@@ -182,6 +182,10 @@ html(lang="en")
                   li
                     a(href=env.BASE_URL + '/connector') Connector
                   li &raquo;
+              - if (url !== '/email' && url.indexOf('/email') !== -1)
+                  li
+                    a(href=env.BASE_URL + '/email') Email
+                  li &raquo;
               li=title
 
           section.content(data-swiftype-index="true")

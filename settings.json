@@ -127,7 +127,8 @@
         "items": [
           { "title": "Overview", "url":"/overview"},
           { "title": "Applications", "url":"/applications"},
-          { "title": "Rules", "url":"/rules"}
+          { "title": "Rules", "url":"/rules"},
+          { "title": "Emails", "url":"/email"}
         ]
       },
       {
