@@ -1,6 +1,12 @@
 <script src="<%= widget_url %>"></script>
 <script type="text/javascript">
+  <% if (!assetsUrl) { %>
   var lock = new Auth0Lock('<%= account.clientId %>', '<%= account.namespace %>');
+  <% } else { %>
+  var lock = new Auth0Lock('<%= account.clientId %>', '<%= account.namespace %>', {
+    assetsUrl: '<%= assetsUrl %>'
+  });
+  <% } %>
   <% if (callbackOnHash) { %>
   var result = lock.parseHash(location.hash);
   if (result) {

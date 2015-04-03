@@ -8,27 +8,25 @@ if (cluster.isMaster && !module.parent) {
  * Module dependencies.
  */
 
-var redirect = require("express-redirect");
+var redirect = require('express-redirect');
 var prerender = require('prerender-node');
 var passport = require('passport');
 var markdocs = require('markdocs');
 var header = require('web-header');
 var express = require('express');
 var nconf = require('nconf');
-var https = require('https');
 var http = require('http');
 var path = require('path');
-var fs = require('fs');
 
 var default_callback = require('./lib/default_callback');
 
 var app = redirect(express());
 
 nconf
-  .use("memory")
+  .use('memory')
   .argv()
   .env()
-  .file({ file: process.env.CONFIG_FILE || path.join(__dirname, "config.json")})
+  .file({ file: process.env.CONFIG_FILE || path.join(__dirname, 'config.json')})
   .defaults({
     'sessionSecret':     'auth11 secret string',
     'COOKIE_SCOPE':      process.env.NODE_ENV === 'production' ? '.auth0.com' : null,
@@ -49,10 +47,12 @@ nconf
     'HMAC_ENCRYPTION_KEY': 'abcdefghij',
     'PUBLIC_ALLOWED_TUTORIALS': '/adldap-auth?,/adldap-x?,/adfs?',
     'AUTH0_TENANT': 'auth0-dev',
-    'AUTH0_CLIENT_ID':   'aCbTAJNi5HbsjPJtRpSP6BIoLPOrSj2C',
+    'AUTH0_CLIENT_ID': 'aCbTAJNi5HbsjPJtRpSP6BIoLPOrSj2C',
     'PRERENDER_ENABLED': false,
     'BASE_URL': ''
   });
+
+var regions = require('./lib/regions');
 
 // after configuration so values are available
 var middlewares = require('./lib/middlewares');
@@ -157,7 +157,7 @@ passport.deserializeUser(function(id, done) {
   this.use(express.cookieParser());
 
   this.use(express.session({
-    secret: nconf.get("sessionSecret"),
+    secret: nconf.get('sessionSecret'),
     store: require('./lib/sessionStore'),
     key: nconf.get('COOKIE_NAME'),
     cookie: {
@@ -196,7 +196,10 @@ app.get('/ticket/step', function (req, res) {
 });
 
 app.get(nconf.get('BASE_URL') + '/switch', function (req, res) {
-  req.session.current_tenant = req.query.tenant;
+  req.session.current_tenant = {
+    name: req.query.tenant,
+    region: req.query.region,
+  };
   res.redirect(nconf.get('BASE_URL') || '/');
 });
 
@@ -239,20 +242,21 @@ var overrideIfAuthenticated = function (req, res, next) {
 
   res.locals.user = {
     tenant: req.user.tenant,
-    tenants: req.user.tenants
+    regions: req.user.regions
   };
 
-  var queryDoc = {
-    tenant: req.user.tenant
+  var params = {
+    tenant: req.user.tenant.name,
+    region: req.user.tenant.region
   };
 
   if (req.session.selectedClient) {
-    queryDoc.clientID = req.session.selectedClient;
+    params.clientID = req.session.selectedClient;
   }
 
-  clients.find(queryDoc, function (err, clients) {
+  clients.find(params, function (err, clients) {
     if (err) {
-      winston.error("error: " + err);
+      winston.error('error: ' + err);
       return next(err);
     }
 
@@ -278,7 +282,7 @@ var overrideIfAuthenticated = function (req, res, next) {
     res.locals.account.loggedIn = true;
     res.locals.account.userName = req.user.name;
 
-    res.locals.account.namespace = nconf.get('DOMAIN_URL_SERVER').replace('{tenant}', req.user.tenant);
+    res.locals.account.namespace = regions.get_namespace(req.user.tenant.region).replace('{tenant}', req.user.tenant.name);
     res.locals.account.tenant = req.user.tenant;
 
     res.locals.account.globalClientId = globalClient.clientID || 'YOUR_GLOBAL_CLIENT_ID';
@@ -310,6 +314,9 @@ var overrideIfClientInQsForPublicAllowedUrls = function (req, res, next) {
   if (!allowed) return next();
   if (!req.query || !req.query.a) return next();
 
+  //todo this doesn't work yet from a foreign region.
+  //but these tutorials are not quite used
+
   clients.findByClientId(req.query.a, { signingKey: 0 }, function (err, client) {
     if (err) { return next(err); }
     if (!client) {
@@ -333,7 +340,13 @@ var overrideIfClientInQs = function (req, res, next) {
   if (!req.query || !req.query.a) { return next(); }
   if (!req.user || !req.user.tenant) { return next(); }
 
-  clients.findByTenantAndClientId(req.user.tenant, req.query.a, function (err, client) {
+  var params = {
+    tenant: req.user.tenant.name,
+    region: req.user.tenant.region,
+    clientID: req.query.a
+  };
+
+  clients.find(params, function (err, client) {
     if (err) { return next(err); }
     if (!client) { return res.send(404, 'client not found'); }
     if (!req.user.is_owner && (!client.owners || client.owners.indexOf(req.user.id) < 0)) {
@@ -341,7 +354,7 @@ var overrideIfClientInQs = function (req, res, next) {
     }
 
     res.locals.account.appName      = client.name && client.name.trim !== '' ? client.name : 'Your App';
-    res.locals.account.namespace    = nconf.get('DOMAIN_URL_SERVER').replace('{tenant}', client.tenant);
+    res.locals.account.namespace    = regions.get_namespace(req.user.tenant.region).replace('{tenant}', req.user.tenant.name);
     res.locals.account.tenant       = client.tenant;
     res.locals.account.clientId     = client.clientID;
     res.locals.account.clientParam = '&clientId=' + client.clientID;
