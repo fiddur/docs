@@ -7,7 +7,6 @@ html(lang="en")
     meta(name="author", content="")
 
     meta(name='viewport', content='width=device-width, initial-scale=1.0')
-    meta(charset="utf-8")
     meta(name="google-site-verification",content="4aSwkVvotRegQ6g32k-21r38Fls9sO8VT5LytKdin3o")
 
     link(href="//cdn.auth0.com/styleguide/latest/img/favicon.png", rel="shortcut icon")
@@ -26,65 +25,8 @@ html(lang="en")
     script(src='//cdn.auth0.com/styleguide/vendor/jquery-1.9.0.min.js')
     script(src='//cdn.auth0.com/styleguide/vendor/bootstrap-3.2.0.min.js')
 
-    - if (env['SEGMENT_KEY'])
-      script.
-        !function(){var analytics=window.analytics=window.analytics||[];if(analytics.invoked)window.console&&console.error&&console.error("Segment snippet included twice.");else{analytics.invoked=!0;analytics.methods=["trackSubmit","trackClick","trackLink","trackForm","pageview","identify","group","track","ready","alias","page","once","off","on"];analytics.factory=function(t){return function(){var e=Array.prototype.slice.call(arguments);e.unshift(t);analytics.push(e);return analytics}};for(var t=0;t<analytics.methods.length;t++){var e=analytics.methods[t];analytics[e]=analytics.factory(e)}analytics.load=function(t){var e=document.createElement("script");e.type="text/javascript";e.async=!0;e.src=("https:"===document.location.protocol?"https://":"http://")+"cdn.segment.com/analytics.js/v1/"+t+"/analytics.min.js";var n=document.getElementsByTagName("script")[0];n.parentNode.insertBefore(e,n)};analytics.SNIPPET_VERSION="3.0.0";
-          analytics.load("#{env['SEGMENT_KEY']}");
-          analytics.page(document.title);
-        }}();
-
-    script(src="#{widget_url}")
-    script.
-      (function () {
-        var widget = window.widget = new Auth0Lock('#{env.AUTH0_CLIENT_ID}', '#{env.AUTH0_DOMAIN}');
-        function getBasicInfo () {
-          return {
-            path: window.location.pathname,
-            url: window.location.toString(),
-            title: document.title,
-            referrer: document.referrer,
-            category: 'Lock',
-            label: 'docs'
-          }
-        }
-        var options = {
-          callbackURL:    '#{uiURLLoginCallback}',
-          dict: {
-            signup: {
-              footerText: 'By signing up, you agree to our <a href="/terms" target="_new">terms of service</a> and <a href="/privacy" target="_new">privacy policy</a>'
-            }
-          },
-          icon: '//auth0.com/boot/badge.png'
-        };
-
-        widget.on('signup ready', function() {
-          if (!window.analytics) return;
-          window.analytics.track('open:signup', getBasicInfo());
-        });
-
-        widget.on('signin ready', function() {
-          if (!window.analytics) return;
-          window.analytics.track('open:signin', getBasicInfo());
-        });
-
-        window.login = function () {
-          if (window.analytics) {
-            window.analytics.track('click:signin', getBasicInfo());
-          }
-          widget.hide(function() {
-            widget.show(options);
-          });
-        };
-
-        window.signup = function() {
-          if (window.analytics) {
-            window.analytics.track('click:signup', getBasicInfo());
-          }
-          widget.hide(function() {
-            widget.showSignup(options);
-          });
-        }
-      })()
+    include inc/analytics
+    include inc/lock-sso
 
   body.page-docs(data-swiftype-index="false")
     header.site-header!= webheader
@@ -114,13 +56,13 @@ html(lang="en")
 
     !function ($) {
       $(function(){
-      $('pre').each(function (i, e) {
-        // Ignore 'pre' elements inside .api-explorer elements
-        if ($(e).closest('.api-explorer').length === 0) {
-          $(e).addClass('prettyprint');
-        }
-      });
-      window.prettyPrint && prettyPrint();
+        $('pre').each(function (i, e) {
+          // Ignore 'pre' elements inside .api-explorer elements
+          if ($(e).closest('.api-explorer').length === 0) {
+            $(e).addClass('prettyprint');
+          }
+        });
+        window.prettyPrint && prettyPrint();
       })
     }(window.jQuery);
 
