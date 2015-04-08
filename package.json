@@ -5,6 +5,7 @@
   "author": "Auth10 <support@auth10.com>",
   "dependencies": {
     "async": "~0.2.9",
+    "auth0": "^0.8.0",
     "auth0-application-types": "git://github.com/auth0/application-types#0.1.1",
     "auth0-client-platforms": "git://github.com/auth0/client-platforms#0.2.1",
     "auth0-native-platforms": "git://github.com/auth0/native-platforms#0.2.0",
@@ -29,6 +30,7 @@
     "prerender-node": "^1.0.6",
     "request": "^2.51.0",
     "server-destroy": "^1.0.0",
+    "url-join": "0.0.1",
     "web-header": "git://github.com/auth0/web-header#0.4.7",
     "winston": "~0.6.2",
     "winston-email": "0.0.6",

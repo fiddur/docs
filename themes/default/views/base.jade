@@ -105,16 +105,18 @@ html(lang="en")
 
     .container
       nav.navbar.navbar-default.sub-navbar
-        if (locals.user && user.tenants && user.tenants.length > 1)
+        if (locals.user && user.regions && user.regions.length > 1)
           .dropdown
             button#account-chooser.btn.dropdown-toggle(type='button', data-toggle='dropdown')
-              | #{user.tenant}
+              | #{user.tenant.name}
               span.caret
             ul.dropdown-menu(role='menu', aria-labelledby='account-chooser')
-              each tenant in user.tenants
-                if (user.tenant !== tenant)
+              each region in user.regions
+                li(role="presentation", class="dropdown-header")
+                  | #{region.description}
+                each tenant in region.tenants
                   li(role='presentation')
-                    a(role='menuitem', tabindex='-1', href=env.BASE_URL + '/switch?tenant=#{tenant}') #{tenant}
+                    a(role='menuitem', tabindex='-1', href=env.BASE_URL + '/switch?tenant=#{tenant}&region=#{region.name}') #{tenant}
         else
           .navbar-header
             small.navbar-text Documentation: API Reference & Help topics
