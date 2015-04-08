@@ -1782,9 +1782,9 @@
       "resolved": "https://registry.npmjs.org/url-join/-/url-join-0.0.1.tgz"
     },
     "web-header": {
-      "version": "0.4.7",
-      "from": "web-header@git://github.com/auth0/web-header#59525c7e6f30350ac5e9b432e4e4ecd09295b85f",
-      "resolved": "git://github.com/auth0/web-header#59525c7e6f30350ac5e9b432e4e4ecd09295b85f"
+      "version": "0.4.10",
+      "from": "web-header@git://github.com/auth0/web-header#acadf3443f7830f7fb0f33a99d60ec2f9e41cc16",
+      "resolved": "git://github.com/auth0/web-header#acadf3443f7830f7fb0f33a99d60ec2f9e41cc16"
     },
     "winston": {
       "version": "0.6.2",
