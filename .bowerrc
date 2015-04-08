@@ -1,4 +1,4 @@
 {
-  "directory": "themes/default/public/vendor/bower_components",
+  "directory": "themes/default/public/vendor",
   "analytics": false
 }
