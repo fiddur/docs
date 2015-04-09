@@ -283,7 +283,7 @@ var overrideIfAuthenticated = function (req, res, next) {
     res.locals.account.userName = req.user.name;
 
     res.locals.account.namespace = regions.get_namespace(req.user.tenant.region).replace('{tenant}', req.user.tenant.name);
-    res.locals.account.tenant = req.user.tenant;
+    res.locals.account.tenant = req.user.tenant.name;
 
     res.locals.account.globalClientId = globalClient.clientID || 'YOUR_GLOBAL_CLIENT_ID';
     res.locals.account.globalClientSecret = globalClient.clientSecret;
@@ -346,7 +346,7 @@ var overrideIfClientInQs = function (req, res, next) {
     clientID: req.query.a
   };
 
-  clients.find(params, function (err, client) {
+  clients.find(params, function (err, clients) {
     if (err) { return next(err); }
 
     var client = clients && clients.length > 0 && clients[0];
