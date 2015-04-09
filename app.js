@@ -348,6 +348,9 @@ var overrideIfClientInQs = function (req, res, next) {
 
   clients.find(params, function (err, client) {
     if (err) { return next(err); }
+
+    var client = clients && clients.length > 0 && clients[0];
+
     if (!client) { return res.send(404, 'client not found'); }
     if (!req.user.is_owner && (!client.owners || client.owners.indexOf(req.user.id) < 0)) {
       return res.send(401);
