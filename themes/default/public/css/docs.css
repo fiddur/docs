@@ -1,3 +1,52 @@
+.color {
+  background: #f00;
+  border-radius: 3px;
+  color: #fff;
+  padding: 20px;
+  margin-bottom: 20px;
+  padding-top: 100px;
+}
+.color span {
+  font-size: 16px;
+  display: block;
+  margin-bottom: 10px;
+}
+.color strong {
+  display: block;
+  text-transform: uppercase;
+}
+.color.color-blue {
+  background: #16214d;
+}
+.color.color-blue-light {
+  background: #44c7f4;
+}
+.color.color-red {
+  background: #eb5424;
+}
+.color.color-grey {
+  background: #d0d2d3;
+  color: #000;
+}
+.color.color-orange {
+  background: #ff9a57;
+  color: #000;
+}
+.color.color-orange {
+  background: #ff9a57;
+  color: #000;
+}
+.color.color-green {
+  background: #01b48f;
+  color: #000;
+}
+.color.color-oil {
+  background: #5c666f;
+}
+.color.color-yellow {
+  background: #eaca2c;
+  color: #000;
+}
 .btn-package {
   white-space: normal;
   margin-bottom: 0px;
@@ -203,7 +252,7 @@ div.package span.smaller {
 }
 .page-docs .browser-icons i {
   margin-right: 10px;
-  color: #14204d;
+  color: #16214d;
 }
 .page-docs .browser-address {
   background: #fff;
@@ -325,6 +374,7 @@ div.package span.smaller {
 .page-docs .sidebar-docs ul li.box {
   border: 1px solid #eee;
   border-radius: 3px;
+  margin-top: 0px;
   margin-bottom: 20px;
   padding: 14px 20px;
 }
@@ -472,6 +522,7 @@ div.package span.smaller {
 }
 .page-docs section.content h1 {
   margin-top: 0;
+  font-weight: 100;
 }
 .page-docs section.content li,
 .page-docs section.content p {
@@ -489,7 +540,7 @@ div.package span.smaller {
   margin-bottom: 20px;
 }
 .page-docs section.content blockquote {
-  background: #ecfafe;
+  background: #ecf9fe;
   border: 0;
   text-align: center;
   color: #fff;
@@ -498,18 +549,18 @@ div.package span.smaller {
 }
 .page-docs section.content blockquote p {
   line-height: 30px;
-  color: #14204d;
+  color: #16214d;
   margin: 0;
 }
 .page-docs section.content blockquote.warning {
-  background: red;
+  background: #f00;
 }
 .page-docs section.content blockquote.warning p {
-  color: white;
+  color: #fff;
   font-weight: bold;
 }
 .page-docs section.content blockquote.warning a {
-  color: white;
+  color: #fff;
   text-decoration: underline;
 }
 .page-docs section.content img {

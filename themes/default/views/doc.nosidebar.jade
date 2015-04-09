@@ -7,11 +7,9 @@ html(lang="en")
     meta(name="description", content="")
     meta(name="author", content="")
 
-    <style>html, body { background-color: #E8EBEF; }</style>
-
-    link(rel="shortcut icon", href="/img/logo-small.png")
-    link(href="//cdn.auth0.com/styleguide/1.0/index.css", rel="stylesheet")
-    link(href="/docs/css/docs.css", rel="stylesheet")
+    link(rel="shortcut icon", href="//cdn.auth0.com/styleguide/latest/lib/logos/img/favicon.png")
+    link(href="//cdn.auth0.com/styleguide/latest/index.css", rel="stylesheet")
+    link(href=env.BASE_URL + "/css/docs.css", rel="stylesheet")
 
     link(href="https://fonts.googleapis.com/css?family=Open+Sans:400,600,700,800", rel="stylesheet", type='text/css')
     link(rel='stylesheet', type='text/css', href='/css/prettify.css')
@@ -24,37 +22,28 @@ html(lang="en")
     script(src="http://html5shim.googlecode.com/svn/trunk/html5.js")
     <![endif]-->
 
+    include inc/analytics
+
   body
     .nosidebar.page-docs.container
       section
         != sections.content
 
       footer
-        span Powered by 
+        span Powered by
           a(href="//auth0.com") Auth0
 
   script(src='//ajax.googleapis.com/ajax/libs/jquery/1.9.0/jquery.min.js')
-  script(src='/js/prettify.js')
-  script(type='text/javascript')
-
+  script(src=env.BASE_URL + '/js/prettify.js')
+  script(type='text/javascript').
     !function ($) {
       $(function(){
-      $('pre').addClass('prettyprint');
-      window.prettyPrint && prettyPrint()
+        $('pre').addClass('prettyprint');
+        window.prettyPrint && prettyPrint()
       })
     }(window.jQuery);
 
-    var _gaq = _gaq || [];
-    _gaq.push(['_setAccount', 'UA-37952868-1']);
-    _gaq.push(['_trackPageview']);
-
-    (function() {
-      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
-      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
-      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
-    })();
-
-  script
+  script.
     var sectionIndex = 1;
     $('h2,h3,h4').each(function(){
       $(this)
