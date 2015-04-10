@@ -115,7 +115,8 @@ passport.deserializeUser(function(id, done) {
 });
 
 (function(){
-  this.set("view engine", "jade");
+  this.set('view engine', 'jade');
+  this.enable('trust proxy');
 
   if (nconf.get('NODE_ENV') === 'production') {
     this.use(function(req, res, next){
