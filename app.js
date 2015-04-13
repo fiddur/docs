@@ -48,6 +48,7 @@ nconf
     'PUBLIC_ALLOWED_TUTORIALS': '/adldap-auth?,/adldap-x?,/adfs?',
     'AUTH0_TENANT': 'auth0-dev',
     'AUTH0_CLIENT_ID': 'aCbTAJNi5HbsjPJtRpSP6BIoLPOrSj2C',
+    'AUTH0_CLIENT_SECRET': 'FBY0d4np9dCQZz1teQbsZSqrTdQI-yA55xPKUGUZgDxOco18yWupBk1MM-eBLme0',
     'PRERENDER_ENABLED': false,
     'BASE_URL': ''
   });
@@ -433,13 +434,18 @@ function alias(route) {
 }
 
 var includes = require('./lib/includes/includes');
-includes.init(path.join(__dirname, '/docs/includes'));
+includes.init(path.join(__dirname, '/docs/content/includes'));
 
 /**
  * Create and boot DocsApp as `Markdocs` app
  */
 
-var docsapp = new markdocs.App(__dirname, nconf.get('BASE_URL') || '', app);
+var docsapp = new markdocs.App({
+  basePath: __dirname,
+  baseUrl: nconf.get('BASE_URL') || '',
+  docsPath: __dirname + '/docs/content'
+}, app);
+
 docsapp.addPreRender(defaultValues);
 docsapp.addPreRender(includes.add);
 docsapp.addPreRender(overrideIfAuthenticated);
