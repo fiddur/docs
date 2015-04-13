@@ -109,7 +109,7 @@ passport.deserializeUser(function(id, done) {
 
   var getDb = require('./lib/data');
   getDb(function(db){
-    var userColl = db.collection("tenantUsers");
+    var userColl = db.collection('tenantUsers');
     userColl.findOne({id: id}, done);
   });
 });
