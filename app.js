@@ -50,7 +50,8 @@ nconf
     'AUTH0_CLIENT_ID': 'aCbTAJNi5HbsjPJtRpSP6BIoLPOrSj2C',
     'AUTH0_CLIENT_SECRET': 'FBY0d4np9dCQZz1teQbsZSqrTdQI-yA55xPKUGUZgDxOco18yWupBk1MM-eBLme0',
     'PRERENDER_ENABLED': false,
-    'BASE_URL': ''
+    'BASE_URL': '',
+    'DOCS_PATH': __dirname + '/docs/content'
   });
 
 var regions = require('./lib/regions');
