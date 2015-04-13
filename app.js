@@ -444,7 +444,7 @@ includes.init(path.join(__dirname, '/docs/content/includes'));
 var docsapp = new markdocs.App({
   basePath: __dirname,
   baseUrl: nconf.get('BASE_URL') || '',
-  docsPath: __dirname + '/docs/content'
+  docsPath: nconf.get('DOCS_PATH')
 }, app);
 
 docsapp.addPreRender(defaultValues);
