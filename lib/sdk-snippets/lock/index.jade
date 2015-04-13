@@ -44,7 +44,16 @@ script
   function refresh (method, clientId) {
     $('#widget-demo').attr('src', '#{DOMAIN_URL_DOCS}/lock-demos/' + method + '?' + (clientId !== 'YOUR_CLIENT_ID' ? '&a=' + clientId : '') + '&callbackOnHash=#{callbackOnHashMode}' + '&backend=#{backend}');
 
-    $('#widget-snippet').load('#{DOMAIN_URL_DOCS}/lock-snippets/' + method + '?' + (clientId !== 'YOUR_CLIENT_ID' ? '&a=' + clientId : '') + '&callbackOnHash=#{callbackOnHashMode}' + '&backend=#{backend}', function() {
+    var snippet_url = '#{DOMAIN_URL_DOCS}/lock-snippets/' + method + '?' + (clientId !== 'YOUR_CLIENT_ID' ? '&a=' + clientId : '') + '&callbackOnHash=#{callbackOnHashMode}' + '&backend=#{backend}';
+
+    $.ajax({
+      url: snippet_url,
+      cache: false,
+      xhrFields: {
+        withCredentials: true
+      }
+    }).done(function (data) {
+      $('#widget-snippet').html(data);
       prettyPrint();
     });
   }
