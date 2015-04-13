@@ -20,7 +20,7 @@
     "limitd": "^4.1.2",
     "lodash": "^2.4.1",
     "lsr": "^1.0.0",
-    "markdocs": "^1.0.1",
+    "markdocs": "^1.1.0",
     "method-override": "^2.3.1",
     "mongo-getdb": "~1.0.1",
     "mongo-heartbeat": "0.0.1",
