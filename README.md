@@ -3,10 +3,25 @@ NPM version: 1.4.21
 
 ## Development
 
+### Usage without Vagrant
+
+```
+nave use 0.10.30
+git submodule init
+git submodule update
+npm i
+mongod &
+node app.js
+```
+
+### Usage with vagrant
+
 Vagrant install production dependencies but not dev dependencies. Use this:
 
 ```
 nave use 0.10.30
+git submodule init
+git submodule update
 npm i
 ```
 
