@@ -172,28 +172,28 @@
     },
     "auth0-application-types": {
       "version": "0.1.1",
-      "from": "auth0-application-types@git://github.com/auth0/application-types#fd4d0ba869cfe4d82d636473ca9472c7e51c21f7",
-      "resolved": "git://github.com/auth0/application-types#fd4d0ba869cfe4d82d636473ca9472c7e51c21f7"
+      "from": "auth0-application-types@git://github.com/auth0/application-types.git#fd4d0ba869cfe4d82d636473ca9472c7e51c21f7",
+      "resolved": "git://github.com/auth0/application-types.git#fd4d0ba869cfe4d82d636473ca9472c7e51c21f7"
     },
     "auth0-client-platforms": {
       "version": "0.2.1",
-      "from": "auth0-client-platforms@git://github.com/auth0/client-platforms#0b9963d2578ad3af4084c8b62c80c31bc44d3b47",
-      "resolved": "git://github.com/auth0/client-platforms#0b9963d2578ad3af4084c8b62c80c31bc44d3b47"
+      "from": "auth0-client-platforms@git://github.com/auth0/client-platforms.git#0b9963d2578ad3af4084c8b62c80c31bc44d3b47",
+      "resolved": "git://github.com/auth0/client-platforms.git#0b9963d2578ad3af4084c8b62c80c31bc44d3b47"
     },
     "auth0-native-platforms": {
-      "version": "0.2.0",
-      "from": "auth0-native-platforms@git://github.com/auth0/native-platforms#a08fb165b0a6002c310ec87b0542e284165d82c3",
-      "resolved": "git://github.com/auth0/native-platforms#a08fb165b0a6002c310ec87b0542e284165d82c3"
+      "version": "0.2.1",
+      "from": "auth0-native-platforms@git://github.com/auth0/native-platforms.git#4899b3ee9666eadb415da4ed9ff5d3cee80b5264",
+      "resolved": "git://github.com/auth0/native-platforms.git#4899b3ee9666eadb415da4ed9ff5d3cee80b5264"
     },
     "auth0-server-apis": {
       "version": "0.2.2",
-      "from": "auth0-server-apis@git://github.com/auth0/server-apis#5b006eae1bd6760d07564990c48b3857fceca7d7",
-      "resolved": "git://github.com/auth0/server-apis#5b006eae1bd6760d07564990c48b3857fceca7d7"
+      "from": "auth0-server-apis@git://github.com/auth0/server-apis.git#5b006eae1bd6760d07564990c48b3857fceca7d7",
+      "resolved": "git://github.com/auth0/server-apis.git#5b006eae1bd6760d07564990c48b3857fceca7d7"
     },
     "auth0-server-platforms": {
       "version": "0.2.0",
-      "from": "auth0-server-platforms@git://github.com/auth0/server-platforms#220881666d4d5860e19133acbcab345dc2cd41ff",
-      "resolved": "git://github.com/auth0/server-platforms#220881666d4d5860e19133acbcab345dc2cd41ff"
+      "from": "auth0-server-platforms@git://github.com/auth0/server-platforms.git#220881666d4d5860e19133acbcab345dc2cd41ff",
+      "resolved": "git://github.com/auth0/server-platforms.git#220881666d4d5860e19133acbcab345dc2cd41ff"
     },
     "connect": {
       "version": "2.28.3",
@@ -2294,9 +2294,9 @@
       "resolved": "https://registry.npmjs.org/url-join/-/url-join-0.0.1.tgz"
     },
     "web-header": {
-      "version": "0.4.7",
-      "from": "web-header@git://github.com/auth0/web-header#59525c7e6f30350ac5e9b432e4e4ecd09295b85f",
-      "resolved": "git://github.com/auth0/web-header#59525c7e6f30350ac5e9b432e4e4ecd09295b85f"
+      "version": "0.4.10",
+      "from": "web-header@git://github.com/auth0/web-header.git#acadf3443f7830f7fb0f33a99d60ec2f9e41cc16",
+      "resolved": "git://github.com/auth0/web-header.git#acadf3443f7830f7fb0f33a99d60ec2f9e41cc16"
     },
     "winston": {
       "version": "0.6.2",
