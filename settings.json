@@ -157,7 +157,8 @@
           { "title": "Multifactor Auth (beta)", "url": "/mfa" },
           { "title": "User Migration (beta)", "url": "/migrating"},
           { "title": "Users search", "url":"/users-search"},
-          { "title": "Legacy Widget", "url":"/login-widget2"}
+          { "title": "Legacy Widget", "url":"/login-widget2"},
+          { "title": "CMS", "url":"/cms"}
         ]
       }
     ],
