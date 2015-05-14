@@ -1,12 +1,20 @@
 var nconf = require('nconf');
+var docsSettings = require('../../docs/settings.json');
 
 var Theme = function(docsapp) {
   this._docsapp = docsapp;
   docsapp.addPreRender(this._preRender.bind(this));
 };
 
+var merge = function (target, source) {
+  for(var attr in source) {
+    target[attr] = source[attr];
+  }
+  return target;
+};
+
 Theme.prototype._preRender = function(request, response, next) {
-  var settings = this._docsapp.getSettings();
+  var settings = merge(this._docsapp.getSettings(), docsSettings);
   var sections = response.doc.getSections();
   var title = response.doc.getMeta()['title'] || alternative_title(sections.content);
   var conanicalUrl = response.doc.getMeta()['canonical'];
