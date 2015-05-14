@@ -14,6 +14,8 @@ mongod &
 node app.js
 ```
 
+> If you see an error like `Error: bind EMFILE` you need to run the following command `ulimit -n 2048`
+
 ### Usage with vagrant
 
 Vagrant install production dependencies but not dev dependencies. Use this:
