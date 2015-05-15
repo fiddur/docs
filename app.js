@@ -437,6 +437,8 @@ function alias(route) {
 var includes = require('./lib/includes/includes');
 includes.init(path.join(__dirname, '/docs/includes'));
 
+var articlesCollection = require('./lib/articles-collection');
+
 /**
  * Create and boot DocsApp as `Markdocs` app
  */
@@ -455,6 +457,7 @@ docsapp.addPreRender(overrideIfClientInQsForPublicAllowedUrls);
 docsapp.addPreRender(appendTicket);
 docsapp.addPreRender(quickstartCollections);
 docsapp.addPreRender(embedded);
+docsapp.addPreRender(articlesCollection);
 docsapp.addPreRender(function(req,res,next){
   var scheme = process.env.NODE_ENV === 'production' ? 'https' : 'http';
 
