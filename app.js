@@ -17,16 +17,27 @@ var express = require('express');
 var nconf = require('nconf');
 var http = require('http');
 var path = require('path');
+var fs = require('fs');
 
 var default_callback = require('./lib/default_callback');
 
 var app = redirect(express());
 
+var config_file = process.env.CONFIG_FILE || path.join(__dirname, 'config.json');
+var extra_configs = config_file.slice(0, -5) + '.d';
+
 nconf
   .use('memory')
   .argv()
-  .env()
-  .file({ file: process.env.CONFIG_FILE || path.join(__dirname, 'config.json')})
+  .env();
+
+if (fs.existsSync(extra_configs)) {
+  fs.readdirSync(extra_configs).forEach(function (f) {
+    nconf.file(f, extra_configs + '/' + f);
+  });
+}
+
+nconf.file('global', { file: config_file })
   .defaults({
     'sessionSecret':     'auth11 secret string',
     'COOKIE_SCOPE':      process.env.NODE_ENV === 'production' ? '.auth0.com' : null,
@@ -58,10 +69,6 @@ var regions = require('./lib/regions');
 
 // after configuration so values are available
 var middlewares = require('./lib/middlewares');
-
-if (nconf.get('db')) {
-  console.log('db is ' + nconf.get('db'));
-}
 
 if (nconf.get('COOKIE_NAME') !== 'auth0l') {
   nconf.set('CURRENT_TENANT_COOKIE', nconf.get('COOKIE_NAME') + '_current_tenant');
