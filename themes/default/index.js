@@ -29,6 +29,7 @@ Theme.prototype._preRender = function(request, response, next) {
   response.locals.canonicalUrl = conanicalUrl;
   response.locals.env = {
     BASE_URL:             nconf.get('BASE_URL'),
+    MEDIA_URL:            nconf.get('MEDIA_URL'),
     AUTH0_DOMAIN:         nconf.get('AUTH0_DOMAIN'),
     AUTH0_CLIENT_ID:      nconf.get('AUTH0_CLIENT_ID'),
     COOKIE_SCOPE:         nconf.get('COOKIE_SCOPE'),
