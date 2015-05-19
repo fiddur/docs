@@ -43,21 +43,9 @@ process.on('SIGHUP', function () {
   for(var id in cluster.workers) {
     cluster.workers[id].process.kill('SIGTERM');
   }
+}).once('SIGUSR2', function () {
+  for(var id in cluster.workers) {
+    cluster.workers[id].process.kill('SIGTERM');
+  }
+  process.kill(process.pid, 'SIGUSR2');
 });
-
-if (process.env.NODE_ENV !== 'production') {
-  // var watch = require('watch');
-  // var path = require('path');
-  // var fs = require('fs');
-  var watchr = require('watchr');
-
-  watchr.watch({
-    path: __dirname,
-    listeners: {
-      change: function(changeType, filePath){
-        console.log(changeType, filePath.substr(__dirname.length));
-        reload();
-      }
-    }
-  });
-}
