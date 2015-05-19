@@ -531,6 +531,8 @@ docsapp.addPreRender(require('./lib/sdk-snippets/lock/middleware'));
 docsapp.addPreRender(middlewares.configuration);
 docsapp.addExtension(require('./lib/extensions').lodash);
 docsapp.addExtension(require('./lib/extensions').warningBlock);
+docsapp.addExtension(require('./lib/extensions').relativePath);
+docsapp.addExtension(require('./lib/extensions').mediaPath);
 require('./lib/sdk-snippets/lock/demos-routes')(app);
 require('./lib/sdk-snippets/lock/snippets-routes')(app);
 require('./lib/sdk-snippets/login-widget2/demos-routes')(app);
