@@ -63,7 +63,8 @@ nconf.file('global', { file: config_file })
     'PRERENDER_ENABLED': false,
     'BASE_URL': '',
     'MEDIA_URL': '/media',
-    'DOCS_PATH': __dirname + '/docs/articles'
+    'DOCS_PATH': __dirname + '/docs/articles',
+    'PORT': 5050
   });
 
 var regions = require('./lib/regions');
@@ -549,7 +550,7 @@ require('./lib/sitemap')(app);
 
 var server = http.createServer(app);
 
-var port = nconf.get('PORT') || 5050;
+var port = nconf.get('PORT');
 server.listen(port, function () {
   console.log('Server listening on http://localhost:'  + port);
 });
