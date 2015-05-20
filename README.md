@@ -11,7 +11,7 @@ git submodule init
 git submodule update
 npm i
 mongod &
-node app.js
+npm run watch
 ```
 
 > If you see an error like `Error: bind EMFILE` you need to run the following command `ulimit -n 2048`
