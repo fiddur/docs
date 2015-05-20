@@ -62,6 +62,7 @@ nconf.file('global', { file: config_file })
     'AUTH0_CLIENT_SECRET': 'FBY0d4np9dCQZz1teQbsZSqrTdQI-yA55xPKUGUZgDxOco18yWupBk1MM-eBLme0',
     'PRERENDER_ENABLED': false,
     'BASE_URL': '',
+    'MEDIA_URL': '/media',
     'DOCS_PATH': __dirname + '/docs/articles'
   });
 
@@ -183,6 +184,9 @@ passport.deserializeUser(function(id, done) {
   this.use(express.logger('dev'));
   this.use(express.json());
   this.use(express.urlencoded());
+
+
+  this.use('/media', express.static(path.join(__dirname, 'docs/media')));
 
   // warning this cause an Internal Server Error
   // this.use(require('method-override'));
