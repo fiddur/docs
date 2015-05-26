@@ -449,6 +449,7 @@ var includes = require('./lib/includes/includes');
 includes.init(path.join(__dirname, '/docs/includes'));
 
 var articlesCollection = require('./lib/articles-collection');
+var articlesTags = require('./lib/articles-tags');
 
 /**
  * Create and boot DocsApp as `Markdocs` app
@@ -469,6 +470,7 @@ docsapp.addPreRender(appendTicket);
 docsapp.addPreRender(quickstartCollections);
 docsapp.addPreRender(embedded);
 docsapp.addPreRender(articlesCollection);
+docsapp.addPreRender(articlesTags);
 docsapp.addPreRender(function(req,res,next){
   var scheme = process.env.NODE_ENV === 'production' ? 'https' : 'http';
 
