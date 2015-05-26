@@ -10,6 +10,9 @@ var blc = require('broken-link-checker');
 var docUrls = require('../lib/doc-urls');
 var fs = require('fs');
 var path = require('path');
+var htmlparser = require("htmlparser2");
+var async = require('async');
+var testConfig = require('./tests.json');
 
 var baseUrl = 'http://localhost:' + nconf.get('PORT');
 
@@ -31,19 +34,18 @@ describe('Application', function() {
   });
 
   describe('HTML', function() {
-    var linksLogPath = path.join(__dirname, 'links.log');
+    var linksErrorPath = path.join(__dirname, '../links.error.log');
+    var linksRedirectsPath = path.join(__dirname, '../links.redirect.log');
     before(function(done) {
-      fs.exists(linksLogPath, function(exists) {
-        if (exists) {
-          fs.unlink(linksLogPath, function (err) {
-            if (err) throw err;
-            console.log('Deleted links log file.');
-            done();
-          });
-        } else {
-          done();
+      var deleteFile = function(filePath) {
+        if (fs.existsSync(filePath)) {
+          fs.unlinkSync(filePath);
+          console.log('Deleted links log file: ' + filePath);
         }
-      });
+      };
+      deleteFile(linksErrorPath);
+      deleteFile(linksRedirectsPath);
+      done();
     });
 
     it('should not include broken links', function(done) {
@@ -56,6 +58,7 @@ describe('Application', function() {
       };
 
       var results = [];
+      var redirects = [];
       var urlChecker = new blc.HtmlUrlChecker(options, {
           link: function(result){
             if (result.broken) {
@@ -68,9 +71,17 @@ describe('Application', function() {
 
               results.push(result);
               var data = result.base.original + '\t' + result.url.original + '\t' + result.http.statusCode + '\n';
-              fs.appendFile(linksLogPath, data, function (err) {
+              fs.appendFile(linksErrorPath, data, function (err) {
                 if (err) throw err;
               });
+            } else if (result.url.redirected) {
+              var data = result.url.original + ' => ' + result.url.redirected.replace(baseUrl, '') + '\n';
+              if (redirects.indexOf(data) < 0) {
+                redirects.push(data);
+                fs.appendFile(linksRedirectsPath, data, function (err) {
+                  if (err) throw err;
+                });
+              }
             }
           },
           item: function(error, htmlUrl){
@@ -89,7 +100,42 @@ describe('Application', function() {
         urlChecker.enqueue(baseUrl + url);
       });
 
-    })
+    });
+
+    it('should not reference blacklisted urls', function(done) {
+      this.timeout(0); // This test takes a while to run.
+
+      var parser = new htmlparser.Parser({
+          onopentag: function(name, attribs){
+            if(name === 'a') {
+              testConfig.blacklisted_hosts.forEach(function(host) {
+                if (attribs.href.indexOf(host) > -1) {
+                  assert.fail(attribs.href, null, 'Use of blacklisted URI \"' + attribs.href + '\"');
+                }
+              });
+            }
+          }
+      }, {decodeEntities: true});
+
+      var q = async.queue(function (url, callback) {
+        request(baseUrl + url, function (error, response, body) {
+          if (!error && response.statusCode === 200) {
+            parser.write(body);
+            callback();
+          } else {
+            callback(error);
+          }
+        });
+      }, 10);
+
+      q.push(docUrls);
+
+      q.drain = function() {
+        parser.end();
+        done();
+      };
+    });
+
   });
 
 });

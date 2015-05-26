@@ -1,0 +1,6 @@
+{
+  "blacklisted_hosts": [
+    "docs.auth0.com",
+    "app.auth0.com"
+  ]
+}
