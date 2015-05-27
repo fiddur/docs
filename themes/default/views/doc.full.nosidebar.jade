@@ -35,7 +35,7 @@ html(lang="en")
         window.widget.getClient().getSSOData(false, function (err, data) {
           if (!data || !data.sso) return;
           $('header.site-header .login')
-            .attr('href', 'https://manage.auth0.com')
+            .attr('href', "#{locals.uiURL}")
             .html('Open Dashboard');
         });
       }
