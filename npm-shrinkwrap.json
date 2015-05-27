@@ -181,14 +181,14 @@
       "resolved": "git://github.com/auth0/client-platforms.git#0b9963d2578ad3af4084c8b62c80c31bc44d3b47"
     },
     "auth0-native-platforms": {
-      "version": "0.2.1",
-      "from": "auth0-native-platforms@git://github.com/auth0/native-platforms.git#4899b3ee9666eadb415da4ed9ff5d3cee80b5264",
-      "resolved": "git://github.com/auth0/native-platforms.git#4899b3ee9666eadb415da4ed9ff5d3cee80b5264"
+      "version": "0.2.2",
+      "from": "auth0-native-platforms@git://github.com/auth0/native-platforms#9e8a03d302a602a82ab3b7aec61df1bde9398c6f",
+      "resolved": "git://github.com/auth0/native-platforms#9e8a03d302a602a82ab3b7aec61df1bde9398c6f"
     },
     "auth0-server-apis": {
-      "version": "0.2.2",
-      "from": "auth0-server-apis@git://github.com/auth0/server-apis.git#5b006eae1bd6760d07564990c48b3857fceca7d7",
-      "resolved": "git://github.com/auth0/server-apis.git#5b006eae1bd6760d07564990c48b3857fceca7d7"
+      "version": "0.2.4",
+      "from": "auth0-server-apis@git://github.com/auth0/server-apis#f3aebef7b3dcc2c8ce685928cd95d9d85dd7b376",
+      "resolved": "git://github.com/auth0/server-apis#f3aebef7b3dcc2c8ce685928cd95d9d85dd7b376"
     },
     "auth0-server-platforms": {
       "version": "0.2.0",
