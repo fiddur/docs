@@ -62,7 +62,7 @@ nconf.file('global', { file: config_file })
     'AUTH0_CLIENT_SECRET': 'FBY0d4np9dCQZz1teQbsZSqrTdQI-yA55xPKUGUZgDxOco18yWupBk1MM-eBLme0',
     'PRERENDER_ENABLED': false,
     'BASE_URL': '',
-    'MEDIA_URL': '/media',
+    'MEDIA_URL': process.env.NODE_ENV === 'production' ? 'https://cdn.auth0.com/docs/media' : '/media',
     'DOCS_PATH': __dirname + '/docs/articles',
     'PORT': 5050
   });
