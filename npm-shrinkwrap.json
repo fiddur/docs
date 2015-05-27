@@ -195,6 +195,10 @@
       "from": "auth0-server-platforms@git://github.com/auth0/server-platforms.git#220881666d4d5860e19133acbcab345dc2cd41ff",
       "resolved": "git://github.com/auth0/server-platforms.git#220881666d4d5860e19133acbcab345dc2cd41ff"
     },
+    "cb": {
+      "version": "0.1.0",
+      "resolved": "https://registry.npmjs.org/cb/-/cb-0.1.0.tgz"
+    },
     "connect": {
       "version": "2.28.3",
       "resolved": "https://registry.npmjs.org/connect/-/connect-2.28.3.tgz",
