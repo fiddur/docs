@@ -62,7 +62,7 @@ nconf.file('global', { file: config_file })
     'AUTH0_CLIENT_SECRET': 'FBY0d4np9dCQZz1teQbsZSqrTdQI-yA55xPKUGUZgDxOco18yWupBk1MM-eBLme0',
     'PRERENDER_ENABLED': false,
     'BASE_URL': '',
-    'MEDIA_URL': process.env.NODE_ENV === 'production' ? 'https://cdn.auth0.com/docs/media' : '/media',
+    'MEDIA_URL': process.env.NODE_ENV === 'production' ? 'https://cdn.auth0.com/docs/media' : false,
     'DOCS_PATH': __dirname + '/docs/articles',
     'PORT': 5050
   });
@@ -533,8 +533,10 @@ docsapp.addPreRender(require('./lib/sdk-snippets/lock/middleware'));
 docsapp.addPreRender(middlewares.configuration);
 docsapp.addExtension(require('./lib/extensions').lodash);
 docsapp.addExtension(require('./lib/extensions').warningBlock);
+if (nconf.get('MEDIA_URL')) {
+  docsapp.addExtension(require('./lib/extensions').mediaPath);
+}
 docsapp.addExtension(require('./lib/extensions').relativePath);
-docsapp.addExtension(require('./lib/extensions').mediaPath);
 require('./lib/sdk-snippets/lock/demos-routes')(app);
 require('./lib/sdk-snippets/lock/snippets-routes')(app);
 require('./lib/sdk-snippets/login-widget2/demos-routes')(app);
