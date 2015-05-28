@@ -41,7 +41,6 @@ describe('Application', function() {
       var deleteFile = function(filePath) {
         if (fs.existsSync(filePath)) {
           fs.unlinkSync(filePath);
-          console.log('Deleted links log file: ' + filePath);
         }
       };
       deleteFile(linksErrorPath);
@@ -113,7 +112,7 @@ describe('Application', function() {
           onopentag: function(name, attribs){
             if(name === 'a') {
               testConfig.blacklisted_hosts.forEach(function(host) {
-                if (attribs.href.indexOf(host) > -1) {
+                if (attribs.href && attribs.href.indexOf(host) > -1) {
                   assert.fail(attribs.href, null, 'Use of blacklisted URI \"' + attribs.href + '\"');
                 }
               });
