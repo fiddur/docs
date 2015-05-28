@@ -10,11 +10,12 @@ var blc = require('broken-link-checker');
 var docUrls = require('../lib/doc-urls');
 var fs = require('fs');
 var path = require('path');
-var htmlparser = require("htmlparser2");
+var htmlparser = require('htmlparser2');
 var async = require('async');
 var testConfig = require('./tests.json');
+var urlJoin = require('url-join');
 
-var baseUrl = 'http://localhost:' + nconf.get('PORT');
+var baseUrl = urlJoin('http://localhost:' + nconf.get('PORT'), nconf.get('BASE_URL'));
 
 describe('Application', function() {
   after(function (done) {
@@ -48,7 +49,7 @@ describe('Application', function() {
       done();
     });
 
-    it('should not include broken links', function(done) {
+    it.only('should not include broken links', function(done) {
       this.timeout(0); // This test takes a while to run.
 
       var options = {
@@ -68,12 +69,14 @@ describe('Application', function() {
                 return;
               }
 
+              //ignore links to HOME
+              if (result.url.original === '/') {
+                return;
+              }
 
               results.push(result);
-              var data = result.base.original + '\t' + result.url.original + '\t' + result.http.statusCode + '\n';
-              fs.appendFile(linksErrorPath, data, function (err) {
-                if (err) throw err;
-              });
+              var error = result.base.original + '\t' + result.url.original + '\t' + result.http.statusCode + '\n';
+              console.error(error);
             } else if (result.url.redirected) {
               var data = result.url.original + ' => ' + result.url.redirected.replace(baseUrl, '') + '\n';
               if (redirects.indexOf(data) < 0) {
@@ -97,7 +100,7 @@ describe('Application', function() {
 
 
       docUrls.forEach(function(url) {
-        urlChecker.enqueue(baseUrl + url);
+        urlChecker.enqueue(urlJoin(baseUrl, url));
       });
 
     });
