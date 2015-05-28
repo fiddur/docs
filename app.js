@@ -188,7 +188,7 @@ passport.deserializeUser(function(id, done) {
   this.use(express.urlencoded());
 
 
-  this.use('/media', express.static(path.join(__dirname, 'docs/media')));
+  this.use(nconf.get('BASE_URL') + '/media', express.static(path.join(__dirname, 'docs/media')));
 
   // warning this cause an Internal Server Error
   // this.use(require('method-override'));
