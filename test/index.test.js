@@ -49,13 +49,14 @@ describe('Application', function() {
       done();
     });
 
-    it.only('should not include broken links', function(done) {
+    it('should not include broken links', function(done) {
       this.timeout(0); // This test takes a while to run.
 
       var options = {
         maxSocketsPerHost: 5,
         excludedSchemes: ['data','geo','mailto','sms','tel','javascript'],
-        excludeExternalLinks: true
+        excludeExternalLinks: true,
+        checkUniqueUrlOnce: true
       };
 
       var results = [];

@@ -8,7 +8,7 @@
     "auth0": "^0.8.0",
     "auth0-application-types": "git://github.com/auth0/application-types#0.1.1",
     "auth0-client-platforms": "git://github.com/auth0/client-platforms#0.2.1",
-    "auth0-native-platforms": "git://github.com/auth0/native-platforms#v0.2.2",
+    "auth0-native-platforms": "git://github.com/auth0/native-platforms#0.2.2",
     "auth0-server-apis": "git://github.com/auth0/server-apis#0.2.4",
     "auth0-server-platforms": "git://github.com/auth0/server-platforms#0.2.0",
     "cb": "^0.1.0",
@@ -53,7 +53,7 @@
   },
   "devDependencies": {
     "bower": "~1.3.5",
-    "broken-link-checker": "git://github.com/ntotten/broken-link-checker.git",
+    "broken-link-checker": "git://github.com/ntotten/broken-link-checker.git#0.3.0",
     "htmlparser2": "^3.8.2",
     "limiter": "^1.0.5",
     "mocha": "^1.20.1",
