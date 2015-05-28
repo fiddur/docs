@@ -12,7 +12,7 @@ var fs = require('fs');
 var path = require('path');
 var htmlparser = require('htmlparser2');
 var async = require('async');
-var testConfig = require('./tests.json');
+var testConfig = require('../docs/tests.json');
 var urlJoin = require('url-join');
 
 var baseUrl = urlJoin('http://localhost:' + nconf.get('PORT'), nconf.get('BASE_URL'));
@@ -111,7 +111,7 @@ describe('Application', function() {
       var parser = new htmlparser.Parser({
           onopentag: function(name, attribs){
             if(name === 'a') {
-              testConfig.blacklisted_hosts.forEach(function(host) {
+              testConfig.blacklisted_urls.forEach(function(host) {
                 if (attribs.href && attribs.href.indexOf(host) > -1) {
                   assert.fail(attribs.href, null, 'Use of blacklisted URI \"' + attribs.href + '\"');
                 }
