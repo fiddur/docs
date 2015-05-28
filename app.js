@@ -162,7 +162,9 @@ passport.deserializeUser(function(id, done) {
     next();
   });
 
-  this.use(express.logger('dev'));
+  if (nconf.get('NODE_ENV') !== 'test') {
+    this.use(express.logger('dev'));
+  }
 
   this.use(middlewares.cors);
 
@@ -182,7 +184,6 @@ passport.deserializeUser(function(id, done) {
   }));
 
   this.use(express.favicon());
-  this.use(express.logger('dev'));
   this.use(express.json());
   this.use(express.urlencoded());
 
