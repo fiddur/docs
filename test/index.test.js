@@ -142,4 +142,32 @@ describe('Application', function() {
 
   });
 
+  describe('Media', function() {
+
+    it('should not include large media files', function(done) {
+      this.timeout(60000); // This test takes a while to run.
+
+      var testDirectory = function(dir) {
+        var files = fs.readdirSync(dir);
+        for (var i = 0; i < files.length; i++) {
+          var file = path.join(dir, files[i]);
+          var stats = fs.statSync(file);
+          if (stats.isDirectory()) {
+            testDirectory(file);
+          } else {
+            var maxSize = 512000;
+
+            // TODO: We need to deal with these huge gifs
+            if (path.extname(file) === '.gif') {
+                maxSize = 5000000;
+            }
+            assert.equal(stats.size < maxSize, true, 'The image at "' + file.replace(path.join(__dirname, '../docs'), '') + '" is ' + stats.size + ' bytes.');
+          }
+        }
+      }
+
+      testDirectory(path.join(__dirname, '../docs/media'));
+      done();
+    });
+  });
 });
