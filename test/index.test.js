@@ -116,6 +116,12 @@ describe('Application', function() {
                   assert.fail(attribs.href, null, 'Use of blacklisted URI \"' + attribs.href + '\"');
                 }
               });
+            } else if (name === 'img') {
+              testConfig.blacklisted_urls.forEach(function(host) {
+                if (attribs.src && attribs.src.indexOf(host) > -1) {
+                  assert.fail(attribs.src, null, 'Use of blacklisted URI \"' + attribs.src + '\"');
+                }
+              });
             }
           }
       }, {decodeEntities: true});
