@@ -286,7 +286,7 @@ html(lang="en")
       $('.fixit').hide();
     }
 
-    $('.fixit a').attr('href', 'https://github.com/auth0/docs/edit/master/content' + window.location.pathname.substr("#{env.BASE_URL}".length) + '.md');
+    $('.fixit a').attr('href', 'https://github.com/auth0/docs/edit/master/articles' + window.location.pathname.substr("#{env.BASE_URL}".length) + '.md');
 
   if (locals.user && user.tenants && user.tenants.length > 1)
     script
