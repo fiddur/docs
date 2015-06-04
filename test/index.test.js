@@ -17,6 +17,25 @@ var urlJoin = require('url-join');
 
 var baseUrl = urlJoin('http://localhost:' + nconf.get('PORT'), nconf.get('BASE_URL'));
 
+var forEachDocPage = function(callback, done) {
+  var q = async.queue(function (url, cb) {
+    request(baseUrl + url, function (error, response, body) {
+      if (!error && response.statusCode === 200) {
+        callback(null, url, body);
+      }
+      cb(error);
+    });
+  }, 10);
+
+  q.push(docUrls);
+
+  q.drain = function() {
+    if (done) {
+      done();
+    }
+  };
+}
+
 describe('Application', function() {
   after(function (done) {
     docsapp.stop(done);
@@ -126,25 +145,26 @@ describe('Application', function() {
           }
       }, {decodeEntities: true});
 
-      var q = async.queue(function (url, callback) {
-        request(baseUrl + url, function (error, response, body) {
-          if (!error && response.statusCode === 200) {
-            parser.write(body);
-            callback();
-          } else {
-            callback(error);
-          }
-        });
-      }, 10);
-
-      q.push(docUrls);
-
-      q.drain = function() {
+      forEachDocPage(function(err, body) {
+        if (err) { throw err; }
+        parser.write(body);
+      }, function() {
         parser.end();
         done();
-      };
+      });
     });
 
+    it('should not contain raw markdown characters', function(done) {
+      this.timeout(60000);
+      var checkForMarkdownChars = function(url, body) {
+        assert(body.indexOf('```') === -1, 'The page at ' + url + ' was not rendered correctly and contains invalid markdown characters.');
+      }
+
+      forEachDocPage(function(err, url, body) {
+        if (err) { throw err; }
+        checkForMarkdownChars(url, body);
+      }, done);
+    });
   });
 
   describe('Media', function() {

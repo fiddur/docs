@@ -460,7 +460,8 @@ var articlesTags = require('./lib/articles-tags');
 var docsapp = new markdocs.App({
   basePath: __dirname,
   baseUrl: nconf.get('BASE_URL') || '',
-  docsPath: nconf.get('DOCS_PATH')
+  docsPath: nconf.get('DOCS_PATH'),
+  useDefaultProcessors: false
 }, app);
 
 docsapp.addPreRender(defaultValues);
@@ -518,12 +519,13 @@ docsapp.addPreRender(require('./lib/sdk-snippets/login-widget2/middleware'));
 docsapp.addPreRender(require('./lib/sdk-snippets/lock/middleware-browser'));
 docsapp.addPreRender(require('./lib/sdk-snippets/lock/middleware'));
 docsapp.addPreRender(middlewares.configuration);
-docsapp.addExtension(require('./lib/extensions').lodash);
-docsapp.addExtension(require('./lib/extensions').warningBlock);
+docsapp.addDocumentProcessor(markdocs.Processors.js);
+docsapp.addDocumentProcessor(require('./lib/doc-processors').lodash);
+docsapp.addDocumentProcessor(require('./lib/doc-processors').markdown);
 if (nconf.get('MEDIA_URL')) {
-  docsapp.addExtension(require('./lib/extensions').mediaPath);
+  docsapp.addDocumentProcessor(require('./lib/doc-processors').mediaPath);
 }
-docsapp.addExtension(require('./lib/extensions').relativePath);
+docsapp.addDocumentProcessor(require('./lib/doc-processors').relativePath);
 require('./lib/sdk-snippets/lock/demos-routes')(app);
 require('./lib/sdk-snippets/lock/snippets-routes')(app);
 require('./lib/sdk-snippets/login-widget2/demos-routes')(app);
