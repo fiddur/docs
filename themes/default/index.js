@@ -1,5 +1,6 @@
 var nconf = require('nconf');
 var docsSettings = require('../../docs/settings.json');
+var alternative_title = require('../../lib/utils').alternative_title;
 
 var Theme = function(docsapp) {
   this._docsapp = docsapp;
@@ -41,21 +42,3 @@ Theme.prototype._preRender = function(request, response, next) {
 };
 
 module.exports = Theme;
-
-/**
- * Matches an alternative
- * title from the content
- *
- * @param {String} content
- * @return {String} title
- * @api private
- */
-
-function alternative_title (content) {
-  var regex = /\#{1}[^\n\#]+/g;
-  var match = content.match(regex);
-
-  if (match && match.length) match = match[0].slice(1).trim();
-
-  return match || 'Document';
-}
