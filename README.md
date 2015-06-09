@@ -27,6 +27,13 @@ git submodule update
 npm i
 ```
 
+Running in vagrant with watch
+
+```
+sudo service auth0-docs stop
+NODE_ENV=production CONFIG_FILE=/etc/auth0-docs.json npm run watch
+```
+
 ## Installing or Updating dependencies
 
 **Do not update npm-shrinkwrap.json by hand**
