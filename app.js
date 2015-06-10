@@ -239,13 +239,20 @@ var defaultValues = function (req, res, next) {
 
 var embedded = function (req, res, next) {
   res.locals.embedded = false;
+  res.locals.include_metadata = false;
 
   if (req.query.e || req.query.callback) {
     res.locals.embedded = true;
   }
 
+  if (req.query.m) {
+    res.locals.include_metadata = true;
+  }
+
   if (req.query.callback) {
     res.locals.jsonp = true;
+  } else if (!req.accepts('html') && req.accepts('application/json')) {
+    res.locals.json = true;
   }
 
   next();
@@ -450,8 +457,8 @@ function alias(route) {
 var includes = require('./lib/includes/includes');
 includes.init(path.join(__dirname, '/docs/includes'));
 
-var articlesCollection = require('./lib/articles-collection');
-var articlesTags = require('./lib/articles-tags');
+var articlesCollection = require('./lib/articles-collection').middleware;
+var articlesTags = require('./lib/articles-tags').middleware;
 
 /**
  * Create and boot DocsApp as `Markdocs` app
@@ -533,6 +540,7 @@ require('./lib/sdk-snippets/login-widget2/snippets-routes')(app);
 require('./lib/sdk-snippets/login-widget/demos-routes')(app);
 require('./lib/packager')(app, overrideIfAuthenticated);
 require('./lib/sitemap')(app);
+require('./lib/api')(app);
 
 
 /**

@@ -170,31 +170,6 @@
         }
       }
     },
-    "auth0-application-types": {
-      "version": "0.1.1",
-      "from": "auth0-application-types@git://github.com/auth0/application-types.git#fd4d0ba869cfe4d82d636473ca9472c7e51c21f7",
-      "resolved": "git://github.com/auth0/application-types.git#fd4d0ba869cfe4d82d636473ca9472c7e51c21f7"
-    },
-    "auth0-client-platforms": {
-      "version": "0.2.1",
-      "from": "auth0-client-platforms@git://github.com/auth0/client-platforms.git#0b9963d2578ad3af4084c8b62c80c31bc44d3b47",
-      "resolved": "git://github.com/auth0/client-platforms.git#0b9963d2578ad3af4084c8b62c80c31bc44d3b47"
-    },
-    "auth0-native-platforms": {
-      "version": "0.2.2",
-      "from": "auth0-native-platforms@git://github.com/auth0/native-platforms#c5ce81e8206a3f7e1868131181fe8909a8c480e9",
-      "resolved": "git://github.com/auth0/native-platforms#c5ce81e8206a3f7e1868131181fe8909a8c480e9"
-    },
-    "auth0-server-apis": {
-      "version": "0.2.4",
-      "from": "auth0-server-apis@git://github.com/auth0/server-apis#f3aebef7b3dcc2c8ce685928cd95d9d85dd7b376",
-      "resolved": "git://github.com/auth0/server-apis#f3aebef7b3dcc2c8ce685928cd95d9d85dd7b376"
-    },
-    "auth0-server-platforms": {
-      "version": "0.2.0",
-      "from": "auth0-server-platforms@git://github.com/auth0/server-platforms.git#220881666d4d5860e19133acbcab345dc2cd41ff",
-      "resolved": "git://github.com/auth0/server-platforms.git#220881666d4d5860e19133acbcab345dc2cd41ff"
-    },
     "cb": {
       "version": "0.1.0",
       "resolved": "https://registry.npmjs.org/cb/-/cb-0.1.0.tgz"
@@ -804,6 +779,30 @@
         "mkdirp": {
           "version": "0.3.5",
           "resolved": "https://registry.npmjs.org/mkdirp/-/mkdirp-0.3.5.tgz"
+        }
+      }
+    },
+    "js-yaml": {
+      "version": "3.3.1",
+      "resolved": "https://registry.npmjs.org/js-yaml/-/js-yaml-3.3.1.tgz",
+      "dependencies": {
+        "argparse": {
+          "version": "1.0.2",
+          "resolved": "https://registry.npmjs.org/argparse/-/argparse-1.0.2.tgz",
+          "dependencies": {
+            "lodash": {
+              "version": "3.9.3",
+              "resolved": "https://registry.npmjs.org/lodash/-/lodash-3.9.3.tgz"
+            },
+            "sprintf-js": {
+              "version": "1.0.2",
+              "resolved": "https://registry.npmjs.org/sprintf-js/-/sprintf-js-1.0.2.tgz"
+            }
+          }
+        },
+        "esprima": {
+          "version": "2.2.0",
+          "resolved": "https://registry.npmjs.org/esprima/-/esprima-2.2.0.tgz"
         }
       }
     },
