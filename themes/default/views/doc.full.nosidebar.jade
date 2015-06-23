@@ -27,6 +27,13 @@ html(lang="en")
 
     include inc/analytics
     include inc/lock-sso
+   
+    // Add this css so site header doesn't transform when API explorer loads
+    style.
+      .site-header .container {
+        max-width: none!important;
+        width: 100%;
+      }
 
   body.page-docs(data-swiftype-index="false")
     header.site-header!= webheader
