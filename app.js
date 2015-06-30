@@ -125,99 +125,6 @@ passport.deserializeUser(function(id, done) {
   });
 });
 
-(function(){
-  this.set('view engine', 'jade');
-  this.enable('trust proxy');
-
-  if (nconf.get('NODE_ENV') === 'production') {
-    this.use(function(req, res, next){
-      if (nconf.get('dontForceHttps') || req.originalUrl === '/test') return next();
-
-      if(req.headers['x-forwarded-proto'] !== 'https')
-        return res.redirect(nconf.get('DOMAIN_URL_DOCS') + req.url);
-
-      next();
-    });
-  }
-
-  if (nconf.get('PRERENDER_ENABLED')) {
-    // Add swiftype UserAgent bot
-    prerender.crawlerUserAgents.push('Swiftbot');
-    prerender.crawlerUserAgents.push('Slackbot-LinkExpanding');
-    // add prerender middleware
-    this.use(prerender);
-  }
-
-  this.use('/test', function (req, res) {
-    res.send(200);
-  });
-
-  this.use(nconf.get('BASE_URL') + '/test', function (req, res) {
-    res.send(200);
-  });
-
-  this.use(function (req, res, next) {
-    if (!nconf.get('BASE_URL') || req.url === '/') return next();
-    req.url = req.url.replace(/\/$/,'');
-    next();
-  });
-
-  if (nconf.get('NODE_ENV') !== 'test') {
-    this.use(express.logger('dev'));
-  }
-
-  this.use(middlewares.cors);
-
-  this.use(express.cookieParser());
-
-  this.use(express.session({
-    secret: nconf.get('sessionSecret'),
-    store: require('./lib/sessionStore'),
-    key: nconf.get('COOKIE_NAME'),
-    cookie: {
-      domain:   nconf.get('COOKIE_SCOPE'),
-      path:     '/',
-      httpOnly: true,
-      maxAge:   null,
-      secure:   !nconf.get('dontForceHttps') && nconf.get('NODE_ENV') === 'production'
-    }
-  }));
-
-  this.use(express.favicon());
-  this.use(express.json());
-  this.use(express.urlencoded());
-
-
-  this.use(nconf.get('BASE_URL') + '/media', express.static(path.join(__dirname, 'docs/media')));
-
-  // warning this cause an Internal Server Error
-  // this.use(require('method-override'));
-  this.use(express.methodOverride());
-  ////////////////////////////////////////
-
-  this.use(passport.initialize());
-  this.use(passport.session());
-  this.use(require('./lib/set_current_tenant'));
-  this.use(require('./lib/set_user_is_owner'));
-  this.use(this.router);
-}).call(app);
-
-app.get('/ticket/step', function (req, res) {
-  if (!req.query.ticket) return res.send(404);
-  connections.getCurrentStep(req.query.ticket, function (err, currentStep) {
-    if (err) return res.send(500);
-    if (!currentStep) return res.send(404);
-    res.send(currentStep);
-  });
-});
-
-app.get(nconf.get('BASE_URL') + '/switch', function (req, res) {
-  req.session.current_tenant = {
-    name: req.query.tenant,
-    region: req.query.region,
-  };
-  res.redirect(nconf.get('BASE_URL') || '/');
-});
 
 var defaultValues = function (req, res, next) {
   res.locals.account = {};
@@ -407,6 +314,109 @@ var appendTicket = function (req, res, next) {
   });
 };
 
+(function(){
+  this.set('view engine', 'jade');
+  this.enable('trust proxy');
+
+  if (nconf.get('NODE_ENV') === 'production') {
+    this.use(function(req, res, next){
+      if (nconf.get('dontForceHttps') || req.originalUrl === '/test') return next();
+
+      if(req.headers['x-forwarded-proto'] !== 'https')
+        return res.redirect(nconf.get('DOMAIN_URL_DOCS') + req.url);
+
+      next();
+    });
+  }
+
+  if (nconf.get('PRERENDER_ENABLED')) {
+    // Add swiftype UserAgent bot
+    prerender.crawlerUserAgents.push('Swiftbot');
+    prerender.crawlerUserAgents.push('Slackbot-LinkExpanding');
+    // add prerender middleware
+    this.use(prerender);
+  }
+
+  this.use('/test', function (req, res) {
+    res.send(200);
+  });
+
+  this.use(nconf.get('BASE_URL') + '/test', function (req, res) {
+    res.send(200);
+  });
+
+  this.use(function (req, res, next) {
+    if (!nconf.get('BASE_URL') || req.url === '/') return next();
+    req.url = req.url.replace(/\/$/,'');
+    next();
+  });
+
+  if (nconf.get('NODE_ENV') !== 'test') {
+    this.use(express.logger('dev'));
+  }
+
+  this.use(middlewares.cors);
+
+  this.use(express.cookieParser());
+
+  this.use(express.session({
+    secret: nconf.get('sessionSecret'),
+    store: require('./lib/sessionStore'),
+    key: nconf.get('COOKIE_NAME'),
+    cookie: {
+      domain:   nconf.get('COOKIE_SCOPE'),
+      path:     '/',
+      httpOnly: true,
+      maxAge:   null,
+      secure:   !nconf.get('dontForceHttps') && nconf.get('NODE_ENV') === 'production'
+    }
+  }));
+
+  this.use(express.favicon());
+  this.use(express.json());
+  this.use(express.urlencoded());
+
+
+  this.use(nconf.get('BASE_URL') + '/media', express.static(path.join(__dirname, 'docs/media')));
+
+  // warning this cause an Internal Server Error
+  // this.use(require('method-override'));
+  this.use(express.methodOverride());
+  ////////////////////////////////////////
+
+  this.use(passport.initialize());
+  this.use(passport.session());
+  this.use(require('./lib/set_current_tenant'));
+  this.use(require('./lib/set_user_is_owner'));
+
+  // These are used by the snippets api to do @@value@@ string replacement
+  var metaBaseUrl = nconf.get('BASE_URL') + '/meta';
+  this.use(metaBaseUrl, defaultValues);
+  this.use(metaBaseUrl, appendTicket);
+  this.use(metaBaseUrl, overrideIfAuthenticated);
+  this.use(metaBaseUrl, overrideIfClientInQs);
+  this.use(metaBaseUrl, overrideIfClientInQsForPublicAllowedUrls);
+
+  this.use(this.router);
+}).call(app);
+
+app.get('/ticket/step', function (req, res) {
+  if (!req.query.ticket) return res.send(404);
+  connections.getCurrentStep(req.query.ticket, function (err, currentStep) {
+    if (err) return res.send(500);
+    if (!currentStep) return res.send(404);
+    res.send(currentStep);
+  });
+});
+
+app.get(nconf.get('BASE_URL') + '/switch', function (req, res) {
+  req.session.current_tenant = {
+    name: req.query.tenant,
+    region: req.query.region,
+  };
+  res.redirect(nconf.get('BASE_URL') || '/');
+});
+
 /**
  * Add quickstart collections for initialization
  * with server matching versioning for SEO and sitemap.xml
@@ -457,9 +467,6 @@ function alias(route) {
 var includes = require('./lib/includes/includes');
 includes.init(path.join(__dirname, '/docs/includes'));
 
-var articlesCollection = require('./lib/articles-collection').middleware;
-var articlesTags = require('./lib/articles-tags').middleware;
-
 /**
  * Create and boot DocsApp as `Markdocs` app
  */
@@ -479,8 +486,9 @@ docsapp.addPreRender(overrideIfClientInQsForPublicAllowedUrls);
 docsapp.addPreRender(appendTicket);
 docsapp.addPreRender(quickstartCollections);
 docsapp.addPreRender(embedded);
-docsapp.addPreRender(articlesCollection);
-docsapp.addPreRender(articlesTags);
+docsapp.addPreRender(require('./lib/articles-collection').middleware);
+docsapp.addPreRender(require('./lib/snippets-collection').middleware);
+docsapp.addPreRender(require('./lib/articles-tags').middleware);
 docsapp.addPreRender(function(req,res,next){
   var scheme = process.env.NODE_ENV === 'production' ? 'https' : 'http';
 
@@ -526,13 +534,9 @@ docsapp.addPreRender(require('./lib/sdk-snippets/login-widget2/middleware'));
 docsapp.addPreRender(require('./lib/sdk-snippets/lock/middleware-browser'));
 docsapp.addPreRender(require('./lib/sdk-snippets/lock/middleware'));
 docsapp.addPreRender(middlewares.configuration);
-docsapp.addDocumentProcessor(markdocs.Processors.js);
-docsapp.addDocumentProcessor(require('./lib/doc-processors').lodash);
-docsapp.addDocumentProcessor(require('./lib/doc-processors').markdown);
-if (nconf.get('MEDIA_URL')) {
-  docsapp.addDocumentProcessor(require('./lib/doc-processors').mediaPath);
-}
-docsapp.addDocumentProcessor(require('./lib/doc-processors').relativePath);
+require('./lib/doc-processors').processors.forEach(function(processor) {
+  docsapp.addDocumentProcessor(processor);
+});
 require('./lib/sdk-snippets/lock/demos-routes')(app);
 require('./lib/sdk-snippets/lock/snippets-routes')(app);
 require('./lib/sdk-snippets/login-widget2/demos-routes')(app);
