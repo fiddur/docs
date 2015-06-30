@@ -1,6 +1,15 @@
 Node version: 0.10.30
 NPM version: 1.4.21
 
+## Contribution Checklist
+When you commit code to this repository, you should follow the following procedures.
+
+* The commit message should clear on what what is being fixed/added
+* The pull request should include any details about what is changed and how the change will be used
+* If appropriate you should add a unit or functional test to verify the change
+* All current tests should be run prior to sending your pull request
+
+
 ## Development
 
 ### Usage without Vagrant
