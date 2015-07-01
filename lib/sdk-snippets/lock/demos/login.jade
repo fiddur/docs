@@ -3,7 +3,7 @@ html
   body
     button(onclick='show()') Login
     script(src=widget_url)
-    script
+    script.
       // define lock
       var lock = new Auth0Lock('!{clientID}', '!{namespace}', {
         assetsUrl:    '!{auth0_sdk_assets}'
