@@ -1,0 +1,132 @@
+.js-tutorial-navigator
+  &.container
+    padding: 60px 0;
+    margin: 0 auto;
+    
+  +breakpoint("desktop")
+    min-height: 302px;
+    
+  .item
+    +breakpoint("desktop")
+      opacity: 0;
+      transition: opacity 600ms cubic-bezier(0.455, 0.03, 0.515, 0.955);
+    
+  .rendered .item
+    +breakpoint("desktop")
+      opacity: 1;
+      
+      &:nth-child(2),
+      &:nth-child(4)
+        transition-delay: 100ms;
+        
+      &:nth-child(1),
+      &:nth-child(5)
+        transition-delay: 200ms;
+
+.quickstart
+  cursor: pointer;
+  padding: 15px 10px;
+  border-radius: 3px;
+  transition: background 100ms ease;
+  margin-bottom: 5px;
+  
+  .btn
+    letter-spacing: 0.005em;
+    
+  .title
+    display: block;
+    
+  .cta
+    opacity: 0;
+    transition: opacity 100ms ease;
+    
+  .description 
+    color: currentColor;
+    line-height: normal;
+    font-size: 1rem;
+    margin-bottom: 10px;
+    max-width: 180px;
+    
+  .sample
+    opacity: 0.5;
+    font-size: 12px;
+    
+  &[data-type="spa"]
+    .symbol 
+      background: #EB5424;
+      
+  &[data-type="regular-web-app"]
+    .symbol 
+      background: #EACA2C;
+      
+  &[data-type="hybrid"]
+    .symbol
+      background: #44C7F4;
+      
+  &[data-type="backend"]
+    .symbol
+      background: #DE60BB;
+    
+  .symbol
+    display: inline-block;
+    background: color_green;
+    border-radius: 50%;
+    height: 100px;
+    width: 100px;
+    margin-bottom: 20px;
+    
+    i 
+      font-size: 40px;
+      top: 30%;
+      animation: none;
+      color: #363C42;
+
+.quickstart:hover
+  +breakpoint("desktop")
+    background: white;
+    color: color_oil;
+    box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.1);
+       
+      .cta
+        opacity: 1;
+       
+       i 
+        color: white;
+
+@media screen and (max-width: 992px)
+  .quickstart
+    cursor: default;
+    opacity: 0.3;
+    background: #AACFD9;
+    box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.1);
+    
+    i 
+      opacity: 0.5;
+    
+    .cta
+      opacity: 1;
+      pointer-events: none;
+    
+  .center .quickstart
+      cursor: pointer;
+      background: white;
+      color: color_oil;
+      opacity: 1;
+         
+        .cta
+          opacity: 1;
+          pointer-events: auto;
+         
+         i 
+          color: white;
+          opacity: 1;
+  
+
+    
+  
+  
+  
+   
+   
+   
+  
