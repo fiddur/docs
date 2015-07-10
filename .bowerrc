@@ -1,4 +1,9 @@
 {
   "directory": "themes/default/public/vendor",
-  "analytics": false
+  "analytics": false,
+  "storage": {
+    "packages": ".bower-cache",
+    "registry": ".bower-registry"
+  },
+  "tmp": ".bower-tmp"
 }
