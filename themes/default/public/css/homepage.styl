@@ -21,25 +21,71 @@
   section
     h2
       padding-top: 40px;
+      margin-bottom: 40px;
       font-size: 35px;
       
       span
-        margin-left: 30px;
         font-size: 14px;
         color: color_oil;
+        display: block;
+        
+        +breakpoint("desktop")
+          display: inline;
+          margin-left: 30px;
+
+.sdk-list
+  list-style: none;
+  padding: 0;
+  grid(2, 0, 'li');
+  
+  +breakpoint("mobile-landscape")
+    grid(3, 0, 'li');
+    
+  +breakpoint("tablet")
+    grid(4, 0, 'li');
+
+  +breakpoint("desktop")
+    grid(6, 0, 'li');
+
+.subcontent-box
+  border: 1px solid #EAEEF3;
+  border-radius: 3px;
+  padding: 20px 30px;
+  padding-top: 10px;
+  background: #FCFDFE;
+  
+  ul 
+    list-style: none;
+    padding: 0;
+    
+    li 
+      margin: 5px 0;
+  
+  h3 
+    color: color_oil;
+    text-transform: uppercase;
+    font-size: 13px;
+    font-weight: bold;
+    letter-spacing: 0.05em;
       
 .showcase
   border-top: 1px solid #EAEEF3;
   border-bottom: 1px solid #EAEEF3;
-  padding-top: 40px;
   
   .container
     margin: 0 auto;
+    padding-top: 40px;
     
   a 
     color: color_oil;
     cursor: pointer;
-    padding-bottom: 20px;
+    height: 190px;
+    
+    &:focus
+      text-decoration: none;
+    
+    +breakpoint("tablet")
+      height: 140px;
     
     &:hover
       i 
@@ -57,9 +103,13 @@
         font-size: 40px;
       
     .content
-      display: inline-block;
-      vertical-align: top;
-      max-width: 200px;
+      display: block;
+      
+      +breakpoint("tablet")
+        max-width: 170px;
+        display: inline-block;
+        vertical-align: top;
+      
       
     strong
       color: #333;
@@ -67,7 +117,7 @@
       
     p 
       margin-top: 5px;
-      font-size: 12px;
+      font-size: 13px;
 
 .js-sticky-nav
   .container
@@ -88,4 +138,3 @@
     form
       +breakpoint("desktop")
         width: 35%;
-          

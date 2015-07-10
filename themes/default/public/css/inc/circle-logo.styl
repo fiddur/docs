@@ -1,0 +1,46 @@
+.circle-logo
+  display: inline-block;
+  text-align: center;
+  font-size: 14px;
+  width: 7em;
+  
+  &:hover
+    text-decoration: none;
+    opacity: 0.7;
+    
+  .logo
+    position: relative;
+    height: 7em;
+    width: 7em;
+    background: blue;
+    border-radius: 50%;
+    
+    &:after
+      content: "";
+      display: block;
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      width: 50%;
+      transform: translate(-50%, -50%);
+      background-size: contain;
+      background-position: center center;
+      background-repeat: no-repeat;
+      height: 50%;
+      width: 50%;
+      
+  .title
+    color: #333;
+    font-weight: bold;
+    margin: 10px 0;
+    
+  &[data-name="angular"]
+    .logo
+      background: -webkit-linear-gradient(top left, #008BFF 40%, #2C6FAD 140%);
+      background: linear-gradient(top left, #008BFF 40%, #2C6FAD 140%);
+      
+      &:after
+        background-image: url('https://cldup.com/YNpure3x4Z.svg');
+      
+    
+    

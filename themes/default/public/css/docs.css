@@ -318,6 +318,49 @@
   height: 35px;
   padding-left: 32px;
 }
+.circle-logo {
+  display: inline-block;
+  text-align: center;
+  font-size: 14px;
+  width: 7em;
+}
+.circle-logo:hover {
+  text-decoration: none;
+  opacity: 0.7;
+}
+.circle-logo .logo {
+  position: relative;
+  height: 7em;
+  width: 7em;
+  background: #00f;
+  border-radius: 50%;
+}
+.circle-logo .logo:after {
+  content: "";
+  display: block;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 50%;
+  transform: translate(-50%, -50%);
+  background-size: contain;
+  background-position: center center;
+  background-repeat: no-repeat;
+  height: 50%;
+  width: 50%;
+}
+.circle-logo .title {
+  color: #333;
+  font-weight: bold;
+  margin: 10px 0;
+}
+.circle-logo[data-name="angular"] .logo {
+  background: -webkit-linear-gradient(top left, #008bff 40%, #2c6fad 140%);
+  background: linear-gradient(top left, #008bff 40%, #2c6fad 140%);
+}
+.circle-logo[data-name="angular"] .logo:after {
+  background-image: url("https://cldup.com/YNpure3x4Z.svg");
+}
 .docs-home {
   color: #5c666f;
 }
@@ -343,25 +386,145 @@
 }
 .docs-home section h2 {
   padding-top: 40px;
+  margin-bottom: 40px;
   font-size: 35px;
 }
 .docs-home section h2 span {
-  margin-left: 30px;
   font-size: 14px;
   color: #5c666f;
+  display: block;
+}
+@media (min-width: 992px) {
+  .docs-home section h2 span {
+    display: inline;
+    margin-left: 30px;
+  }
+}
+.sdk-list {
+  list-style: none;
+  padding: 0;
+  *zoom: 1;
+  width: auto;
+  margin-right: 0;
+}
+.sdk-list:after {
+  clear: both;
+}
+.sdk-list:after,
+.sdk-list:before {
+  content: "";
+  display: table;
+}
+.sdk-list li {
+  float: left;
+  width: 50%;
+  padding-right: 0;
+  background-clip: content-box;
+}
+@media (min-width: 568px) {
+  .sdk-list {
+    *zoom: 1;
+    width: auto;
+    margin-right: 0;
+  }
+  .sdk-list:after {
+    clear: both;
+  }
+  .sdk-list:after,
+  .sdk-list:before {
+    content: "";
+    display: table;
+  }
+  .sdk-list li {
+    float: left;
+    width: 33.333333333333336%;
+    padding-right: 0;
+    background-clip: content-box;
+  }
+}
+@media (min-width: 768px) {
+  .sdk-list {
+    *zoom: 1;
+    width: auto;
+    margin-right: 0;
+  }
+  .sdk-list:after {
+    clear: both;
+  }
+  .sdk-list:after,
+  .sdk-list:before {
+    content: "";
+    display: table;
+  }
+  .sdk-list li {
+    float: left;
+    width: 25%;
+    padding-right: 0;
+    background-clip: content-box;
+  }
+}
+@media (min-width: 992px) {
+  .sdk-list {
+    *zoom: 1;
+    width: auto;
+    margin-right: 0;
+  }
+  .sdk-list:after {
+    clear: both;
+  }
+  .sdk-list:after,
+  .sdk-list:before {
+    content: "";
+    display: table;
+  }
+  .sdk-list li {
+    float: left;
+    width: 16.666666666666668%;
+    padding-right: 0;
+    background-clip: content-box;
+  }
+}
+.subcontent-box {
+  border: 1px solid #eaeef3;
+  border-radius: 3px;
+  padding: 20px 30px;
+  padding-top: 10px;
+  background: #fcfdfe;
+}
+.subcontent-box ul {
+  list-style: none;
+  padding: 0;
+}
+.subcontent-box ul li {
+  margin: 5px 0;
+}
+.subcontent-box h3 {
+  color: #5c666f;
+  text-transform: uppercase;
+  font-size: 13px;
+  font-weight: bold;
+  letter-spacing: 0.05em;
 }
 .showcase {
   border-top: 1px solid #eaeef3;
   border-bottom: 1px solid #eaeef3;
-  padding-top: 40px;
 }
 .showcase .container {
   margin: 0 auto;
+  padding-top: 40px;
 }
 .showcase a {
   color: #5c666f;
   cursor: pointer;
-  padding-bottom: 20px;
+  height: 190px;
+}
+.showcase a:focus {
+  text-decoration: none;
+}
+@media (min-width: 768px) {
+  .showcase a {
+    height: 140px;
+  }
 }
 .showcase a:hover i {
   color: #eb5424;
@@ -380,9 +543,14 @@
   }
 }
 .showcase a .content {
-  display: inline-block;
-  vertical-align: top;
-  max-width: 200px;
+  display: block;
+}
+@media (min-width: 768px) {
+  .showcase a .content {
+    max-width: 170px;
+    display: inline-block;
+    vertical-align: top;
+  }
 }
 .showcase a strong {
   color: #333;
@@ -390,7 +558,7 @@
 }
 .showcase a p {
   margin-top: 5px;
-  font-size: 12px;
+  font-size: 13px;
 }
 .js-sticky-nav .container {
   *zoom: 1;
