@@ -1,8 +1,10 @@
+rel_width = 8em;
+
 .circle-logo
   display: inline-block;
   text-align: center;
   font-size: 14px;
-  width: 7em;
+  width: rel_width;
   
   &:hover
     text-decoration: none;
@@ -10,29 +12,38 @@
     
   .logo
     position: relative;
-    height: 7em;
-    width: 7em;
-    background: blue;
+    height: rel_width;
+    width: rel_width;
+    background: #EAEEF3;
+    color: #333;
     border-radius: 50%;
     
+    &:before,
     &:after
-      content: "";
-      display: block;
       position: absolute;
       top: 50%;
       left: 50%;
       width: 50%;
       transform: translate(-50%, -50%);
+      font-size: 3em;
+    
+    &:after
+      content: "";
+      display: block;
       background-size: contain;
       background-position: center center;
       background-repeat: no-repeat;
-      height: 50%;
       width: 50%;
+      height: 50%;
       
   .title
     color: #333;
     font-weight: bold;
     margin: 10px 0;
+    
+  &[data-name="how-to"]
+    .logo:before
+      top: 55%;
     
   &[data-name="angular"]
     .logo
@@ -41,6 +52,16 @@
       
       &:after
         background-image: url('https://cldup.com/YNpure3x4Z.svg');
+        
+  &[data-name="emberjs"]
+    .logo
+      background: -webkit-linear-gradient(top left, #F46642 40%, #9C2202 140%);
+      background: linear-gradient(top left, #F46642 40%, #9C2202 140%);
+      
+      &:after
+        background-image: url('https://cldup.com/AcYPnXStyC.svg');
+        width: 80%;
+        height: 80%;
       
     
     

@@ -1,5 +1,6 @@
 var nconf = require('nconf');
 var docsSettings = require('../../docs/settings.json');
+var docsNav = require('../../docs/navigation.json');
 var alternative_title = require('../../lib/utils').alternative_title;
 
 var Theme = function(docsapp) {
@@ -26,6 +27,7 @@ Theme.prototype._preRender = function(request, response, next) {
   response.locals.site = response.locals.site || {};
   response.locals.site.title = settings['title'] || 'Default';
   response.locals.site.menus = settings['menus'] || {};
+  response.locals.navigation = docsNav;
   response.locals.title = title;
   response.locals.canonicalUrl = conanicalUrl;
   response.locals.env = {

@@ -33,7 +33,7 @@
           display: inline;
           margin-left: 30px;
 
-.sdk-list
+.circle-list
   list-style: none;
   padding: 0;
   grid(2, 0, 'li');
@@ -45,7 +45,13 @@
     grid(4, 0, 'li');
 
   +breakpoint("desktop")
-    grid(6, 0, 'li');
+    grid(5, 0, 'li');
+    
+  li 
+    text-align: center;
+    
+    +breakpoint("mobile-landscape")
+      text-align: left;
 
 .subcontent-box
   border: 1px solid #EAEEF3;

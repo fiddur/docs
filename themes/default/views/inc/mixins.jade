@@ -18,7 +18,7 @@ mixin showcaseItem(name, icon, href, description)
       strong= name
       p= description
 
-mixin circleLogo(name, slug, href)
+mixin circleLogo(name, slug, href, icon)
   a.circle-logo(href!=href, data-name!=slug)
-    .logo
+    .logo(class!=icon || '')
     .title= name

@@ -44,6 +44,7 @@ html(lang="en")
             .html('Open Dashboard');
         });
       }
+    - var nav = navigation['categories'];
 
     .banner
       .container.banner-container
@@ -67,14 +68,9 @@ html(lang="en")
       .wrapper
         .container
           ul.list-inline
-            li
-              a(href="") Product
-            li
-              a(href="") API
-            li
-              a(href="") SDKs
-            li
-              a(href="") How To's
+            - for (var item in nav)
+              li
+                a(href!="#" + nav[item].id)= nav[item].name
 
           form#search(role="search", action=env.BASE_URL + "/search", autocomplete="off")
             .form-group.search-control
@@ -82,82 +78,69 @@ html(lang="en")
               input#search-input.form-control(type="text", placeholder="Search for docs", name="stq")
 
                 
+    - for (var item in nav)
+      - var current = nav[item];
 
-    section.section-product
-      .container
-        h2#product Product
-          span Learn all about what Auth0 offers as a service
+        section.section-product
+          .container
+            h2(id!=current.id)= current.name
+              span= current.description
+          
+          - if(current.id === 'product')
+            .showcase
+              .container
+                .row
+                  - for (var link in current.links)
+                    - var current2 = current.links[link];
+                    +showcaseItem(current2.name, current2.icon, current2.href, current2.description);
 
-      .showcase
-        .container
-          .row
-            +showcaseItem('Overview', 'icon-budicon-489', env.BASE_URL + '#', 'What is Auth0 and how can it help you build applications.');
-            +showcaseItem('Overview', 'icon-budicon-489', env.BASE_URL + '#', 'Curabitur blandit tempus porttitor. Donec ullamcorper nulla.');
-            +showcaseItem('Overview', 'icon-budicon-489', env.BASE_URL + '#', 'Curabitur blandit tempus porttitor. Donec ullamcorper nulla.');
-            +showcaseItem('Overview', 'icon-budicon-489', env.BASE_URL + '#', 'Curabitur blandit tempus porttitor. Donec ullamcorper nulla.');
-            +showcaseItem('Overview', 'icon-budicon-489', env.BASE_URL + '#', 'Curabitur blandit tempus porttitor. Donec ullamcorper nulla.');
-            +showcaseItem('Overview', 'icon-budicon-489', env.BASE_URL + '#', 'Curabitur blandit tempus porttitor. Donec ullamcorper nulla.');
-
-
-    section.section-api
-      .container
-        h2#api API
-          span Our API reference and all documentation associated with it
-
-      .container
-        .row
-          .col-xs-12.col-md-4
-            h3 API Explorer
-            p Read the full reference to Auth0’s API and try all endpoints using your own credentials.
-            p
-              a(href="") Launch API Explorer
-            br
-          .col-xs-12.col-md-8
-            .subcontent-box
+          - if(current.id === 'api')
+            .container
               .row
-                .col-xs-6
-                  h3 Specifications
-                  ul
-                    li
-                      a(href="") Authentication Endpoints
-                    li
-                      a(href="") Suppoted Protocols
-                .col-xs-6
-                  h3 Announcements
-                  ul
-                    li
-                      a(href="") Authentication Endpoints
-                    li
-                      a(href="") Suppoted Protocols
-                    li
-                      a(href="") Suppoted Protocols
-                    
-    section.section-sdk
-      .container
-        h2#sdk SDKs
-          span Our API reference and all documentation associated with it
+                .col-xs-12.col-md-4
+                  - var explorer = current.sections['explorer'];
+                  h3= explorer.name
+                  p= explorer.description
+                  p
+                    a(href!=explorer.href) Launch API Explorer
+                  br
+                .col-xs-12.col-md-8
+                  .subcontent-box
+                    .row
+                      .col-xs-6
+                        h3 Specifications
+                        ul
+                          - var specs = current.sections['specifications'];
+                          - for (var current2 in specs.links)
+                            li
+                              a(href!=specs.links[current2].href)= specs.links[current2].name
+                      .col-xs-6
+                        h3 Announcements
+                        ul
+                          - var news = current.sections['announcements'];
+                          - for (var current2 in news.links)
+                            li
+                              a(href!=news.links[current2].href)= news.links[current2].name
 
-      .container
-        ul.sdk-list
-          li
-            +circleLogo('AngularJS', 'angular', '');
-          li
-            +circleLogo('AngularJS', 'angular', '');
-          li
-            +circleLogo('AngularJS', 'angular', '');
-          li
-            +circleLogo('AngularJS', 'angular', '');
-          li
-            +circleLogo('AngularJS', 'angular', '');
+          
+          - if(current.id === 'sdk')
+            .container
+              ul.circle-list
+                - for (var link in current.links)
+                  - var current2 = current.links[link];
+                  li
+                    +circleLogo(current2.name, current2.slug, current2.href);
 
-          li
-            +circleLogo('AngularJS', 'angular', '');
-        
+          - if(current.id === 'how-to')
+            .container
+              ul.circle-list
+                - for (var link in current.links)
+                  - var current2 = current.links[link];
+                  li
+                    +circleLogo(current2.name, 'how-to', current2.href, current2.icon);
 
-    section.content(data-swiftype-index="true")
-      != sections.content
-      
-    
+    hr
+
     include ../public/vendor/auth0-styleguide/lib/footer/demo.jade
 
   //- Start search feature scripts
