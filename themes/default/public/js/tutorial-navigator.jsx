@@ -589,7 +589,6 @@ var TutorialNavigator = React.createClass({
       skippable: null,
       tech1: null,
       tech2: null,
-      backEnd: null,
       url: null
     };
   },
