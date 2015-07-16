@@ -1,7 +1,19 @@
 .js-sticky-nav
+  min-height: 66px;
+  
+  &.is-fixed
+    .wrapper 
+      +breakpoint("desktop")
+        position: fixed;
+        top: 0;
+        left: 0;
+  
   .wrapper
     padding: 15px 0;
     border-bottom: 1px solid #EAEEF3;
+    background: white;
+    width: 100%;
+    z-index: 800;
   
   .list-inline
     margin: 0;

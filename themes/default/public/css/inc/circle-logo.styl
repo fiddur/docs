@@ -5,10 +5,14 @@ rel_width = 8em;
   text-align: center;
   font-size: 14px;
   width: rel_width;
+  transition: transform 100ms cubic-bezier(0.455, 0.03, 0.515, 0.955);
   
   &:hover
     text-decoration: none;
-    opacity: 0.7;
+    transform: scale(1.05);
+    
+    .logo 
+      opacity: 0.9;
     
   .logo
     position: relative;
@@ -40,12 +44,14 @@ rel_width = 8em;
     color: #333;
     font-weight: bold;
     margin: 10px 0;
+    min-height: 3em;
     
   &[data-name="how-to"]
     .logo:before
       top: 55%;
     
-  &[data-name="angular"]
+  &[data-name="angular"],
+  &[data-name="angularjs"]
     .logo
       background: -webkit-linear-gradient(top left, #008BFF 40%, #2C6FAD 140%);
       background: linear-gradient(top left, #008BFF 40%, #2C6FAD 140%);
@@ -53,6 +59,7 @@ rel_width = 8em;
       &:after
         background-image: url('https://cldup.com/YNpure3x4Z.svg');
         
+  &[data-name="ember"],
   &[data-name="emberjs"]
     .logo
       background: -webkit-linear-gradient(top left, #F46642 40%, #9C2202 140%);
@@ -62,6 +69,17 @@ rel_width = 8em;
         background-image: url('https://cldup.com/AcYPnXStyC.svg');
         width: 80%;
         height: 80%;
+        
+  &[data-name="node"],
+  &[data-name="nodejs"]
+    .logo
+      background: -webkit-linear-gradient(top left, #78B743 40%, #9FE861 140%);
+      background: linear-gradient(top left, #78B743 40%, #9FE861 140%);
+      
+      &:after
+        background-image: url('https://cldup.com/QHrD4g1qxl.svg');
+        width: 50%;
+        height: 50%;
       
     
     

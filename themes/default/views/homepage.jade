@@ -47,22 +47,8 @@ html(lang="en")
     - var nav = navigation['categories'];
 
     .banner
-      .container.banner-container
-        h1 Documentation
+      #tutorial-navigator
 
-        p Getting started?, Try our Quickstarts
-  
-      .js-tutorial-navigator.container
-        .js-carousel
-          +quickstart('Native Mobile App', 'native-mobile', 'icon-budicon-243', 'An app that runs natively in devices', 'eg: iOS SDK');
-
-          +quickstart('Single Page App', 'spa', 'icon-budicon-453', 'A JavaScript front-end app that uses an API', 'eg: AngularJS + NodeJOS');
-
-          +quickstart('Regular Web App', 'regular-web-app', 'icon-budicon-349', 'An app that runs natively in devices', 'eg: iOS SDK');
-
-          +quickstart('Hybrid Mobile App', 'hybrid', 'icon-budicon-641', 'An app that runs natively in devices', 'eg: iOS SDK');
-
-          +quickstart('Backend/API', 'backend', 'icon-budicon-649', 'An app that runs natively in devices', 'eg: iOS SDK');
 
     .js-sticky-nav
       .wrapper
@@ -95,32 +81,33 @@ html(lang="en")
                     +showcaseItem(current2.name, current2.icon, current2.href, current2.description);
 
           - if(current.id === 'api')
-            .container
-              .row
-                .col-xs-12.col-md-4
-                  - var explorer = current.sections['explorer'];
-                  h3= explorer.name
-                  p= explorer.description
-                  p
-                    a(href!=explorer.href) Launch API Explorer
-                  br
-                .col-xs-12.col-md-8
-                  .subcontent-box
-                    .row
-                      .col-xs-6
-                        h3 Specifications
-                        ul
-                          - var specs = current.sections['specifications'];
-                          - for (var current2 in specs.links)
-                            li
-                              a(href!=specs.links[current2].href)= specs.links[current2].name
-                      .col-xs-6
-                        h3 Announcements
-                        ul
-                          - var news = current.sections['announcements'];
-                          - for (var current2 in news.links)
-                            li
-                              a(href!=news.links[current2].href)= news.links[current2].name
+            .api-docs
+              .container
+                .row
+                  .col-xs-6.col-md-4
+                    - var explorer = current.sections['explorer'];
+                    a.icon-scale.api-link(href!=explorer.href)
+                      i.icon-budicon-631
+                      strong= explorer.name
+                      p= explorer.description
+                    br
+                  .col-xs-6.col-md-4
+                    - var endpoints = current.sections['auth-endpoints'];
+                    a.icon-scale.api-link(href!=endpoints.href)
+                      i.icon-budicon-638
+                      strong= endpoints.name
+                      p= endpoints.description
+                    br
+                  .col-xs-12.col-md-4
+                    .subcontent-box
+                      .row
+                        .col-xs-12
+                          h3 Announcements
+                          ul
+                            - var news = current.sections['announcements'];
+                            - for (var current2 in news.links)
+                              li
+                                a(href!=news.links[current2].href)= news.links[current2].name
 
           
           - if(current.id === 'sdk')
@@ -133,7 +120,7 @@ html(lang="en")
 
           - if(current.id === 'how-to')
             .container
-              ul.circle-list
+              ul.circle-list.circle-list-howtos
                 - for (var link in current.links)
                   - var current2 = current.links[link];
                   li
@@ -151,6 +138,10 @@ html(lang="en")
 
   script(src=env.BASE_URL + '/js/prettify.js')
   script(src=env.BASE_URL + '/js/owl.carousel.min.js')
+  script(src='https://fb.me/react-0.13.3.min.js')
+  script(src=env.BASE_URL + '/js/babel.runtime.min.js')
+  script(type="text/babel", src=env.BASE_URL + '/js/tutorial-navigator.jsx')
+
   script(type='text/javascript')
 
     var $quickstarts = $('.js-carousel');
@@ -250,6 +241,26 @@ html(lang="en")
     //-     .prepend('<a class="anchor" href="#' + sectionIndex + '"><i class="icon icon-budicon-345"></i></a>');
     //-   sectionIndex++;
     //- });
+
+    $(window).on('scroll', function() {
+      var sticky = $('.js-sticky-nav');
+
+      function toggleSticky($nav) {
+        if(!$nav.hasClass('is-fixed')) {
+          navOffset = $nav.offset().top;
+        }
+        if ($(window).scrollTop() > navOffset) {
+          $nav.addClass('is-fixed');
+        } else {
+          $nav.removeClass('is-fixed');
+        }
+      }
+
+      if(sticky.length) {
+        toggleSticky(sticky);
+      }
+    });
+
 
     if(location.hash) {
       location.hash = location.hash;

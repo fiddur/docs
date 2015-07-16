@@ -1,4 +1,4 @@
-.js-tutorial-navigator
+.quickstart-list
   &.container
     padding: 60px 0;
     margin: 0 auto;
@@ -16,12 +16,44 @@
       opacity: 1;
       
       &:nth-child(2),
-      &:nth-child(4)
-        transition-delay: 100ms;
-        
+      &:nth-child(4),
       &:nth-child(1),
       &:nth-child(5)
-        transition-delay: 200ms;
+        transition-delay: 100ms;
+        
+.js-tutorial-navigator
+  .circle-list
+    padding: 0;
+    padding-top: 30px;
+    padding-bottom: 30px;
+    list-style: none;
+    text-align: center;
+    
+    li 
+      display: inline-block;
+      vertical-align: top;
+      margin: 10px 15px;
+      
+      +breakpoint("mobile-landscape")
+        margin: 10px 30px;
+    
+  .circle-logo
+    .logo
+      background: #aacfd9;
+        
+
+.breadcrumbs
+  font-size: 12px;
+  padding-top: 20px;
+  
+  a
+    color: color_oil;
+  
+  .chevron
+    opacity: 0.5;
+    position: relative;
+    top: 3px;
+    padding: 0 1.3em 0 1em;
 
 .quickstart
   cursor: pointer;
@@ -29,6 +61,8 @@
   border-radius: 3px;
   transition: background 100ms ease;
   margin-bottom: 5px;
+  animation-timing-function: cubic-bezier(0.455, 0.03, 0.515, 0.955);
+  animation-duration: 200ms;
   
   .btn
     letter-spacing: 0.005em;
@@ -55,7 +89,7 @@
     .symbol 
       background: #EB5424;
       
-  &[data-type="regular-web-app"]
+  &[data-type="webapp"]
     .symbol 
       background: #EACA2C;
       

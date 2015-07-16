@@ -7,6 +7,7 @@
 @import 'inc/sticky-nav'
 @import 'inc/search-control'
 @import 'inc/circle-logo'
+@import 'inc/chevron'
 
 // Views
 @import 'homepage'
@@ -24,6 +25,21 @@ color_windowsphone= #e3ca59;
 color_xamarin= #dfe158;
 color_win8= #4ec75c;
 color_win8_cs= #f00;
+
+header.site-header.site-header
+  background-color: #eaf1f3;
+  border-bottom: 1px solid rgba(0,0,0, 0.05);
+  
+  a.login
+    border-color: rgba(0,0,0, 0.05);
+    
+    &:hover
+      background: rgba(0,0,0, 0.03);
+
+a:focus,
+a {
+  text-decoration: none;
+}
 
 .btn-package {
   white-space: normal;
