@@ -108,6 +108,7 @@ describe('Application', function() {
           },
           item: function(error, htmlUrl){
             if (error) {
+              console.warn('Broken link found in ' + htmlUrl);
               throw error;
             }
           },
@@ -145,8 +146,11 @@ describe('Application', function() {
           }
       }, {decodeEntities: true});
 
-      forEachDocPage(function(err, body) {
-        if (err) { throw err; }
+      forEachDocPage(function(err, url, body) {
+        if (err) {
+          console.error('Blacklisted url found in ' + url);
+          throw err;
+        }
         parser.write(body);
       }, function() {
         parser.end();
@@ -155,13 +159,16 @@ describe('Application', function() {
     });
 
     it('should not contain raw markdown characters', function(done) {
-      this.timeout(60000);
+      this.timeout(120000);
       var checkForMarkdownChars = function(url, body) {
         assert(body.indexOf('```') === -1, 'The page at ' + url + ' was not rendered correctly and contains invalid markdown characters.');
       }
 
       forEachDocPage(function(err, url, body) {
-        if (err) { throw err; }
+        if (err) {
+          console.error('Invalid markdown in ' + url);
+          throw err;
+        }
         checkForMarkdownChars(url, body);
       }, done);
     });
@@ -170,7 +177,7 @@ describe('Application', function() {
   describe('Media', function() {
 
     it('should not include large media files', function(done) {
-      this.timeout(60000); // This test takes a while to run.
+      this.timeout(120000); // This test takes a while to run.
 
       var testDirectory = function(dir) {
         var files = fs.readdirSync(dir);
@@ -189,7 +196,7 @@ describe('Application', function() {
             assert.equal(stats.size < maxSize, true, 'The image at "' + file.replace(path.join(__dirname, '../docs'), '') + '" is ' + stats.size + ' bytes.');
           }
         }
-      }
+      };
 
       testDirectory(path.join(__dirname, '../docs/media'));
       done();
