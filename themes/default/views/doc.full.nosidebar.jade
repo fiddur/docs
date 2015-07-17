@@ -1,4 +1,4 @@
-doctype 5
+doctype html
 html(lang="en")
   head
     title= title + ' - ' + site.title
@@ -59,7 +59,7 @@ html(lang="en")
   //- End search feature scripts
 
   script(src=env.BASE_URL + '/js/prettify.js')
-  script(type='text/javascript')
+  script(type='text/javascript').
 
     !function ($) {
       $(function(){
@@ -74,7 +74,7 @@ html(lang="en")
     }(window.jQuery);
 
   //- Begin Inspectlet Embed Code
-  script#inspectletjs(type="text/javascript")
+  script#inspectletjs(type="text/javascript").
     window.__insp = window.__insp || [];
     __insp.push(['wid', 1881287289]);
     (function() {
@@ -86,7 +86,7 @@ html(lang="en")
       }
     })();
 
-  script
+  script.
     var sectionIndex = 1;
     $('h2,h3,h4').each(function(){
       $(this)
@@ -106,7 +106,7 @@ html(lang="en")
     $('.fixit a').attr('href', 'https://github.com/auth0/docs/tree/master/docs' + window.location.pathname.substr("#{env.BASE_URL}".length) + '.md');
 
   if (locals.user && user.tenants && user.tenants.length > 1)
-    script
+    script.
       var getCookie = function (name) {
         var match = document.cookie.match(RegExp('(?:^|;\\s*)' + name + '=([^;]*)'));
         return match ? match[1] : null;
