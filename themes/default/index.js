@@ -2,6 +2,7 @@ var nconf = require('nconf');
 var docsSettings = require('../../docs/settings.json');
 var docsNav = require('../../docs/navigation.json');
 var alternative_title = require('../../lib/utils').alternative_title;
+var quickstartCollections = require('../../lib/quickstart-collections');
 
 var Theme = function(docsapp) {
   this._docsapp = docsapp;
@@ -29,6 +30,7 @@ Theme.prototype._preRender = function(request, response, next) {
   response.locals.site.menus = settings['menus'] || {};
   response.locals.navigation = docsNav;
   response.locals.title = title;
+  response.locals.quickstarts = quickstartCollections;
   response.locals.canonicalUrl = conanicalUrl;
   response.locals.env = {
     BASE_URL:             nconf.get('BASE_URL'),

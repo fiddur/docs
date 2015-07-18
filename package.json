@@ -39,8 +39,8 @@
   "main": "app.js",
   "scripts": {
     "test": "make test",
-    "start": "node app.js",
-    "watch": "node ./node_modules/nodemon/bin/nodemon.js -e js,md,json,jade app.js",
+    "start": "gulp build & node app.js",
+    "watch": "gulp & node ./node_modules/nodemon/bin/nodemon.js -e js,jsx,md,json,jade,styl app.js",
     "postinstall": "CI=true bower install --allow-root",
     "shrinkwrap": "npm-shrinkwrap"
   },
@@ -50,6 +50,8 @@
   "devDependencies": {
     "bower": "~1.3.5",
     "broken-link-checker": "git://github.com/ntotten/broken-link-checker.git#0.3.0",
+    "gulp": "^3.9.0",
+    "gulp-react": "^3.0.1",
     "htmlparser2": "^3.8.2",
     "limiter": "^1.0.5",
     "mocha": "^1.20.1",

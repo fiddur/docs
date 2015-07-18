@@ -1,6 +1,7 @@
 .quickstart-list
   &.container
     padding: 60px 0;
+    padding-top: 30px;
     margin: 0 auto;
     
   +breakpoint("desktop")
@@ -22,12 +23,24 @@
         transition-delay: 100ms;
         
 .js-tutorial-navigator
+  .tutorial-content
+    display: none;
+    
+  &.is-result
+    .tutorial-content
+      display: block;
+      
+    .tutorial-wizard
+      display: none;
+    
   .circle-list
     padding: 0;
-    padding-top: 30px;
+    padding-top: 10px;
     padding-bottom: 30px;
     list-style: none;
     text-align: center;
+    max-width: 800px;
+    margin: 0 auto;
     
     li 
       display: inline-block;
@@ -38,6 +51,11 @@
         margin: 10px 30px;
     
   .circle-logo
+    font-size: 12px;
+    
+    +breakpoint("tablet")
+      font-size: 14px;
+      
     .logo
       background: #aacfd9;
         
@@ -133,6 +151,7 @@
     opacity: 0.3;
     background: #AACFD9;
     box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.1);
+    pointer-events: none;
     
     i 
       opacity: 0.5;
@@ -145,6 +164,7 @@
       cursor: pointer;
       background: white;
       color: color_oil;
+      pointer-events: auto;
       opacity: 1;
          
         .cta
