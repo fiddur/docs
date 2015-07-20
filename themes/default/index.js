@@ -1,6 +1,6 @@
 var nconf = require('nconf');
 var docsSettings = require('../../docs/settings.json');
-var docsNav = require('../../docs/navigation.json');
+var docsNav = require('./navigation.json');
 var alternative_title = require('../../lib/utils').alternative_title;
 var quickstartCollections = require('../../lib/quickstart-collections');
 
