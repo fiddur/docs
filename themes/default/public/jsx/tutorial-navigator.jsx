@@ -184,8 +184,32 @@ var Tutorial = React.createClass({
       ready: false
     };
   },
+  getParam: function(appType) {
+    var options = {
+      "spa": "frontend",
+      "native-mobile": "mobile",
+      "webapp": "backend",
+      "hybrid": "hybrid",
+      "backend": "api"
+    };
+
+    return options[appType];
+  },
+  setUrlParams: function(url) {
+    var tutorial = this.props.tutorial;
+    var url = url;
+
+    url += '&' + this.getParam(tutorial.appType) + '=' + tutorial.tech1;
+
+    if(tutorial.tech2) {
+      url += '&api=' + tutorial.tech2;
+    }
+
+    return url;
+  },
   fetchDocument: function(url, toUpdate) {
-    var uri = 'https://auth0.com/docs' + url + '?e=1';
+    var tutorial = this.props.tutorial;
+    var uri = this.setUrlParams('https://auth0.com/docs' + url + '?e=1');
     var component = this;
     var config = {};
 
@@ -200,10 +224,10 @@ var Tutorial = React.createClass({
         component.setState(config);
         component.forceUpdate();
 
-        if(!component.state.content2 && component.props.tutorialUrls.length > 1) {
-          component.fetchDocument(component.props.tutorialUrls[1], "content2");
-        } else {
-          component.setState({ ready: true });
+        if(tutorial.showTutorial) {
+          component.setState({
+            ready: true
+          });
         }
       },
       error: function(status, err) {
@@ -212,8 +236,14 @@ var Tutorial = React.createClass({
     });
   },
   componentDidMount: function() {
-    if(this.props.tutorialUrls.length) {
-      this.fetchDocument(this.props.tutorialUrls[0], "content1");
+    var tutorial = this.props.tutorial;
+
+    if(tutorial.tutorialUrls.length) {
+      this.fetchDocument(tutorial.tutorialUrls[0], "content1");
+
+      if(tutorial.tech2) {
+        this.fetchDocument(tutorial.tutorialUrls[1], "content2");
+      }
     }
   },
   render: function() {
@@ -374,7 +404,7 @@ var TutorialNavigator = React.createClass({
         </div>
 
         <div className="tutorial-content">
-          <Tutorial key={this.state.tutorialUrls.length} tutorialUrls={this.state.tutorialUrls} navigation={this.props.navigation || null} />
+          <Tutorial key={this.state.tutorialUrls.length} tutorial={this.state} />
         </div>
         
       </div>
