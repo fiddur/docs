@@ -3,7 +3,7 @@ html
   body
     button(onclick='widget.signin()') Login
     script(src=widget_url)
-    script
+    script.
       var widget = new Auth0Widget({
         domain:       '!{namespace}',
         clientID:     '!{clientID}',
