@@ -47,7 +47,7 @@
   "scripts": {
     "test": "make test",
     "start": "gulp build & node app.js",
-    "watch": "gulp & node ./node_modules/nodemon/bin/nodemon.js -e js,jsx,md,json,jade,styl app.js",
+    "watch": "gulp & node ./node_modules/nodemon/bin/nodemon.js -e js,jsx,md,json,jade,styl app.js --delay 10",
     "postinstall": "CI=true bower install --allow-root",
     "shrinkwrap": "npm-shrinkwrap"
   },
