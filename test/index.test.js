@@ -159,7 +159,7 @@ describe('Application', function() {
     });
 
     it('should not contain raw markdown characters', function(done) {
-      this.timeout(120000);
+      this.timeout(0); // This test takes a while to run.
       var checkForMarkdownChars = function(url, body) {
         assert(body.indexOf('```') === -1, 'The page at ' + url + ' was not rendered correctly and contains invalid markdown characters.');
       }
@@ -177,7 +177,7 @@ describe('Application', function() {
   describe('Media', function() {
 
     it('should not include large media files', function(done) {
-      this.timeout(120000); // This test takes a while to run.
+      this.timeout(0); // This test takes a while to run.
 
       var testDirectory = function(dir) {
         var files = fs.readdirSync(dir);
