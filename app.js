@@ -1,3 +1,4 @@
+require('babel/register');
 var cluster = require('cluster');
 
 if (cluster.isMaster && !module.parent) {
