@@ -27,7 +27,7 @@ html
   
     script#auth0(src=auth0_sdk_route + "&mode=headless")
     script(src='//ajax.googleapis.com/ajax/libs/jquery/1.9.0/jquery.min.js')
-    script
+    script.
       if (window.Auth0) {
         window.Auth0.ready(function(){
           $('.signin-google').on('click', function() {
