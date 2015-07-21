@@ -47,7 +47,7 @@
   "scripts": {
     "test": "make test",
     "start": "node app.js",
-    "watch": "node ./node_modules/nodemon/bin/nodemon.js -e js,md,json,jade app.js",
+    "watch": "node ./node_modules/nodemon/bin/nodemon.js -e js,md,json,jade app.js --delay 10",
     "postinstall": "CI=true bower install --allow-root",
     "shrinkwrap": "npm-shrinkwrap"
   },
