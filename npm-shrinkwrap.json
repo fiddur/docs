@@ -1703,8 +1703,8 @@
       }
     },
     "markdocs": {
-      "version": "3.0.0",
-      "resolved": "https://registry.npmjs.org/markdocs/-/markdocs-3.0.0.tgz",
+      "version": "3.1.0",
+      "resolved": "https://registry.npmjs.org/markdocs/-/markdocs-3.1.0.tgz",
       "dependencies": {
         "commander": {
           "version": "1.0.5",
@@ -1717,54 +1717,26 @@
           }
         },
         "gray-matter": {
-          "version": "2.0.0",
-          "resolved": "https://registry.npmjs.org/gray-matter/-/gray-matter-2.0.0.tgz",
+          "version": "2.0.1",
+          "resolved": "https://registry.npmjs.org/gray-matter/-/gray-matter-2.0.1.tgz",
           "dependencies": {
-            "chalk": {
-              "version": "1.1.0",
-              "resolved": "https://registry.npmjs.org/chalk/-/chalk-1.1.0.tgz",
+            "ansi-red": {
+              "version": "0.1.1",
+              "resolved": "https://registry.npmjs.org/ansi-red/-/ansi-red-0.1.1.tgz",
               "dependencies": {
-                "ansi-styles": {
-                  "version": "2.1.0",
-                  "resolved": "https://registry.npmjs.org/ansi-styles/-/ansi-styles-2.1.0.tgz"
-                },
-                "escape-string-regexp": {
-                  "version": "1.0.3",
-                  "resolved": "https://registry.npmjs.org/escape-string-regexp/-/escape-string-regexp-1.0.3.tgz"
-                },
-                "has-ansi": {
-                  "version": "2.0.0",
-                  "resolved": "https://registry.npmjs.org/has-ansi/-/has-ansi-2.0.0.tgz",
-                  "dependencies": {
-                    "ansi-regex": {
-                      "version": "2.0.0",
-                      "resolved": "https://registry.npmjs.org/ansi-regex/-/ansi-regex-2.0.0.tgz"
-                    }
-                  }
-                },
-                "strip-ansi": {
-                  "version": "3.0.0",
-                  "resolved": "https://registry.npmjs.org/strip-ansi/-/strip-ansi-3.0.0.tgz",
-                  "dependencies": {
-                    "ansi-regex": {
-                      "version": "2.0.0",
-                      "resolved": "https://registry.npmjs.org/ansi-regex/-/ansi-regex-2.0.0.tgz"
-                    }
-                  }
-                },
-                "supports-color": {
-                  "version": "2.0.0",
-                  "resolved": "https://registry.npmjs.org/supports-color/-/supports-color-2.0.0.tgz"
+                "ansi-wrap": {
+                  "version": "0.1.0",
+                  "resolved": "https://registry.npmjs.org/ansi-wrap/-/ansi-wrap-0.1.0.tgz"
                 }
               }
             },
             "extend-shallow": {
-              "version": "1.1.4",
-              "resolved": "https://registry.npmjs.org/extend-shallow/-/extend-shallow-1.1.4.tgz",
+              "version": "2.0.1",
+              "resolved": "https://registry.npmjs.org/extend-shallow/-/extend-shallow-2.0.1.tgz",
               "dependencies": {
-                "kind-of": {
-                  "version": "1.1.0",
-                  "resolved": "https://registry.npmjs.org/kind-of/-/kind-of-1.1.0.tgz"
+                "is-extendable": {
+                  "version": "0.1.1",
+                  "resolved": "https://registry.npmjs.org/is-extendable/-/is-extendable-0.1.1.tgz"
                 }
               }
             }
