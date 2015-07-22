@@ -5,6 +5,11 @@ if (cluster.isMaster && !module.parent) {
   return require('./master');
 }
 
+// FOR TEST ONLY!!!
+if (process.env.NODE_ENV !== 'production') {
+  process.env.NODE_TLS_REJECT_UNAUTHORIZED = "0"
+}
+
 /**
  * Module dependencies.
  */
@@ -363,9 +368,10 @@ app.use(middlewares.cors);
 
 app.use(cookieParser());
 
+var sessionStore = require('./lib/sessionStore');
 app.use(session({
   secret: nconf.get('sessionSecret'),
-  store: require('./lib/sessionStore')(session),
+  store: sessionStore ? sessionStore(session) : undefined,
   key: nconf.get('COOKIE_NAME'),
   resave: false,
   saveUninitialized: true,
