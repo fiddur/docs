@@ -172,6 +172,21 @@ describe('Application', function() {
         checkForMarkdownChars(url, body);
       }, done);
     });
+
+    it('should not contain rendering errors', function(done) {
+      this.timeout(0); // This test takes a while to run.
+      var checkForRenderingErrors = function(url, body) {
+        assert(body.indexOf('<span style="color:red;">ERROR:') === -1, 'The page at ' + url + ' was not rendered correctly and contains an error.');
+      }
+
+      forEachDocPage(function(err, url, body) {
+        if (err) {
+          console.error('Errors detected in ' + url);
+          throw err;
+        }
+        checkForRenderingErrors(url, body);
+      }, done);
+    });
   });
 
   describe('Media', function() {
