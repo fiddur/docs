@@ -4,12 +4,6 @@ var Quickstart = React.createClass({displayName: "Quickstart",
   handleClick: function(quickstart) {
     var question = this.props.getQuestion(quickstart.name);
 
-    this.props.updateTutorial({
-      question: question,
-      options: quickstart.name,
-      appType: quickstart.name
-    });
-
     page('/quickstart/' + quickstart.name);
   },
   render: function() {
@@ -171,8 +165,36 @@ var TechList = React.createClass({displayName: "TechList",
 });
 
 var Breadcrumbs = React.createClass({displayName: "Breadcrumbs",
+  getAppTypeName: function(appType) {
+    var options = {
+      "spa": "Single Page App",
+      "native-mobile": "Native Mobile App",
+      "webapp": "Regular Web Application",
+      "hybrid": "Hybrid Mobile App",
+      "backend": "Backend/API"
+    };
+
+    return options[appType];
+  },
   render: function() {
-    return (React.createElement("div", null));
+    var list = [];
+    var tutorial = this.props.tutorial;
+
+    if(tutorial.appType) {
+      list.push(React.createElement("a", {href: "/quickstart/"}, React.createElement("span", {className: "text"}, this.getAppTypeName(tutorial.appType))));
+    } else {
+      return (React.createElement("div", null));
+    }
+
+    if(tutorial.tech1) {
+      list.push(React.createElement("a", {href: "/quickstart/" + tutorial.appType + "/"}, React.createElement("i", {className: "icon-budicon-461"}), React.createElement("span", {className: "text"}, this.props.getTechName(tutorial.appType, tutorial.tech1))));
+    }
+
+    if(tutorial.tech2) {
+      list.push(React.createElement("a", {href: "/quickstart/" + tutorial.appType + "/" + tutorial.tech1}, React.createElement("span", {className: "plus"}, "+"), React.createElement("span", {className: "text"}, this.props.getTechName('backend', tutorial.tech2))));
+    }
+
+    return (React.createElement("div", {className: "breadcrumbs"}, list));
   }
 });
 
@@ -207,7 +229,7 @@ var Tutorial = React.createClass({displayName: "Tutorial",
 
     return url;
   },
-  fetchDocument: function(url, toUpdate) {
+  fetchDocument: function(url, toUpdate, jsonp) {
     var tutorial = this.props.tutorial;
     var uri = this.setUrlParams('https://auth0.com/docs' + url + '?e=1');
     var component = this;
@@ -216,7 +238,7 @@ var Tutorial = React.createClass({displayName: "Tutorial",
     $.ajax({
       url: uri,
       dataType: "jsonp",
-      jsonpCallback: "__a0tn9",
+      jsonpCallback: jsonp,
       contentType: "application/json",
       success: function(response) {
         config[toUpdate] = response.html;
@@ -224,10 +246,10 @@ var Tutorial = React.createClass({displayName: "Tutorial",
         component.setState(config);
         component.forceUpdate();
 
-        if(!component.state.content2 && tutorial.tutorialUrls.length > 1) {
-          component.fetchDocument(tutorial.tutorialUrls[1], "content2");
-        } else {
-          component.setState({ ready: true });
+        if(tutorial.showTutorial) {
+          component.setState({
+            ready: true
+          });
         }
       },
       error: function(status, err) {
@@ -239,13 +261,18 @@ var Tutorial = React.createClass({displayName: "Tutorial",
     var tutorial = this.props.tutorial;
 
     if(tutorial.tutorialUrls.length) {
-      this.fetchDocument(tutorial.tutorialUrls[0], "content1");
+      this.fetchDocument(tutorial.tutorialUrls[0], "content1", "__a0tn1");
+
+      if(tutorial.tech2) {
+        this.fetchDocument(tutorial.tutorialUrls[1], "content2", "__a0tn2");
+      }
     }
   },
   render: function() {
     return (
       React.createElement("div", null, 
         React.createElement("div", {className: (this.state.ready) ? 'tutorial-ready' : 'hide'}, 
+          React.createElement(Breadcrumbs, {tutorial: this.props.tutorial, getTechName: this.props.getTechName}), 
           React.createElement("div", {className: "content-1", dangerouslySetInnerHTML: {__html: this.state.content1}}
           ), 
           React.createElement("div", {className: "content-2", dangerouslySetInnerHTML: {__html: this.state.content2}}
@@ -263,13 +290,6 @@ var TutorialNavigator = React.createClass({displayName: "TutorialNavigator",
   handleSkip: function() {
     var platformPath = this.getPlatformPath(this.state.appType);
     var path = '/quickstart/' + this.state.appType + '/' + this.state.tech1 + '/no-api/';
-
-    this.setState({
-      tech2: null,
-      path: path,
-      tutorialUrls: [platformPath + this.state.tech1],
-      showTutorial: true
-    });
 
     page(path);
   },
@@ -312,6 +332,15 @@ var TutorialNavigator = React.createClass({displayName: "TutorialNavigator",
 
     return options[platformType];
   },
+  getTechName: function(platformType, tech) {
+    var collection = this.getOptions(platformType);
+
+    var result = $.grep(collection, function(e){ return e.name == tech; });
+
+    if(result.length) {
+      return result[0].title;
+    }
+  },
   getPlatformPath: function(platformType) {
     var paths = {
       "spa": "client-platforms",
@@ -342,6 +371,8 @@ var TutorialNavigator = React.createClass({displayName: "TutorialNavigator",
         path: '/quickstart/' + ctx.params.apptype,
         tutorialUrls: [],
         skippable: false,
+        tech1: null,
+        tech2: null,
         showTutorial: false
       });
     });
@@ -349,16 +380,31 @@ var TutorialNavigator = React.createClass({displayName: "TutorialNavigator",
     page('/quickstart/:apptype/:platform?', function(ctx) {
       var platformPath = component.getPlatformPath(ctx.params.apptype);
 
-      component.setState({
-        options: 'backend', 
-        appType: ctx.params.apptype, 
-        question: "Will you use a Backend or API with your application?",
-        skippable: true,
-        tech1: ctx.params.platform,
-        path: '/quickstart/' + ctx.params.apptype + [platformPath + ctx.params.platform],
-        tutorialUrls: [platformPath + ctx.params.platform],
-        showTutorial: false
-      });
+      if(ctx.params.apptype !== 'backend' && ctx.params.apptype !== 'webapp') {
+        component.setState({
+          options: 'backend', 
+          appType: ctx.params.apptype,
+          question: "Will you use a Backend or API with your application?",
+          skippable: true,
+          tech1: ctx.params.platform,
+          tech2: null,
+          path: '/quickstart/' + ctx.params.apptype + [platformPath + ctx.params.platform],
+          tutorialUrls: [platformPath + ctx.params.platform],
+          showTutorial: false
+        });
+      } else {
+        component.setState({
+          options: null, 
+          appType: ctx.params.apptype,
+          question: null,
+          skippable: false,
+          tech1: ctx.params.platform,
+          tech2: null,
+          path: '/quickstart/' + ctx.params.apptype + [platformPath + ctx.params.platform],
+          tutorialUrls: [platformPath + ctx.params.platform],
+          showTutorial: true
+        });
+      }
     });
 
     page('/quickstart/:apptype/:platform/:api?', function(ctx) {
@@ -391,8 +437,12 @@ var TutorialNavigator = React.createClass({displayName: "TutorialNavigator",
         React.createElement("div", {className: "banner tutorial-wizard"}, 
           React.createElement("div", {className: "container"}, 
             React.createElement("h1", null, "Documentation"), 
+            
             React.createElement("p", null, this.state.question), 
-            React.createElement("button", {onClick: this.handleSkip, className: (this.state.skippable) ? 'btn btn-mid btn-success' : 'btn btn-mid btn-success hide'}, "No, skip this")
+
+            React.createElement("button", {href: "#", "data-skip": true, onClick: this.handleSkip, className: (this.state.skippable) ? '' : 'hide'}, "No, skip this", React.createElement("i", {className: "icon-budicon-461"})), 
+            React.createElement("br", null), 
+            React.createElement(Breadcrumbs, {tutorial: this.state, getTechName: this.getTechName})
           ), 
 
           React.createElement(QuickstartList, {quickstarts: this.props.platforms.apptypes, updateTutorial: this.updateTutorial, getQuestion: this.getQuestion, tutorial: this.state}), 
@@ -400,7 +450,7 @@ var TutorialNavigator = React.createClass({displayName: "TutorialNavigator",
         ), 
 
         React.createElement("div", {className: "tutorial-content"}, 
-          React.createElement(Tutorial, {key: this.state.tutorialUrls.length, tutorial: this.state})
+          React.createElement(Tutorial, {key: this.state.showTutorial, tutorial: this.state, getTechName: this.getTechName})
         )
         
       )
