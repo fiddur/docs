@@ -4,7 +4,7 @@ html
     #root(style='width: 280px; margin: 40px auto; padding: 10px; border-style: dashed; border-width: 1px;')
       | embeded area
     script(src=widget_url)
-    script
+    script.
       if (window.Auth0Widget) {
         var widget = new Auth0Widget({
           domain:       '!{namespace}',

@@ -14,7 +14,7 @@ p This is how it will look on a browser...
     iframe#widget-demo(src='')
 
 
-script
+script.
   function refresh (method, clientId) {
     $('#widget-demo').attr('src', '#{DOMAIN_URL_DOCS}/lock-demos/' + method + '?' + (clientId !== 'YOUR_CLIENT_ID' ? '&a=' + clientId : '') + '&callbackOnHash=#{callbackOnHashMode}');
   }

@@ -1,7 +1,13 @@
+require('babel/register');
 var cluster = require('cluster');
 
 if (cluster.isMaster && !module.parent) {
   return require('./master');
+}
+
+// FOR TEST ONLY!!!
+if (process.env.NODE_ENV !== 'production') {
+  process.env.NODE_TLS_REJECT_UNAUTHORIZED = "0"
 }
 
 /**
@@ -14,6 +20,11 @@ var passport = require('passport');
 var markdocs = require('markdocs');
 var header = require('web-header');
 var express = require('express');
+var bodyParser = require('body-parser');
+var cookieParser = require('cookie-parser');
+var methodOverride = require('method-override');
+var session = require('express-session');
+var logger = require('morgan');
 var nconf = require('nconf');
 var http = require('http');
 var path = require('path');
@@ -124,7 +135,6 @@ passport.deserializeUser(function(id, done) {
     userColl.findOne({id: id}, done);
   });
 });
-
 
 var defaultValues = function (req, res, next) {
   res.locals.account = {};
@@ -250,7 +260,7 @@ var overrideIfClientInQsForPublicAllowedUrls = function (req, res, next) {
   clients.findByClientId(req.query.a, { signingKey: 0 }, function (err, client) {
     if (err) { return next(err); }
     if (!client) {
-      return res.send(404, 'client not found');
+      return res.status(404).send('client not found');
     }
 
     res.locals.account.appName      = client.name && client.name.trim !== '' ? client.name : 'Your App';
@@ -281,9 +291,9 @@ var overrideIfClientInQs = function (req, res, next) {
 
     var client = clients && clients.length > 0 && clients[0];
 
-    if (!client) { return res.send(404, 'client not found'); }
+    if (!client) { return res.status(404).send('client not found'); }
     if (!req.user.is_owner && (!client.owners || client.owners.indexOf(req.user.id) < 0)) {
-      return res.send(401);
+      return res.sendStatus(401);
     }
 
     res.locals.account.appName      = client.name && client.name.trim !== '' ? client.name : 'Your App';
@@ -305,8 +315,8 @@ var appendTicket = function (req, res, next) {
   res.locals.connectionName = res.locals.connectionName || 'YOUR_CONNECTION_NAME';
   if (!req.query.ticket) return next();
   connections.findByTicket(req.query.ticket, function (err, connection) {
-    if (err) return res.send(500);
-    if (!connection) return res.send(404);
+    if (err) return res.sendStatus(500);
+    if (!connection) return res.sendStatus(404);
     res.locals.ticket = req.query.ticket;
     res.locals.connectionDomain = connection.options.tenant_domain;
     res.locals.connectionName = connection.name;
@@ -314,97 +324,90 @@ var appendTicket = function (req, res, next) {
   });
 };
 
-(function(){
-  this.set('view engine', 'jade');
-  this.enable('trust proxy');
+app.set('view engine', 'jade');
+app.enable('trust proxy');
 
-  if (nconf.get('NODE_ENV') === 'production') {
-    this.use(function(req, res, next){
-      if (nconf.get('dontForceHttps') || req.originalUrl === '/test') return next();
+if (nconf.get('NODE_ENV') === 'production') {
+  app.use(function(req, res, next){
+    if (nconf.get('dontForceHttps') || req.originalUrl === '/test') return next();
 
-      if(req.headers['x-forwarded-proto'] !== 'https')
-        return res.redirect(nconf.get('DOMAIN_URL_DOCS') + req.url);
+    if(req.headers['x-forwarded-proto'] !== 'https')
+      return res.redirect(nconf.get('DOMAIN_URL_DOCS') + req.url);
 
-      next();
-    });
-  }
-
-  if (nconf.get('PRERENDER_ENABLED')) {
-    // Add swiftype UserAgent bot
-    prerender.crawlerUserAgents.push('Swiftbot');
-    prerender.crawlerUserAgents.push('Slackbot-LinkExpanding');
-    // add prerender middleware
-    this.use(prerender);
-  }
-
-  this.use('/test', function (req, res) {
-    res.send(200);
-  });
-
-  this.use(nconf.get('BASE_URL') + '/test', function (req, res) {
-    res.send(200);
-  });
-
-  this.use(function (req, res, next) {
-    if (!nconf.get('BASE_URL') || req.url === '/') return next();
-    req.url = req.url.replace(/\/$/,'');
     next();
   });
+}
 
-  if (nconf.get('NODE_ENV') !== 'test') {
-    this.use(express.logger('dev'));
+if (nconf.get('PRERENDER_ENABLED')) {
+  // Add swiftype UserAgent bot
+  prerender.crawlerUserAgents.push('Swiftbot');
+  prerender.crawlerUserAgents.push('Slackbot-LinkExpanding');
+  // add prerender middleware
+  app.use(prerender);
+}
+
+app.use('/test', function (req, res) {
+  res.sendStatus(200);
+});
+
+app.use(nconf.get('BASE_URL') + '/test', function (req, res) {
+  res.sendStatus(200);
+});
+
+app.use(function (req, res, next) {
+  if (!nconf.get('BASE_URL') || req.url === '/') return next();
+  req.url = req.url.replace(/\/$/,'');
+  next();
+});
+
+if (nconf.get('NODE_ENV') !== 'test') {
+  app.use(logger('dev'));
+}
+
+app.use(middlewares.cors);
+
+app.use(cookieParser());
+
+var sessionStore = require('./lib/sessionStore');
+app.use(session({
+  secret: nconf.get('sessionSecret'),
+  store: sessionStore ? sessionStore(session) : undefined,
+  key: nconf.get('COOKIE_NAME'),
+  resave: false,
+  saveUninitialized: true,
+  cookie: {
+    domain:   nconf.get('COOKIE_SCOPE'),
+    path:     '/',
+    httpOnly: true,
+    maxAge:   null,
+    secure:   !nconf.get('dontForceHttps') && nconf.get('NODE_ENV') === 'production'
   }
+}));
 
-  this.use(middlewares.cors);
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: false }));
+app.use(methodOverride());
 
-  this.use(express.cookieParser());
+app.use(nconf.get('BASE_URL') + '/media', express.static(path.join(__dirname, 'docs/media')));
 
-  this.use(express.session({
-    secret: nconf.get('sessionSecret'),
-    store: require('./lib/sessionStore'),
-    key: nconf.get('COOKIE_NAME'),
-    cookie: {
-      domain:   nconf.get('COOKIE_SCOPE'),
-      path:     '/',
-      httpOnly: true,
-      maxAge:   null,
-      secure:   !nconf.get('dontForceHttps') && nconf.get('NODE_ENV') === 'production'
-    }
-  }));
+app.use(passport.initialize());
+app.use(passport.session());
+app.use(require('./lib/set_current_tenant'));
+app.use(require('./lib/set_user_is_owner'));
 
-  this.use(express.favicon());
-  this.use(express.json());
-  this.use(express.urlencoded());
-
-
-  this.use(nconf.get('BASE_URL') + '/media', express.static(path.join(__dirname, 'docs/media')));
-
-  // warning this cause an Internal Server Error
-  // this.use(require('method-override'));
-  this.use(express.methodOverride());
-  ////////////////////////////////////////
-
-  this.use(passport.initialize());
-  this.use(passport.session());
-  this.use(require('./lib/set_current_tenant'));
-  this.use(require('./lib/set_user_is_owner'));
-
-  // These are used by the snippets api to do @@value@@ string replacement
-  var metaBaseUrl = nconf.get('BASE_URL') + '/meta';
-  this.use(metaBaseUrl, defaultValues);
-  this.use(metaBaseUrl, appendTicket);
-  this.use(metaBaseUrl, overrideIfAuthenticated);
-  this.use(metaBaseUrl, overrideIfClientInQs);
-  this.use(metaBaseUrl, overrideIfClientInQsForPublicAllowedUrls);
-
-  this.use(this.router);
-}).call(app);
+// These are used by the snippets api to do @@value@@ string replacement
+var metaBaseUrl = nconf.get('BASE_URL') + '/meta';
+app.use(metaBaseUrl, defaultValues);
+app.use(metaBaseUrl, appendTicket);
+app.use(metaBaseUrl, overrideIfAuthenticated);
+app.use(metaBaseUrl, overrideIfClientInQs);
+app.use(metaBaseUrl, overrideIfClientInQsForPublicAllowedUrls);
 
 app.get('/ticket/step', function (req, res) {
-  if (!req.query.ticket) return res.send(404);
+  if (!req.query.ticket) return res.sendStatus(404);
   connections.getCurrentStep(req.query.ticket, function (err, currentStep) {
-    if (err) return res.send(500);
-    if (!currentStep) return res.send(404);
+    if (err) return res.sendStatus(500);
+    if (!currentStep) return res.sendStatus(404);
     res.send(currentStep);
   });
 });
@@ -537,6 +540,21 @@ docsapp.addPreRender(middlewares.configuration);
 require('./lib/doc-processors').processors.forEach(function(processor) {
   docsapp.addDocumentProcessor(processor);
 });
+
+// WARNING: THIS IS A TEMPORARY HACK TO OVERRIDE THE INDEX DOCUMENT
+// REMOVE THIS BEFORE GOING LIVE WITH THE REDESIGN!!!!!!!!
+docsapp.addPreRender(function(req, res, next) {
+  if (req.path ===  nconf.get('BASE_URL') + '/') {
+    var Doc = require('./node_modules/markdocs/lib/markdocs/doc');
+    res.doc = new Doc(docsapp, 'index.md');
+    res.doc._meta.layout = 'homepage';
+    res.doc.processSections = function() {
+      return [];
+    }
+  }
+  next();
+});
+
 require('./lib/sdk-snippets/lock/demos-routes')(app);
 require('./lib/sdk-snippets/lock/snippets-routes')(app);
 require('./lib/sdk-snippets/login-widget2/demos-routes')(app);
