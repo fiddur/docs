@@ -46,13 +46,14 @@
   "main": "app.js",
   "scripts": {
     "test": "make test",
-    "start": "gulp build & node app.js",
+    "start": "node app.js",
     "watch": "gulp & node ./node_modules/nodemon/bin/nodemon.js -e js,jsx,md,json,jade,styl app.js --delay 10",
-    "postinstall": "CI=true bower install --allow-root",
+    "postinstall": "bash ./post_install.sh",
     "shrinkwrap": "npm-shrinkwrap"
   },
   "engines": {
-    "node": "0.10.30"
+    "node": "0.10.30",
+    "npm": "2.13.1"
   },
   "devDependencies": {
     "bower": "~1.3.5",
