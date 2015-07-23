@@ -540,6 +540,21 @@ docsapp.addPreRender(middlewares.configuration);
 require('./lib/doc-processors').processors.forEach(function(processor) {
   docsapp.addDocumentProcessor(processor);
 });
+
+// WARNING: THIS IS A TEMPORARY HACK TO OVERRIDE THE INDEX DOCUMENT
+// REMOVE THIS BEFORE GOING LIVE WITH THE REDESIGN!!!!!!!!
+docsapp.addPreRender(function(req, res, next) {
+  if (req.path ===  nconf.get('BASE_URL') + '/') {
+    var Doc = require('./node_modules/markdocs/lib/markdocs/doc');
+    res.doc = new Doc(docsapp, 'index.md');
+    res.doc._meta.layout = 'homepage';
+    res.doc.processSections = function() {
+      return [];
+    }
+  }
+  next();
+});
+
 require('./lib/sdk-snippets/lock/demos-routes')(app);
 require('./lib/sdk-snippets/lock/snippets-routes')(app);
 require('./lib/sdk-snippets/login-widget2/demos-routes')(app);
