@@ -139,6 +139,7 @@ html(lang="en")
   script(src=env.BASE_URL + '/js/page.min.js')
   script(src='https://fb.me/react-0.13.3.min.js')
   script(src=env.BASE_URL + '/js/tutorial-navigator.js')
+  script(src=env.BASE_URL + '/js/docs.js')
   
 
   script(type='text/javascript').
@@ -181,25 +182,6 @@ html(lang="en")
       React.createElement(TutorialNavigator, { platforms: !{JSON.stringify(quickstarts)} }), 
         $('.js-tutorial-navigator').get(0)
     );
-
-    $(window).on('scroll', function() {
-      var sticky = $('.js-sticky-nav');
-
-      function toggleSticky($nav) {
-        if(!$nav.hasClass('is-fixed')) {
-          navOffset = $nav.offset().top;
-        }
-        if ($(window).scrollTop() > navOffset) {
-          $nav.addClass('is-fixed');
-        } else {
-          $nav.removeClass('is-fixed');
-        }
-      }
-
-      if(sticky.length) {
-        toggleSticky(sticky);
-      }
-    });
 
 
     if(location.hash) {

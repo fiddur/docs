@@ -113,6 +113,11 @@
           "href": "#"
         },
         {
+          "name": "React",
+          "slug": "react",
+          "href": "#"
+        },
+        {
           "name": "Ember.js",
           "slug": "emberjs",
           "href": "#"
@@ -176,57 +181,57 @@
       "links": [
         {
           "name": "Configure an Identity Provider",
-          "icon": "icon-budicon-215",
+          "icon": "icon-budicon-754",
           "href": "#"
         },
         {
           "name": "Multifactor Authentication",
-          "icon": "icon-budicon-315",
+          "icon": "icon-budicon-754",
           "href": "#"
         },
         {
           "name": "Multifactor Authentication",
-          "icon": "icon-budicon-315",
+          "icon": "icon-budicon-754",
           "href": "#"
         },
         {
           "name": "Multifactor Authentication",
-          "icon": "icon-budicon-315",
+          "icon": "icon-budicon-754",
           "href": "#"
         },
         {
           "name": "Multifactor Authentication",
-          "icon": "icon-budicon-315",
+          "icon": "icon-budicon-754",
           "href": "#"
         },
         {
           "name": "Multifactor Authentication",
-          "icon": "icon-budicon-315",
+          "icon": "icon-budicon-754",
           "href": "#"
         },
         {
           "name": "Multifactor Authentication",
-          "icon": "icon-budicon-315",
+          "icon": "icon-budicon-754",
           "href": "#"
         },
         {
           "name": "Multifactor Authentication",
-          "icon": "icon-budicon-315",
+          "icon": "icon-budicon-754",
           "href": "#"
         },
         {
           "name": "Multifactor Authentication",
-          "icon": "icon-budicon-315",
+          "icon": "icon-budicon-754",
           "href": "#"
         },
         {
           "name": "Multifactor Authentication",
-          "icon": "icon-budicon-315",
+          "icon": "icon-budicon-754",
           "href": "#"
         },
         {
           "name": "Multifactor Authentication",
-          "icon": "icon-budicon-315",
+          "icon": "icon-budicon-754",
           "href": "#"
         }
       ]

@@ -433,7 +433,7 @@ var TutorialNavigator = React.createClass({
   },
   render: function() {
     return (
-      <div className={(this.state.showTutorial) ? 'js-tutorial-navigator is-result' : 'js-tutorial-navigator'}>
+      <div className={(this.state.showTutorial) ? 'inner-content is-result' : 'inner-content'}>
         <div className="banner tutorial-wizard">
           <div className="container">
             <h1>Documentation</h1>

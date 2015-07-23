@@ -9,11 +9,13 @@
         left: 0;
   
   .wrapper
-    padding: 15px 0;
     border-bottom: 1px solid #EAEEF3;
     background: white;
     width: 100%;
     z-index: 800;
+    
+  form
+    padding: 15px 0;
   
   .list-inline
     margin: 0;
@@ -30,6 +32,15 @@
     li 
       margin: 0;
       padding: 0;
+      padding: 15px 0;
+      
+      &.is-active
+        color: #333;
+        font-weight: bold;
+        box-shadow: 0 1px 0 0 #333;
+        
+        a 
+          color: #333;
       
       & + li
         margin-left: 50px;

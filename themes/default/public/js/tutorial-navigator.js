@@ -433,7 +433,7 @@ var TutorialNavigator = React.createClass({displayName: "TutorialNavigator",
   },
   render: function() {
     return (
-      React.createElement("div", {className: (this.state.showTutorial) ? 'js-tutorial-navigator is-result' : 'js-tutorial-navigator'}, 
+      React.createElement("div", {className: (this.state.showTutorial) ? 'inner-content is-result' : 'inner-content'}, 
         React.createElement("div", {className: "banner tutorial-wizard"}, 
           React.createElement("div", {className: "container"}, 
             React.createElement("h1", null, "Documentation"), 
