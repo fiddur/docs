@@ -1,4 +1,4 @@
-doctype html
+doctype 5
 html(lang="en")
   head
     title= site.title
@@ -62,7 +62,7 @@ html(lang="en")
               i.icon-budicon-489
               input#search-input.form-control(type="text", placeholder="Search for docs", name="stq")
 
-                
+
     - for (var item in nav)
       - var current = nav[item];
 
@@ -70,14 +70,14 @@ html(lang="en")
           .container
             h2(id!=current.id)= current.name
               span= current.description
-          
+
           - if(current.id === 'product')
             .showcase
               .container
                 .row
                   - for (var link in current.links)
                     - var current2 = current.links[link];
-                    +showcaseItem(current2.name, current2.icon, current2.href, current2.description)
+                    +showcaseItem(current2.name, current2.icon, current2.href, current2.description);
 
           - if(current.id === 'api')
             .api-docs
@@ -108,14 +108,14 @@ html(lang="en")
                               li
                                 a(href!=news.links[current2].href)= news.links[current2].name
 
-          
+
           - if(current.id === 'sdk')
             .container
               ul.circle-list
                 - for (var link in current.links)
                   - var current2 = current.links[link];
                   li
-                    +circleLogo(current2.name, current2.slug, current2.href)
+                    +circleLogo(current2.name, current2.slug, current2.href);
 
           - if(current.id === 'how-to')
             .container
@@ -123,7 +123,7 @@ html(lang="en")
                 - for (var link in current.links)
                   - var current2 = current.links[link];
                   li
-                    +circleLogo(current2.name, 'how-to', current2.href, current2.icon)
+                    +circleLogo(current2.name, 'how-to', current2.href, current2.icon);
 
     hr
 
@@ -139,10 +139,9 @@ html(lang="en")
   script(src=env.BASE_URL + '/js/page.min.js')
   script(src='https://fb.me/react-0.13.3.min.js')
   script(src=env.BASE_URL + '/js/tutorial-navigator.js')
-  script(src=env.BASE_URL + '/js/docs.js')
-  
 
-  script(type='text/javascript').
+
+  script(type='text/javascript')
     !function ($) {
       $(function(){
       $('pre').each(function (i, e) {
@@ -156,7 +155,7 @@ html(lang="en")
     }(window.jQuery);
 
   //- Begin Inspectlet Embed Code
-  script#inspectletjs(type="text/javascript").
+  script#inspectletjs(type="text/javascript")
     window.__insp = window.__insp || [];
     __insp.push(['wid', 1881287289]);
     (function() {
@@ -168,7 +167,7 @@ html(lang="en")
       }
     })();
 
-  script.
+  script
     //- var sectionIndex = 1;
     //- $('h2,h3,h4').each(function(){
     //-   $(this)
@@ -179,9 +178,28 @@ html(lang="en")
 
     // Init Tutorial Navigator
     React.render(
-      React.createElement(TutorialNavigator, { platforms: !{JSON.stringify(quickstarts)} }), 
+      React.createElement(TutorialNavigator, { platforms: !{JSON.stringify(quickstarts)} }),
         $('.js-tutorial-navigator').get(0)
     );
+
+    $(window).on('scroll', function() {
+      var sticky = $('.js-sticky-nav');
+
+      function toggleSticky($nav) {
+        if(!$nav.hasClass('is-fixed')) {
+          navOffset = $nav.offset().top;
+        }
+        if ($(window).scrollTop() > navOffset) {
+          $nav.addClass('is-fixed');
+        } else {
+          $nav.removeClass('is-fixed');
+        }
+      }
+
+      if(sticky.length) {
+        toggleSticky(sticky);
+      }
+    });
 
 
     if(location.hash) {
@@ -196,7 +214,7 @@ html(lang="en")
     $('.fixit a').attr('href', 'https://github.com/auth0/docs/edit/master/articles' + window.location.pathname.substr("#{env.BASE_URL}".length) + '.md');
 
   if (locals.user && user.tenants && user.tenants.length > 1)
-    script.
+    script
       var getCookie = function (name) {
         var match = document.cookie.match(RegExp('(?:^|;\\s*)' + name + '=([^;]*)'));
         return match ? match[1] : null;

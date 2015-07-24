@@ -1,0 +1,74 @@
+pre.prettyprint.prettyprint
+  background-color rgba(#F1F1F1,.1)
+  word-wrap normal
+  border 1px solid rgba(#979797,.2)!important
+  padding 10px!important
+  position relative
+  &:before
+    content ''
+    background-color rgba(#EAF1F3,.25)
+    border-right 1px solid rgba(#5C666F,.1)
+    width 40px
+    height 100%
+    position absolute
+    left 0
+    top 0
+  code
+    white-space pre
+    padding-left 10px
+
+.com
+  color #93a1a1
+
+.pun, .opn, .clo
+  color color_oil
+
+.fun
+  color #dc322f
+
+.str, .atv
+  color color_green
+
+.kwd, .lit
+  color darken(color_blue_light,20%)
+
+.prettyprint .tag
+  color darken(color_orange,20%)
+
+.typ, .atn, .dec, .var
+  color darken(color_pink,10%)
+
+.pln
+  color color_oil
+
+ol
+  &.linenums
+    margin 0
+    padding 0
+    position relative
+    li
+      background transparent
+      margin 0
+      line-height 20px
+
+ol
+  &.linenums
+    counter-reset linenumber
+    li
+      list-style-type none
+      counter-increment linenumber
+      &:before
+        content counter(linenumber)
+        text-align right
+        width 16px
+        margin-right 20px
+        display inline-block
+        color rgba(color_oil,.3)
+        font-size 12px
+        -webkit-touch-callout: none;
+        -webkit-user-select: none;
+        -khtml-user-select: none;
+        -moz-user-select: none;
+        -ms-user-select: none;
+        user-select: none;
+
