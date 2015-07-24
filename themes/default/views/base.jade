@@ -50,10 +50,13 @@ html(lang="en")
     .js-sticky-nav
       .wrapper
         .container
-          ul.list-inline
-            - for (var item in nav)
-              li
-                a(href!="#" + nav[item].id)= nav[item].name
+          .breadcrumbs
+            a
+              span.text Lala
+            a
+              i.icon-budicon-461
+              span.text Lala
+
 
           form#search(role="search", action=env.BASE_URL + "/search", autocomplete="off")
             .form-group.search-control
@@ -61,67 +64,105 @@ html(lang="en")
               input#search-input.form-control(type="text", placeholder="Search for docs", name="stq")
 
 
+    - var nav = navigation['categories'];
+
     //- Start content
     .container
       .row
-        .col-xs-3
+        .col-sm-3
           nav.sidebar-menu(data-accordion-group)
-            .accordion(data-accordion)
-              .nav-title(data-control)
-                i.icon-budicon-461
-                h2 Product
-              ul.nav-content(data-content)
-                li
-                  a(href="") Option
-                li
-                  a(href="") Option
-                li
-                  a(href="") Option
-            .accordion(data-accordion)
-              .nav-title(data-control)
-                i.icon-budicon-461
-                h2 API
-              ul.nav-content(data-content)
-                li
-                  a(href="") Option
-                li
-                  a(href="") Option
-                li
-                  a(href="") Option
-            .accordion(data-accordion)
-              .nav-title(data-control)
-                i.icon-budicon-461
-                h2 SDKS
-              ul.nav-content(data-content)
-                li
-                  a(href="") Option
-                li
-                  a(href="") Option
-                li
-                  a(href="") Option
-            .accordion(data-accordion)
-              .nav-title(data-control)
-                i.icon-budicon-461
-                h2 How to's
-              ul.nav-content(data-content)
-                li
-                  a(href="") Option
-                li
-                  a(href="") Option
-                li
-                  a(href="") Option
+            - for (var item in nav)
+              .accordion(data-accordion)
+                .nav-title(data-control)
+                  i.icon-budicon-461
+                  h2= nav[item].name
+                ul.nav-content(data-content)
+                  li
+                    a(href="") Option
+                  li
+                    a(href="") Option
+                  li
+                    a(href="") Option
+            //- .accordion(data-accordion)
+            //-   .nav-title(data-control)
+            //-     i.icon-budicon-461
+            //-     h2 API
+            //-   ul.nav-content(data-content)
+            //-     li
+            //-       a(href="") Option
+            //-     li
+            //-       a(href="") Option
+            //-     li
+            //-       a(href="") Option
+            //- .accordion(data-accordion)
+            //-   .nav-title(data-control)
+            //-     i.icon-budicon-461
+            //-     h2 SDKS
+            //-   ul.nav-content(data-content)
+            //-     li
+            //-       a(href="") Option
+            //-     li
+            //-       a(href="") Option
+            //-     li
+            //-       a(href="") Option
+            //- .accordion(data-accordion)
+            //-   .nav-title(data-control)
+            //-     i.icon-budicon-461
+            //-     h2 How to's
+            //-   ul.nav-content(data-content)
+            //-     li
+            //-       a(href="") Option
+            //-     li
+            //-       a(href="") Option
+            //-     li
+            //-       a(href="") Option
 
-        .col-xs-9.col-md-7
+        .col-sm-9.col-md-7
           section.docs-content(data-swiftype-index="true")
             block content
 
-        .col-xs-2
+        .col-md-2
           nav.sidebar-sbs
             h2 Step by step
             a(href="").active Operations for Database connections
             a(href="") Operations for Database connections
             a(href="") Operations for Database connections
             a(href="") Operations for Database connections
+
+    .related-howto
+      .container
+        .row
+          .col-md-8
+            h3 Related how to's
+            .articles-item
+              .item
+                a(href="")
+                  i.icon-budicon-754
+                  | Configure an Identity Provider
+              .item
+                a(href="")
+                  i.icon-budicon-754
+                  | Adding user metadata
+              .item
+                a(href="")
+                  i.icon-budicon-754
+                  | Running tasks after authentication
+              .item
+                a(href="")
+                  i.icon-budicon-754
+                  | Using Webtasks to set Permissions
+          .col-md-4
+            h3 Send feedback
+            p Did you find this document userful?
+              .feedback-choose
+                .choose
+                  a(href="")
+                    i.icon-budicon-470
+                    | Yes
+                .choose
+                  a(href="")
+                    i.icon-budicon-471
+                    | No
 
     hr
 
