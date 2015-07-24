@@ -74,32 +74,14 @@
     transition-delay: 100ms;
   }
 }
-.js-tutorial-navigator {
-  min-height: 640px;
-}
 .js-tutorial-navigator .tutorial-content {
   display: none;
 }
-.js-tutorial-navigator .inner-content.is-result .tutorial-content {
+.js-tutorial-navigator.is-result .tutorial-content {
   display: block;
 }
-.js-tutorial-navigator .inner-content.is-result .tutorial-wizard {
+.js-tutorial-navigator.is-result .tutorial-wizard {
   display: none;
-}
-.js-tutorial-navigator [data-skip] {
-  background: none;
-  outline: none;
-  border: 0;
-  font-size: 1.4rem;
-  padding: 0;
-  margin: 0;
-}
-.js-tutorial-navigator [data-skip] i {
-  font-size: 1.4rem;
-  top: 4px;
-  position: relative;
-  animation: none;
-  opacity: 0.5;
 }
 .js-tutorial-navigator .circle-list {
   padding: 0;
@@ -107,17 +89,8 @@
   padding-bottom: 30px;
   list-style: none;
   text-align: center;
+  max-width: 800px;
   margin: 0 auto;
-}
-@media (min-width: 768px) {
-  .js-tutorial-navigator .circle-list {
-    max-width: 800px;
-  }
-}
-@media (min-width: 992px) {
-  .js-tutorial-navigator .circle-list {
-    max-width: none;
-  }
 }
 .js-tutorial-navigator .circle-list li {
   display: inline-block;
@@ -134,7 +107,7 @@
 }
 @media (min-width: 768px) {
   .js-tutorial-navigator .circle-logo {
-    font-size: 13px;
+    font-size: 14px;
   }
 }
 .js-tutorial-navigator .circle-logo .logo {
@@ -142,38 +115,16 @@
 }
 .breadcrumbs {
   font-size: 12px;
-  margin: 15px 10px;
-  padding: 3px 15px;
-  line-height: 2.5;
-  background: rgba(255,255,255,0.3);
-  border: 1px solid rgba(150,150,150,0.3);
-  border-radius: 8px;
-  display: inline-block;
-}
-.breadcrumbs i {
-  font-size: 12px;
-  animation: none;
-  margin: 0;
-  position: relative;
-  top: 3px;
-  margin-left: 7px;
-  margin-right: 5px;
-  opacity: 0.5;
+  padding-top: 20px;
 }
 .breadcrumbs a {
   color: #5c666f;
-  font-weight: normal;
-  display: inline-block;
 }
-.breadcrumbs .plus {
-  padding: 0 5px;
-}
-.breadcrumbs .text {
-  color: #5c666f;
-  border-radius: 20px;
-}
-.breadcrumbs .text:hover {
-  opacity: 1;
+.breadcrumbs .chevron {
+  opacity: 0.5;
+  position: relative;
+  top: 3px;
+  padding: 0 1.3em 0 1em;
 }
 .quickstart {
   cursor: pointer;
