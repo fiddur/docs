@@ -1,7 +1,7 @@
 doctype html
 html(lang="en")
   head
-    title= title + ' - ' + site.title
+    title= site.title
     meta(charset="utf-8")
     meta(name="description", content="")
     meta(name="author", content="")
@@ -31,8 +31,9 @@ html(lang="en")
 
     include inc/analytics
     include inc/lock-sso
+    include inc/mixins
 
-  body.page-docs(data-swiftype-index="false")
+  body.docs-single(data-swiftype-index="false")
     header.site-header!= webheader
     script.
       if (null != window.widget) {
@@ -43,90 +44,87 @@ html(lang="en")
             .html('Open Dashboard');
         });
       }
+    - var nav = navigation['categories'];
 
 
-    .container
-      nav.navbar.navbar-default.sub-navbar
-        if (locals.user && user.regions && user.regions.length > 1)
-          .dropdown
-            button#account-chooser.btn.dropdown-toggle(type='button', data-toggle='dropdown')
-              | #{user.tenant.name}
-              span.caret
-            ul.dropdown-menu(role='menu', aria-labelledby='account-chooser')
-              each region in user.regions
-                li(role="presentation", class="dropdown-header")
-                  | #{region.description}
-                each tenant in region.tenants
-                  li(role='presentation')
-                    a(role='menuitem', tabindex='-1', href=env.BASE_URL + '/switch?tenant=#{tenant}&region=#{region.name}') #{tenant}
-        else
-          .navbar-header
-            small.navbar-text Documentation: API Reference & Help topics
+    .js-sticky-nav
+      .wrapper
+        .container
+          ul.list-inline
+            - for (var item in nav)
+              li
+                a(href!="#" + nav[item].id)= nav[item].name
+
+          form#search(role="search", action=env.BASE_URL + "/search", autocomplete="off")
+            .form-group.search-control
+              i.icon-budicon-489
+              input#search-input.form-control(type="text", placeholder="Search for docs", name="stq")
 
 
-        form#search.navbar-form.navbar-right(role="search", action=env.BASE_URL + "/search", autocomplete="off")
-          .form-group
-            .input-group
-
-              input#search-input.form-control(type="text", placeholder="Search for terms", name="stq")
-              span.input-group-btn
-                button.btn.btn-default.btn-small(type="submit", value="")
-                  i.icon.icon-budicon-489
-
+    //- Start content
     .container
       .row
         .col-xs-3
-          nav.sidebar-docs
-            ul
-              -var navigation = site.menus.navigation
-              - for (var k1 in navigation)
-                - var l1 = navigation[k1]
-                - if (!l1.disabled)
-                  li(class="box-" + l1.icon.substr(5)).box.sidebar-box
-                    - if (l1.icon)
-                        strong
-                          //- i(class='icon #{l1.icon}')
-                          | #{l1.title}
-                    - else
-                        strong= l1.title
-                    ul
-                      - for (var k2 in l1.items)
-                        - var l2 = l1.items[k2]
-                        - if (l2.url == url)
-                            li(class=l2.url.substr(1)).selected
-                              a(href=furl(l2.url))
-                                i
-                                span= l2.title
-                        - else
-                            li(class=l2.url.substr(1))
-                              a(href=furl(l2.url))
-                                i
-                                span= l2.title
+          nav.sidebar-menu(data-accordion-group)
+            .accordion(data-accordion)
+              .nav-title(data-control)
+                i.icon-budicon-461
+                h2 Product
+              ul.nav-content(data-content)
+                li
+                  a(href="") Option
+                li
+                  a(href="") Option
+                li
+                  a(href="") Option
+            .accordion(data-accordion)
+              .nav-title(data-control)
+                i.icon-budicon-461
+                h2 API
+              ul.nav-content(data-content)
+                li
+                  a(href="") Option
+                li
+                  a(href="") Option
+                li
+                  a(href="") Option
+            .accordion(data-accordion)
+              .nav-title(data-control)
+                i.icon-budicon-461
+                h2 SDKS
+              ul.nav-content(data-content)
+                li
+                  a(href="") Option
+                li
+                  a(href="") Option
+                li
+                  a(href="") Option
+            .accordion(data-accordion)
+              .nav-title(data-control)
+                i.icon-budicon-461
+                h2 How to's
+              ul.nav-content(data-content)
+                li
+                  a(href="") Option
+                li
+                  a(href="") Option
+                li
+                  a(href="") Option
 
-        .col-xs-9
-
-          .srow
-            ul.breadcrumb
-              li
-                a(href=env.BASE_URL || "/") Documentation
-              li &raquo;
-              - if (url !== '/connector' && url.indexOf('/connector') !== -1)
-                  li
-                    a(href=env.BASE_URL + '/connector') Connector
-                  li &raquo;
-              - if (url !== '/email' && url.indexOf('/email') !== -1)
-                  li
-                    a(href=env.BASE_URL + '/email') Email
-                  li &raquo;
-              li=title
-
-          section.content(data-swiftype-index="true")
+        .col-xs-9.col-md-7
+          section.docs-content(data-swiftype-index="true")
             block content
 
+        .col-xs-2
+          nav.sidebar-sbs
+            h2 Step by step
+            a(href="").active Operations for Database connections
+            a(href="") Operations for Database connections
+            a(href="") Operations for Database connections
+            a(href="") Operations for Database connections
 
-          .fixit
-              a(href='#', target='_blank') Found a typo?  Fix it
-    
+    hr
+
     include ../public/vendor/auth0-styleguide/lib/footer/demo.jade
 
   //- Start search feature scripts
@@ -135,19 +133,29 @@ html(lang="en")
   //- End search feature scripts
 
   script(src=env.BASE_URL + '/js/prettify.js')
-  script.
+  script(src=env.BASE_URL + '/js/owl.carousel.min.js')
+  script(src=env.BASE_URL + '/js/jquery.accordion.min.js')
+  script(src=env.BASE_URL + '/js/page.min.js')
+  script(src='https://fb.me/react-0.13.3.min.js')
+  script(src=env.BASE_URL + '/js/tutorial-navigator.js')
 
+
+  script(type='text/javascript').
     !function ($) {
       $(function(){
       $('pre').each(function (i, e) {
         // Ignore 'pre' elements inside .api-explorer elements
         if ($(e).closest('.api-explorer').length === 0) {
-          $(e).addClass('prettyprint');
+          $(e).addClass('prettyprint linenums');
         }
       });
       window.prettyPrint && prettyPrint();
       })
     }(window.jQuery);
+
+  //- Accordion
+  script(type='text/javascript').
+    $('.accordion').accordion();
 
   //- Begin Inspectlet Embed Code
   script#inspectletjs(type="text/javascript").
@@ -163,13 +171,39 @@ html(lang="en")
     })();
 
   script.
-    var sectionIndex = 1;
-    $('h2,h3,h4').each(function(){
-      $(this)
-        .attr('id', sectionIndex)
-        .prepend('<a class="anchor" href="#' + sectionIndex + '"><i class="icon icon-budicon-345"></i></a>');
-      sectionIndex++;
+    //- var sectionIndex = 1;
+    //- $('h2,h3,h4').each(function(){
+    //-   $(this)
+    //-     .attr('id', sectionIndex)
+    //-     .prepend('<a class="anchor" href="#' + sectionIndex + '"><i class="icon icon-budicon-345"></i></a>');
+    //-   sectionIndex++;
+    //- });
+
+    // Init Tutorial Navigator
+    React.render(
+      React.createElement(TutorialNavigator, { platforms: !{JSON.stringify(quickstarts)} }),
+        $('.js-tutorial-navigator').get(0)
+    );
+
+    $(window).on('scroll', function() {
+      var sticky = $('.js-sticky-nav');
+
+      function toggleSticky($nav) {
+        if(!$nav.hasClass('is-fixed')) {
+          navOffset = $nav.offset().top;
+        }
+        if ($(window).scrollTop() > navOffset) {
+          $nav.addClass('is-fixed');
+        } else {
+          $nav.removeClass('is-fixed');
+        }
+      }
+
+      if(sticky.length) {
+        toggleSticky(sticky);
+      }
     });
+
 
     if(location.hash) {
       location.hash = location.hash;
