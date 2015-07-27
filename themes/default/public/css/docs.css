@@ -1548,6 +1548,13 @@ body {
 .page-docs #search-results .st-pagination {
   text-align: center;
 }
+.docs-single .breadcrumbs {
+  border: none;
+  float: left;
+}
+.docs-single .js-sticky-nav form {
+  float: right;
+}
 .sidebar-menu {
   border: 1px solid #eaeef3;
   border-radius: 3px;
