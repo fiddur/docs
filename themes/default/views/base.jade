@@ -90,11 +90,12 @@ html(lang="en")
 
         .col-md-2
           nav.sidebar-sbs
-            h2 Step by step
-            a(href="").active Operations for Database connections
-            a(href="") Operations for Database connections
-            a(href="") Operations for Database connections
-            a(href="") Operations for Database connections
+            .wrapper
+              h2 Step by step
+              a(href="").active Operations for Database connections
+              a(href="") Operations for Database connections
+              a(href="") Operations for Database connections
+              a(href="") Operations for Database connections
 
     .related-howto
       .container
@@ -183,6 +184,26 @@ html(lang="en")
       }
     })
 
+  script(type='text/javascript').
+    $(window).on('scroll', function() {
+      var sticky = $('.sidebar-sbs');
+
+      function toggleSticky($nav) {
+        if(!$nav.hasClass('is-fixed')) {
+          navOffset = $nav.offset().top;
+        }
+        if ($(window).scrollTop() > navOffset) {
+          $nav.addClass('is-fixed');
+        } else {
+          $nav.removeClass('is-fixed');
+        }
+      }
+
+      if(sticky.length) {
+        toggleSticky(sticky);
+      }
+    });
+
   //- Begin Inspectlet Embed Code
   script#inspectletjs(type="text/javascript").
     window.__insp = window.__insp || [];
@@ -210,25 +231,6 @@ html(lang="en")
       React.createElement(TutorialNavigator, { platforms: !{JSON.stringify(quickstarts)} }),
         $('.js-tutorial-navigator').get(0)
     );
-
-    $(window).on('scroll', function() {
-      var sticky = $('.js-sticky-nav');
-
-      function toggleSticky($nav) {
-        if(!$nav.hasClass('is-fixed')) {
-          navOffset = $nav.offset().top;
-        }
-        if ($(window).scrollTop() > navOffset) {
-          $nav.addClass('is-fixed');
-        } else {
-          $nav.removeClass('is-fixed');
-        }
-      }
-
-      if(sticky.length) {
-        toggleSticky(sticky);
-      }
-    });
 
 
     if(location.hash) {

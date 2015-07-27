@@ -1542,13 +1542,19 @@ body {
   border: none;
 }
 .sidebar-sbs {
-  margin-top: 60px;
+  margin-top: 40px;
   display: none;
+  padding-top: 20px;
 }
 @media (min-width: 992px) {
   .sidebar-sbs {
     display: block;
   }
+}
+.sidebar-sbs.is-fixed .wrapper {
+  width: 8.294%;
+  position: fixed;
+  top: 20px;
 }
 .sidebar-sbs h2 {
   font-size: 13px;
