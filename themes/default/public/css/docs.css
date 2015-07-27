@@ -120,6 +120,7 @@
   display: inline-block;
   vertical-align: top;
   margin: 10px 15px;
+  cursor: pointer;
 }
 @media (min-width: 568px) {
   .js-tutorial-navigator .circle-list li {
@@ -133,9 +134,6 @@
   .js-tutorial-navigator .circle-logo {
     font-size: 13px;
   }
-}
-.js-tutorial-navigator .circle-logo .logo {
-  background: #aacfd9;
 }
 .breadcrumbs {
   font-size: 12px;
@@ -442,86 +440,6 @@
   box-shadow: none;
   height: 35px;
   padding-left: 32px;
-}
-.circle-logo {
-  display: inline-block;
-  text-align: center;
-  font-size: 14px;
-  width: 8em;
-  transition: transform 100ms cubic-bezier(0.455, 0.03, 0.515, 0.955);
-}
-.circle-logo:hover {
-  text-decoration: none;
-  transform: scale(1.05);
-}
-.circle-logo:hover .logo {
-  opacity: 0.9;
-}
-.circle-logo .logo {
-  position: relative;
-  height: 8em;
-  width: 8em;
-  background: #eaeef3;
-  color: #333;
-  border-radius: 50%;
-}
-.circle-logo .logo:before,
-.circle-logo .logo:after {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  width: 50%;
-  transform: translate(-50%, -50%);
-  font-size: 3em;
-}
-.circle-logo .logo:after {
-  content: "";
-  display: block;
-  background-size: contain;
-  background-position: center center;
-  background-repeat: no-repeat;
-  width: 50%;
-  height: 50%;
-}
-.circle-logo .title {
-  color: #333;
-  font-weight: bold;
-  margin: 10px 0;
-  min-height: 3em;
-}
-.circle-logo[data-name="how-to"] .logo:before {
-  top: 55%;
-}
-.circle-logo[data-name="angular"] .logo,
-.circle-logo[data-name="angularjs"] .logo {
-  background: -webkit-linear-gradient(top left, #008bff 40%, #2c6fad 140%);
-  background: linear-gradient(top left, #008bff 40%, #2c6fad 140%);
-}
-.circle-logo[data-name="angular"] .logo:after,
-.circle-logo[data-name="angularjs"] .logo:after {
-  background-image: url("https://cldup.com/YNpure3x4Z.svg");
-}
-.circle-logo[data-name="ember"] .logo,
-.circle-logo[data-name="emberjs"] .logo {
-  background: -webkit-linear-gradient(top left, #f46642 40%, #9c2202 140%);
-  background: linear-gradient(top left, #f46642 40%, #9c2202 140%);
-}
-.circle-logo[data-name="ember"] .logo:after,
-.circle-logo[data-name="emberjs"] .logo:after {
-  background-image: url("https://cldup.com/AcYPnXStyC.svg");
-  width: 80%;
-  height: 80%;
-}
-.circle-logo[data-name="node"] .logo,
-.circle-logo[data-name="nodejs"] .logo {
-  background: -webkit-linear-gradient(top left, #78b743 40%, #9fe861 140%);
-  background: linear-gradient(top left, #78b743 40%, #9fe861 140%);
-}
-.circle-logo[data-name="node"] .logo:after,
-.circle-logo[data-name="nodejs"] .logo:after {
-  background-image: url("https://cldup.com/QHrD4g1qxl.svg");
-  width: 50%;
-  height: 50%;
 }
 .chevron:before {
   border-style: solid;
