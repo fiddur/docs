@@ -1820,3 +1820,8 @@ body {
 .related-howto .choose:nth-child(2) i {
   color: #e0485a;
 }
+.related-howto .feedback-no textarea {
+  width: 100%;
+  min-height: 100px;
+  resize: none;
+}

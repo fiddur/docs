@@ -83,39 +83,6 @@ html(lang="en")
                     a(href="") Option
                   li
                     a(href="") Option
-            //- .accordion(data-accordion)
-            //-   .nav-title(data-control)
-            //-     i.icon-budicon-461
-            //-     h2 API
-            //-   ul.nav-content(data-content)
-            //-     li
-            //-       a(href="") Option
-            //-     li
-            //-       a(href="") Option
-            //-     li
-            //-       a(href="") Option
-            //- .accordion(data-accordion)
-            //-   .nav-title(data-control)
-            //-     i.icon-budicon-461
-            //-     h2 SDKS
-            //-   ul.nav-content(data-content)
-            //-     li
-            //-       a(href="") Option
-            //-     li
-            //-       a(href="") Option
-            //-     li
-            //-       a(href="") Option
-            //- .accordion(data-accordion)
-            //-   .nav-title(data-control)
-            //-     i.icon-budicon-461
-            //-     h2 How to's
-            //-   ul.nav-content(data-content)
-            //-     li
-            //-       a(href="") Option
-            //-     li
-            //-       a(href="") Option
-            //-     li
-            //-       a(href="") Option
 
         .col-sm-9.col-md-7
           section.docs-content(data-swiftype-index="true")
@@ -155,14 +122,18 @@ html(lang="en")
             h3 Send feedback
             p Did you find this document userful?
               .feedback-choose
-                .choose
+                .choose.choose-yes
                   a(href="")
                     i.icon-budicon-470
                     | Yes
-                .choose
+                .choose.choose-no
                   a(href="")
                     i.icon-budicon-471
                     | No
+              .feedback-yes(style="display: none")
+                h5 Thank you for your feedback
+              .feedback-no(style="display: none")
+                textarea.form-control
 
     hr
 
@@ -197,6 +168,20 @@ html(lang="en")
   //- Accordion
   script(type='text/javascript').
     $('.accordion').accordion();
+
+  //- Feedback
+  script(type="text/javascript").
+    $('.choose').on('click', function(e) {
+      e.preventDefault();
+
+      $('.feedback-choose').hide();
+
+      if ($(this).hasClass('choose-yes')) {
+        $('.feedback-yes').show();
+      } else {
+        $('.feedback-no').show();
+      }
+    })
 
   //- Begin Inspectlet Embed Code
   script#inspectletjs(type="text/javascript").
