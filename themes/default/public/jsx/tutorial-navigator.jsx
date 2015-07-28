@@ -434,7 +434,7 @@ var TutorialNavigator = React.createClass({
             
             <p>{this.state.question}</p>
 
-            <button href="#" data-skip onClick={this.handleSkip} className={(this.state.skippable) ? '' : 'hide' }>No, skip this<i className="icon-budicon-461"></i></button>
+            <button href="#" data-skip onClick={this.handleSkip} className={(this.state.skippable) ? '' : 'hide' }>No, skip this</button>
             <br />
             <Breadcrumbs tutorial={this.state} getTechName={this.getTechName} />
           </div>

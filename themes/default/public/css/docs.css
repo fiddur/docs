@@ -91,16 +91,14 @@
   background: none;
   outline: none;
   border: 0;
-  font-size: 1.4rem;
-  padding: 0;
-  margin: 0;
-}
-#tutorial-navigator [data-skip] i {
-  font-size: 1.4rem;
-  top: 4px;
-  position: relative;
-  animation: none;
-  opacity: 0.5;
+  background-color: #eb5424;
+  font-size: 13px;
+  border-radius: 3px;
+  font-weight: bold;
+  text-transform: uppercase;
+  color: #fff;
+  margin: 0 15px;
+  padding: 6px 15px;
 }
 #tutorial-navigator .circle-list {
   padding: 0;
@@ -709,11 +707,10 @@ section .circle-list li {
   }
 }
 .subcontent-box {
-  border: 1px solid #eaeef3;
   border-radius: 3px;
   padding: 20px 30px;
   padding-top: 10px;
-  background: #fcfdfe;
+  background: #fff;
 }
 .subcontent-box ul {
   list-style: none;
@@ -768,10 +765,9 @@ section .circle-list li {
     margin-bottom: -15px;
   }
 }
-.showcase {
-  border-top: 1px solid #eaeef3;
-  border-bottom: 1px solid #eaeef3;
-  background: #fcfdfe;
+.section-product:nth-of-type(even) {
+  background: #f6f7f9;
+  padding-bottom: 60px;
 }
 .showcase .container {
   margin: 0 auto;
