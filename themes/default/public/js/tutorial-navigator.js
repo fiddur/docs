@@ -11,9 +11,7 @@ var Quickstart = React.createClass({displayName: "Quickstart",
     
     return (
       React.createElement("div", {className: "quickstart", "data-type": quickstart.name, onClick: this.handleClick.bind(this, quickstart)}, 
-        React.createElement("div", {className: "symbol"}, 
-          React.createElement("i", {className: 'icon-budicon-' + quickstart.budicon})
-        ), 
+        React.createElement("div", {className: "symbol"}), 
         React.createElement("strong", {className: "title"}, quickstart.title), 
         React.createElement("p", {className: "description"}, quickstart.description), 
         React.createElement("p", {className: "sample"}, quickstart.example), 
@@ -271,12 +269,8 @@ var Tutorial = React.createClass({displayName: "Tutorial",
   render: function() {
     return (
       React.createElement("div", null, 
-        React.createElement("div", {className: (this.state.ready) ? 'tutorial-ready' : 'hide'}, 
-          React.createElement(Breadcrumbs, {tutorial: this.props.tutorial, getTechName: this.props.getTechName}), 
-          React.createElement("div", {className: "content-1", dangerouslySetInnerHTML: {__html: this.state.content1}}
-          ), 
-          React.createElement("div", {className: "content-2", dangerouslySetInnerHTML: {__html: this.state.content2}}
-          )
+        React.createElement("div", {className: (!this.state.ready) ? 'loading-tutorial' : 'hide'}, 
+          "Loading tutorial..."
         )
       )
     );

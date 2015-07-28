@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg width="45px" height="45px" viewBox="0 0 45 45" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:sketch="http://www.bohemiancoding.com/sketch/ns">
+    <!-- Generator: Sketch 3.3.3 (12081) - http://www.bohemiancoding.com/sketch -->
+    <title>hybrid</title>
+    <desc>Created with Sketch.</desc>
+    <defs></defs>
+    <g id="Mockups" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd" sketch:type="MSPage">
+        <g id="Docs-Home" sketch:type="MSArtboardGroup" transform="translate(-843.000000, -346.000000)">
+            <g id="Group" sketch:type="MSLayerGroup" transform="translate(118.000000, 296.000000)">
+                <g id="hybrid" transform="translate(725.000000, 50.000000)" sketch:type="MSShapeGroup">
+                    <path d="M30,30 L0,30 L0,0 L30,0 L30,30 Z" id="Fill-42" fill="#44C7F4"></path>
+                    <path d="M45,30 C45,38.2842708 38.2842708,45 30,45 C21.7157292,45 15,38.2842708 15,30 C15,21.7157292 21.7157292,15 30,15 C38.2842708,15 45,21.7157292 45,30" id="Fill-44" fill="#EC5424"></path>
+                    <path d="M30,15 C21.7157292,15 15,21.7157292 15,30 L30,30 L30,15 Z" id="Fill-45" fill="#16214D"></path>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

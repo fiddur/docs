@@ -46,7 +46,7 @@ html(lang="en")
       }
     - var nav = navigation['categories'];
 
-    .js-tutorial-navigator
+    #tutorial-navigator
 
 
     .navigation-bar.js-sticky-nav
@@ -180,7 +180,7 @@ html(lang="en")
     // Init Tutorial Navigator
     React.render(
       React.createElement(TutorialNavigator, { platforms: !{JSON.stringify(quickstarts)} }), 
-        $('.js-tutorial-navigator').get(0)
+        $('#tutorial-navigator').get(0)
     );
 
 

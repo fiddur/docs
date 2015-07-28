@@ -11,9 +11,7 @@ var Quickstart = React.createClass({
     
     return (
       <div className="quickstart" data-type={quickstart.name} onClick={this.handleClick.bind(this, quickstart)}>
-        <div className="symbol">
-          <i className={'icon-budicon-' + quickstart.budicon}></i>
-        </div>
+        <div className="symbol"></div>
         <strong className="title">{quickstart.title}</strong>
         <p className="description">{quickstart.description}</p>
         <p className="sample">{quickstart.example}</p>
@@ -271,12 +269,8 @@ var Tutorial = React.createClass({
   render: function() {
     return (
       <div>
-        <div className={(this.state.ready) ? 'tutorial-ready' : 'hide' }>
-          <Breadcrumbs tutorial={this.props.tutorial} getTechName={this.props.getTechName} />
-          <div className="content-1" dangerouslySetInnerHTML={{__html: this.state.content1}}>
-          </div>
-          <div className="content-2" dangerouslySetInnerHTML={{__html: this.state.content2}}>
-          </div>
+        <div className={(!this.state.ready) ? 'loading-tutorial' : 'hide' }>
+          Loading tutorial...
         </div>
       </div>
     );
