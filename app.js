@@ -207,14 +207,6 @@ app.use(passport.session());
 app.use(require('./lib/set_current_tenant'));
 app.use(require('./lib/set_user_is_owner'));
 
-// These are used by the snippets api to do @@value@@ string replacement
-var metaBaseUrl = nconf.get('BASE_URL') + '/meta';
-app.use(metaBaseUrl, defaultValues);
-app.use(metaBaseUrl, appendTicket);
-app.use(metaBaseUrl, overrideIfAuthenticated);
-app.use(metaBaseUrl, overrideIfClientInQs);
-app.use(metaBaseUrl, overrideIfClientInQsForPublicAllowedUrls);
-
 app.get('/ticket/step', function (req, res) {
   if (!req.query.ticket) return res.sendStatus(404);
   connections.getCurrentStep(req.query.ticket, function (err, currentStep) {
@@ -341,7 +333,7 @@ require('./lib/sdk-snippets/login-widget2/snippets-routes')(app);
 require('./lib/sdk-snippets/login-widget/demos-routes')(app);
 require('./lib/packager')(app, overrideIfAuthenticated);
 require('./lib/sitemap')(app);
-require('./lib/api')(app);
+app.use(nconf.get('BASE_URL') + '/meta', require('./lib/api'));
 
 
 /**
