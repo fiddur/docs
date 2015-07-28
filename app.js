@@ -7,7 +7,7 @@ if (cluster.isMaster && !module.parent) {
 
 // FOR TEST ONLY!!!
 if (process.env.NODE_ENV !== 'production') {
-  process.env.NODE_TLS_REJECT_UNAUTHORIZED = "0"
+  process.env.NODE_TLS_REJECT_UNAUTHORIZED = '0';
 }
 
 /**
@@ -18,7 +18,7 @@ var redirect = require('express-redirect');
 var prerender = require('prerender-node');
 var passport = require('passport');
 var markdocs = require('markdocs');
-var header = require('web-header');
+
 var express = require('express');
 var bodyParser = require('body-parser');
 var cookieParser = require('cookie-parser');
@@ -78,8 +78,6 @@ nconf.file('global', { file: config_file })
     'PORT': 5050
   });
 
-var regions = require('./lib/regions');
-
 if (nconf.get('COOKIE_NAME') !== 'auth0l') {
   nconf.set('CURRENT_TENANT_COOKIE', nconf.get('COOKIE_NAME') + '_current_tenant');
 }
@@ -109,10 +107,8 @@ if (nconf.get('PRERENDER_PROTOCOL')) {
 }
 
 var connections = require('./lib/connections');
-var clients     = require('./lib/clients');
 
 require('./lib/setupLogger');
-var winston = require('winston');
 
 passport.serializeUser(function(user, done) {
   if (!nconf.get('db')) {
@@ -133,193 +129,12 @@ passport.deserializeUser(function(id, done) {
   });
 });
 
-var defaultValues = function (req, res, next) {
-  res.locals.account = {};
-  res.locals.account.clientParam = '';
-  res.locals.account.userName     = '';
-  res.locals.account.appName      = 'YOUR_APP_NAME';
-  res.locals.account.tenant       = 'YOUR_TENANT';
-  res.locals.account.namespace    = 'YOUR_NAMESPACE';
-  res.locals.account.clientId     = 'YOUR_CLIENT_ID';
-  res.locals.account.clientSecret = 'YOUR_CLIENT_SECRET';
-  res.locals.account.callback     = default_callback.get(req) || 'http://YOUR_APP/callback';
-
-  res.locals.base_url             = nconf.get('DOMAIN_URL_DOCS');
-
-  // var escape = nconf.get('BASE_URL').replace(/\/([^\/]*)/ig, '/..');
-  res.locals.webheader            = header({ base_url: 'https://auth0.com' });
-  next();
-};
-
-var embedded = function (req, res, next) {
-  res.locals.embedded = false;
-  res.locals.include_metadata = false;
-
-  if (req.query.e || req.query.callback) {
-    res.locals.embedded = true;
-  }
-
-  if (req.query.m) {
-    res.locals.include_metadata = true;
-  }
-
-  if (req.query.callback) {
-    res.locals.jsonp = true;
-  } else if (!req.accepts('html') && req.accepts('application/json')) {
-    res.locals.json = true;
-  }
-
-  next();
-};
-
-var overrideIfAuthenticated = function (req, res, next) {
-  if (!req.user || !req.user.tenant) {
-    return next();
-  }
-
-  res.locals.user = {
-    tenant: req.user.tenant,
-    regions: req.user.regions
-  };
-
-  var params = {
-    tenant: req.user.tenant.name,
-    region: req.user.tenant.region
-  };
-
-  if (req.session.selectedClient) {
-    params.clientID = req.session.selectedClient;
-  }
-
-  clients.find(params, function (err, clients) {
-    if (err) {
-      winston.error('error: ' + err);
-      return next(err);
-    }
-
-    // filter user's clients
-    if (!req.user.is_owner) {
-      clients = clients.filter(function (c) {
-        return c.owners && ~c.owners.indexOf(req.user.id);
-      });
-    }
-
-    var globalClient = {}, nonGlobalClients = [];
-
-    clients.forEach(function (client) {
-      if (client.global) {
-        globalClient = client;
-        return;
-      }
-
-      nonGlobalClients.push(client);
-    });
-
-    res.locals.account = res.locals.account || {};
-    res.locals.account.loggedIn = true;
-    res.locals.account.userName = req.user.name;
-
-    res.locals.account.namespace = regions.get_namespace(req.user.tenant.region).replace('{tenant}', req.user.tenant.name);
-    res.locals.account.tenant = req.user.tenant.name;
-
-    res.locals.account.globalClientId = globalClient.clientID || 'YOUR_GLOBAL_CLIENT_ID';
-    res.locals.account.globalClientSecret = globalClient.clientSecret;
-
-    if (nonGlobalClients.length === 0) {
-      return next();
-    }
-
-    res.locals.account.clients = nonGlobalClients;
-
-    var client = nonGlobalClients[0];
-    res.locals.account.appName = client.name && client.name.trim !== '' ? client.name : 'Your App';
-    res.locals.account.clientId = client.clientID;
-    res.locals.account.clientParam = '&clientId=' + client.clientID;
-    res.locals.account.clientSecret = client.clientSecret;
-    res.locals.account.callback = client.callback;
-
-    next();
-  });
-};
-
-var overrideIfClientInQsForPublicAllowedUrls = function (req, res, next) {
-
-  var allowed = nconf.get('PUBLIC_ALLOWED_TUTORIALS').split(',').some(function (allowedUrl) {
-    return req.originalUrl.indexOf(allowedUrl) === 0;
-  });
-
-  if (!allowed) return next();
-  if (!req.query || !req.query.a) return next();
-
-  //todo this doesn't work yet from a foreign region.
-  //but these tutorials are not quite used
-
-  clients.findByClientId(req.query.a, { signingKey: 0 }, function (err, client) {
-    if (err) { return next(err); }
-    if (!client) {
-      return res.status(404).send('client not found');
-    }
-
-    res.locals.account.appName      = client.name && client.name.trim !== '' ? client.name : 'Your App';
-    res.locals.account.namespace    = nconf.get('DOMAIN_URL_SERVER').replace('{tenant}', client.tenant);
-    res.locals.account.tenant       = client.tenant;
-    res.locals.account.clientId     = client.clientID;
-    res.locals.account.clientParam = '&clientId=' + client.clientID;
-    res.locals.account.clientSecret = 'YOUR_CLIENT_SECRET'; // it's a public url (don't share client secret)
-    res.locals.account.callback     = client.callback;
-    res.locals.connectionName       = req.query.conn;
-
-    next();
-  });
-};
-
-var overrideIfClientInQs = function (req, res, next) {
-  if (!req.query || !req.query.a) { return next(); }
-  if (!req.user || !req.user.tenant) { return next(); }
-
-  var params = {
-    tenant: req.user.tenant.name,
-    region: req.user.tenant.region,
-    clientID: req.query.a
-  };
-
-  clients.find(params, function (err, clients) {
-    if (err) { return next(err); }
-
-    var client = clients && clients.length > 0 && clients[0];
-
-    if (!client) { return res.status(404).send('client not found'); }
-    if (!req.user.is_owner && (!client.owners || client.owners.indexOf(req.user.id) < 0)) {
-      return res.sendStatus(401);
-    }
-
-    res.locals.account.appName      = client.name && client.name.trim !== '' ? client.name : 'Your App';
-    res.locals.account.namespace    = regions.get_namespace(req.user.tenant.region).replace('{tenant}', req.user.tenant.name);
-    res.locals.account.tenant       = client.tenant;
-    res.locals.account.clientId     = client.clientID;
-    res.locals.account.clientParam = '&clientId=' + client.clientID;
-    res.locals.account.clientSecret = client.clientSecret;
-    res.locals.account.callback     = client.callback;
-    res.locals.connectionName       = req.query.conn;
-
-    next();
-  });
-};
-
-var appendTicket = function (req, res, next) {
-  res.locals.ticket = 'YOUR_TICKET';
-  res.locals.connectionDomain = 'YOUR_CONNECTION_NAME';
-  res.locals.connectionName = res.locals.connectionName || 'YOUR_CONNECTION_NAME';
-  if (!req.query.ticket) return next();
-  connections.findByTicket(req.query.ticket, function (err, connection) {
-    if (err) return res.sendStatus(500);
-    if (!connection) return res.sendStatus(404);
-    res.locals.ticket = req.query.ticket;
-    res.locals.connectionDomain = connection.options.tenant_domain;
-    res.locals.connectionName = connection.name;
-    next();
-  });
-};
+var defaultValues = require('./lib/middleware/defaultValues');
+var embedded = require('./lib/middleware/embedded');
+var overrideIfAuthenticated = require('./lib/middleware/overrideIfAuthenticated');
+var overrideIfClientInQsForPublicAllowedUrls = require('./lib/middleware/overrideIfClientInQsForPublicAllowedUrls');
+var overrideIfClientInQs = require('./lib/middleware/overrideIfClientInQs');
+var appendTicket = require('./lib/middleware/appendTicket');
 
 app.set('view engine', 'jade');
 app.enable('trust proxy');
@@ -418,25 +233,6 @@ app.get(nconf.get('BASE_URL') + '/switch', function (req, res) {
 });
 
 /**
- * Add quickstart collections for initialization
- * with server matching versioning for SEO and sitemap.xml
- */
-
-var collections = require('./lib/quickstart-collections');
-
-var quickstartCollections = function (req, res, next) {
-  if (res.locals.quickstart != null) return next();
-  res.locals.quickstart = {};
-  res.locals.quickstart.apptypes = collections.apptypes;
-  res.locals.quickstart.clientPlatforms = collections.clientPlatforms;
-  res.locals.quickstart.nativePlatforms = collections.nativePlatforms;
-  res.locals.quickstart.hybridPlatforms = collections.hybridPlatforms;
-  res.locals.quickstart.serverPlatforms = collections.serverPlatforms;
-  res.locals.quickstart.serverApis = collections.serverApis;
-  next();
-};
-
-/**
  * Manage redirect 301 for deprecated links
  * to point to new links or documents
  */
@@ -448,6 +244,12 @@ require('./lib/redirects')(app);
  * So that the tutorial navigator gets to load
  * quickstart collections and render
  */
+function alias(route) {
+ return function(req, res, next) {
+   req.url = route;
+   next();
+ };
+}
 
 var quickstartRoutes = require('./lib/quickstart-routes');
 
@@ -457,12 +259,7 @@ quickstartRoutes.forEach(function(route) {
 
 app.get(nconf.get('BASE_URL') + '/quickstart', alias(nconf.get('BASE_URL') || '/'));
 
-function alias(route) {
-  return function(req, res, next) {
-    req.url = route;
-    next();
-  };
-}
+
 
 var includes = require('./lib/includes/includes');
 includes.init(path.join(__dirname, '/docs/includes'));
@@ -484,7 +281,7 @@ docsapp.addPreRender(overrideIfAuthenticated);
 docsapp.addPreRender(overrideIfClientInQs);
 docsapp.addPreRender(overrideIfClientInQsForPublicAllowedUrls);
 docsapp.addPreRender(appendTicket);
-docsapp.addPreRender(quickstartCollections);
+docsapp.addPreRender(require('./lib/quickstart').middleware);
 docsapp.addPreRender(embedded);
 docsapp.addPreRender(require('./lib/articles-collection').middleware);
 docsapp.addPreRender(require('./lib/snippets-collection').middleware);
