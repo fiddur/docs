@@ -22,11 +22,14 @@
       &:nth-child(5)
         transition-delay: 100ms;
 
-.js-tutorial-navigator
+#tutorial-navigator
+  min-height: 640px;
+  background: #EBEFF2;
+  
   .tutorial-content
     display: none;
 
-  &.is-result
+  .is-result
     .tutorial-content
       display: block;
 
@@ -128,13 +131,14 @@
 
   .title
     display: block;
+    color: #333;
 
   .cta
     opacity: 0;
     transition: opacity 100ms ease;
 
-  .description
-    color: currentColor;
+  .description.description
+    color: color_oil;
     line-height: normal;
     font-size: 1rem;
     margin-bottom: 10px;
@@ -143,22 +147,32 @@
   .sample
     opacity: 0.5;
     font-size: 12px;
-
-  &[data-type="spa"]
-    .symbol
-      background: #EB5424;
-
+    
   &[data-type="webapp"]
     .symbol
-      background: #EACA2C;
-
+      &:after
+        background-image: url('../img/quickstarts/webapp.svg');
+        
+  &[data-type="spa"]
+    .symbol
+      &:after
+        background-image: url('../img/quickstarts/spa.svg');
+        
   &[data-type="hybrid"]
     .symbol
-      background: #44C7F4;
-
+      &:after
+        background-image: url('../img/quickstarts/hybrid.svg');
+        
+  &[data-type="native-mobile"]
+    .symbol
+      &:after
+        background-image: url('../img/quickstarts/native-mobile.svg');
+        
   &[data-type="backend"]
     .symbol
-      background: #DE60BB;
+      &:after
+        background-image: url('../img/quickstarts/backend.svg');
+      
 
   .symbol
     display: inline-block;
@@ -167,6 +181,20 @@
     height: 100px;
     width: 100px;
     margin-bottom: 20px;
+    background: white;
+    position: relative;
+    
+    &:after
+      position: absolute;
+      top: 0;
+      left: 0;
+      content: "";
+      display: block;
+      height: 100%;
+      width: 100%;
+      background-size: 50% 50%;
+      background-repeat: no-repeat;
+      background-position: center center;
 
     i
       font-size: 40px;
@@ -179,22 +207,22 @@
     background: white;
     color: color_oil;
     box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.1);
+    
+    .symbol
+      background: #EBEFF2;
 
     .cta
       opacity: 1;
-
-    i
-      color: white;
 
 @media screen and (max-width: 992px)
   .quickstart
     cursor: default;
     opacity: 0.3;
-    background: #AACFD9;
+    background: #A9B3BC;
     box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.1);
     pointer-events: none;
-
-    i
+    
+    .symbol
       opacity: 0.5;
 
     .cta
@@ -212,9 +240,12 @@
       opacity: 1;
       pointer-events: auto;
 
-    i
-      color: white;
+    i,
+    .symbol
       opacity: 1;
+      
+    .symbol
+      background: #EBEFF2;
 
 
 
