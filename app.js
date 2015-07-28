@@ -331,8 +331,8 @@ require('./lib/sdk-snippets/lock/snippets-routes')(app);
 require('./lib/sdk-snippets/login-widget2/demos-routes')(app);
 require('./lib/sdk-snippets/login-widget2/snippets-routes')(app);
 require('./lib/sdk-snippets/login-widget/demos-routes')(app);
-require('./lib/packager')(app, overrideIfAuthenticated);
-require('./lib/sitemap')(app);
+app.use(nconf.get('BASE_URL'), require('./lib/packager'));
+app.use(nconf.get('BASE_URL'), require('./lib/sitemap'));
 app.use(nconf.get('BASE_URL') + '/meta', require('./lib/api'));
 
 
