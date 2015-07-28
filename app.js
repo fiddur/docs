@@ -80,9 +80,6 @@ nconf.file('global', { file: config_file })
 
 var regions = require('./lib/regions');
 
-// after configuration so values are available
-var middlewares = require('./lib/middlewares');
-
 if (nconf.get('COOKIE_NAME') !== 'auth0l') {
   nconf.set('CURRENT_TENANT_COOKIE', nconf.get('COOKIE_NAME') + '_current_tenant');
 }
@@ -364,7 +361,7 @@ if (nconf.get('NODE_ENV') !== 'test') {
   app.use(logger('dev'));
 }
 
-app.use(middlewares.cors);
+app.use(require('./lib/middleware/cors'));
 
 app.use(cookieParser());
 
@@ -536,7 +533,7 @@ docsapp.addPreRender(require('./lib/sdk-snippets/login-widget/middleware'));
 docsapp.addPreRender(require('./lib/sdk-snippets/login-widget2/middleware'));
 docsapp.addPreRender(require('./lib/sdk-snippets/lock/middleware-browser'));
 docsapp.addPreRender(require('./lib/sdk-snippets/lock/middleware'));
-docsapp.addPreRender(middlewares.configuration);
+docsapp.addPreRender(require('./lib/middleware/configuration'));
 require('./lib/doc-processors').processors.forEach(function(processor) {
   docsapp.addDocumentProcessor(processor);
 });
