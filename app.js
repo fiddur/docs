@@ -30,8 +30,6 @@ var http = require('http');
 var path = require('path');
 var fs = require('fs');
 
-var default_callback = require('./lib/default_callback');
-
 var app = redirect(express());
 
 var config_file = process.env.CONFIG_FILE || path.join(__dirname, 'config.json');
@@ -207,6 +205,7 @@ app.use(passport.session());
 app.use(require('./lib/middleware/set-current-tenant'));
 app.use(require('./lib/middleware/set-user-is-owner'));
 
+var connections = require('./lib/connections');
 app.get('/ticket/step', function (req, res) {
   if (!req.query.ticket) return res.sendStatus(404);
   connections.getCurrentStep(req.query.ticket, function (err, currentStep) {
@@ -236,22 +235,20 @@ require('./lib/redirects')(app);
  * So that the tutorial navigator gets to load
  * quickstart collections and render
  */
-function alias(route) {
- return function(req, res, next) {
-   req.url = route;
-   next();
- };
-}
+var quickstart = require('./lib/quickstart');
 
-var quickstartRoutes = require('./lib/quickstart-routes');
-
-quickstartRoutes.forEach(function(route) {
+quickstart.routes.forEach(function(route) {
   app.get(nconf.get('BASE_URL') + '/quickstart' + route, alias(nconf.get('BASE_URL') || '/'));
 });
 
 app.get(nconf.get('BASE_URL') + '/quickstart', alias(nconf.get('BASE_URL') || '/'));
 
-
+function alias(route) {
+  return function(req, res, next) {
+    req.url = route;
+    next();
+  };
+}
 
 var includes = require('./lib/includes/includes');
 includes.init(path.join(__dirname, '/docs/includes'));
@@ -273,49 +270,12 @@ docsapp.addPreRender(overrideIfAuthenticated);
 docsapp.addPreRender(overrideIfClientInQs);
 docsapp.addPreRender(overrideIfClientInQsForPublicAllowedUrls);
 docsapp.addPreRender(appendTicket);
-docsapp.addPreRender(require('./lib/quickstart').middleware);
+docsapp.addPreRender(quickstart.middleware);
 docsapp.addPreRender(embedded);
-docsapp.addPreRender(require('./lib/articles-collection').middleware);
-docsapp.addPreRender(require('./lib/snippets-collection').middleware);
-docsapp.addPreRender(require('./lib/articles-tags').middleware);
-docsapp.addPreRender(function(req,res,next){
-  var scheme = process.env.NODE_ENV === 'production' ? 'https' : 'http';
-
-  res.locals.uiURL              = scheme + '://' + nconf.get('DOMAIN_URL_APP');
-  res.locals.uiURLLoginCallback = res.locals.uiURL + '/callback';
-  res.locals.sdkURL             = scheme + '://' + nconf.get('DOMAIN_URL_SDK');
-
-  if (res.locals.account && res.locals.account.clientId) {
-    res.locals.uiAppSettingsURL = res.locals.uiURL + '/#/applications/' + res.locals.account.clientId + '/settings';
-    res.locals.uiAppAddonsURL = res.locals.uiURL + '/#/applications/' + res.locals.account.clientId + '/addons';
-  }
-
-  function removeScheme(url) {
-    return url.slice(url.indexOf(':') + 1);
-  }
-
-  // Auth0 client side Javascript URLs to use
-  res.locals.auth0js_url                  = nconf.get('AUTH0JS_URL');
-  res.locals.auth0js_url_no_scheme        = removeScheme(nconf.get('AUTH0JS_URL'));
-
-  res.locals.auth0_angular_url            = nconf.get('AUTH0_ANGULAR_URL');
-  res.locals.auth0_angular_url_no_scheme  = removeScheme(nconf.get('AUTH0_ANGULAR_URL'));
-
-  res.locals.widget_url                   = nconf.get('LOGIN_WIDGET_URL');
-  res.locals.widget_url_no_scheme         = removeScheme(nconf.get('LOGIN_WIDGET_URL'));
-
-  res.locals.hasCallback = res.locals.account && !!res.locals.account.callback;
-
-  // defualt values
-  if (res.locals.account) {
-    res.locals.account.callback = res.locals.account.callback ||
-                                  default_callback.get(req) ||
-                                  'http://YOUR_APP/callback';
-  }
-
-  next();
-});
-
+docsapp.addPreRender(require('./lib/collections/articles').middleware);
+docsapp.addPreRender(require('./lib/collections/snippets').middleware);
+docsapp.addPreRender(require('./lib/collections/articles-tags').middleware);
+docsapp.addPreRender(require('./lib/middleware/url-variables'));
 docsapp.addPreRender(require('./lib/external/middleware'));
 docsapp.addPreRender(require('./lib/external/api2-explorer-middleware'));
 docsapp.addPreRender(require('./lib/sdk-snippets/login-widget/middleware'));
@@ -326,15 +286,16 @@ docsapp.addPreRender(require('./lib/middleware/configuration'));
 require('./lib/doc-processors').processors.forEach(function(processor) {
   docsapp.addDocumentProcessor(processor);
 });
+
 require('./lib/sdk-snippets/lock/demos-routes')(app);
 require('./lib/sdk-snippets/lock/snippets-routes')(app);
 require('./lib/sdk-snippets/login-widget2/demos-routes')(app);
 require('./lib/sdk-snippets/login-widget2/snippets-routes')(app);
 require('./lib/sdk-snippets/login-widget/demos-routes')(app);
+
 app.use(nconf.get('BASE_URL'), require('./lib/packager'));
 app.use(nconf.get('BASE_URL'), require('./lib/sitemap'));
 app.use(nconf.get('BASE_URL') + '/meta', require('./lib/api'));
-
 
 /**
  * Export `docsapp` or boot a new https server
