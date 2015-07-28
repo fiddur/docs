@@ -81,56 +81,60 @@ $(function() {
     }
 
     var $activeLink = getActiveLink(),
-        $activeSection = $($activeLink.find('a').attr('href')),
-        activeSectionPos = $activeSection.offset().top,
-        activeSectionBottom = activeSectionPos + $activeSection.outerHeight();
+        $activeSection = $($activeLink.find('a').attr('href'));
 
-    var $nextLink = getLink('next');
-    var $prevLink = getLink('prev');
+    if($activeSection.length) {
+      var activeSectionPos = $activeSection.offset().top,
+          activeSectionBottom = activeSectionPos + $activeSection.outerHeight();
 
-    if ($nextLink.length) {
-      var $nextSection = $($nextLink.find('a').attr('href')),
-          nextSectionPos = $nextSection.offset().top,
-          nextSectionBottom = nextSectionPos + $nextSection.outerHeight();
+      var $nextLink = getLink('next');
+      var $prevLink = getLink('prev');
 
-      if (getScroll() >= nextSectionPos) {
-        setActiveSection($nextLink);
-      }
-    }
+      if ($nextLink.length) {
+        var $nextSection = $($nextLink.find('a').attr('href')),
+            nextSectionPos = $nextSection.offset().top,
+            nextSectionBottom = nextSectionPos + $nextSection.outerHeight();
 
-    if ($prevLink.length) {
-      var $prevSection = $($prevLink.find('a').attr('href')),
-          prevSectionPos = $prevLink.offset().top,
-          prevSectionBottom = prevSectionPos + $prevSection.outerHeight(),
-          backThreshold = 100;
-
-      if (getScroll() < activeSectionPos - backThreshold) {
-        setActiveSection($prevLink);
-      }
-    }
-
-    function setActiveSection($selected) {
-      $nav.find('.is-active').removeClass('is-active');
-      $selected.addClass('is-active');
-    }
-
-    function getLink(direction) {
-      var next = $activeLink.next(),
-          prev = $activeLink.prev();
-
-      if(direction === 'next') {
-        if(next.length) {
-          return next;
+        if (getScroll() >= nextSectionPos) {
+          setActiveSection($nextLink);
         }
       }
 
-      if(direction === 'prev') {
-        if(prev.length) {
-          return prev;
+      if ($prevLink.length) {
+        var $prevSection = $($prevLink.find('a').attr('href')),
+            prevSectionPos = $prevLink.offset().top,
+            prevSectionBottom = prevSectionPos + $prevSection.outerHeight(),
+            backThreshold = 100;
+
+        if (getScroll() < activeSectionPos - backThreshold) {
+          setActiveSection($prevLink);
         }
       }
 
-      return [];
+      function setActiveSection($selected) {
+        $nav.find('.is-active').removeClass('is-active');
+        $selected.addClass('is-active');
+      }
+
+      function getLink(direction) {
+        var next = $activeLink.next(),
+            prev = $activeLink.prev();
+
+        if(direction === 'next') {
+          if(next.length) {
+            return next;
+          }
+        }
+
+        if(direction === 'prev') {
+          if(prev.length) {
+            return prev;
+          }
+        }
+
+        return [];
+      }
+
     }
   }
 });

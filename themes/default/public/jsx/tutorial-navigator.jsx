@@ -191,7 +191,7 @@ var Breadcrumbs = React.createClass({
     }
 
     if(tutorial.tech2) {
-      list.push(<a href={"/quickstart/" + tutorial.appType + "/" + tutorial.tech1}><span className="plus">{"+"}</span><span className="text">{this.props.getTechName('backend', tutorial.tech2)}</span></a>);
+      list.push(<a href={"/quickstart/" + tutorial.appType + "/" + tutorial.tech1}><i className="icon-budicon-461"></i><span className="text">{this.props.getTechName('backend', tutorial.tech2)}</span></a>);
     }
 
     return (<div className="breadcrumbs">{list}</div>);

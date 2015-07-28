@@ -9,37 +9,37 @@
           "name": "Overview",
           "icon": "icon-budicon-121",
           "description": "What is Auth0 and how can it help you build applications.",
-          "href": "#"
+          "href": "/overview"
         },
         {
           "name": "Applications",
           "icon": "icon-budicon-349",
           "description": "What is Auth0 and how can it help you build applications.",
-          "href": "#"
+          "href": "/applications"
         },
         {
           "name": "Rules",
           "icon": "icon-budicon-173",
           "description": "What is Auth0 and how can it help you build applications.",
-          "href": "#"
+          "href": "/rules"
         },
         {
           "name": "Identity Providers",
           "icon": "icon-budicon-297",
           "description": "What is Auth0 and how can it help you build applications.",
-          "href": "#"
+          "href": "/identityproviders"
         },
         {
           "name": "Single Sign On",
           "icon": "icon-budicon-170",
           "description": "What is Auth0 and how can it help you build applications.",
-          "href": "#"
+          "href": "/sso/single-sign-on"
         },
         {
           "name": "User Profile",
           "icon": "icon-budicon-289",
           "description": "What is Auth0 and how can it help you build applications.",
-          "href": "#"
+          "href": "/user-profile"
         }
       ]
     },
@@ -109,7 +109,7 @@
         },
         {
           "name": "Ruby on Rails",
-          "slug": "lock",
+          "slug": "rails",
           "href": "#"
         },
         {
@@ -154,7 +154,7 @@
         },
         {
           "name": ".NET",
-          "slug": "dotnet",
+          "slug": "net",
           "href": "#"
         },
         {

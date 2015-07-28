@@ -191,7 +191,7 @@ var Breadcrumbs = React.createClass({displayName: "Breadcrumbs",
     }
 
     if(tutorial.tech2) {
-      list.push(React.createElement("a", {href: "/quickstart/" + tutorial.appType + "/" + tutorial.tech1}, React.createElement("span", {className: "plus"}, "+"), React.createElement("span", {className: "text"}, this.props.getTechName('backend', tutorial.tech2))));
+      list.push(React.createElement("a", {href: "/quickstart/" + tutorial.appType + "/" + tutorial.tech1}, React.createElement("i", {className: "icon-budicon-461"}), React.createElement("span", {className: "text"}, this.props.getTechName('backend', tutorial.tech2))));
     }
 
     return (React.createElement("div", {className: "breadcrumbs"}, list));

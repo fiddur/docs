@@ -4,7 +4,7 @@
 // Components
 @import 'inc/quickstart'
 @import 'inc/carousel'
-@import 'inc/sticky-nav'
+@import 'inc/navigation-bar'
 @import 'inc/search-control'
 @import 'inc/chevron'
 @import 'prettify'
@@ -659,8 +659,10 @@ body
   .breadcrumbs
     border none
     float left
+    padding-left 0
+    margin-left 0
 
-  .js-sticky-nav form
+  .navigation-bar form
     float right
 
 
@@ -724,9 +726,10 @@ body
 
 
 .sidebar-sbs
+  margin-top 40px
   display none
-  padding-top 60px
-  position relative
+  padding-top 20px
+  
   +breakpoint("desktop")
     display block
 
@@ -736,30 +739,31 @@ body
       position fixed
       top 20px
 
-  &.is-stop
-    .wrapper
-      width 100%
-      position absolute
-      top auto
-      bottom 123px
-
   h2
     font-size 13px
     font-weight 700
     text-transform uppercase
     color color_oil
     margin 0 0 20px
+  
+  ul,
+  li
+    padding: 0;
+    margin: 0;
+    list-style: none;
 
-  a
+  li a
     font-size 12px
     display block
     margin-bottom 15px
-    &.active
-      color #333
-      font-weight 700
+    
+  li.is-active a
+    color #333
+    font-weight 700
 
 .docs-content
   padding-bottom 20px
+  
   +breakpoint("tablet")
     padding 30px 10px 60px
 
@@ -870,18 +874,10 @@ body
         color #E0485A
 
   .feedback-no
-    clearfix()
     textarea
       width 100%
       min-height 100px
       resize none
-
-    input
-      float right
-      margin-top 10px
-      outline none
-      &:active
-        outline none
 
 
 
