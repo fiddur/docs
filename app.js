@@ -108,7 +108,7 @@ if (nconf.get('PRERENDER_PROTOCOL')) {
 
 var connections = require('./lib/connections');
 
-require('./lib/setupLogger');
+require('./lib/setup-logger');
 
 passport.serializeUser(function(user, done) {
   if (!nconf.get('db')) {
@@ -129,12 +129,12 @@ passport.deserializeUser(function(id, done) {
   });
 });
 
-var defaultValues = require('./lib/middleware/defaultValues');
+var defaultValues = require('./lib/middleware/default-values');
 var embedded = require('./lib/middleware/embedded');
-var overrideIfAuthenticated = require('./lib/middleware/overrideIfAuthenticated');
-var overrideIfClientInQsForPublicAllowedUrls = require('./lib/middleware/overrideIfClientInQsForPublicAllowedUrls');
-var overrideIfClientInQs = require('./lib/middleware/overrideIfClientInQs');
-var appendTicket = require('./lib/middleware/appendTicket');
+var overrideIfAuthenticated = require('./lib/middleware/override-if-authenticated');
+var overrideIfClientInQsForPublicAllowedUrls = require('./lib/middleware/override-if-client-in-qs-for-public-allowed-urls');
+var overrideIfClientInQs = require('./lib/middleware/override-if-client-in-qs');
+var appendTicket = require('./lib/middleware/append-ticket');
 
 app.set('view engine', 'jade');
 app.enable('trust proxy');
@@ -180,7 +180,7 @@ app.use(require('./lib/middleware/cors'));
 
 app.use(cookieParser());
 
-var sessionStore = require('./lib/sessionStore');
+var sessionStore = require('./lib/session-store');
 app.use(session({
   secret: nconf.get('sessionSecret'),
   store: sessionStore ? sessionStore(session) : undefined,
@@ -204,8 +204,8 @@ app.use(nconf.get('BASE_URL') + '/media', express.static(path.join(__dirname, 'd
 
 app.use(passport.initialize());
 app.use(passport.session());
-app.use(require('./lib/set_current_tenant'));
-app.use(require('./lib/set_user_is_owner'));
+app.use(require('./lib/middleware/set-current-tenant'));
+app.use(require('./lib/middleware/set-user-is-owner'));
 
 app.get('/ticket/step', function (req, res) {
   if (!req.query.ticket) return res.sendStatus(404);
