@@ -1,7 +1,7 @@
 doctype html
 html(lang="en")
   head
-    title= site.title
+    title= title + ' - ' + site.title
     meta(charset="utf-8")
     meta(name="description", content="")
     meta(name="author", content="")
@@ -44,10 +44,8 @@ html(lang="en")
             .html('Open Dashboard');
         });
       }
-    - var nav = navigation['categories'];
 
-
-    .js-sticky-nav
+    .navigation-bar
       .wrapper
         .container
           .breadcrumbs
@@ -55,7 +53,7 @@ html(lang="en")
               span.text Documentation
             a
               i.icon-budicon-461
-              span.text Auth0.js
+              span.text= title
 
 
           form#search(role="search", action=env.BASE_URL + "/search", autocomplete="off")
@@ -63,39 +61,29 @@ html(lang="en")
               i.icon-budicon-489
               input#search-input.form-control(type="text", placeholder="Search for docs", name="stq")
 
-
-    - var nav = navigation['categories'];
-
     //- Start content
-    .container
+    .js-doc-template.container
       .row
         .col-sm-3
-          nav.sidebar-menu(data-accordion-group)
-            - for (var item in nav)
-              .accordion(data-accordion)
-                .nav-title(data-control)
-                  i.icon-budicon-461
-                  h2= nav[item].name
-                ul.nav-content(data-content)
-                  li
-                    a(href="") Option
-                  li
-                    a(href="") Option
-                  li
-                    a(href="") Option
+          include inc/sidebar-menu
 
         .col-sm-9.col-md-7
           section.docs-content(data-swiftype-index="true")
             block content
 
         .col-md-2
-          nav.sidebar-sbs
+          nav.sidebar-sbs.js-sticky-nav
             .wrapper
               h2 Step by step
-              a(href="").active Operations for Database connections
-              a(href="") Operations for Database connections
-              a(href="") Operations for Database connections
-              a(href="") Operations for Database connections
+              ul 
+                li.is-active
+                  a(href="") Operations for Database connections
+                li 
+                  a(href="") Operations for Database connections
+                li 
+                  a(href="") Operations for Database connections
+                li 
+                  a(href="") Operations for Database connections
 
     .related-howto
       .container
@@ -146,11 +134,8 @@ html(lang="en")
   //- End search feature scripts
 
   script(src=env.BASE_URL + '/js/prettify.js')
-  script(src=env.BASE_URL + '/js/owl.carousel.min.js')
   script(src=env.BASE_URL + '/js/jquery.accordion.min.js')
-  script(src=env.BASE_URL + '/js/page.min.js')
-  script(src='https://fb.me/react-0.13.3.min.js')
-  script(src=env.BASE_URL + '/js/tutorial-navigator.js')
+  script(src=env.BASE_URL + '/js/docs.js')
 
 
   script(type='text/javascript').
@@ -184,26 +169,6 @@ html(lang="en")
       }
     })
 
-  script(type='text/javascript').
-    $(window).on('scroll', function() {
-      var sticky = $('.sidebar-sbs');
-
-      function toggleSticky($nav) {
-        if(!$nav.hasClass('is-fixed')) {
-          navOffset = $nav.offset().top;
-        }
-        if ($(window).scrollTop() > navOffset) {
-          $nav.addClass('is-fixed');
-        } else {
-          $nav.removeClass('is-fixed');
-        }
-      }
-
-      if(sticky.length) {
-        toggleSticky(sticky);
-      }
-    });
-
   //- Begin Inspectlet Embed Code
   script#inspectletjs(type="text/javascript").
     window.__insp = window.__insp || [];
@@ -225,12 +190,6 @@ html(lang="en")
     //-     .prepend('<a class="anchor" href="#' + sectionIndex + '"><i class="icon icon-budicon-345"></i></a>');
     //-   sectionIndex++;
     //- });
-
-    // Init Tutorial Navigator
-    React.render(
-      React.createElement(TutorialNavigator, { platforms: !{JSON.stringify(quickstarts)} }),
-        $('.js-tutorial-navigator').get(0)
-    );
 
 
     if(location.hash) {

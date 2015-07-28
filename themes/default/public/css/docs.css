@@ -374,51 +374,51 @@
 .no-js .js-carousel {
   display: block;
 }
-.js-sticky-nav {
+.navigation-bar {
   min-height: 66px;
 }
 @media (min-width: 992px) {
-  .js-sticky-nav.is-fixed .wrapper {
+  .navigation-bar.is-fixed .wrapper {
     position: fixed;
     top: 0;
     left: 0;
   }
 }
-.js-sticky-nav .wrapper {
+.navigation-bar .wrapper {
   border-bottom: 1px solid #eaeef3;
   background: #fff;
   width: 100%;
   z-index: 800;
 }
-.js-sticky-nav form {
+.navigation-bar form {
   padding: 15px 0;
 }
-.js-sticky-nav .list-inline {
+.navigation-bar .list-inline {
   margin: 0;
   font-size: 15px;
 }
-.js-sticky-nav .list-inline a {
+.navigation-bar .list-inline a {
   color: #798590;
   height: 35px;
   line-height: 35px;
 }
-.js-sticky-nav .list-inline a:hover {
+.navigation-bar .list-inline a:hover {
   opacity: 0.7;
 }
-.js-sticky-nav .list-inline li {
+.navigation-bar .list-inline li {
   margin: 0;
   padding: 0;
   padding: 15px 0;
 }
-.js-sticky-nav .list-inline li.is-active {
+.navigation-bar .list-inline li.is-active {
   color: #333;
   font-weight: bold;
   box-shadow: 0 1px 0 0 #333;
 }
-.js-sticky-nav .list-inline li.is-active a {
+.navigation-bar .list-inline li.is-active a {
   color: #333;
 }
-.js-sticky-nav .list-inline li + li {
+.navigation-bar .list-inline li + li {
   margin-left: 50px;
 }
 .search-control {
@@ -1469,8 +1469,10 @@ body {
 .docs-single .breadcrumbs {
   border: none;
   float: left;
+  padding-left: 0;
+  margin-left: 0;
 }
-.docs-single .js-sticky-nav form {
+.docs-single .navigation-bar form {
   float: right;
 }
 .sidebar-menu {
@@ -1563,12 +1565,18 @@ body {
   color: #5c666f;
   margin: 0 0 20px;
 }
-.sidebar-sbs a {
+.sidebar-sbs ul,
+.sidebar-sbs li {
+  padding: 0;
+  margin: 0;
+  list-style: none;
+}
+.sidebar-sbs li a {
   font-size: 12px;
   display: block;
   margin-bottom: 15px;
 }
-.sidebar-sbs a.active {
+.sidebar-sbs li.is-active a {
   color: #333;
   font-weight: 700;
 }
