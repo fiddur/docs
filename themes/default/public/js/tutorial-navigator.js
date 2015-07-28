@@ -434,7 +434,7 @@ var TutorialNavigator = React.createClass({displayName: "TutorialNavigator",
             
             React.createElement("p", null, this.state.question), 
 
-            React.createElement("button", {href: "#", "data-skip": true, onClick: this.handleSkip, className: (this.state.skippable) ? '' : 'hide'}, "No, skip this", React.createElement("i", {className: "icon-budicon-461"})), 
+            React.createElement("button", {href: "#", "data-skip": true, onClick: this.handleSkip, className: (this.state.skippable) ? '' : 'hide'}, "No, skip this"), 
             React.createElement("br", null), 
             React.createElement(Breadcrumbs, {tutorial: this.state, getTechName: this.getTechName})
           ), 
