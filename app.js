@@ -1,4 +1,6 @@
-require('babel/register');
+require('babel/register')({
+  sourceMaps: (process.env.NODE_ENV === 'production') ? false : 'inline'
+});
 var cluster = require('cluster');
 
 if (cluster.isMaster && !module.parent) {
@@ -104,8 +106,6 @@ if (nconf.get('PRERENDER_PROTOCOL')) {
   prerender.set('protocol', nconf.get('PRERENDER_PROTOCOL'));
 }
 
-var connections = require('./lib/connections');
-
 require('./lib/setup-logger');
 
 passport.serializeUser(function(user, done) {
@@ -126,13 +126,6 @@ passport.deserializeUser(function(id, done) {
     userColl.findOne({id: id}, done);
   });
 });
-
-var defaultValues = require('./lib/middleware/default-values');
-var embedded = require('./lib/middleware/embedded');
-var overrideIfAuthenticated = require('./lib/middleware/override-if-authenticated');
-var overrideIfClientInQsForPublicAllowedUrls = require('./lib/middleware/override-if-client-in-qs-for-public-allowed-urls');
-var overrideIfClientInQs = require('./lib/middleware/override-if-client-in-qs');
-var appendTicket = require('./lib/middleware/append-ticket');
 
 app.set('view engine', 'jade');
 app.enable('trust proxy');
@@ -174,11 +167,12 @@ if (nconf.get('NODE_ENV') !== 'test') {
   app.use(logger('dev'));
 }
 
-app.use(require('./lib/middleware/cors'));
 
-app.use(cookieParser());
-
+var middleware = require('./lib/middleware');
 var sessionStore = require('./lib/session-store');
+
+app.use(middleware.cors);
+app.use(cookieParser());
 app.use(session({
   secret: nconf.get('sessionSecret'),
   store: sessionStore ? sessionStore(session) : undefined,
@@ -202,8 +196,9 @@ app.use(nconf.get('BASE_URL') + '/media', express.static(path.join(__dirname, 'd
 
 app.use(passport.initialize());
 app.use(passport.session());
-app.use(require('./lib/middleware/set-current-tenant'));
-app.use(require('./lib/middleware/set-user-is-owner'));
+app.use(middleware.setCurrentTenant);
+app.use(middleware.setUserIsOwner);
+
 
 var connections = require('./lib/connections');
 app.get('/ticket/step', function (req, res) {
@@ -237,18 +232,19 @@ require('./lib/redirects')(app);
  */
 var quickstart = require('./lib/quickstart');
 
-quickstart.routes.forEach(function(route) {
-  app.get(nconf.get('BASE_URL') + '/quickstart' + route, alias(nconf.get('BASE_URL') || '/'));
-});
-
-app.get(nconf.get('BASE_URL') + '/quickstart', alias(nconf.get('BASE_URL') || '/'));
-
 function alias(route) {
   return function(req, res, next) {
     req.url = route;
     next();
   };
 }
+
+quickstart.routes.forEach(function(route) {
+  app.get(nconf.get('BASE_URL') + '/quickstart' + route, alias(nconf.get('BASE_URL') || '/'));
+});
+
+app.get(nconf.get('BASE_URL') + '/quickstart', alias(nconf.get('BASE_URL') || '/'));
+
 
 var includes = require('./lib/includes/includes');
 includes.init(path.join(__dirname, '/docs/includes'));
@@ -264,14 +260,14 @@ var docsapp = new markdocs.App({
   useDefaultProcessors: false
 }, app);
 
-docsapp.addPreRender(defaultValues);
+docsapp.addPreRender(middleware.defaultValues);
 docsapp.addPreRender(includes.add);
-docsapp.addPreRender(overrideIfAuthenticated);
-docsapp.addPreRender(overrideIfClientInQs);
-docsapp.addPreRender(overrideIfClientInQsForPublicAllowedUrls);
-docsapp.addPreRender(appendTicket);
+docsapp.addPreRender(middleware.overrideIfAuthenticated);
+docsapp.addPreRender(middleware.overrideIfClientInQs);
+docsapp.addPreRender(middleware.overrideIfClientInQsForPublicAllowedUrls);
+docsapp.addPreRender(middleware.appendTicket);
 docsapp.addPreRender(quickstart.middleware);
-docsapp.addPreRender(embedded);
+docsapp.addPreRender(middleware.embedded);
 docsapp.addPreRender(require('./lib/collections/articles').middleware);
 docsapp.addPreRender(require('./lib/collections/snippets').middleware);
 docsapp.addPreRender(require('./lib/collections/articles-tags').middleware);
@@ -282,7 +278,7 @@ docsapp.addPreRender(require('./lib/sdk-snippets/login-widget/middleware'));
 docsapp.addPreRender(require('./lib/sdk-snippets/login-widget2/middleware'));
 docsapp.addPreRender(require('./lib/sdk-snippets/lock/middleware-browser'));
 docsapp.addPreRender(require('./lib/sdk-snippets/lock/middleware'));
-docsapp.addPreRender(require('./lib/middleware/configuration'));
+docsapp.addPreRender(middleware.configuration);
 require('./lib/doc-processors').processors.forEach(function(processor) {
   docsapp.addDocumentProcessor(processor);
 });
