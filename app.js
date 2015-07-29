@@ -1,4 +1,6 @@
-require('babel/register');
+require('babel/register')({
+  sourceMaps: (process.env.NODE_ENV === 'production') ? false : 'inline'
+});
 var cluster = require('cluster');
 
 if (cluster.isMaster && !module.parent) {
@@ -7,7 +9,7 @@ if (cluster.isMaster && !module.parent) {
 
 // FOR TEST ONLY!!!
 if (process.env.NODE_ENV !== 'production') {
-  process.env.NODE_TLS_REJECT_UNAUTHORIZED = "0"
+  process.env.NODE_TLS_REJECT_UNAUTHORIZED = '0';
 }
 
 /**
@@ -18,7 +20,7 @@ var redirect = require('express-redirect');
 var prerender = require('prerender-node');
 var passport = require('passport');
 var markdocs = require('markdocs');
-var header = require('web-header');
+
 var express = require('express');
 var bodyParser = require('body-parser');
 var cookieParser = require('cookie-parser');
@@ -29,8 +31,6 @@ var nconf = require('nconf');
 var http = require('http');
 var path = require('path');
 var fs = require('fs');
-
-var default_callback = require('./lib/default_callback');
 
 var app = redirect(express());
 
@@ -78,11 +78,6 @@ nconf.file('global', { file: config_file })
     'PORT': 5050
   });
 
-var regions = require('./lib/regions');
-
-// after configuration so values are available
-var middlewares = require('./lib/middlewares');
-
 if (nconf.get('COOKIE_NAME') !== 'auth0l') {
   nconf.set('CURRENT_TENANT_COOKIE', nconf.get('COOKIE_NAME') + '_current_tenant');
 }
@@ -111,11 +106,7 @@ if (nconf.get('PRERENDER_PROTOCOL')) {
   prerender.set('protocol', nconf.get('PRERENDER_PROTOCOL'));
 }
 
-var connections = require('./lib/connections');
-var clients     = require('./lib/clients');
-
-require('./lib/setupLogger');
-var winston = require('winston');
+require('./lib/setup-logger');
 
 passport.serializeUser(function(user, done) {
   if (!nconf.get('db')) {
@@ -135,194 +126,6 @@ passport.deserializeUser(function(id, done) {
     userColl.findOne({id: id}, done);
   });
 });
-
-var defaultValues = function (req, res, next) {
-  res.locals.account = {};
-  res.locals.account.clientParam = '';
-  res.locals.account.userName     = '';
-  res.locals.account.appName      = 'YOUR_APP_NAME';
-  res.locals.account.tenant       = 'YOUR_TENANT';
-  res.locals.account.namespace    = 'YOUR_NAMESPACE';
-  res.locals.account.clientId     = 'YOUR_CLIENT_ID';
-  res.locals.account.clientSecret = 'YOUR_CLIENT_SECRET';
-  res.locals.account.callback     = default_callback.get(req) || 'http://YOUR_APP/callback';
-
-  res.locals.base_url             = nconf.get('DOMAIN_URL_DOCS');
-
-  // var escape = nconf.get('BASE_URL').replace(/\/([^\/]*)/ig, '/..');
-  res.locals.webheader            = header({ base_url: 'https://auth0.com' });
-  next();
-};
-
-var embedded = function (req, res, next) {
-  res.locals.embedded = false;
-  res.locals.include_metadata = false;
-
-  if (req.query.e || req.query.callback) {
-    res.locals.embedded = true;
-  }
-
-  if (req.query.m) {
-    res.locals.include_metadata = true;
-  }
-
-  if (req.query.callback) {
-    res.locals.jsonp = true;
-  } else if (!req.accepts('html') && req.accepts('application/json')) {
-    res.locals.json = true;
-  }
-
-  next();
-};
-
-var overrideIfAuthenticated = function (req, res, next) {
-  if (!req.user || !req.user.tenant) {
-    return next();
-  }
-
-  res.locals.user = {
-    tenant: req.user.tenant,
-    regions: req.user.regions
-  };
-
-  var params = {
-    tenant: req.user.tenant.name,
-    region: req.user.tenant.region
-  };
-
-  if (req.session.selectedClient) {
-    params.clientID = req.session.selectedClient;
-  }
-
-  clients.find(params, function (err, clients) {
-    if (err) {
-      winston.error('error: ' + err);
-      return next(err);
-    }
-
-    // filter user's clients
-    if (!req.user.is_owner) {
-      clients = clients.filter(function (c) {
-        return c.owners && ~c.owners.indexOf(req.user.id);
-      });
-    }
-
-    var globalClient = {}, nonGlobalClients = [];
-
-    clients.forEach(function (client) {
-      if (client.global) {
-        globalClient = client;
-        return;
-      }
-
-      nonGlobalClients.push(client);
-    });
-
-    res.locals.account = res.locals.account || {};
-    res.locals.account.loggedIn = true;
-    res.locals.account.userName = req.user.name;
-
-    res.locals.account.namespace = regions.get_namespace(req.user.tenant.region).replace('{tenant}', req.user.tenant.name);
-    res.locals.account.tenant = req.user.tenant.name;
-
-    res.locals.account.globalClientId = globalClient.clientID || 'YOUR_GLOBAL_CLIENT_ID';
-    res.locals.account.globalClientSecret = globalClient.clientSecret;
-
-    if (nonGlobalClients.length === 0) {
-      return next();
-    }
-
-    res.locals.account.clients = nonGlobalClients;
-
-    var client = nonGlobalClients[0];
-    res.locals.account.appName = client.name && client.name.trim !== '' ? client.name : 'Your App';
-    res.locals.account.clientId = client.clientID;
-    res.locals.account.clientParam = '&clientId=' + client.clientID;
-    res.locals.account.clientSecret = client.clientSecret;
-    res.locals.account.callback = client.callback;
-
-    next();
-  });
-};
-
-var overrideIfClientInQsForPublicAllowedUrls = function (req, res, next) {
-
-  var allowed = nconf.get('PUBLIC_ALLOWED_TUTORIALS').split(',').some(function (allowedUrl) {
-    return req.originalUrl.indexOf(allowedUrl) === 0;
-  });
-
-  if (!allowed) return next();
-  if (!req.query || !req.query.a) return next();
-
-  //todo this doesn't work yet from a foreign region.
-  //but these tutorials are not quite used
-
-  clients.findByClientId(req.query.a, { signingKey: 0 }, function (err, client) {
-    if (err) { return next(err); }
-    if (!client) {
-      return res.status(404).send('client not found');
-    }
-
-    res.locals.account.appName      = client.name && client.name.trim !== '' ? client.name : 'Your App';
-    res.locals.account.namespace    = nconf.get('DOMAIN_URL_SERVER').replace('{tenant}', client.tenant);
-    res.locals.account.tenant       = client.tenant;
-    res.locals.account.clientId     = client.clientID;
-    res.locals.account.clientParam = '&clientId=' + client.clientID;
-    res.locals.account.clientSecret = 'YOUR_CLIENT_SECRET'; // it's a public url (don't share client secret)
-    res.locals.account.callback     = client.callback;
-    res.locals.connectionName       = req.query.conn;
-
-    next();
-  });
-};
-
-var overrideIfClientInQs = function (req, res, next) {
-  if (!req.query || !req.query.a) { return next(); }
-  if (!req.user || !req.user.tenant) { return next(); }
-
-  var params = {
-    tenant: req.user.tenant.name,
-    region: req.user.tenant.region,
-    clientID: req.query.a
-  };
-
-  clients.find(params, function (err, clients) {
-    if (err) { return next(err); }
-
-    var client = clients && clients.length > 0 && clients[0];
-
-    if (!client) { return res.status(404).send('client not found'); }
-    if (!req.user.is_owner && (!client.owners || client.owners.indexOf(req.user.id) < 0)) {
-      return res.sendStatus(401);
-    }
-
-    res.locals.account.appName      = client.name && client.name.trim !== '' ? client.name : 'Your App';
-    res.locals.account.namespace    = regions.get_namespace(req.user.tenant.region).replace('{tenant}', req.user.tenant.name);
-    res.locals.account.tenant       = client.tenant;
-    res.locals.account.clientId     = client.clientID;
-    res.locals.account.clientParam = '&clientId=' + client.clientID;
-    res.locals.account.clientSecret = client.clientSecret;
-    res.locals.account.callback     = client.callback;
-    res.locals.connectionName       = req.query.conn;
-
-    next();
-  });
-};
-
-var appendTicket = function (req, res, next) {
-  res.locals.ticket = 'YOUR_TICKET';
-  res.locals.connectionDomain = 'YOUR_CONNECTION_NAME';
-  res.locals.connectionName = res.locals.connectionName || 'YOUR_CONNECTION_NAME';
-  if (!req.query.ticket) return next();
-  connections.findByTicket(req.query.ticket, function (err, connection) {
-    if (err) return res.sendStatus(500);
-    if (!connection) return res.sendStatus(404);
-    res.locals.ticket = req.query.ticket;
-    res.locals.connectionDomain = connection.options.tenant_domain;
-    res.locals.connectionName = connection.name;
-    next();
-  });
-};
 
 app.set('view engine', 'jade');
 app.enable('trust proxy');
@@ -364,11 +167,12 @@ if (nconf.get('NODE_ENV') !== 'test') {
   app.use(logger('dev'));
 }
 
-app.use(middlewares.cors);
 
+var middleware = require('./lib/middleware');
+var sessionStore = require('./lib/session-store');
+
+app.use(middleware.cors);
 app.use(cookieParser());
-
-var sessionStore = require('./lib/sessionStore');
 app.use(session({
   secret: nconf.get('sessionSecret'),
   store: sessionStore ? sessionStore(session) : undefined,
@@ -392,17 +196,11 @@ app.use(nconf.get('BASE_URL') + '/media', express.static(path.join(__dirname, 'd
 
 app.use(passport.initialize());
 app.use(passport.session());
-app.use(require('./lib/set_current_tenant'));
-app.use(require('./lib/set_user_is_owner'));
+app.use(middleware.setCurrentTenant);
+app.use(middleware.setUserIsOwner);
 
-// These are used by the snippets api to do @@value@@ string replacement
-var metaBaseUrl = nconf.get('BASE_URL') + '/meta';
-app.use(metaBaseUrl, defaultValues);
-app.use(metaBaseUrl, appendTicket);
-app.use(metaBaseUrl, overrideIfAuthenticated);
-app.use(metaBaseUrl, overrideIfClientInQs);
-app.use(metaBaseUrl, overrideIfClientInQsForPublicAllowedUrls);
 
+var connections = require('./lib/connections');
 app.get('/ticket/step', function (req, res) {
   if (!req.query.ticket) return res.sendStatus(404);
   connections.getCurrentStep(req.query.ticket, function (err, currentStep) {
@@ -421,25 +219,6 @@ app.get(nconf.get('BASE_URL') + '/switch', function (req, res) {
 });
 
 /**
- * Add quickstart collections for initialization
- * with server matching versioning for SEO and sitemap.xml
- */
-
-var collections = require('./lib/quickstart-collections');
-
-var quickstartCollections = function (req, res, next) {
-  if (res.locals.quickstart != null) return next();
-  res.locals.quickstart = {};
-  res.locals.quickstart.apptypes = collections.apptypes;
-  res.locals.quickstart.clientPlatforms = collections.clientPlatforms;
-  res.locals.quickstart.nativePlatforms = collections.nativePlatforms;
-  res.locals.quickstart.hybridPlatforms = collections.hybridPlatforms;
-  res.locals.quickstart.serverPlatforms = collections.serverPlatforms;
-  res.locals.quickstart.serverApis = collections.serverApis;
-  next();
-};
-
-/**
  * Manage redirect 301 for deprecated links
  * to point to new links or documents
  */
@@ -451,14 +230,7 @@ require('./lib/redirects')(app);
  * So that the tutorial navigator gets to load
  * quickstart collections and render
  */
-
-var quickstartRoutes = require('./lib/quickstart-routes');
-
-quickstartRoutes.forEach(function(route) {
-  app.get(nconf.get('BASE_URL') + '/quickstart' + route, alias(nconf.get('BASE_URL') || '/'));
-});
-
-app.get(nconf.get('BASE_URL') + '/quickstart', alias(nconf.get('BASE_URL') || '/'));
+var quickstart = require('./lib/quickstart');
 
 function alias(route) {
   return function(req, res, next) {
@@ -466,6 +238,13 @@ function alias(route) {
     next();
   };
 }
+
+quickstart.routes.forEach(function(route) {
+  app.get(nconf.get('BASE_URL') + '/quickstart' + route, alias(nconf.get('BASE_URL') || '/'));
+});
+
+app.get(nconf.get('BASE_URL') + '/quickstart', alias(nconf.get('BASE_URL') || '/'));
+
 
 var includes = require('./lib/includes/includes');
 includes.init(path.join(__dirname, '/docs/includes'));
@@ -481,74 +260,38 @@ var docsapp = new markdocs.App({
   useDefaultProcessors: false
 }, app);
 
-docsapp.addPreRender(defaultValues);
+docsapp.addPreRender(middleware.defaultValues);
 docsapp.addPreRender(includes.add);
-docsapp.addPreRender(overrideIfAuthenticated);
-docsapp.addPreRender(overrideIfClientInQs);
-docsapp.addPreRender(overrideIfClientInQsForPublicAllowedUrls);
-docsapp.addPreRender(appendTicket);
-docsapp.addPreRender(quickstartCollections);
-docsapp.addPreRender(embedded);
-docsapp.addPreRender(require('./lib/articles-collection').middleware);
-docsapp.addPreRender(require('./lib/snippets-collection').middleware);
-docsapp.addPreRender(require('./lib/articles-tags').middleware);
-docsapp.addPreRender(function(req,res,next){
-  var scheme = process.env.NODE_ENV === 'production' ? 'https' : 'http';
-
-  res.locals.uiURL              = scheme + '://' + nconf.get('DOMAIN_URL_APP');
-  res.locals.uiURLLoginCallback = res.locals.uiURL + '/callback';
-  res.locals.sdkURL             = scheme + '://' + nconf.get('DOMAIN_URL_SDK');
-
-  if (res.locals.account && res.locals.account.clientId) {
-    res.locals.uiAppSettingsURL = res.locals.uiURL + '/#/applications/' + res.locals.account.clientId + '/settings';
-    res.locals.uiAppAddonsURL = res.locals.uiURL + '/#/applications/' + res.locals.account.clientId + '/addons';
-  }
-
-  function removeScheme(url) {
-    return url.slice(url.indexOf(':') + 1);
-  }
-
-  // Auth0 client side Javascript URLs to use
-  res.locals.auth0js_url                  = nconf.get('AUTH0JS_URL');
-  res.locals.auth0js_url_no_scheme        = removeScheme(nconf.get('AUTH0JS_URL'));
-
-  res.locals.auth0_angular_url            = nconf.get('AUTH0_ANGULAR_URL');
-  res.locals.auth0_angular_url_no_scheme  = removeScheme(nconf.get('AUTH0_ANGULAR_URL'));
-
-  res.locals.widget_url                   = nconf.get('LOGIN_WIDGET_URL');
-  res.locals.widget_url_no_scheme         = removeScheme(nconf.get('LOGIN_WIDGET_URL'));
-
-  res.locals.hasCallback = res.locals.account && !!res.locals.account.callback;
-
-  // defualt values
-  if (res.locals.account) {
-    res.locals.account.callback = res.locals.account.callback ||
-                                  default_callback.get(req) ||
-                                  'http://YOUR_APP/callback';
-  }
-
-  next();
-});
-
+docsapp.addPreRender(middleware.overrideIfAuthenticated);
+docsapp.addPreRender(middleware.overrideIfClientInQs);
+docsapp.addPreRender(middleware.overrideIfClientInQsForPublicAllowedUrls);
+docsapp.addPreRender(middleware.appendTicket);
+docsapp.addPreRender(quickstart.middleware);
+docsapp.addPreRender(middleware.embedded);
+docsapp.addPreRender(require('./lib/collections/articles').middleware);
+docsapp.addPreRender(require('./lib/collections/snippets').middleware);
+docsapp.addPreRender(require('./lib/collections/articles-tags').middleware);
+docsapp.addPreRender(require('./lib/middleware/url-variables'));
 docsapp.addPreRender(require('./lib/external/middleware'));
 docsapp.addPreRender(require('./lib/external/api2-explorer-middleware'));
 docsapp.addPreRender(require('./lib/sdk-snippets/login-widget/middleware'));
 docsapp.addPreRender(require('./lib/sdk-snippets/login-widget2/middleware'));
 docsapp.addPreRender(require('./lib/sdk-snippets/lock/middleware-browser'));
 docsapp.addPreRender(require('./lib/sdk-snippets/lock/middleware'));
-docsapp.addPreRender(middlewares.configuration);
+docsapp.addPreRender(middleware.configuration);
 require('./lib/doc-processors').processors.forEach(function(processor) {
   docsapp.addDocumentProcessor(processor);
 });
+
 require('./lib/sdk-snippets/lock/demos-routes')(app);
 require('./lib/sdk-snippets/lock/snippets-routes')(app);
 require('./lib/sdk-snippets/login-widget2/demos-routes')(app);
 require('./lib/sdk-snippets/login-widget2/snippets-routes')(app);
 require('./lib/sdk-snippets/login-widget/demos-routes')(app);
-require('./lib/packager')(app, overrideIfAuthenticated);
-require('./lib/sitemap')(app);
-require('./lib/api')(app);
 
+app.use(nconf.get('BASE_URL'), require('./lib/packager'));
+app.use(nconf.get('BASE_URL'), require('./lib/sitemap'));
+app.use(nconf.get('BASE_URL') + '/meta', require('./lib/api'));
 
 /**
  * Export `docsapp` or boot a new https server
