@@ -122,7 +122,9 @@ html(lang="en")
               .feedback-yes(style="display: none")
                 h5 Thank you for your feedback
               .feedback-no(style="display: none")
-                textarea.form-control
+                form.send-feedback
+                  textarea(placeholder="Sorry to hear that!, how can we help you?").form-control
+                  input(type="submit", value="Submit").submit.btn.btn-primary
 
     hr
 
