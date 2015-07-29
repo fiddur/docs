@@ -47,7 +47,7 @@ html(lang="en")
     - var nav = navigation['categories'];
 
 
-    .js-sticky-nav
+    .navigation-bar
       .wrapper
         .container
           .breadcrumbs
@@ -70,32 +70,25 @@ html(lang="en")
     .container
       .row
         .col-sm-3
-          nav.sidebar-menu(data-accordion-group)
-            - for (var item in nav)
-              .accordion(data-accordion)
-                .nav-title(data-control)
-                  i.icon-budicon-461
-                  h2= nav[item].name
-                ul.nav-content(data-content)
-                  li
-                    a(href="") Option
-                  li
-                    a(href="") Option
-                  li
-                    a(href="") Option
+          include inc/sidebar-menu
 
         .col-sm-9.col-md-7
           section.docs-content(data-swiftype-index="true")
             block content
 
         .col-md-2
-          nav.sidebar-sbs
+          nav.sidebar-sbs.js-sticky-nav
             .wrapper
               h2 Step by step
-              a(href="").active Operations for Database connections
-              a(href="") Operations for Database connections
-              a(href="") Operations for Database connections
-              a(href="") Operations for Database connections
+              ul 
+                li.is-active
+                  a(href="") Operations for Database connections
+                li 
+                  a(href="") Operations for Database connections
+                li 
+                  a(href="") Operations for Database connections
+                li 
+                  a(href="") Operations for Database connections
 
     .related-howto
       .container
@@ -148,11 +141,9 @@ html(lang="en")
   //- End search feature scripts
 
   script(src=env.BASE_URL + '/js/prettify.js')
-  script(src=env.BASE_URL + '/js/owl.carousel.min.js')
   script(src=env.BASE_URL + '/js/jquery.accordion.min.js')
-  script(src=env.BASE_URL + '/js/page.min.js')
-  script(src='https://fb.me/react-0.13.3.min.js')
   script(src=env.BASE_URL + '/js/tutorial-navigator.js')
+  script(src=env.BASE_URL + '/js/docs.js')
 
 
   script(type='text/javascript').
@@ -186,36 +177,6 @@ html(lang="en")
       }
     })
 
-  //- SubNav fixed
-  script(type='text/javascript').
-    $(window).on('scroll', function() {
-      var sticky = $('.sidebar-sbs'),
-          $stickyHeight = $('.sidebar-sbs .wrapper').height(),
-          $contentHeight = $('.docs-content').outerHeight();
-
-      function toggleSticky($nav) {
-        if(!$nav.hasClass('is-fixed')) {
-          navOffset = $nav.offset().top + 40;
-          stopSticky = $contentHeight - $stickyHeight;
-        }
-        if ($(window).scrollTop() > navOffset) {
-          $nav.css('height', '' + $contentHeight + 'px');
-          $nav.addClass('is-fixed');
-        } else {
-          $nav.removeClass('is-fixed');
-        }
-        if ($(window).scrollTop() > stopSticky) {
-          $nav.addClass('is-stop');
-        } else {
-          $nav.removeClass('is-stop');
-        }
-      }
-
-      if(sticky.length) {
-        toggleSticky(sticky);
-      }
-    });
-
   //- Form feedback submit
   script(type="text/javascript").
     $('.send-feedback').submit(function(e) {
@@ -247,11 +208,6 @@ html(lang="en")
     //-   sectionIndex++;
     //- });
 
-    // Init Tutorial Navigator
-    React.render(
-      React.createElement(TutorialNavigator, { platforms: !{JSON.stringify(quickstarts)} }),
-        $('.js-tutorial-navigator').get(0)
-    );
 
 
     if(location.hash) {
