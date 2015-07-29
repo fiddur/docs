@@ -1702,9 +1702,9 @@ body {
   border: none;
 }
 .sidebar-sbs {
+  margin-top: 40px;
   display: none;
-  padding-top: 60px;
-  position: relative;
+  padding-top: 20px;
 }
 @media (min-width: 992px) {
   .sidebar-sbs {
@@ -1715,12 +1715,6 @@ body {
   width: 8.294%;
   position: fixed;
   top: 20px;
-}
-.sidebar-sbs.is-stop .wrapper {
-  width: 100%;
-  position: absolute;
-  top: auto;
-  bottom: 123px;
 }
 .sidebar-sbs h2 {
   font-size: 13px;
@@ -1916,27 +1910,8 @@ body {
 .related-howto .choose:nth-child(2) i {
   color: #e0485a;
 }
-.related-howto .feedback-no {
-  *zoom: 1;
-}
-.related-howto .feedback-no:after {
-  clear: both;
-}
-.related-howto .feedback-no:after,
-.related-howto .feedback-no:before {
-  content: "";
-  display: table;
-}
 .related-howto .feedback-no textarea {
   width: 100%;
   min-height: 100px;
   resize: none;
-}
-.related-howto .feedback-no input {
-  float: right;
-  margin-top: 10px;
-  outline: none;
-}
-.related-howto .feedback-no input:active {
-  outline: none;
 }
