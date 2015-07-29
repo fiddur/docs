@@ -1774,8 +1774,27 @@ body {
 .related-howto .choose:nth-child(2) i {
   color: #e0485a;
 }
+.related-howto .feedback-no {
+  *zoom: 1;
+}
+.related-howto .feedback-no:after {
+  clear: both;
+}
+.related-howto .feedback-no:after,
+.related-howto .feedback-no:before {
+  content: "";
+  display: table;
+}
 .related-howto .feedback-no textarea {
   width: 100%;
   min-height: 100px;
   resize: none;
+}
+.related-howto .feedback-no input {
+  float: right;
+  margin-top: 10px;
+  outline: none;
+}
+.related-howto .feedback-no input:active {
+  outline: none;
 }
