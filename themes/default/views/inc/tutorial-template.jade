@@ -1,0 +1,39 @@
+#tutorial-template.docs-single.animated.fadeInUp.hide
+  .navigation-bar
+    .wrapper
+      .container
+        .breadcrumbs
+          a(href="/")
+            span.text Documentation
+          a
+            i.icon-budicon-461
+            span.text title
+
+
+        form#search(role="search", action=env.BASE_URL + "/search", autocomplete="off")
+          .form-group.search-control
+            i.icon-budicon-489
+            input#search-input.form-control(type="text", placeholder="Search for docs", name="stq")
+  
+  .js-doc-template.container
+    .row
+      .col-sm-3
+        include sidebar-menu
+
+      .col-sm-9.col-md-7
+        section.docs-content(data-swiftype-index="true")
+          
+
+      .col-md-2
+        nav.sidebar-sbs.js-sticky-nav
+          .wrapper
+            h2 Step by step
+            ul 
+              li.is-active
+                a(href="") Operations for Database connections
+              li 
+                a(href="") Operations for Database connections
+              li 
+                a(href="") Operations for Database connections
+              li 
+                a(href="") Operations for Database connections
