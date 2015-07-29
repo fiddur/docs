@@ -1542,9 +1542,9 @@ body {
   border: none;
 }
 .sidebar-sbs {
-  margin-top: 40px;
   display: none;
-  padding-top: 20px;
+  padding-top: 60px;
+  position: relative;
 }
 @media (min-width: 992px) {
   .sidebar-sbs {
@@ -1555,6 +1555,12 @@ body {
   width: 8.294%;
   position: fixed;
   top: 20px;
+}
+.sidebar-sbs.is-stop .wrapper {
+  width: 100%;
+  position: absolute;
+  top: auto;
+  bottom: 123px;
 }
 .sidebar-sbs h2 {
   font-size: 13px;

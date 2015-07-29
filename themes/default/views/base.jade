@@ -184,18 +184,28 @@ html(lang="en")
       }
     })
 
+  //- Nav fixed
   script(type='text/javascript').
     $(window).on('scroll', function() {
-      var sticky = $('.sidebar-sbs');
+      var sticky = $('.sidebar-sbs'),
+          $stickyHeight = $('.sidebar-sbs .wrapper').height(),
+          $contentHeight = $('.docs-content').outerHeight();
 
       function toggleSticky($nav) {
         if(!$nav.hasClass('is-fixed')) {
-          navOffset = $nav.offset().top;
+          navOffset = $nav.offset().top + 40;
+          stopSticky = $contentHeight - $stickyHeight;
         }
         if ($(window).scrollTop() > navOffset) {
+          $nav.css('height', '' + $contentHeight + 'px');
           $nav.addClass('is-fixed');
         } else {
           $nav.removeClass('is-fixed');
+        }
+        if ($(window).scrollTop() > stopSticky) {
+          $nav.addClass('is-stop');
+        } else {
+          $nav.removeClass('is-stop');
         }
       }
 

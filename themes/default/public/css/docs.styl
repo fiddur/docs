@@ -724,9 +724,9 @@ body
 
 
 .sidebar-sbs
-  margin-top 40px
   display none
-  padding-top 20px
+  padding-top 60px
+  position relative
   +breakpoint("desktop")
     display block
 
@@ -735,6 +735,13 @@ body
       width 8.294%
       position fixed
       top 20px
+
+  &.is-stop
+    .wrapper
+      width 100%
+      position absolute
+      top auto
+      bottom 123px
 
   h2
     font-size 13px
