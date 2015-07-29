@@ -90,7 +90,7 @@ var QuickstartList = React.createClass({
     }.bind(this));
     
     return (
-      <div className={hide + "quickstart-list container"}>
+      <div key={this.props.tutorial} className={hide + "quickstart-list container"}>
         <div className="js-carousel" ref="carousel">{list}</div>
       </div>
     );
@@ -248,6 +248,8 @@ var Tutorial = React.createClass({
           component.setState({
             ready: true
           });
+
+          component.updateTemplate(component.state);
         }
       },
       error: function(status, err) {
@@ -255,8 +257,37 @@ var Tutorial = React.createClass({
       }
     });
   },
+  updateTemplate: function(state) {
+    var $template = this.props.template;
+    var breadcrumbs = $(this.refs.breadcrumbs.getDOMNode()).clone();
+
+    $template.find('.docs-content').html('');
+    $template.find('.breadcrumbs').replaceWith(breadcrumbs);
+    
+    if(state.content1) {
+      $template.find('.docs-content').append(state.content1);
+    }
+
+    if(state.content2) {
+      $template.find('.docs-content').append(state.content2);
+    }
+
+    $('#tutorial-navigator, #homepage-content').addClass('hide');
+    $template.removeClass('hide');
+
+    this.props.onLoad();
+  },
+  resetTemplate: function($template) {
+    $('#tutorial-navigator, #homepage-content').removeClass('hide');
+
+    $template
+      .addClass('hide')
+      .find('.docs-content').html('');
+  },
   componentDidMount: function() {
     var tutorial = this.props.tutorial;
+
+    this.resetTemplate(this.props.template);
 
     if(tutorial.tutorialUrls.length) {
       this.fetchDocument(tutorial.tutorialUrls[0], "content1", "__a0tn1");
@@ -269,8 +300,13 @@ var Tutorial = React.createClass({
   render: function() {
     return (
       <div>
+        <div className="hide">
+          <Breadcrumbs ref="breadcrumbs" tutorial={this.props.tutorial} getTechName={this.props.getTechName} />
+        </div>
         <div className={(!this.state.ready) ? 'loading-tutorial' : 'hide' }>
-          Loading tutorial...
+          <div className="auth0-spinner">
+            <div className="spinner"></div>  
+          </div>
         </div>
       </div>
     );
@@ -444,7 +480,7 @@ var TutorialNavigator = React.createClass({
         </div>
 
         <div className="tutorial-content">
-          <Tutorial key={this.state.showTutorial} tutorial={this.state} getTechName={this.getTechName} />
+          <Tutorial key={this.state.showTutorial} tutorial={this.state} getTechName={this.getTechName} template={this.props.singleTpl} onLoad={this.props.onTutorialLoad} />
         </div>
         
       </div>

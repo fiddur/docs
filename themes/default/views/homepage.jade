@@ -47,83 +47,84 @@ html(lang="en")
     - var nav = navigation['categories'];
 
     #tutorial-navigator
+    include inc/tutorial-template
 
-
-    .navigation-bar.js-sticky-nav
-      .wrapper
-        .container
-          ul.list-inline
-            - for (var item in nav)
-              li
-                a(href!="#" + nav[item].id)= nav[item].name
-
-          form#search(role="search", action=env.BASE_URL + "/search", autocomplete="off")
-            .form-group.search-control
-              i.icon-budicon-489
-              input#search-input.form-control(type="text", placeholder="Search for docs", name="stq")
-
-                
-    - for (var item in nav)
-      - var current = nav[item];
-
-        section.section-product
+    #homepage-content
+      .navigation-bar.js-sticky-nav
+        .wrapper
           .container
-            h2(id!=current.id)= current.name
-              span= current.description
-          
-          - if(current.id === 'product')
-            .showcase
+            ul.list-inline
+              - for (var item in nav)
+                li
+                  a(href!="#" + nav[item].id)= nav[item].name
+
+            form#search(role="search", action=env.BASE_URL + "/search", autocomplete="off")
+              .form-group.search-control
+                i.icon-budicon-489
+                input#search-input.form-control(type="text", placeholder="Search for docs", name="stq")
+
+                  
+      - for (var item in nav)
+        - var current = nav[item];
+
+          section.section-product
+            .container
+              h2(id!=current.id)= current.name
+                span= current.description
+            
+            - if(current.id === 'product')
+              .showcase
+                .container
+                  .row
+                    - for (var link in current.links)
+                      - var current2 = current.links[link];
+                      +showcaseItem(current2.name, current2.icon, current2.href, current2.description)
+
+            - if(current.id === 'api')
+              .api-docs
+                .container
+                  .row
+                    .col-xs-6.col-md-4
+                      - var explorer = current.sections['explorer'];
+                      a.icon-scale.api-link(href!=explorer.href)
+                        i.icon-budicon-631
+                        strong= explorer.name
+                        p= explorer.description
+                      br
+                    .col-xs-6.col-md-4
+                      - var endpoints = current.sections['auth-endpoints'];
+                      a.icon-scale.api-link(href!=endpoints.href)
+                        i.icon-budicon-638
+                        strong= endpoints.name
+                        p= endpoints.description
+                      br
+                    .col-xs-12.col-md-4
+                      .subcontent-box
+                        .row
+                          .col-xs-12
+                            h3 Announcements
+                            ul
+                              - var news = current.sections['announcements'];
+                              - for (var current2 in news.links)
+                                li
+                                  a(href!=news.links[current2].href)= news.links[current2].name
+
+            
+            - if(current.id === 'sdk')
               .container
-                .row
+                ul.circle-list
                   - for (var link in current.links)
                     - var current2 = current.links[link];
-                    +showcaseItem(current2.name, current2.icon, current2.href, current2.description)
+                    li
+                      +circleLogo(current2.name, current2.slug, current2.href)
 
-          - if(current.id === 'api')
-            .api-docs
+            - if(current.id === 'how-to')
               .container
-                .row
-                  .col-xs-6.col-md-4
-                    - var explorer = current.sections['explorer'];
-                    a.icon-scale.api-link(href!=explorer.href)
-                      i.icon-budicon-631
-                      strong= explorer.name
-                      p= explorer.description
-                    br
-                  .col-xs-6.col-md-4
-                    - var endpoints = current.sections['auth-endpoints'];
-                    a.icon-scale.api-link(href!=endpoints.href)
-                      i.icon-budicon-638
-                      strong= endpoints.name
-                      p= endpoints.description
-                    br
-                  .col-xs-12.col-md-4
-                    .subcontent-box
-                      .row
-                        .col-xs-12
-                          h3 Announcements
-                          ul
-                            - var news = current.sections['announcements'];
-                            - for (var current2 in news.links)
-                              li
-                                a(href!=news.links[current2].href)= news.links[current2].name
-
-          
-          - if(current.id === 'sdk')
-            .container
-              ul.circle-list
-                - for (var link in current.links)
-                  - var current2 = current.links[link];
-                  li
-                    +circleLogo(current2.name, current2.slug, current2.href)
-
-          - if(current.id === 'how-to')
-            .container
-              ul.circle-list.circle-list-howtos
-                - for (var link in current.links)
-                  - var current2 = current.links[link];
-                  li
-                    +circleLogo(current2.name, 'how-to', current2.href, current2.icon)
+                ul.circle-list.circle-list-howtos
+                  - for (var link in current.links)
+                    - var current2 = current.links[link];
+                    li
+                      +circleLogo(current2.name, 'how-to', current2.href, current2.icon)
 
 
     include ../public/vendor/auth0-styleguide/lib/footer/demo.jade
@@ -136,7 +137,7 @@ html(lang="en")
   script(src=env.BASE_URL + '/js/prettify.js')
   script(src=env.BASE_URL + '/js/owl.carousel.min.js')
   script(src=env.BASE_URL + '/js/page.min.js')
-  script(src='https://fb.me/react-0.13.3.min.js')
+  script(src=env.BASE_URL + '/js/react.min.js')
   script(src=env.BASE_URL + '/js/tutorial-navigator.js')
   script(src=env.BASE_URL + '/js/docs.js')
   
@@ -176,9 +177,17 @@ html(lang="en")
     //-   sectionIndex++;
     //- });
 
+    var tnOpts = {};
+    
+    tnOpts.platforms = !{JSON.stringify(quickstarts)};
+    tnOpts.singleTpl = $('#tutorial-template');
+    tnOpts.onTutorialLoad = function() {
+      Auth0Docs.init();
+    };
+
     // Init Tutorial Navigator
     React.render(
-      React.createElement(TutorialNavigator, { platforms: !{JSON.stringify(quickstarts)} }), 
+      React.createElement(TutorialNavigator, tnOpts), 
         $('#tutorial-navigator').get(0)
     );
 

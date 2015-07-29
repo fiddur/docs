@@ -1,20 +1,117 @@
-$(function() {
-  var sticky = $('.js-sticky-nav');
+var Auth0Docs;
 
-  $(window).on('scroll', function() {
-    if(sticky.length) {
-      toggleSticky(sticky);
-      updateNav(sticky);
+Auth0Docs = (function($, window, document) {
+  function init() {
+    stickyNav();
+  }
+
+  function stickyNav() {
+    var sticky = $('.js-sticky-nav');
+
+    $(window).on('scroll', function() {
+      if(sticky.length) {
+        toggleSticky(sticky);
+        updateNav(sticky);
+      }
+    });
+
+    sticky.on('click', 'a', function(e) {
+      e.preventDefault();
+
+      var pos = $($(this).attr('href')).offset().top - sticky.outerHeight();
+
+      scrollAnimated(pos, 400);
+    });
+
+    function toggleSticky($nav) {
+      if(!$nav.hasClass('is-fixed')) {
+        navOffset = $nav.offset().top;
+      }
+      if ($(window).scrollTop() > navOffset) {
+        $nav.addClass('is-fixed');
+      } else {
+        $nav.removeClass('is-fixed');
+      }
     }
-  });
 
-  sticky.on('click', 'a', function(e) {
-    e.preventDefault();
+    function updateNav($nav) {
+      function getScroll() {
+        var scrollPos = $(window).scrollTop();
+        var stickyNav = $nav;
 
-    var pos = $($(this).attr('href')).offset().top - sticky.outerHeight();
+        if (stickyNav.hasClass('is-fixed')) {
+          scrollPos = scrollPos + stickyNav.outerHeight() + 40;
+        }
 
-    scrollAnimated(pos, 400);
-  });
+        return scrollPos;
+      }
+
+      function getActiveLink() {
+        if($nav.find('.is-active').length) {
+          return $nav.find('.is-active')
+        }
+
+        return $nav.find('li:first')
+      }
+
+      var $activeLink = getActiveLink(),
+          $activeSection = $($activeLink.find('a').attr('href'));
+
+      if($activeSection.length) {
+        var activeSectionPos = $activeSection.offset().top,
+            activeSectionBottom = activeSectionPos + $activeSection.outerHeight();
+
+        var $nextLink = getLink('next');
+        var $prevLink = getLink('prev');
+
+        if ($nextLink.length) {
+          var $nextSection = $($nextLink.find('a').attr('href')),
+              nextSectionPos = $nextSection.offset().top,
+              nextSectionBottom = nextSectionPos + $nextSection.outerHeight();
+
+          if (getScroll() >= nextSectionPos) {
+            setActiveSection($nextLink);
+          }
+        }
+
+        if ($prevLink.length) {
+          var $prevSection = $($prevLink.find('a').attr('href')),
+              prevSectionPos = $prevLink.offset().top,
+              prevSectionBottom = prevSectionPos + $prevSection.outerHeight(),
+              backThreshold = 100;
+
+          if (getScroll() < activeSectionPos - backThreshold) {
+            setActiveSection($prevLink);
+          }
+        }
+
+        function setActiveSection($selected) {
+          $nav.find('.is-active').removeClass('is-active');
+          $selected.addClass('is-active');
+        }
+
+        function getLink(direction) {
+          var next = $activeLink.next(),
+              prev = $activeLink.prev();
+
+          if(direction === 'next') {
+            if(next.length) {
+              return next;
+            }
+          }
+
+          if(direction === 'prev') {
+            if(prev.length) {
+              return prev;
+            }
+          }
+
+          return [];
+        }
+
+      }
+    }
+  }
 
   function scrollAnimated(to, duration) {
     var start = $(window).scrollTop(),
@@ -49,92 +146,11 @@ $(function() {
     animateScroll();
   }
 
-  function toggleSticky($nav) {
-    if(!$nav.hasClass('is-fixed')) {
-      navOffset = $nav.offset().top;
-    }
-    if ($(window).scrollTop() > navOffset) {
-      $nav.addClass('is-fixed');
-    } else {
-      $nav.removeClass('is-fixed');
-    }
+  return {
+    init: init
   }
+})(jQuery, window, document);
 
-  function updateNav($nav) {
-    function getScroll() {
-      var scrollPos = $(window).scrollTop();
-      var stickyNav = $nav;
-
-      if (stickyNav.hasClass('is-fixed')) {
-        scrollPos = scrollPos + stickyNav.outerHeight() + 40;
-      }
-
-      return scrollPos;
-    }
-
-    function getActiveLink() {
-      if($nav.find('.is-active').length) {
-        return $nav.find('.is-active')
-      }
-
-      return $nav.find('li:first')
-    }
-
-    var $activeLink = getActiveLink(),
-        $activeSection = $($activeLink.find('a').attr('href'));
-
-    if($activeSection.length) {
-      var activeSectionPos = $activeSection.offset().top,
-          activeSectionBottom = activeSectionPos + $activeSection.outerHeight();
-
-      var $nextLink = getLink('next');
-      var $prevLink = getLink('prev');
-
-      if ($nextLink.length) {
-        var $nextSection = $($nextLink.find('a').attr('href')),
-            nextSectionPos = $nextSection.offset().top,
-            nextSectionBottom = nextSectionPos + $nextSection.outerHeight();
-
-        if (getScroll() >= nextSectionPos) {
-          setActiveSection($nextLink);
-        }
-      }
-
-      if ($prevLink.length) {
-        var $prevSection = $($prevLink.find('a').attr('href')),
-            prevSectionPos = $prevLink.offset().top,
-            prevSectionBottom = prevSectionPos + $prevSection.outerHeight(),
-            backThreshold = 100;
-
-        if (getScroll() < activeSectionPos - backThreshold) {
-          setActiveSection($prevLink);
-        }
-      }
-
-      function setActiveSection($selected) {
-        $nav.find('.is-active').removeClass('is-active');
-        $selected.addClass('is-active');
-      }
-
-      function getLink(direction) {
-        var next = $activeLink.next(),
-            prev = $activeLink.prev();
-
-        if(direction === 'next') {
-          if(next.length) {
-            return next;
-          }
-        }
-
-        if(direction === 'prev') {
-          if(prev.length) {
-            return prev;
-          }
-        }
-
-        return [];
-      }
-
-    }
-  }
+$(function() {
+  Auth0Docs.init();
 });

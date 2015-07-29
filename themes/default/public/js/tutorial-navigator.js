@@ -90,7 +90,7 @@ var QuickstartList = React.createClass({displayName: "QuickstartList",
     }.bind(this));
     
     return (
-      React.createElement("div", {className: hide + "quickstart-list container"}, 
+      React.createElement("div", {key: this.props.tutorial, className: hide + "quickstart-list container"}, 
         React.createElement("div", {className: "js-carousel", ref: "carousel"}, list)
       )
     );
@@ -248,6 +248,8 @@ var Tutorial = React.createClass({displayName: "Tutorial",
           component.setState({
             ready: true
           });
+
+          component.updateTemplate(component.state);
         }
       },
       error: function(status, err) {
@@ -255,8 +257,37 @@ var Tutorial = React.createClass({displayName: "Tutorial",
       }
     });
   },
+  updateTemplate: function(state) {
+    var $template = this.props.template;
+    var breadcrumbs = $(this.refs.breadcrumbs.getDOMNode()).clone();
+
+    $template.find('.docs-content').html('');
+    $template.find('.breadcrumbs').replaceWith(breadcrumbs);
+    
+    if(state.content1) {
+      $template.find('.docs-content').append(state.content1);
+    }
+
+    if(state.content2) {
+      $template.find('.docs-content').append(state.content2);
+    }
+
+    $('#tutorial-navigator, #homepage-content').addClass('hide');
+    $template.removeClass('hide');
+
+    this.props.onLoad();
+  },
+  resetTemplate: function($template) {
+    $('#tutorial-navigator, #homepage-content').removeClass('hide');
+
+    $template
+      .addClass('hide')
+      .find('.docs-content').html('');
+  },
   componentDidMount: function() {
     var tutorial = this.props.tutorial;
+
+    this.resetTemplate(this.props.template);
 
     if(tutorial.tutorialUrls.length) {
       this.fetchDocument(tutorial.tutorialUrls[0], "content1", "__a0tn1");
@@ -269,8 +300,13 @@ var Tutorial = React.createClass({displayName: "Tutorial",
   render: function() {
     return (
       React.createElement("div", null, 
+        React.createElement("div", {className: "hide"}, 
+          React.createElement(Breadcrumbs, {ref: "breadcrumbs", tutorial: this.props.tutorial, getTechName: this.props.getTechName})
+        ), 
         React.createElement("div", {className: (!this.state.ready) ? 'loading-tutorial' : 'hide'}, 
-          "Loading tutorial..."
+          React.createElement("div", {className: "auth0-spinner"}, 
+            React.createElement("div", {className: "spinner"})
+          )
         )
       )
     );
@@ -444,7 +480,7 @@ var TutorialNavigator = React.createClass({displayName: "TutorialNavigator",
         ), 
 
         React.createElement("div", {className: "tutorial-content"}, 
-          React.createElement(Tutorial, {key: this.state.showTutorial, tutorial: this.state, getTechName: this.getTechName})
+          React.createElement(Tutorial, {key: this.state.showTutorial, tutorial: this.state, getTechName: this.getTechName, template: this.props.singleTpl, onLoad: this.props.onTutorialLoad})
         )
         
       )
