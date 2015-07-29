@@ -3,6 +3,34 @@ var Auth0Docs;
 Auth0Docs = (function($, window, document) {
   function init() {
     stickyNav();
+    submitFeedback();
+    chooseFeedback();
+
+    $('.accordion').accordion();
+  }
+
+  function chooseFeedback() {
+    $('.choose').on('click', function(e) {
+      e.preventDefault();
+
+      $('.feedback-choose').hide();
+
+      if ($(this).hasClass('choose-yes')) {
+        $('.feedback-yes').show();
+      } else {
+        $('.feedback-no').show();
+      }
+    });
+  }
+
+  function submitFeedback() {
+    $('.send-feedback').submit(function(e) {
+      e.preventDefault();
+      e.stopPropagation();
+
+      $('.feedback-no').hide();
+      $('.feedback-yes').show();
+    });
   }
 
   function stickyNav() {

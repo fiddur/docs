@@ -75,14 +75,14 @@ html(lang="en")
           nav.sidebar-sbs.js-sticky-nav
             .wrapper
               h2 Step by step
-              ul 
+              ul
                 li.is-active
                   a(href="") Operations for Database connections
-                li 
+                li
                   a(href="") Operations for Database connections
-                li 
+                li
                   a(href="") Operations for Database connections
-                li 
+                li
                   a(href="") Operations for Database connections
 
     .related-howto
@@ -152,24 +152,6 @@ html(lang="en")
       window.prettyPrint && prettyPrint();
       })
     }(window.jQuery);
-
-  //- Accordion
-  script(type='text/javascript').
-    $('.accordion').accordion();
-
-  //- Feedback
-  script(type="text/javascript").
-    $('.choose').on('click', function(e) {
-      e.preventDefault();
-
-      $('.feedback-choose').hide();
-
-      if ($(this).hasClass('choose-yes')) {
-        $('.feedback-yes').show();
-      } else {
-        $('.feedback-no').show();
-      }
-    })
 
   //- Begin Inspectlet Embed Code
   script#inspectletjs(type="text/javascript").
