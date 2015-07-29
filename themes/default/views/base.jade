@@ -134,7 +134,9 @@ html(lang="en")
               .feedback-yes(style="display: none")
                 h5 Thank you for your feedback
               .feedback-no(style="display: none")
-                textarea.form-control
+                form.send-feedback
+                  textarea(placeholder="Sorry to hear that!, how can we help you?").form-control
+                  input(type="submit", value="Submit").submit.btn.btn-primary
 
     hr
 
@@ -184,7 +186,7 @@ html(lang="en")
       }
     })
 
-  //- Nav fixed
+  //- SubNav fixed
   script(type='text/javascript').
     $(window).on('scroll', function() {
       var sticky = $('.sidebar-sbs'),
@@ -212,6 +214,15 @@ html(lang="en")
       if(sticky.length) {
         toggleSticky(sticky);
       }
+    });
+
+  //- Form feedback submit
+  script(type="text/javascript").
+    $('.send-feedback').submit(function(e) {
+      e.preventDefault();
+      e.stopPropagation();
+      $('.feedback-no').hide();
+      $('.feedback-yes').show();
     });
 
   //- Begin Inspectlet Embed Code
