@@ -624,90 +624,6 @@
     opacity: 1;
   }
 }
-pre.prettyprint.prettyprint {
-  background-color: rgba(241,241,241,0.1);
-  word-wrap: normal;
-  border: 1px solid rgba(151,151,151,0.2) !important;
-  padding: 10px !important;
-  position: relative;
-}
-pre.prettyprint.prettyprint:before {
-  content: '';
-  background-color: rgba(234,241,243,0.25);
-  border-right: 1px solid rgba(92,102,111,0.1);
-  width: 40px;
-  height: 100%;
-  position: absolute;
-  left: 0;
-  top: 0;
-}
-pre.prettyprint.prettyprint code {
-  white-space: pre;
-  padding-left: 10px;
-}
-.com {
-  color: #93a1a1;
-}
-.pun,
-.opn,
-.clo {
-  color: #5c666f;
-}
-.fun {
-  color: #dc322f;
-}
-.str,
-.atv {
-  color: #01b48f;
-}
-.kwd,
-.lit {
-  color: #0eb3ec;
-}
-.prettyprint .tag {
-  color: #ff7113;
-}
-.typ,
-.atn,
-.dec,
-.var {
-  color: #bf62a5;
-}
-.pln {
-  color: #5c666f;
-}
-ol.linenums {
-  margin: 0;
-  padding: 0;
-  position: relative;
-}
-ol.linenums li {
-  background: transparent;
-  margin: 0;
-  line-height: 20px;
-}
-ol.linenums {
-  counter-reset: linenumber;
-}
-ol.linenums li {
-  list-style-type: none;
-  counter-increment: linenumber;
-}
-ol.linenums li:before {
-  content: counter(linenumber);
-  text-align: right;
-  width: 16px;
-  margin-right: 20px;
-  display: inline-block;
-  color: rgba(92,102,111,0.3);
-  font-size: 12px;
-  -webkit-touch-callout: none;
-  -webkit-user-select: none;
-  -khtml-user-select: none;
-  -moz-user-select: none;
-  -ms-user-select: none;
-  user-select: none;
-}
 .docs-home {
   color: #5c666f;
 }
@@ -1933,4 +1849,27 @@ body {
 }
 .related-howto .feedback-no input:active {
   outline: none;
+}
+pre {
+  background-color: rgba(241,241,241,0.1);
+  word-wrap: normal;
+  border: 1px solid rgba(151,151,151,0.2) !important;
+  padding: 0 !important;
+  position: relative;
+}
+pre code.hljs {
+  white-space: pre;
+  padding-left: 10px;
+}
+pre code.hljs-line-numbers {
+  background-color: rgba(234,241,243,0.25);
+  border-right: 1px solid rgba(92,102,111,0.1);
+  text-align: right;
+  color: rgba(92,102,111,0.3);
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
 }

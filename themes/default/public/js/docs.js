@@ -5,7 +5,10 @@ Auth0Docs = (function($, window, document) {
     stickyNav();
     submitFeedback();
     chooseFeedback();
-    initAccordions();
+
+    $('.accordion').accordion();
+    hljs.initHighlightingOnLoad();
+    hljs.initLineNumbersOnLoad();
   }
 
   function chooseFeedback() {
@@ -20,12 +23,6 @@ Auth0Docs = (function($, window, document) {
         $('.feedback-no').show();
       }
     });
-  }
-
-  function initAccordions() {
-    if($('.accordion').length) {
-      $('.accordion').accordion();
-    }
   }
 
   function submitFeedback() {
