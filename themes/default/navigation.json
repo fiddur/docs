@@ -51,12 +51,12 @@
         "explorer": {
           "name": "API Explorer",
           "description": "Read the full reference to Auth0’s API and try all endpoints using your own credentials.",
-          "href": "#"
+          "href": "/api/v2/"
         },
         "auth-endpoints": {
           "name": "Authentication Endpoints",
-          "description": "Read the full reference to Auth0’s API and try all endpoints using your own credentials.",
-          "href": "#"
+          "description": "Perform Enterprise Authentication or OpenID operations asing these APIs.",
+          "href": "/auth-api/"
         },
         "announcements": {
           "name": "Announcements",
@@ -79,7 +79,7 @@
     },
     {
       "id": "sdk",
-      "name": "SDKs",
+      "name": "Libraries & SDKs",
       "description": "Learn all about what Auth0 offers as a service",
       "links": [
         {
