@@ -262,11 +262,7 @@ var Tutorial = React.createClass({displayName: "Tutorial",
     var breadcrumbs = $(this.refs.breadcrumbs.getDOMNode()).clone();
 
     $template
-      .find('.docs-content').html('').addClass('fadeInUp');
-
-    setTimeout(function() {
-      $template.removeClass('fadeInUp');
-    }, 600);
+      .find('.docs-content').html('');
 
     if($template.find('.breadcrumbs').length) {
       $template.find('.breadcrumbs').replaceWith(breadcrumbs);

@@ -5,8 +5,7 @@ Auth0Docs = (function($, window, document) {
     stickyNav();
     submitFeedback();
     chooseFeedback();
-
-    $('.accordion').accordion();
+    initAccordions();
   }
 
   function chooseFeedback() {
@@ -21,6 +20,12 @@ Auth0Docs = (function($, window, document) {
         $('.feedback-no').show();
       }
     });
+  }
+
+  function initAccordions() {
+    if($('.accordion').length) {
+      $('.accordion').accordion();
+    }
   }
 
   function submitFeedback() {
