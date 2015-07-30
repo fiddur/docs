@@ -624,6 +624,57 @@
     opacity: 1;
   }
 }
+pre {
+  background-color: rgba(241,241,241,0.1);
+  word-wrap: normal;
+  border: 1px solid rgba(151,151,151,0.2) !important;
+  padding: 0 !important;
+  position: relative;
+}
+pre code.hljs {
+  white-space: pre;
+  padding-left: 10px;
+}
+pre code.hljs-line-numbers.hljs-line-numbers {
+  background-color: rgba(234,241,243,0.25);
+  border-right: 1px solid rgba(92,102,111,0.1);
+  text-align: right;
+  color: rgba(92,102,111,0.3);
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+.xml .javascript {
+  opacity: 1;
+}
+.comment {
+  opacity: 0.5;
+}
+.xml .value,
+.string {
+  color: #01b48f;
+}
+.title,
+.javascript .keyword,
+.number {
+  color: #ff7113;
+}
+.function .keyword,
+.literal {
+  color: #0c9dce;
+}
+.function .params {
+  color: #e4c117;
+}
+.tag {
+  color: #5c666f;
+}
+.xml .attribute {
+  color: #bf62a5;
+}
 .docs-home {
   color: #5c666f;
 }
@@ -1849,27 +1900,4 @@ body {
 }
 .related-howto .feedback-no input:active {
   outline: none;
-}
-pre {
-  background-color: rgba(241,241,241,0.1);
-  word-wrap: normal;
-  border: 1px solid rgba(151,151,151,0.2) !important;
-  padding: 0 !important;
-  position: relative;
-}
-pre code.hljs {
-  white-space: pre;
-  padding-left: 10px;
-}
-pre code.hljs-line-numbers {
-  background-color: rgba(234,241,243,0.25);
-  border-right: 1px solid rgba(92,102,111,0.1);
-  text-align: right;
-  color: rgba(92,102,111,0.3);
-  -webkit-touch-callout: none;
-  -webkit-user-select: none;
-  -khtml-user-select: none;
-  -moz-user-select: none;
-  -ms-user-select: none;
-  user-select: none;
 }
