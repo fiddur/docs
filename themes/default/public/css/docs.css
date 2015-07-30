@@ -76,7 +76,7 @@
 }
 #tutorial-navigator {
   min-height: 640px;
-  background: #ebeff2;
+  background: #f3f3f3;
 }
 #tutorial-navigator .tutorial-content {
   display: none;
@@ -253,7 +253,7 @@
     box-shadow: 0 2px 4px 0 rgba(0,0,0,0.1);
   }
   .quickstart:hover .symbol {
-    background: #ebeff2;
+    background: #f3f3f3;
   }
   .quickstart:hover .cta {
     opacity: 1;
@@ -290,7 +290,7 @@
     opacity: 1;
   }
   .center .quickstart .symbol {
-    background: #ebeff2;
+    background: #f3f3f3;
   }
 }
 .js-carousel .dots {
@@ -867,7 +867,7 @@ section .circle-list li {
   }
 }
 .section-product:nth-of-type(even) {
-  background: #f6f7f9;
+  background: #fafafa;
 }
 .section-product {
   padding-bottom: 60px;
@@ -966,7 +966,7 @@ section .circle-list li {
   }
 }
 header.site-header.site-header {
-  background-color: #ebeff2;
+  background-color: #f3f3f3;
   border-bottom: 1px solid rgba(0,0,0,0.05);
 }
 header.site-header.site-header a.login {
