@@ -14,8 +14,19 @@ var htmlparser = require('htmlparser2');
 var async = require('async');
 var testConfig = require('../docs/tests.json');
 var urlJoin = require('url-join');
+var ProgressBar = require('progress');
 
 var baseUrl = urlJoin('http://localhost:' + nconf.get('PORT'), nconf.get('BASE_URL'));
+
+var getProgressBar = function(total) {
+  console.log('');
+  return new ProgressBar('        running test [:bar] :percent :etas', {
+    complete: '=',
+    incomplete: ' ',
+    width: 20,
+    total: total
+  });
+}
 
 var forEachDocPage = function(callback, done) {
   var q = async.queue(function (url, cb) {
@@ -43,9 +54,6 @@ describe('Application', function() {
 
   describe('GET /test', function(){
     it('should respond OK with json', function(done){
-
-      console.log(nconf.get('BASE_URL'));
-
       request.get(baseUrl + '/test', function (err, resp, body) {
         assert.equal(resp.statusCode, 200);
         done();
@@ -70,23 +78,21 @@ describe('Application', function() {
     it('should not include broken links', function(done) {
       this.timeout(0); // This test takes a while to run.
 
+      var bar = getProgressBar(docUrls.length);
+
       var options = {
         maxSocketsPerHost: 5,
         excludedSchemes: ['data','geo','mailto','sms','tel','javascript'],
         excludeExternalLinks: true,
-        checkUniqueUrlOnce: true
+        cacheResponses: true
       };
 
       var results = [];
       var redirects = [];
+      var interval;
       var urlChecker = new blc.HtmlUrlChecker(options, {
           link: function(result){
             if (result.broken) {
-
-              // Ignore the create-package urls, they don't work on localhost
-              if (result.url.original.indexOf('create-package') > -1) {
-                return;
-              }
 
               //ignore links to HOME
               if (result.url.original === '/') {
@@ -106,7 +112,8 @@ describe('Application', function() {
               }
             }
           },
-          item: function(error, htmlUrl){
+          item: function(error, htmlUrl) {
+            bar.tick();
             if (error) {
               console.warn('Broken link found in ' + htmlUrl);
               throw error;
@@ -114,10 +121,12 @@ describe('Application', function() {
           },
           end: function(){
             assert.equal(results.length, 0);
+            if (interval) {
+              clearInterval(interval);
+            }
             done();
           }
       });
-
 
       docUrls.forEach(function(url) {
         urlChecker.enqueue(urlJoin(baseUrl, url));
@@ -125,8 +134,10 @@ describe('Application', function() {
 
     });
 
-    it('should not reference blacklisted urls', function(done) {
-      this.timeout(0); // This test takes a while to run.
+    it.only('should not reference blacklisted urls', function(done) {
+      this.timeout(300000); // This test takes a while to run.
+
+      var bar = getProgressBar(docUrls.length);
 
       var parser = new htmlparser.Parser({
           onopentag: function(name, attribs){
@@ -152,6 +163,7 @@ describe('Application', function() {
           throw err;
         }
         parser.write(body);
+        bar.tick();
       }, function() {
         parser.end();
         done();
@@ -159,7 +171,10 @@ describe('Application', function() {
     });
 
     it('should not contain raw markdown characters', function(done) {
-      this.timeout(0); // This test takes a while to run.
+      this.timeout(300000); // This test takes a while to run.
+
+      var bar = getProgressBar(docUrls.length);
+
       var checkForMarkdownChars = function(url, body) {
         assert(body.indexOf('```') === -1, 'The page at ' + url + ' was not rendered correctly and contains invalid markdown characters.');
       };
@@ -174,7 +189,7 @@ describe('Application', function() {
     });
 
     it('should not contain rendering errors', function(done) {
-      this.timeout(0); // This test takes a while to run.
+      this.timeout(300000); // This test takes a while to run.
       var checkForRenderingErrors = function(url, body) {
         assert(body.indexOf('<span style="color:red;">ERROR:') === -1, 'The page at ' + url + ' was not rendered correctly and contains an error.');
       };
@@ -185,6 +200,7 @@ describe('Application', function() {
           throw err;
         }
         checkForRenderingErrors(url, body);
+        bar.tick();
       }, done);
     });
   });
@@ -192,7 +208,7 @@ describe('Application', function() {
   describe('Media', function() {
 
     it('should not include large media files', function(done) {
-      this.timeout(0); // This test takes a while to run.
+      this.timeout(300000); // This test takes a while to run.
 
       var testDirectory = function(dir) {
         var files = fs.readdirSync(dir);
