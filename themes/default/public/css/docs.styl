@@ -8,6 +8,7 @@
 @import 'inc/search-control'
 @import 'inc/chevron'
 @import 'inc/spinner'
+@import 'highlight'
 
 // Views
 @import 'homepage'
@@ -662,9 +663,15 @@ body
     padding-left 0
     margin-left 0
     box-shadow none
+    display none
+    +breakpoint("tablet")
+      display block
 
   .navigation-bar form
+    width 100%
     float right
+    +breakpoint("tablet")
+      width 35%
 
 
 .sidebar-menu
@@ -692,8 +699,10 @@ body
     font-size 12px
 
   .nav-title
-    padding 20px 20px
+    padding 20px 20px 20px 40px
     cursor pointer
+    +breakpoint("tablet")
+      padding 20px
     i
       float right
       color #A9B3BC
@@ -707,7 +716,9 @@ body
       margin 0
 
   .nav-content
-    padding 0 20px
+    padding 0 20px 0 40px
+    +breakpoint("tablet")
+      padding 0 20px
     li:last-child
       margin-bottom 20px
 
@@ -716,14 +727,38 @@ body
     border-bottom 1px solid rgba(#A9B3BC,.25)
     -webkit-transition background .5s ease-out
     transition background .5s ease-out
-    &.open
+    &.open .open
       background-color white
       .nav-title
         i
           -webkit-transform rotate(90deg) translate(-2px,5px)
           transform rotate(90deg) translate(-2px,5px)
+
+    +breakpoint("tablet")
+      &.open
+        background-color white
+        .nav-title
+          i
+            -webkit-transform rotate(90deg) translate(-2px,5px)
+            transform rotate(90deg) translate(-2px,5px)
+
     &:last-child
       border none
+
+  .principal-title
+    padding 20px
+    h2
+      font-size 13px
+      font-weight 700
+      text-transform uppercase
+      color color_oil
+      margin 0
+    +breakpoint("tablet")
+      display none
+
+  .principal-content
+    +breakpoint("tablet")
+      max-height 100%!important
 
 
 .sidebar-sbs
@@ -887,29 +922,5 @@ body
       outline none
       &:active
         outline none
-
-pre
-  background-color rgba(#F1F1F1,.1)
-  word-wrap normal
-  border 1px solid rgba(#979797,.2)!important
-  padding 0!important
-  position relative
-  code.hljs
-    white-space pre
-    padding-left 10px
-
-pre
-  code.hljs-line-numbers
-    background-color rgba(#EAF1F3,.25)
-    border-right 1px solid rgba(#5C666F,.1)
-
-    text-align right
-    color rgba(color_oil,.3)
-    -webkit-touch-callout none
-    -webkit-user-select none
-    -khtml-user-select none
-    -moz-user-select none
-    -ms-user-select none
-    user-select none
 
 

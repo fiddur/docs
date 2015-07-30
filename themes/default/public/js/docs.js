@@ -7,6 +7,9 @@ Auth0Docs = (function($, window, document) {
     chooseFeedback();
 
     $('.accordion').accordion();
+    hljs.configure({
+      classPrefix: ''
+    })
     hljs.initHighlightingOnLoad();
     hljs.initLineNumbersOnLoad();
   }
@@ -38,7 +41,7 @@ Auth0Docs = (function($, window, document) {
   function stickyNav(refresh) {
     var navOffset = 0;
 
-    
+
     $(window).on('scroll', function() {
       var sticky = $('.js-sticky-nav').filter(':visible');
 
