@@ -34,7 +34,7 @@ var forEachDocPage = function(callback, done) {
       done();
     }
   };
-}
+};
 
 describe('Application', function() {
   after(function (done) {
@@ -162,7 +162,7 @@ describe('Application', function() {
       this.timeout(0); // This test takes a while to run.
       var checkForMarkdownChars = function(url, body) {
         assert(body.indexOf('```') === -1, 'The page at ' + url + ' was not rendered correctly and contains invalid markdown characters.');
-      }
+      };
 
       forEachDocPage(function(err, url, body) {
         if (err) {
@@ -177,7 +177,7 @@ describe('Application', function() {
       this.timeout(0); // This test takes a while to run.
       var checkForRenderingErrors = function(url, body) {
         assert(body.indexOf('<span style="color:red;">ERROR:') === -1, 'The page at ' + url + ' was not rendered correctly and contains an error.');
-      }
+      };
 
       forEachDocPage(function(err, url, body) {
         if (err) {
