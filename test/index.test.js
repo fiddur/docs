@@ -26,7 +26,7 @@ var getProgressBar = function(total) {
     width: 20,
     total: total
   });
-}
+};
 
 var forEachDocPage = function(callback, done) {
   var q = async.queue(function (url, cb) {
@@ -134,7 +134,7 @@ describe('Application', function() {
 
     });
 
-    it.only('should not reference blacklisted urls', function(done) {
+    it('should not reference blacklisted urls', function(done) {
       this.timeout(300000); // This test takes a while to run.
 
       var bar = getProgressBar(docUrls.length);
@@ -185,6 +185,7 @@ describe('Application', function() {
           throw err;
         }
         checkForMarkdownChars(url, body);
+        bar.tick();
       }, done);
     });
 
@@ -193,6 +194,8 @@ describe('Application', function() {
       var checkForRenderingErrors = function(url, body) {
         assert(body.indexOf('<span style="color:red;">ERROR:') === -1, 'The page at ' + url + ' was not rendered correctly and contains an error.');
       };
+
+      var bar = getProgressBar(docUrls.length);
 
       forEachDocPage(function(err, url, body) {
         if (err) {
