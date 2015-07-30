@@ -1642,13 +1642,8 @@ body {
   font-size: 12px;
 }
 .sidebar-menu .nav-title {
-  padding: 20px 20px 20px 40px;
   cursor: pointer;
-}
-@media (min-width: 768px) {
-  .sidebar-menu .nav-title {
-    padding: 20px;
-  }
+  padding: 20px;
 }
 .sidebar-menu .nav-title i {
   float: right;
@@ -1664,43 +1659,51 @@ body {
   margin: 0;
 }
 .sidebar-menu .nav-content {
-  padding: 0 20px 0 40px;
-}
-@media (min-width: 768px) {
-  .sidebar-menu .nav-content {
-    padding: 0 20px;
-  }
+  padding: 0 20px;
 }
 .sidebar-menu .nav-content li:last-child {
   margin-bottom: 20px;
 }
-.sidebar-menu .accordion {
+.sidebar-menu .accordion.open .plus:before {
+  transform: rotate(0deg);
+}
+.sidebar-menu .accordion .accordion {
   background-color: rgba(234,238,243,0.25);
-  border-bottom: 1px solid rgba(169,179,188,0.25);
+  border-top: 1px solid rgba(169,179,188,0.25);
   -webkit-transition: background 0.5s ease-out;
   transition: background 0.5s ease-out;
 }
-.sidebar-menu .accordion.open .open {
+.sidebar-menu .accordion .accordion.open {
   background-color: #fff;
 }
-.sidebar-menu .accordion.open .open .nav-title i {
+.sidebar-menu .accordion .accordion.open .nav-title i {
   -webkit-transform: rotate(90deg) translate(-2px, 5px);
   transform: rotate(90deg) translate(-2px, 5px);
 }
 @media (min-width: 768px) {
-  .sidebar-menu .accordion.open {
-    background-color: #fff;
+  .sidebar-menu .accordion:first-child {
+    border: none;
   }
-  .sidebar-menu .accordion.open .nav-title i {
-    -webkit-transform: rotate(90deg) translate(-2px, 5px);
-    transform: rotate(90deg) translate(-2px, 5px);
-  }
-}
-.sidebar-menu .accordion:last-child {
-  border: none;
 }
 .sidebar-menu .principal-title {
   padding: 20px;
+}
+.sidebar-menu .principal-title .plus {
+  background: #a9b3bc;
+  float: right;
+  width: 10px;
+  height: 1px;
+  display: block;
+  margin-top: 10px;
+}
+.sidebar-menu .principal-title .plus:before {
+  content: '';
+  background: #a9b3bc;
+  display: block;
+  width: 10px;
+  height: 1px;
+  transform: rotate(270deg);
+  transition: transform 0.3s ease-out;
 }
 .sidebar-menu .principal-title h2 {
   font-size: 13px;
@@ -1730,7 +1733,7 @@ body {
   }
 }
 .sidebar-sbs.is-fixed .wrapper {
-  width: 8.294%;
+  width: 139px;
   position: fixed;
   top: 20px;
 }
