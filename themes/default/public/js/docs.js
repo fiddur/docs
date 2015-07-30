@@ -100,6 +100,12 @@ Auth0Docs = (function($, window, document) {
         var $nextLink = getLink('next');
         var $prevLink = getLink('prev');
 
+        if (getScroll() >= activeSectionPos) {
+          setActiveSection($activeLink);
+        } else {
+          $activeLink.removeClass('is-active');
+        }
+
         if ($nextLink.length) {
           var $nextSection = $($nextLink.find('a').attr('href')),
               nextSectionPos = $nextSection.offset().top,
