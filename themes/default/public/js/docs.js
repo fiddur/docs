@@ -5,19 +5,23 @@ Auth0Docs = (function($, window, document) {
     stickyNav();
   }
 
-  function stickyNav() {
-    var sticky = $('.js-sticky-nav');
+  function stickyNav(refresh) {
+    var navOffset = 0;
 
+    
     $(window).on('scroll', function() {
+      var sticky = $('.js-sticky-nav').filter(':visible');
+
       if(sticky.length) {
         toggleSticky(sticky);
         updateNav(sticky);
       }
     });
 
-    sticky.on('click', 'a', function(e) {
+    $('body').on('click', '.js-sticky-nav a', function(e) {
       e.preventDefault();
 
+      var sticky = $(this).closest('.js-sticky-nav');
       var pos = $($(this).attr('href')).offset().top - sticky.outerHeight();
 
       scrollAnimated(pos, 400);
@@ -27,11 +31,10 @@ Auth0Docs = (function($, window, document) {
       if(!$nav.hasClass('is-fixed')) {
         navOffset = $nav.offset().top;
       }
-      if ($(window).scrollTop() > navOffset) {
-        $nav.addClass('is-fixed');
-      } else {
-        $nav.removeClass('is-fixed');
-      }
+
+      var isFixed = $(window).scrollTop() > navOffset;
+
+      $nav.toggleClass('is-fixed', isFixed);
     }
 
     function updateNav($nav) {
