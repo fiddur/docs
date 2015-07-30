@@ -8,17 +8,22 @@ var baseUrl = urlJoin('http://localhost:' + nconf.get('PORT'), nconf.get('BASE_U
 
 describe('Application', function() {
   after(function(done) {
+    nconf.set('ENABLE_PACKAGE_TEST', false);
     docsapp.stop(done);
+  });
+  before(function(done) {
+    nconf.set('ENABLE_PACKAGE_TEST', true);
+    done();
   });
 
   describe('Packager', function() {
-    it('should return 500 error when downloading android package', function(done) {
-      this.timeout(0);
+    it('should download seed project', function(done) {
+      this.timeout(30000);
       var packageTestUrl = urlJoin(baseUrl, '/native-mobile-samples/master/create-package?path=Android/basic-sample&type=replace&filePath=Android/basic-sample/app/src/main/res/values/auth0.xml');
       request(packageTestUrl,
         function(error, response, body) {
-          assert.equal(response.statusCode, 500);
-          assert.equal(body, 'Error: Could not download the project.');
+          assert.notEqual(body.length, 0);
+          assert.equal(response.statusCode, 200);
           done();
         });
     });

@@ -1,10 +1,13 @@
 require('babel/register')({
   sourceMaps: (process.env.NODE_ENV === 'production') ? false : 'inline'
 });
-var cluster = require('cluster');
 
-if (cluster.isMaster && !module.parent) {
-  return require('./master');
+if (process.env.NODE_ENV !== 'dev') {
+  var cluster = require('cluster');
+
+  if (cluster.isMaster && !module.parent) {
+    return require('./master');
+  }
 }
 
 // FOR TEST ONLY!!!
@@ -57,7 +60,7 @@ nconf.file('global', { file: config_file })
     'DOMAIN_URL_SERVER': '{tenant}.auth0.com:3000',
     'DOMAIN_URL_APP':    'localhost:8989',
     'DOMAIN_URL_SDK':    'login-dev.auth0.com:3000',
-    'PACKAGER_URL':      'http://localhost:3001',
+    'PACKAGER_URL':      'http://localhost:8792',
     'DOMAIN_URL_DOCS':   'https://localhost:5050',
     'DOMAIN_URL_API2_EXPLORER': 'login0.myauth0.com',
     'WIDGET_FALLBACK_CLIENTID': 'aCbTAJNi5HbsjPJtRpSP6BIoLPOrSj2C',
