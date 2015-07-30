@@ -8,7 +8,6 @@
 @import 'inc/search-control'
 @import 'inc/chevron'
 @import 'inc/spinner'
-@import 'prettify'
 
 // Views
 @import 'homepage'
@@ -731,7 +730,7 @@ body
   margin-top 40px
   display none
   padding-top 20px
-  
+
   +breakpoint("desktop")
     display block
 
@@ -747,7 +746,7 @@ body
     text-transform uppercase
     color color_oil
     margin 0 0 20px
-  
+
   ul,
   li
     padding: 0;
@@ -758,14 +757,14 @@ body
     font-size 12px
     display block
     margin-bottom 15px
-    
+
   li.is-active a
     color #333
     font-weight 700
 
 .docs-content
   padding-bottom 20px
-  
+
   +breakpoint("tablet")
     padding 30px 10px 60px
 
@@ -889,5 +888,28 @@ body
       &:active
         outline none
 
+pre
+  background-color rgba(#F1F1F1,.1)
+  word-wrap normal
+  border 1px solid rgba(#979797,.2)!important
+  padding 0!important
+  position relative
+  code.hljs
+    white-space pre
+    padding-left 10px
+
+pre
+  code.hljs-line-numbers
+    background-color rgba(#EAF1F3,.25)
+    border-right 1px solid rgba(#5C666F,.1)
+
+    text-align right
+    color rgba(color_oil,.3)
+    -webkit-touch-callout none
+    -webkit-user-select none
+    -khtml-user-select none
+    -moz-user-select none
+    -ms-user-select none
+    user-select none
 
 

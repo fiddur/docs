@@ -7,6 +7,8 @@ Auth0Docs = (function($, window, document) {
     chooseFeedback();
 
     $('.accordion').accordion();
+    hljs.initHighlightingOnLoad();
+    hljs.initLineNumbersOnLoad();
   }
 
   function chooseFeedback() {
