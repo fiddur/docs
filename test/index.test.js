@@ -52,6 +52,10 @@ describe('Application', function() {
     docsapp.stop(done);
   });
 
+  before(function (done) {
+    docsapp.start(done);
+  });
+
   describe('GET /test', function(){
     it('should respond OK with json', function(done){
       request.get(baseUrl + '/test', function (err, resp, body) {
@@ -76,7 +80,7 @@ describe('Application', function() {
       done();
     });
 
-    after(function(done) {
+    after(function() {
       nconf.set('ENABLE_PACKAGE_TEST', false);
     });
 

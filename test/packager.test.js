@@ -13,7 +13,7 @@ describe('Application', function() {
   });
   before(function(done) {
     nconf.set('ENABLE_PACKAGE_TEST', true);
-    done();
+    docsapp.start(done);
   });
 
   describe('Packager', function() {

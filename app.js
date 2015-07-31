@@ -301,24 +301,30 @@ app.use(nconf.get('BASE_URL') + '/meta', require('./lib/api'));
  * with it
  */
 
-var server = http.createServer(app);
+var server;
 
-var port = nconf.get('PORT');
-server.listen(port, function () {
-  console.log('Server listening on http://localhost:'  + port);
-});
-
-var enableDestroy = require('server-destroy');
-enableDestroy(server);
-
-process.on('SIGTERM', function () {
-  server.destroy(function () {
-    process.exit(0);
-  });
-});
+var application = {
+  start: function (callback) {
+    server = http.createServer(app);
+    var enableDestroy = require('server-destroy');
+    enableDestroy(server);
+    server.listen(nconf.get('PORT'), callback);
+  },
+  stop: function (callback) {
+    server.destroy(callback);
+  }
+};
 
 if (module.parent) {
-  module.exports.stop = function (cb) {
-    server.destroy(cb);
-  };
+  module.exports = application;
+} else {
+  application.start(function () {
+    console.log('Server listening on http://localhost:' + nconf.get('PORT'));
+  });
+
+  process.on('SIGTERM', function () {
+    application.stop(function () {
+      process.exit(0);
+    });
+  });
 }
