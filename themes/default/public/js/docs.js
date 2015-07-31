@@ -5,13 +5,32 @@ Auth0Docs = (function($, window, document) {
     stickyNav();
     submitFeedback();
     chooseFeedback();
+    tabs();
 
     $('.accordion').accordion();
+
     hljs.configure({
       classPrefix: ''
-    })
-    hljs.initHighlightingOnLoad();
-    hljs.initLineNumbersOnLoad();
+    });
+
+    renderCode();
+  }
+
+  function tabs() {
+    $('body').on('click', '.nav-tabs a', function(e) {
+      e.preventDefault();
+      
+      $(this).tab('show');
+    });
+  }
+
+  function renderCode() {
+    $('pre code').each(function(i, block) {
+      if(!$(this).hasClass('hljs')) {
+        hljs.highlightBlock(block);
+        hljs.lineNumbersBlock(block);
+      }
+    });
   }
 
   function chooseFeedback() {
@@ -189,7 +208,8 @@ Auth0Docs = (function($, window, document) {
   }
 
   return {
-    init: init
+    init: init,
+    renderCode: renderCode
   }
 })(jQuery, window, document);
 

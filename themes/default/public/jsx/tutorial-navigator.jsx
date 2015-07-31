@@ -260,33 +260,49 @@ var Tutorial = React.createClass({
   updateTemplate: function(state) {
     var $template = this.props.template;
     var breadcrumbs = $(this.refs.breadcrumbs.getDOMNode()).clone();
+    var tutorial = this.props.tutorial;
+    var title1 = this.props.getTechName(tutorial.appType, tutorial.tech1);
+    var finalTitle = title1 + ' Tutorial';
 
     $template
-      .find('.docs-content').html('');
+      .find('.tab-pane').html('');
+
+    if(state.content1 && state.content2) {
+      var title2 = this.props.getTechName('backend', tutorial.tech2);
+
+      finalTitle = title1 + ' + ' + title2;
+    }
 
     if($template.find('.breadcrumbs').length) {
       $template.find('.breadcrumbs').replaceWith(breadcrumbs);
     }
     
     if(state.content1) {
-      $template.find('.docs-content').append(state.content1);
+      $template.find('#tutorial-1').append(state.content1);
+      $template.find('.nav-tabs li').eq(0).find('a').text(title1);
     }
 
     if(state.content2) {
-      $template.find('.docs-content').append(state.content2);
+      $template.find('#tutorial-2').append(state.content2);
+      $template.find('.nav-tabs li').eq(1).find('a').text(title2);
     }
+
+    $template.find('.tutorial-title').text(finalTitle);
+    $template.find('.nav-tabs').toggleClass('hide', !!!state.content2);
 
     $('#tutorial-navigator, #homepage-content').addClass('hide');
     $template.removeClass('hide');
 
-    this.props.onLoad();
+    $template.find('.tab-pane h1, .tab-pane h2').filter(':first-child').remove();
+
+    this.props.onLoad($template);
   },
   resetTemplate: function($template) {
     $('#tutorial-navigator, #homepage-content').removeClass('hide');
 
     $template
       .addClass('hide')
-      .find('.docs-content').html('');
+      .find('.tab-pane').html('');
   },
   componentDidMount: function() {
     var tutorial = this.props.tutorial;
