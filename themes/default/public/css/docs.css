@@ -1777,7 +1777,7 @@ body {
   margin-bottom: 0;
 }
 .sidebar-menu a {
-  font-size: 12px;
+  font-size: 13px;
 }
 .sidebar-menu .nav-title {
   cursor: pointer;
@@ -1904,6 +1904,18 @@ body {
   .docs-content {
     padding: 30px 10px 60px;
   }
+}
+.docs-content .tutorial-title {
+  margin-bottom: 0;
+}
+.docs-content .nav-tabs > li.active > a:focus {
+  border-top: 0;
+  border-left: 0;
+  border-right: 0;
+}
+.docs-content .package blockquote {
+  padding: 20px 0;
+  border: 0;
 }
 .docs-content img {
   max-width: 100%;

@@ -24,6 +24,41 @@ Auth0Docs = (function($, window, document) {
     });
   }
 
+  function throttle(callback, limit) {
+    var wait = false; 
+    return function() { 
+      if (!wait) {
+        callback.call();
+        wait = true;
+        setTimeout(function() {
+          wait = false;
+        }, limit);
+      }
+    }
+  }
+
+  function debounce(func, threshold, execAsap) {
+    var timeout;
+
+    return function debounced() {
+      var obj = this,
+        args = arguments;
+
+      function delayed() {
+        if (!execAsap) func.apply(obj, args);
+        timeout = null;
+      };
+
+      if(timeout) {
+        clearTimeout(timeout);
+      } else if(execAsap) {
+        unc.apply(obj, args);
+      }
+
+      timeout = setTimeout(delayed, threshold || 100);
+    };
+  }
+
   function renderCode() {
     $('pre code').each(function(i, block) {
       var $snippet = $(this);
@@ -34,6 +69,38 @@ Auth0Docs = (function($, window, document) {
         $snippet.addClass('hljs');
       }
     });
+  }
+
+  function buildStepNav($template) {
+    var $list = $template.find('.sidebar-sbs ul');
+
+    if(!$list.length) {
+      return;
+    }
+
+    function getList() {
+      var $collection = $('<ul>');
+
+      $template.find('.nav-tabs a').off('shown.bs.tab');
+      $template.find('.nav-tabs a').on('shown.bs.tab', function(e) {
+        buildStepNav($template);
+      });
+
+      $template.find('.tab-pane.active h3').each(function() {
+        var href = $(this).attr('id');
+        var str = $(this).text().split('.');
+        var text;
+
+        str.shift();
+        text = str.join('.').trim();
+        
+        $collection.append('<li><a href="#' + href + '">' + text + '</a></li>')
+      });
+
+      return $collection;
+    }
+
+    $list.replaceWith(getList());
   }
 
   function chooseFeedback() {
@@ -63,24 +130,41 @@ Auth0Docs = (function($, window, document) {
   function stickyNav(refresh) {
     var navOffset = 0;
 
+    $(window)
+      .on('scroll', throttle(onScrollThrottle, 200))
+      .on('scroll', onScroll)
 
-    $(window).on('scroll', function() {
+    $('body').on('click', '.js-sticky-nav a', onClickStickyNavLink);
+
+    function onScrollThrottle() {
+      var sticky = $('.js-sticky-nav').filter(':visible');
+
+      if(sticky.length) {
+        updateNav(sticky);
+      }
+    }
+
+    function onScroll() {
       var sticky = $('.js-sticky-nav').filter(':visible');
 
       if(sticky.length) {
         toggleSticky(sticky);
-        updateNav(sticky);
       }
-    });
+    }
 
-    $('body').on('click', '.js-sticky-nav a', function(e) {
+    function onClickStickyNavLink(e) {
       e.preventDefault();
 
       var sticky = $(this).closest('.js-sticky-nav');
-      var pos = $($(this).attr('href')).offset().top - sticky.outerHeight();
+
+      var pos = $($(this).attr('href')).offset().top;
+
+      if(sticky.hasClass('navigation-bar')) {
+        pos = (pos - sticky.outerHeight()) + 5;
+      }
 
       scrollAnimated(pos, 400);
-    });
+    }
 
     function toggleSticky($nav) {
       if(!$nav.hasClass('is-fixed')) {
@@ -212,7 +296,8 @@ Auth0Docs = (function($, window, document) {
 
   return {
     init: init,
-    renderCode: renderCode
+    renderCode: renderCode,
+    buildStepNav: buildStepNav
   }
 })(jQuery, window, document);
 
