@@ -26,9 +26,12 @@ Auth0Docs = (function($, window, document) {
 
   function renderCode() {
     $('pre code').each(function(i, block) {
-      if(!$(this).hasClass('hljs')) {
+      var $snippet = $(this);
+      
+      if(!$snippet.hasClass('hljs')) {
         hljs.highlightBlock(block);
         hljs.lineNumbersBlock(block);
+        $snippet.addClass('hljs');
       }
     });
   }
