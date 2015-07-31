@@ -72,7 +72,12 @@ describe('Application', function() {
       };
       deleteFile(linksErrorPath);
       deleteFile(linksRedirectsPath);
+      nconf.set('ENABLE_PACKAGE_TEST', true);
       done();
+    });
+
+    after(function(done) {
+      nconf.set('ENABLE_PACKAGE_TEST', false);
     });
 
     it('should not include broken links', function(done) {
