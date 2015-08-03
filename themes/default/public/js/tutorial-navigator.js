@@ -285,6 +285,9 @@ var Tutorial = React.createClass({displayName: "Tutorial",
     if(state.content2) {
       $template.find('#tutorial-2').append(state.content2);
       $template.find('.nav-tabs li').eq(1).find('a').text(title2);
+    } else {
+      $template.find('.tab-pane').removeClass('active');
+      $template.find('#tutorial-1').addClass('active');
     }
 
     $template.find('.tutorial-title').text(finalTitle);

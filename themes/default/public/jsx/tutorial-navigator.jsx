@@ -249,8 +249,6 @@ var Tutorial = React.createClass({
             ready: true
           });
 
-          console.log(component.state);
-
           component.updateTemplate(component.state);
         }
       },
