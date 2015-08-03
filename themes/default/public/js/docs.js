@@ -24,41 +24,6 @@ Auth0Docs = (function($, window, document) {
     });
   }
 
-  function throttle(callback, limit) {
-    var wait = false; 
-    return function() { 
-      if (!wait) {
-        callback.call();
-        wait = true;
-        setTimeout(function() {
-          wait = false;
-        }, limit);
-      }
-    }
-  }
-
-  function debounce(func, threshold, execAsap) {
-    var timeout;
-
-    return function debounced() {
-      var obj = this,
-        args = arguments;
-
-      function delayed() {
-        if (!execAsap) func.apply(obj, args);
-        timeout = null;
-      };
-
-      if(timeout) {
-        clearTimeout(timeout);
-      } else if(execAsap) {
-        unc.apply(obj, args);
-      }
-
-      timeout = setTimeout(delayed, threshold || 100);
-    };
-  }
-
   function renderCode() {
     $('pre code').each(function(i, block) {
       var $snippet = $(this);
@@ -88,19 +53,17 @@ Auth0Docs = (function($, window, document) {
 
       $template.find('.tab-pane.active h3').each(function() {
         var href = $(this).attr('id');
-        var str = $(this).text().split('.');
-        var text;
-
-        str.shift();
-        text = str.join('.').trim();
+        var str = $(this).text();
         
-        $collection.append('<li><a href="#' + href + '">' + text + '</a></li>')
+        $collection.append('<li><a href="#' + href + '">' + str + '</a></li>')
       });
 
       return $collection;
     }
 
     $list.replaceWith(getList());
+
+    setWaypoints('.sidebar-sbs');
   }
 
   function chooseFeedback() {
@@ -127,22 +90,45 @@ Auth0Docs = (function($, window, document) {
     });
   }
 
+  function setWaypoints(list, offset) {
+    var $module = $(list)
+
+    $module.find('li a').each(function() {
+      var id = $(this).attr('href');
+
+      var opts = {
+        handler: function(direction) {
+          var pos = $(window).scrollTop();
+          var prev = this.previous();
+
+          $('.is-active', $module).removeClass('is-active');
+
+          if(prev && direction === 'up') {
+            $('a[href="#' + prev.element.id + '"]', $module).closest('li').addClass('is-active');
+          } else {
+            $('a[href="' + id + '"]', $module).closest('li').addClass('is-active');
+          }
+        },
+        group: 'waypoints' + list
+      };
+
+      if(offset) {
+        opts.offset = offset;
+      }
+
+      $(id).waypoint(opts);
+    });
+  }
+
   function stickyNav(refresh) {
     var navOffset = 0;
 
     $(window)
-      .on('scroll', throttle(onScrollThrottle, 200))
       .on('scroll', onScroll)
 
     $('body').on('click', '.js-sticky-nav a', onClickStickyNavLink);
 
-    function onScrollThrottle() {
-      var sticky = $('.js-sticky-nav').filter(':visible');
-
-      if(sticky.length) {
-        updateNav(sticky);
-      }
-    }
+    setWaypoints('.navigation-bar', 66);
 
     function onScroll() {
       var sticky = $('.js-sticky-nav').filter(':visible');
@@ -160,7 +146,7 @@ Auth0Docs = (function($, window, document) {
       var pos = $($(this).attr('href')).offset().top;
 
       if(sticky.hasClass('navigation-bar')) {
-        pos = (pos - sticky.outerHeight()) + 5;
+        pos = Math.floor(pos - sticky.outerHeight());
       }
 
       scrollAnimated(pos, 400);
@@ -174,90 +160,6 @@ Auth0Docs = (function($, window, document) {
       var isFixed = $(window).scrollTop() > navOffset;
 
       $nav.toggleClass('is-fixed', isFixed);
-    }
-
-    function updateNav($nav) {
-      function getScroll() {
-        var scrollPos = $(window).scrollTop();
-        var stickyNav = $nav;
-
-        if (stickyNav.hasClass('is-fixed')) {
-          scrollPos = scrollPos + stickyNav.outerHeight() + 40;
-        }
-
-        return scrollPos;
-      }
-
-      function getActiveLink() {
-        if($nav.find('.is-active').length) {
-          return $nav.find('.is-active')
-        }
-
-        return $nav.find('li:first')
-      }
-
-      var $activeLink = getActiveLink(),
-          $activeSection = $($activeLink.find('a').attr('href'));
-
-      if($activeSection.length) {
-        var activeSectionPos = $activeSection.offset().top,
-            activeSectionBottom = activeSectionPos + $activeSection.outerHeight();
-
-        var $nextLink = getLink('next');
-        var $prevLink = getLink('prev');
-
-        if (getScroll() >= activeSectionPos) {
-          setActiveSection($activeLink);
-        } else {
-          $activeLink.removeClass('is-active');
-        }
-
-        if ($nextLink.length) {
-          var $nextSection = $($nextLink.find('a').attr('href')),
-              nextSectionPos = $nextSection.offset().top,
-              nextSectionBottom = nextSectionPos + $nextSection.outerHeight();
-
-          if (getScroll() >= nextSectionPos) {
-            setActiveSection($nextLink);
-          }
-        }
-
-        if ($prevLink.length) {
-          var $prevSection = $($prevLink.find('a').attr('href')),
-              prevSectionPos = $prevLink.offset().top,
-              prevSectionBottom = prevSectionPos + $prevSection.outerHeight(),
-              backThreshold = 100;
-
-          if (getScroll() < activeSectionPos - backThreshold) {
-            setActiveSection($prevLink);
-          }
-        }
-
-        function setActiveSection($selected) {
-          $nav.find('.is-active').removeClass('is-active');
-          $selected.addClass('is-active');
-        }
-
-        function getLink(direction) {
-          var next = $activeLink.next(),
-              prev = $activeLink.prev();
-
-          if(direction === 'next') {
-            if(next.length) {
-              return next;
-            }
-          }
-
-          if(direction === 'prev') {
-            if(prev.length) {
-              return prev;
-            }
-          }
-
-          return [];
-        }
-
-      }
     }
   }
 
@@ -297,7 +199,8 @@ Auth0Docs = (function($, window, document) {
   return {
     init: init,
     renderCode: renderCode,
-    buildStepNav: buildStepNav
+    buildStepNav: buildStepNav,
+    setWaypoints: setWaypoints
   }
 })(jQuery, window, document);
 

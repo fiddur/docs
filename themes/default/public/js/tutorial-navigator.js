@@ -27,17 +27,6 @@ var QuickstartList = React.createClass({displayName: "QuickstartList",
   componentDidMount: function() {
     var $carousel = $(this.refs.carousel.getDOMNode());
 
-    $carousel.on('initialized.owl.carousel', function() {
-      var $module = $(this);
-      if (window.requestAnimationFrame) {
-        requestAnimationFrame(function() {
-          $module.addClass('rendered');
-        });
-      } else {
-        $module.addClass('rendered');
-      }
-    });
-
     $carousel.owlCarousel({
       margin: 20,
       center: true,
@@ -118,12 +107,12 @@ var Tech = React.createClass({displayName: "Tech",
     var tech = this.props.model;
     var style = {
       animationDelay: this.props.delay + "ms",
-      animationDuration: "400ms",
+      animationDuration: "200ms",
       animationTimingFunction: "cubic-bezier(0.455, 0.03, 0.515, 0.955)"
     };
 
     return (
-      React.createElement("li", {className: "animated fadeIn", style: style}, 
+      React.createElement("li", {className: "animated scaleIn", style: style}, 
         React.createElement("div", {"data-name": tech.name, className: "circle-logo", onClick: this.handleClick.bind(this, tech)}, 
           React.createElement("div", {className: "logo"}), 
           React.createElement("div", {className: "title"}, tech.title)
@@ -145,7 +134,7 @@ var TechList = React.createClass({displayName: "TechList",
     }
       
     this.props.options.forEach(function(tech, i) {
-      var time = 40 * i;
+      var time = 20 * i;
 
       collection.push(
         React.createElement(Tech, {key: i, delay: time, model: tech, tutorial: this.props.tutorial, updateTutorial: this.props.updateTutorial})
@@ -233,25 +222,11 @@ var Tutorial = React.createClass({displayName: "Tutorial",
     var component = this;
     var config = {};
 
-    $.ajax({
+    return $.ajax({
       url: uri,
       dataType: "jsonp",
       jsonpCallback: jsonp,
       contentType: "application/json",
-      success: function(response) {
-        config[toUpdate] = response.html;
-
-        component.setState(config);
-        component.forceUpdate();
-
-        if(tutorial.showTutorial) {
-          component.setState({
-            ready: true
-          });
-
-          component.updateTemplate(component.state);
-        }
-      },
       error: function(status, err) {
         return console.log(err);
       }
@@ -262,14 +237,11 @@ var Tutorial = React.createClass({displayName: "Tutorial",
     var breadcrumbs = $(this.refs.breadcrumbs.getDOMNode()).clone();
     var tutorial = this.props.tutorial;
     var title1 = this.props.getTechName(tutorial.appType, tutorial.tech1);
+    var title2 = '';
     var finalTitle = title1 + ' Tutorial';
 
-    $template
-      .find('.tab-pane').html('');
-
     if(state.content1 && state.content2) {
-      var title2 = this.props.getTechName('backend', tutorial.tech2);
-
+      title2 = this.props.getTechName('backend', tutorial.tech2);
       finalTitle = title1 + ' + ' + title2;
     }
 
@@ -290,35 +262,65 @@ var Tutorial = React.createClass({displayName: "Tutorial",
       $template.find('#tutorial-1').addClass('active');
     }
 
+    // Remove duplicate titles
+    $template.find('.tab-pane h1, .tab-pane h2').filter(':first-child').remove();
+
     $template.find('.tutorial-title').text(finalTitle);
     $template.find('.nav-tabs').toggleClass('hide', !!!state.content2);
 
-    $('#tutorial-navigator, #homepage-content').addClass('hide');
     $template.removeClass('hide');
-
-    $template.find('.tab-pane h1, .tab-pane h2').filter(':first-child').remove();
 
     this.props.onLoad($template);
   },
+  emptyTemplate: function($template) {
+    $template.find('.tab-pane, .nav-tabs li a, .tutorial-title, .sidebar-sbs ul').html('');
+  },
   resetTemplate: function($template) {
-    $('#tutorial-navigator, #homepage-content').removeClass('hide');
+    $template.addClass('hide');
 
-    $template
-      .addClass('hide')
-      .find('.tab-pane').html('');
+    this.emptyTemplate($template);
+    this.props.onReset($template);
+  },
+  onReady: function(content1, content2) {
+    if(!content2[0].html) {
+      this.setState({
+        ready: true,
+        content1: content1.html
+      });
+
+      return this.updateTemplate(this.state);
+    }
+
+    if(content1[0] && content2[0]) {
+      this.setState({
+        ready: true,
+        content1: content1[0].html,
+        content2: content2[0].html
+      });
+
+      return this.updateTemplate(this.state);
+    }
   },
   componentDidMount: function() {
     var tutorial = this.props.tutorial;
 
     this.resetTemplate(this.props.template);
 
-    if(tutorial.tutorialUrls.length) {
-      this.fetchDocument(tutorial.tutorialUrls[0], "content1", "__a0tn1");
-
-      if(tutorial.tech2) {
-        this.fetchDocument(tutorial.tutorialUrls[1], "content2", "__a0tn2");
-      }
+    if(!tutorial.showTutorial) {
+      return;
     }
+
+    if(tutorial.tutorialUrls.length > 1) {
+      return $.when(
+        this.fetchDocument(tutorial.tutorialUrls[0], "content1", "__a0tn1"), 
+        this.fetchDocument(tutorial.tutorialUrls[1], "content2", "__a0tn2")
+      ).then(this.onReady);
+    }
+      
+    return $.when(
+      this.fetchDocument(tutorial.tutorialUrls[0], "__a0tn1")
+    ).then(this.onReady);
+    
   },
   render: function() {
     return (
@@ -455,7 +457,8 @@ var TutorialNavigator = React.createClass({displayName: "TutorialNavigator",
           tech2: null,
           path: '/quickstart/' + ctx.params.apptype + [platformPath + ctx.params.platform],
           tutorialUrls: [platformPath + ctx.params.platform],
-          showTutorial: true
+          showTutorial: true,
+          noApi: null
         });
       }
     });
@@ -464,10 +467,12 @@ var TutorialNavigator = React.createClass({displayName: "TutorialNavigator",
       var platformPath = component.getPlatformPath(ctx.params.apptype);
       var tech2 = ctx.params.api;
       var tutorialUrls = [platformPath + ctx.params.platform, '/server-apis/' + ctx.params.api];
+      var noApi = null;
 
       if(ctx.params.api === 'no-api') {
         tech2 = null;
         tutorialUrls = [platformPath + ctx.params.platform]
+        noApi = true;
       }
 
       component.setState({
@@ -478,7 +483,8 @@ var TutorialNavigator = React.createClass({displayName: "TutorialNavigator",
         tech2: tech2,
         path: '/quickstart/' + ctx.params.apptype + [platformPath + ctx.params.platform, '/server-apis/' + ctx.params.api],
         tutorialUrls: tutorialUrls,
-        showTutorial: true
+        showTutorial: true,
+        noApi: noApi
       });
     });
 
@@ -503,7 +509,7 @@ var TutorialNavigator = React.createClass({displayName: "TutorialNavigator",
         ), 
 
         React.createElement("div", {className: "tutorial-content"}, 
-          React.createElement(Tutorial, {key: this.state.showTutorial, tutorial: this.state, getTechName: this.getTechName, template: this.props.singleTpl, onLoad: this.props.onTutorialLoad})
+          React.createElement(Tutorial, {key: this.state.showTutorial, tutorial: this.state, getTechName: this.getTechName, template: this.props.singleTpl, onLoad: this.props.onTutorialLoad, onReset: this.props.onTutorialReset})
         )
         
       )

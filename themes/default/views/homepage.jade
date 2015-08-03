@@ -67,9 +67,9 @@ html(lang="en")
       - for (var item in nav)
         - var current = nav[item];
 
-          section.section-product
+          section.section-product(id!=current.id)
             .container
-              h2(id!=current.id)= current.name
+              h2= current.name
                 span= current.description
             
             - if(current.id === 'product')
@@ -137,6 +137,7 @@ html(lang="en")
   script(src=env.BASE_URL + '/js/prettify.js')
   script(src=env.BASE_URL + '/js/owl.carousel.min.js')
   script(src=env.BASE_URL + '/js/jquery.accordion.min.js')
+  script(src=env.BASE_URL + '/js/jquery.waypoints.js')
   script(src=env.BASE_URL + '/js/highlight.min.js')
   script(src=env.BASE_URL + '/js/page.min.js')
   script(src=env.BASE_URL + '/js/react.min.js')
@@ -184,9 +185,15 @@ html(lang="en")
     tnOpts.platforms = !{JSON.stringify(quickstarts)};
     tnOpts.singleTpl = $('#tutorial-template');
     tnOpts.onTutorialLoad = function($template) {
+      $('#tutorial-navigator, #homepage-content').addClass('hide');
       // trigger code samples
       Auth0Docs.renderCode();
       Auth0Docs.buildStepNav($template);
+    };
+
+    tnOpts.onTutorialReset = function($template) {
+      $('#tutorial-navigator, #homepage-content').removeClass('hide');
+      Waypoint.refreshAll();
     };
 
     // Init Tutorial Navigator
