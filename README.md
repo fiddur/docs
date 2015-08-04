@@ -52,7 +52,7 @@ Running in vagrant with watch
 
 ```
 sudo service auth0-docs stop
-NODE_ENV=dev CONFIG_FILE=/etc/auth0-docs.json npm run watch
+npm run watch
 ```
 
 ## Installing or Updating dependencies
