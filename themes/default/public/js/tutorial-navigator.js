@@ -232,45 +232,54 @@ var Tutorial = React.createClass({displayName: "Tutorial",
       }
     });
   },
-  updateTemplate: function(state) {
-    var $template = this.props.template;
-    var breadcrumbs = $(this.refs.breadcrumbs.getDOMNode()).clone();
+  getBreadcrumbs: function() {
+    return $(this.refs.breadcrumbs.getDOMNode()).clone();
+  },
+  getTitle: function(state) {
     var tutorial = this.props.tutorial;
     var title1 = this.props.getTechName(tutorial.appType, tutorial.tech1);
     var title2 = '';
-    var finalTitle = title1 + ' Tutorial';
-
+    var title = title1 + ' Tutorial';
+    
     if(state.content1 && state.content2) {
       title2 = this.props.getTechName('backend', tutorial.tech2);
-      finalTitle = title1 + ' + ' + title2;
+      title = title1 + ' + ' + title2;
     }
 
-    if($template.find('.breadcrumbs').length) {
-      $template.find('.breadcrumbs').replaceWith(breadcrumbs);
-    }
-    
+    return {
+      tutorial: title,
+      tech1: title1,
+      tech2: title2
+    };
+  },
+  updateTemplate: function(state) {
+    var template = this.props.template;
+    var tutorial = this.props.tutorial;
+    var titles = this.getTitle(state);
+
+    $('.tutorial-title', template).text(titles.tutorial);
+    $('.breadcrumbs', template).replaceWith(this.getBreadcrumbs());
+
     if(state.content1) {
-      $template.find('#tutorial-1').append(state.content1);
-      $template.find('.nav-tabs li').eq(0).find('a').text(title1);
+      $('#tutorial-1', template).append(state.content1);
+      $('.nav-tabs li', template).eq(0).find('a').text(titles.tech1);
     }
 
     if(state.content2) {
-      $template.find('#tutorial-2').append(state.content2);
-      $template.find('.nav-tabs li').eq(1).find('a').text(title2);
-    } else {
-      $template.find('.tab-pane').removeClass('active');
-      $template.find('#tutorial-1').addClass('active');
+      $('#tutorial-2', template).append(state.content2);
+      $('.nav-tabs li', template).eq(1).find('a').text(titles.tech2);
     }
 
     // Remove duplicate titles
-    $template.find('.tab-pane h1, .tab-pane h2').filter(':first-child').remove();
+    $('.tab-pane h1, .tab-pane h2', template).filter(':first-child').remove();
 
-    $template.find('.tutorial-title').text(finalTitle);
-    $template.find('.nav-tabs').toggleClass('hide', !!!state.content2);
+    // If only one tutorial, hide the tabs
+    $('.nav-tabs', template).toggleClass('hide', !!!state.content2);
+    $('.tab-pane', template).removeClass('active').eq(0).addClass('active');
 
-    $template.removeClass('hide');
+    template.removeClass('hide');
 
-    this.props.onLoad($template);
+    this.props.onLoad(template);
   },
   emptyTemplate: function($template) {
     $template.find('.tab-pane, .nav-tabs li a, .tutorial-title, .sidebar-sbs ul').html('');
@@ -312,13 +321,13 @@ var Tutorial = React.createClass({displayName: "Tutorial",
 
     if(tutorial.tutorialUrls.length > 1) {
       return $.when(
-        this.fetchDocument(tutorial.tutorialUrls[0], "content1", "__a0tn1"), 
-        this.fetchDocument(tutorial.tutorialUrls[1], "content2", "__a0tn2")
+        this.fetchDocument(tutorial.tutorialUrls[0], 'content1', '__a0tn1'), 
+        this.fetchDocument(tutorial.tutorialUrls[1], 'content2', '__a0tn2')
       ).then(this.onReady);
     }
       
     return $.when(
-      this.fetchDocument(tutorial.tutorialUrls[0], "__a0tn1")
+      this.fetchDocument(tutorial.tutorialUrls[0], 'content1', '__a0tn1')
     ).then(this.onReady);
     
   },
