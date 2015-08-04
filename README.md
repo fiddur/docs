@@ -8,6 +8,18 @@ When you commit code to this repository, you should follow the following procedu
 * The pull request should include any details about what is changed and how the change will be used
 * If appropriate you should add a unit or functional test to verify the change
 * All current tests should be run prior to sending your pull request
+* Use ES6 syntax when possible
+* Always run JSLint on code, when exception is applied mark it with an ignore statement in code and note why. Always reenable the ignore after the exception.
+  ```js
+  var y = Object.create(null);
+  // ...
+  /*jshint -W089 */
+  // This is disabled because...
+  for (var prop in y) {
+      // ...
+  }
+  /*jshint +W089 */
+  ```
 
 
 ## Development
@@ -40,7 +52,7 @@ Running in vagrant with watch
 
 ```
 sudo service auth0-docs stop
-NODE_ENV=production CONFIG_FILE=/etc/auth0-docs.json npm run watch
+NODE_ENV=dev CONFIG_FILE=/etc/auth0-docs.json npm run watch
 ```
 
 ## Installing or Updating dependencies

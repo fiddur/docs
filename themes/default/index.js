@@ -2,7 +2,7 @@ var nconf = require('nconf');
 var docsSettings = require('../../docs/settings.json');
 var docsNav = require('./navigation.json');
 var alternative_title = require('../../lib/utils').alternative_title;
-var quickstartCollections = require('../../lib/quickstart-collections');
+var quickstartCollections = require('../../lib/collections/quickstarts');
 
 var Theme = function(docsapp) {
   this._docsapp = docsapp;
