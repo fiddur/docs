@@ -296,6 +296,20 @@ app.use(nconf.get('BASE_URL'), require('./lib/packager'));
 app.use(nconf.get('BASE_URL'), require('./lib/sitemap'));
 app.use(nconf.get('BASE_URL') + '/meta', require('./lib/api'));
 
+// WARNING: THIS IS A TEMPORARY HACK TO OVERRIDE THE INDEX DOCUMENT
+// REMOVE THIS BEFORE GOING LIVE WITH THE REDESIGN!!!!!!!!
+docsapp.addPreRender(function(req, res, next) {
+  if (req.path ===  nconf.get('BASE_URL') + '/') {
+    var Doc = require('./node_modules/markdocs/lib/markdocs/doc');
+    res.doc = new Doc(docsapp, 'index.md');
+    res.doc._meta.layout = 'homepage';
+    res.doc.processSections = function() {
+      return [];
+    }
+  }
+  next();
+});
+
 /**
  * Export `docsapp` or boot a new https server
  * with it
