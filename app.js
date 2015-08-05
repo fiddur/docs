@@ -2,7 +2,7 @@ require('babel/register')({
   sourceMaps: (process.env.NODE_ENV === 'production') ? false : 'inline'
 });
 
-if (process.env.NODE_ENV !== 'dev') {
+if (process.env.NODE_ENV !== 'development') {
   var cluster = require('cluster');
 
   if (cluster.isMaster && !module.parent) {
@@ -22,8 +22,6 @@ if (process.env.NODE_ENV !== 'production') {
 var redirect = require('express-redirect');
 var prerender = require('prerender-node');
 var passport = require('passport');
-var markdocs = require('markdocs');
-
 var express = require('express');
 var bodyParser = require('body-parser');
 var cookieParser = require('cookie-parser');
@@ -34,6 +32,7 @@ var nconf = require('nconf');
 var http = require('http');
 var path = require('path');
 var fs = require('fs');
+var sitemap = require('express-sitemap');
 
 var app = redirect(express());
 
@@ -130,6 +129,7 @@ passport.deserializeUser(function(id, done) {
   });
 });
 
+app.set('views', path.join(__dirname, 'themes/default/views'));
 app.set('view engine', 'jade');
 app.enable('trust proxy');
 
@@ -196,12 +196,16 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(methodOverride());
 
 app.use(nconf.get('BASE_URL') + '/media', express.static(path.join(__dirname, 'docs/media')));
+['css', 'img', 'js', 'vendor'].forEach(function(folder) {
+  app.use(nconf.get('BASE_URL') + '/' + folder, express.static(path.join(__dirname, '/themes/default/public/', folder)));
+});
+
 
 app.use(passport.initialize());
 app.use(passport.session());
 app.use(middleware.setCurrentTenant);
 app.use(middleware.setUserIsOwner);
-
+app.use(middleware.defaultValues);
 
 var connections = require('./lib/connections');
 app.get('/ticket/step', function (req, res) {
@@ -219,6 +223,11 @@ app.get(nconf.get('BASE_URL') + '/switch', function (req, res) {
     region: req.query.region,
   };
   res.redirect(nconf.get('BASE_URL') || '/');
+});
+
+var quickstartCollections = require('./lib/collections/quickstarts');
+app.use(nconf.get('BASE_URL'), function(req, res) {
+  res.render('homepage', { quickstarts: quickstartCollections });
 });
 
 /**
@@ -249,42 +258,8 @@ quickstart.routes.forEach(function(route) {
 app.get(nconf.get('BASE_URL') + '/quickstart', alias(nconf.get('BASE_URL') || '/'));
 
 
-var includes = require('./lib/includes/includes');
-includes.init(path.join(__dirname, '/docs/includes'));
-
-/**
- * Create and boot DocsApp as `Markdocs` app
- */
-
-var docsapp = new markdocs.App({
-  basePath: __dirname,
-  baseUrl: nconf.get('BASE_URL') || '',
-  docsPath: nconf.get('DOCS_PATH'),
-  useDefaultProcessors: false
-}, app);
-
-docsapp.addPreRender(middleware.defaultValues);
-docsapp.addPreRender(includes.add);
-docsapp.addPreRender(middleware.overrideIfAuthenticated);
-docsapp.addPreRender(middleware.overrideIfClientInQs);
-docsapp.addPreRender(middleware.overrideIfClientInQsForPublicAllowedUrls);
-docsapp.addPreRender(middleware.appendTicket);
-docsapp.addPreRender(quickstart.middleware);
-docsapp.addPreRender(middleware.embedded);
-docsapp.addPreRender(require('./lib/collections/articles').middleware);
-docsapp.addPreRender(require('./lib/collections/snippets').middleware);
-docsapp.addPreRender(require('./lib/collections/articles-tags').middleware);
-docsapp.addPreRender(require('./lib/middleware/url-variables'));
-docsapp.addPreRender(require('./lib/external/middleware'));
-docsapp.addPreRender(require('./lib/external/api2-explorer-middleware'));
-docsapp.addPreRender(require('./lib/sdk-snippets/login-widget/middleware'));
-docsapp.addPreRender(require('./lib/sdk-snippets/login-widget2/middleware'));
-docsapp.addPreRender(require('./lib/sdk-snippets/lock/middleware-browser'));
-docsapp.addPreRender(require('./lib/sdk-snippets/lock/middleware'));
-docsapp.addPreRender(middleware.configuration);
-require('./lib/doc-processors').processors.forEach(function(processor) {
-  docsapp.addDocumentProcessor(processor);
-});
+app.use(nconf.get('BASE_URL'), require('./lib/api-explorer'));
+app.use(nconf.get('BASE_URL'), require('./lib/docs').router);
 
 require('./lib/sdk-snippets/lock/demos-routes')(app);
 require('./lib/sdk-snippets/lock/snippets-routes')(app);
@@ -293,22 +268,54 @@ require('./lib/sdk-snippets/login-widget2/snippets-routes')(app);
 require('./lib/sdk-snippets/login-widget/demos-routes')(app);
 
 app.use(nconf.get('BASE_URL'), require('./lib/packager'));
-app.use(nconf.get('BASE_URL'), require('./lib/sitemap'));
-app.use(nconf.get('BASE_URL') + '/meta', require('./lib/api'));
 
-// WARNING: THIS IS A TEMPORARY HACK TO OVERRIDE THE INDEX DOCUMENT
-// REMOVE THIS BEFORE GOING LIVE WITH THE REDESIGN!!!!!!!!
-docsapp.addPreRender(function(req, res, next) {
-  if (req.path ===  nconf.get('BASE_URL') + '/') {
-    var Doc = require('./node_modules/markdocs/lib/markdocs/doc');
-    res.doc = new Doc(docsapp, 'index.md');
-    res.doc._meta.layout = 'homepage';
-    res.doc.processSections = function() {
-      return [];
+// Sitemap
+var map = sitemap({
+  generate: app,
+  cache: 60000,
+  route: {
+    'ALL': {
+      changefreq: 'weekly',
     }
   }
-  next();
 });
+app.get(nconf.get('BASE_URL') + '/sitemap.xml', function(req, res) {
+  map.XMLtoWeb(res);
+});
+
+app.use(nconf.get('BASE_URL') + '/meta', require('./lib/api'));
+
+// catch 404 and forward to error handler
+app.use(function(req, res, next) {
+    var err = new Error('Not Found');
+    err.status = 404;
+    next(err);
+});
+
+// error handlers
+
+// development error handler
+// will print stacktrace
+if (app.get('env') === 'development') {
+    app.use(function(err, req, res, next) {
+        res.status(err.status || 500);
+        res.render('error', {
+            message: err.message,
+            error: err
+        });
+    });
+}
+
+// production error handler
+// no stacktraces leaked to user
+app.use(function(err, req, res, next) {
+    res.status(err.status || 500);
+    res.render('error', {
+        message: err.message,
+        error: {}
+    });
+});
+
 
 /**
  * Export `docsapp` or boot a new https server
