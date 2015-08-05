@@ -14,6 +14,33 @@
   min-height: 640px;
   background: #F3F3F3;
   
+  .question-text,
+  .tenant-switcher
+    margin: 20px 0;
+    margin-bottom: 10px;
+    display: inline-block;
+    color: color_oil;
+    font-size: 20px;
+    
+  .tenant-switcher
+    max-width: 320px;
+    
+    +breakpoint("tablet")
+      max-width: none;
+      
+    .text
+      margin-bottom: 15px;
+      
+    .icon
+      font-size: 16px;
+      opacity: 0.5;
+      position: relative;
+      top: 0.2em;
+      padding-left: 1px;
+      
+    .custom-select
+      margin: 0 10px;
+  
   .tutorial-content
     display: none;
 

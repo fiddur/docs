@@ -184,6 +184,7 @@ html(lang="en")
     
     tnOpts.platforms = !{JSON.stringify(quickstarts)};
     tnOpts.singleTpl = $('#tutorial-template');
+    tnOpts.userTenants = !{JSON.stringify(account.tenantList) || false};
     tnOpts.onTutorialLoad = function($template) {
       $('#tutorial-navigator, #homepage-content').addClass('hide');
       // trigger code samples
@@ -198,10 +199,9 @@ html(lang="en")
 
     // Init Tutorial Navigator
     React.render(
-      React.createElement(TutorialNavigator, tnOpts), 
+      React.createElement(TutorialNavigator.init, tnOpts), 
         $('#tutorial-navigator').get(0)
     );
-
 
     if(location.hash) {
       location.hash = location.hash;
