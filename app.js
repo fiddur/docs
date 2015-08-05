@@ -205,7 +205,7 @@ app.use(passport.initialize());
 app.use(passport.session());
 app.use(middleware.setCurrentTenant);
 app.use(middleware.setUserIsOwner);
-
+app.use(middleware.defaultValues);
 
 var connections = require('./lib/connections');
 app.get('/ticket/step', function (req, res) {
@@ -223,6 +223,11 @@ app.get(nconf.get('BASE_URL') + '/switch', function (req, res) {
     region: req.query.region,
   };
   res.redirect(nconf.get('BASE_URL') || '/');
+});
+
+var quickstartCollections = require('./lib/collections/quickstarts');
+app.use(nconf.get('BASE_URL'), function(req, res) {
+  res.render('homepage', { quickstarts: quickstartCollections });
 });
 
 /**
