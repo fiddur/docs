@@ -221,7 +221,8 @@ TutorialNavigator = (function($, window, document) {
     },
     fetchDocument: function(url, toUpdate, jsonp) {
       var tutorial = this.props.tutorial;
-      var uri = this.setUrlParams('/docs' + url + '?e=1');
+      var prefix = (window.location.host === 'manage.myauth0.com') ? 'docs' : '';
+      var uri = this.setUrlParams('/' + prefix + url + '?e=1');
       var component = this;
       var config = {};
 
