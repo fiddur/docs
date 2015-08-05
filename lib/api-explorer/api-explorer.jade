@@ -1,0 +1,23 @@
+extends ../../themes/default/views/doc
+
+block content
+  div#api-explorer
+
+  script(src="https://cdn.auth0.com/api-explorer/api-explorer.js", type="text/javascript")
+  link(rel="stylesheet", href="https://cdn.auth0.com/api-explorer/api-explorer.css", type="text/css")
+
+  script.
+      require(['api-explorer'], function () {
+        var apiExplorer = require('api-explorer')
+        apiExplorer({
+          el:             $('#api-explorer'),
+          isAuth:         #{isAuth},
+          tenantDomain:   '#{account.namespace}',
+          clientId:       '#{globalClientID}',
+          clientSecret:   '#{globalClientSecret}',
+          docsDomain:     '#{docsDomain}',
+          user:           !{JSON.stringify(user)},
+          readOnly:       #{readOnly},
+          anchors:        #{anchors}
+        });
+      });

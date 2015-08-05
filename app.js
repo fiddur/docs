@@ -252,6 +252,7 @@ quickstart.routes.forEach(function(route) {
 app.get(nconf.get('BASE_URL') + '/quickstart', alias(nconf.get('BASE_URL') || '/'));
 
 
+app.use(nconf.get('BASE_URL'), require('./lib/api-explorer'));
 app.use(nconf.get('BASE_URL'), require('./lib/docs').router);
 
 require('./lib/sdk-snippets/lock/demos-routes')(app);
