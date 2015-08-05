@@ -221,8 +221,8 @@ TutorialNavigator = (function($, window, document) {
     },
     fetchDocument: function(url, toUpdate, jsonp) {
       var tutorial = this.props.tutorial;
-      var prefix = (window.location.host === 'manage.myauth0.com') ? 'docs' : '';
-      var uri = this.setUrlParams('/' + prefix + url + '?e=1');
+      var prefix = (window.location.host === 'manage.myauth0.com') ? '/docs' : '';
+      var uri = this.setUrlParams('//' + window.location.host + prefix + url + '?e=1');
       var component = this;
       var config = {};
 
@@ -410,7 +410,7 @@ TutorialNavigator = (function($, window, document) {
 
       return (
         React.createElement("div", {key: this.props.tutorial.appType, className: cssClass}, 
-          React.createElement("div", {className: "text"}, "Choose an Account and Aplication to customize your Tutorials"), 
+          React.createElement("div", {className: "text"}, "Choose an account or application to customize your Tutorials"), 
           React.createElement("span", {className: "icon icon-budicon-300"}), 
           React.createElement("div", {className: "custom-select"}, 
             React.createElement("span", {"data-select-value": true}, this.state.tenant.tenant, " ", React.createElement("i", {className: "icon-budicon-460"})), 

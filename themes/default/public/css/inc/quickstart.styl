@@ -1,6 +1,6 @@
 .quickstart-list
   &.container
-    padding: 60px 0;
+    padding: 0;
     padding-top: 30px;
     margin: 0 auto;
 
@@ -11,7 +11,7 @@
     animation: fadeIn 300ms;
 
 #tutorial-navigator
-  min-height: 640px;
+  min-height: 580px;
   background: #F3F3F3;
   
   .question-text,
@@ -30,6 +30,10 @@
       
     .text
       margin-bottom: 15px;
+      font-size: 16px;
+      
+      +breakpoint("tablet")
+        font-size: 20px;
       
     .icon
       font-size: 16px;
@@ -40,6 +44,7 @@
       
     .custom-select
       margin: 0 10px;
+      max-width: 30vw;
   
   .tutorial-content
     display: none;
