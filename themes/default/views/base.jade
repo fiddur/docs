@@ -14,7 +14,6 @@ html(lang="en")
     link(href="//cdn.auth0.com/styleguide/latest/lib/logos/img/favicon.png", rel="shortcut icon")
     link(href='//cdn.auth0.com/styleguide/latest/index.min.css', rel='stylesheet')
     link(href="//cdn.auth0.com/web-header/latest/standalone.css", rel="stylesheet")
-
     link(href=env.BASE_URL + '/css/docs.css', rel='stylesheet')
 
     script(type='text/javascript', src='//use.typekit.net/iws6ohy.js')
@@ -29,11 +28,11 @@ html(lang="en")
     script(src='//cdn.auth0.com/styleguide/vendor/jquery-1.9.0.min.js')
     script(src='//cdn.auth0.com/styleguide/vendor/bootstrap-3.2.0.min.js')
 
-    include inc/swiftype
     include inc/analytics
     include inc/lock-sso
+    include inc/mixins
 
-  body.page-docs(data-swiftype-index="false")
+  body.docs-single(data-swiftype-index="false")
     header.site-header!= webheader
     script.
       if (null != window.widget) {
@@ -45,89 +44,75 @@ html(lang="en")
         });
       }
 
-
-    .container
-      nav.navbar.navbar-default.sub-navbar
-        if (locals.user && user.regions && user.regions.length > 1)
-          .dropdown
-            button#account-chooser.btn.dropdown-toggle(type='button', data-toggle='dropdown')
-              | #{user.tenant.name}
-              span.caret
-            ul.dropdown-menu(role='menu', aria-labelledby='account-chooser')
-              each region in user.regions
-                li(role="presentation", class="dropdown-header")
-                  | #{region.description}
-                each tenant in region.tenants
-                  li(role='presentation')
-                    a(role='menuitem', tabindex='-1', href=env.BASE_URL + '/switch?tenant=#{tenant}&region=#{region.name}') #{tenant}
-        else
-          .navbar-header
-            small.navbar-text Documentation: API Reference & Help topics
+    .navigation-bar
+      .wrapper
+        .container
+          .breadcrumbs
+            a(href="/")
+              span.text Documentation
+            a
+              i.icon-budicon-461
+              span.text= title
 
 
-        form#search.navbar-form.navbar-right(role="search", action=env.BASE_URL + "/search", autocomplete="off")
-          .form-group
-            .input-group
+          form#search(role="search", action=env.BASE_URL + "/search", autocomplete="off")
+            .form-group.search-control
+              i.icon-budicon-489
+              input#search-input.form-control(type="text", placeholder="Search for docs", name="stq")
 
-              input#search-input.form-control(type="text", placeholder="Search for terms", name="stq")
-              span.input-group-btn
-                button.btn.btn-default.btn-small(type="submit", value="")
-                  i.icon.icon-budicon-489
-
-    .container
+    //- Start content
+    .js-doc-template.container
       .row
-        .col-xs-3
-          nav.sidebar-docs
-            ul
-              -var navigation = site.menus.navigation
-              - for (var k1 in navigation)
-                - var l1 = navigation[k1]
-                - if (!l1.disabled)
-                  li(class="box-" + l1.icon.substr(5)).box.sidebar-box
-                    - if (l1.icon)
-                        strong
-                          //- i(class='icon #{l1.icon}')
-                          | #{l1.title}
-                    - else
-                        strong= l1.title
-                    ul
-                      - for (var k2 in l1.items)
-                        - var l2 = l1.items[k2]
-                        - if (l2.url == url)
-                            li(class=l2.url.substr(1)).selected
-                              a(href=furl(l2.url))
-                                i
-                                span= l2.title
-                        - else
-                            li(class=l2.url.substr(1))
-                              a(href=furl(l2.url))
-                                i
-                                span= l2.title
+        .col-sm-3
+          include inc/sidebar-menu
 
-        .col-xs-9
-
-          .srow
-            ul.breadcrumb
-              li
-                a(href=env.BASE_URL || "/") Documentation
-              li &raquo;
-              - if (url !== '/connector' && url.indexOf('/connector') !== -1)
-                  li
-                    a(href=env.BASE_URL + '/connector') Connector
-                  li &raquo;
-              - if (url !== '/email' && url.indexOf('/email') !== -1)
-                  li
-                    a(href=env.BASE_URL + '/email') Email
-                  li &raquo;
-              li=title
-
-          section.content(data-swiftype-index="true")
+        .col-sm-9
+          section.docs-content(data-swiftype-index="true")
             block content
 
+    .related-howto
+      .container
+        .row
+          .col-md-8
+            h3 Related how to's
+            .articles-item
+              .item
+                a(href="")
+                  i.icon-budicon-754
+                  | Configure an Identity Provider
+              .item
+                a(href="")
+                  i.icon-budicon-754
+                  | Adding user metadata
+              .item
+                a(href="")
+                  i.icon-budicon-754
+                  | Running tasks after authentication
+              .item
+                a(href="")
+                  i.icon-budicon-754
+                  | Using Webtasks to set Permissions
+          .col-md-4
+            h3 Send feedback
+            p Did you find this document userful?
+              .feedback-choose
+                .choose.choose-yes
+                  a(href="")
+                    i.icon-budicon-470
+                    | Yes
+                .choose.choose-no
+                  a(href="")
+                    i.icon-budicon-471
+                    | No
+              .feedback-yes(style="display: none")
+                h5 Thank you for your feedback
+              .feedback-no(style="display: none")
+                form.send-feedback
+                  textarea(placeholder="Sorry to hear that!, how can we help you?").form-control
+                  input(type="submit", value="Submit").submit.btn.btn-primary
 
-          .fixit
-              a(href='#', target='_blank') Found a typo?  Fix it
-    
+    hr
+
     include ../public/vendor/auth0-styleguide/lib/footer/demo.jade
 
   //- Start search feature scripts
@@ -135,20 +120,24 @@ html(lang="en")
   script(src=env.BASE_URL + '/js/search.js')
   //- End search feature scripts
 
-  script(src=env.BASE_URL + '/js/prettify.js')
-  script.
+  script(src=env.BASE_URL + '/js/highlight.min.js')
+  script(src=env.BASE_URL + '/js/jquery.accordion.min.js')
+  script(src=env.BASE_URL + '/js/jquery.waypoints.js')
+  script(src=env.BASE_URL + '/js/docs.js')
 
-    !function ($) {
-      $(function(){
-      $('pre').each(function (i, e) {
-        // Ignore 'pre' elements inside .api-explorer elements
-        if ($(e).closest('.api-explorer').length === 0) {
-          $(e).addClass('prettyprint');
-        }
-      });
-      window.prettyPrint && prettyPrint();
-      })
-    }(window.jQuery);
+
+  //- script(type='text/javascript').
+  //-   !function ($) {
+  //-     $(function(){
+  //-     $('pre').each(function (i, e) {
+  //-       // Ignore 'pre' elements inside .api-explorer elements
+  //-       if ($(e).closest('.api-explorer').length === 0) {
+  //-         $(e).addClass('prettyprint linenums');
+  //-       }
+  //-     });
+  //-     window.prettyPrint && prettyPrint();
+  //-     })
+  //-   }(window.jQuery);
 
   //- Begin Inspectlet Embed Code
   script#inspectletjs(type="text/javascript").
@@ -164,13 +153,14 @@ html(lang="en")
     })();
 
   script.
-    var sectionIndex = 1;
-    $('h2,h3,h4').each(function(){
-      $(this)
-        .attr('id', sectionIndex)
-        .prepend('<a class="anchor" href="#' + sectionIndex + '"><i class="icon icon-budicon-345"></i></a>');
-      sectionIndex++;
-    });
+    //- var sectionIndex = 1;
+    //- $('h2,h3,h4').each(function(){
+    //-   $(this)
+    //-     .attr('id', sectionIndex)
+    //-     .prepend('<a class="anchor" href="#' + sectionIndex + '"><i class="icon icon-budicon-345"></i></a>');
+    //-   sectionIndex++;
+    //- });
+
 
     if(location.hash) {
       location.hash = location.hash;

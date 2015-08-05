@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg width="45px" height="45px" viewBox="0 0 45 45" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:sketch="http://www.bohemiancoding.com/sketch/ns">
+    <!-- Generator: Sketch 3.3.3 (12081) - http://www.bohemiancoding.com/sketch -->
+    <title>native-mobile</title>
+    <desc>Created with Sketch.</desc>
+    <defs></defs>
+    <g id="Mockups" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd" sketch:type="MSPage">
+        <g id="Docs-Home" sketch:type="MSArtboardGroup" transform="translate(-190.000000, -346.000000)">
+            <g id="Group" sketch:type="MSLayerGroup" transform="translate(118.000000, 296.000000)">
+                <g id="native-mobile" transform="translate(72.000000, 50.000000)" sketch:type="MSShapeGroup">
+                    <path d="M27.3684375,45 L2.63161458,45 C1.17822917,45 0,43.8217708 0,42.3684375 L0,17.6315625 C0,16.1782292 1.17822917,15 2.63161458,15 L27.3684375,15 C28.8218229,15 30,16.1782292 30,17.6315625 L30,42.3684375 C30,43.8217708 28.8218229,45 27.3684375,45" id="Fill-46" fill="#16214D"></path>
+                    <path d="M34.8684375,37.5 L10.1315625,37.5 C8.67822917,37.5 7.5,36.3217708 7.5,34.8684375 L7.5,10.1315625 C7.5,8.67822917 8.67822917,7.5 10.1315625,7.5 L34.8684375,7.5 C36.3218229,7.5 37.5,8.67822917 37.5,10.1315625 L37.5,34.8684375 C37.5,36.3217708 36.3218229,37.5 34.8684375,37.5" id="Fill-47" fill="#EC5424"></path>
+                    <path d="M42.3684375,30 L17.6315625,30 C16.1782292,30 15,28.8217708 15,27.3684375 L15,2.6315625 C15,1.17822917 16.1782292,0 17.6315625,0 L42.3684375,0 C43.8218229,0 45,1.17822917 45,2.6315625 L45,27.3684375 C45,28.8217708 43.8218229,30 42.3684375,30" id="Fill-48" fill="#44C7F4"></path>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

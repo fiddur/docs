@@ -1,0 +1,20 @@
+- var nav = navigation['categories'];
+
+nav.sidebar-menu(data-accordion-group)
+  .accordion(data-accordion)
+    .principal-title(data-control)
+      i.plus
+      h2 Documentation
+    .principal-content(data-content)
+      - for (var item in nav)
+        .accordion(data-accordion)
+          .nav-title(data-control)
+            i.icon-budicon-461
+            h2= nav[item].name
+          ul.nav-content(data-content)
+            li
+              a(href="") Option
+            li
+              a(href="") Option
+            li
+              a(href="") Option

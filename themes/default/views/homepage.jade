@@ -1,0 +1,237 @@
+doctype html
+html(lang="en")
+  head
+    title= site.title
+    meta(charset="utf-8")
+    meta(name="description", content="")
+    meta(name="author", content="")
+
+    meta(name='viewport', content='width=device-width, initial-scale=1.0')
+    meta(name="google-site-verification", content="4aSwkVvotRegQ6g32k-21r38Fls9sO8VT5LytKdin3o")
+
+    - if (canonicalUrl)
+      link(href=canonicalUrl, rel="canonical")
+    link(href="//cdn.auth0.com/styleguide/latest/lib/logos/img/favicon.png", rel="shortcut icon")
+    link(href='//cdn.auth0.com/styleguide/latest/index.min.css', rel='stylesheet')
+    link(href="//cdn.auth0.com/web-header/latest/standalone.css", rel="stylesheet")
+
+    link(href=env.BASE_URL + '/css/docs.css', rel='stylesheet')
+
+    script(type='text/javascript', src='//use.typekit.net/iws6ohy.js')
+    script.
+      try{Typekit.load();}catch(e){}
+
+    <!--[if lt IE 9]>
+    script(src="http://html5shim.googlecode.com/svn/trunk/html5.js")
+    <![endif]-->
+
+    script(src=env.BASE_URL + "/js/shims/window.location.origin.js")
+    script(src='//cdn.auth0.com/styleguide/vendor/jquery-1.9.0.min.js')
+    script(src='//cdn.auth0.com/styleguide/vendor/bootstrap-3.2.0.min.js')
+
+    include inc/analytics
+    include inc/lock-sso
+    include inc/mixins
+
+  body.docs-home(data-swiftype-index="false")
+    header.site-header!= webheader
+    script.
+      if (null != window.widget) {
+        window.widget.getClient().getSSOData(false, function (err, data) {
+          if (!data || !data.sso) return;
+          $('header.site-header .login')
+            .attr('href', "#{locals.uiURL}")
+            .html('Open Dashboard');
+        });
+      }
+    - var nav = navigation['categories'];
+
+    #tutorial-navigator
+    include inc/tutorial-template
+
+    #homepage-content
+      .navigation-bar.js-sticky-nav
+        .wrapper
+          .container
+            ul.list-inline
+              - for (var item in nav)
+                li
+                  a(href!="#" + nav[item].id)= nav[item].name
+
+            form#search(role="search", action=env.BASE_URL + "/search", autocomplete="off")
+              .form-group.search-control
+                i.icon-budicon-489
+                input#search-input.form-control(type="text", placeholder="Search for docs", name="stq")
+
+                  
+      - for (var item in nav)
+        - var current = nav[item];
+
+          section.section-product(id!=current.id)
+            .container
+              h2= current.name
+                span= current.description
+            
+            - if(current.id === 'product')
+              .showcase
+                .container
+                  .row
+                    - for (var link in current.links)
+                      - var current2 = current.links[link];
+                      +showcaseItem(current2.name, current2.icon, current2.href, current2.description)
+
+            - if(current.id === 'api')
+              .api-docs
+                .container
+                  .row
+                    .col-xs-6.col-md-4
+                      - var explorer = current.sections['explorer'];
+                      a.icon-scale.api-link(href!=explorer.href)
+                        i.icon-budicon-631
+                        strong= explorer.name
+                        p= explorer.description
+                      br
+                    .col-xs-6.col-md-4
+                      - var endpoints = current.sections['auth-endpoints'];
+                      a.icon-scale.api-link(href!=endpoints.href)
+                        i.icon-budicon-638
+                        strong= endpoints.name
+                        p= endpoints.description
+                      br
+                    .col-xs-12.col-md-4
+                      .subcontent-box
+                        .row
+                          .col-xs-12
+                            h3 Announcements
+                            ul
+                              - var news = current.sections['announcements'];
+                              - for (var current2 in news.links)
+                                li
+                                  a(href!=news.links[current2].href)= news.links[current2].name
+
+            
+            - if(current.id === 'sdk')
+              .container
+                ul.circle-list
+                  - for (var link in current.links)
+                    - var current2 = current.links[link];
+                    li
+                      +circleLogo(current2.name, current2.slug, current2.href)
+
+            - if(current.id === 'how-to')
+              .container
+                ul.circle-list.circle-list-howtos
+                  - for (var link in current.links)
+                    - var current2 = current.links[link];
+                    li
+                      +circleLogo(current2.name, 'how-to', current2.href, current2.icon)
+
+
+    include ../public/vendor/auth0-styleguide/lib/footer/demo.jade
+
+  //- Start search feature scripts
+  script(src=env.BASE_URL + "/js/jquery.ba-hashchange.min.js", type="text/javascript")
+  script(src=env.BASE_URL + '/js/search.js')
+  //- End search feature scripts
+
+  script(src=env.BASE_URL + '/js/prettify.js')
+  script(src=env.BASE_URL + '/js/owl.carousel.min.js')
+  script(src=env.BASE_URL + '/js/jquery.accordion.min.js')
+  script(src=env.BASE_URL + '/js/jquery.waypoints.js')
+  script(src=env.BASE_URL + '/js/highlight.min.js')
+  script(src=env.BASE_URL + '/js/page.min.js')
+  script(src=env.BASE_URL + '/js/react.min.js')
+  script(src=env.BASE_URL + '/js/tutorial-navigator.js')
+  script(src=env.BASE_URL + '/js/docs.js')
+  
+
+  script(type='text/javascript').
+    !function ($) {
+      $(function(){
+      $('pre').each(function (i, e) {
+        // Ignore 'pre' elements inside .api-explorer elements
+        if ($(e).closest('.api-explorer').length === 0) {
+          $(e).addClass('prettyprint');
+        }
+      });
+      window.prettyPrint && prettyPrint();
+      })
+    }(window.jQuery);
+
+  //- Begin Inspectlet Embed Code
+  script#inspectletjs(type="text/javascript").
+    window.__insp = window.__insp || [];
+    __insp.push(['wid', 1881287289]);
+    (function() {
+      function __ldinsp(){var insp = document.createElement('script'); insp.type = 'text/javascript'; insp.async = true; insp.id = "inspsync"; insp.src = ('https:' == document.location.protocol ? 'https' : 'http') + '://cdn.inspectlet.com/inspectlet.js'; var x = document.getElementsByTagName('script')[0]; x.parentNode.insertBefore(insp, x); }
+      if (window.attachEvent){
+        window.attachEvent('onload', __ldinsp);
+      }else{
+        window.addEventListener('load', __ldinsp, false);
+      }
+    })();
+
+  script.
+    //- var sectionIndex = 1;
+    //- $('h2,h3,h4').each(function(){
+    //-   $(this)
+    //-     .attr('id', sectionIndex)
+    //-     .prepend('<a class="anchor" href="#' + sectionIndex + '"><i class="icon icon-budicon-345"></i></a>');
+    //-   sectionIndex++;
+    //- });
+
+    var tnOpts = {};
+    
+    tnOpts.platforms = !{JSON.stringify(quickstarts)};
+    tnOpts.singleTpl = $('#tutorial-template');
+    tnOpts.userTenants = !{JSON.stringify(account.tenantList) || false};
+    tnOpts.onTutorialLoad = function($template) {
+      $('#tutorial-navigator, #homepage-content').addClass('hide');
+      // trigger code samples
+      Auth0Docs.renderCode();
+      Auth0Docs.buildStepNav($template);
+    };
+
+    tnOpts.onTutorialReset = function($template) {
+      $('#tutorial-navigator, #homepage-content').removeClass('hide');
+      Waypoint.refreshAll();
+    };
+
+    // Init Tutorial Navigator
+    React.render(
+      React.createElement(TutorialNavigator.init, tnOpts), 
+        $('#tutorial-navigator').get(0)
+    );
+
+    if(location.hash) {
+      location.hash = location.hash;
+    }
+
+    if (~['/', '/api', '/auth-api'].indexOf(window.location.pathname) ||
+        ~window.location.pathname.indexOf('/quickstart')) {
+      $('.fixit').hide();
+    }
+
+    $('.fixit a').attr('href', 'https://github.com/auth0/docs/edit/master/articles' + window.location.pathname.substr("#{env.BASE_URL}".length) + '.md');
+
+  if (locals.user && user.tenants && user.tenants.length > 1)
+    script.
+      var getCookie = function (name) {
+        var match = document.cookie.match(RegExp('(?:^|;\\s*)' + name + '=([^;]*)'));
+        return match ? match[1] : null;
+      };
+
+      var setCookie = function (name, value, days) {
+        var date = new Date();
+        date.setTime(date.getTime() + (days * 24 * 60 * 60 * 1000));
+        document.cookie = name + '=' + value + '; expires=' + date.toGMTString() + '; path=/; domain=#{env['COOKIE_SCOPE']}';
+      }
+
+      setCookie('#{env['CURRENT_TENANT_COOKIE']}', '#{user.tenant}', 7);
+
+      setInterval(function () {
+        var current_tenant = getCookie('#{env['CURRENT_TENANT_COOKIE']}');
+        if (current_tenant && current_tenant !== '#{user.tenant}') {
+          window.location.reload(true);
+        }
+      }, 3000);

@@ -1,0 +1,103 @@
+.js-carousel
+  .dots
+    padding: 20px 0;
+    
+    .dot
+      height: 10px;
+      width: 10px;
+      display: inline-block;
+      border-radius: 50%;
+      background: color_oil;
+      opacity: 0.3;
+      
+      &.active
+        opacity: 1;
+
+      & + .dot
+        margin-left: 8px;
+        
+.js-carousel
+  position relative
+  z-index 1
+  display none
+  width 100%
+  -webkit-tap-highlight-color transparent
+  
+  .owl-stage
+    position relative
+    -ms-touch-action pan-Y
+    &:after
+      line-height 0
+      display block
+      visibility hidden
+      clear both
+      height 0
+      content '.'
+      
+  .owl-stage-outer
+    position relative
+    overflow hidden
+    -webkit-transform translate3d(0px, 0px, 0px)
+    
+  .item
+    position relative
+    float left
+    min-height 1px
+    -webkit-backface-visibility hidden
+    -webkit-tap-highlight-color transparent
+    -webkit-touch-callout none
+    
+    img
+      display block
+      width 100%
+      -webkit-transform-style preserve-3d
+      
+  &.owl-loaded
+    display block
+  &.owl-loading
+    display block
+    opacity 0
+  &.owl-hidden
+    opacity 0
+  &.owl-refresh
+    .item
+      display none
+      
+  &.owl-drag
+    .item
+      -webkit-user-select none
+      -moz-user-select none
+      -ms-user-select none
+      user-select none
+      
+  &.owl-grab
+    cursor move
+    cursor -webkit-grab
+    cursor -o-grab
+    cursor -ms-grab
+    cursor grab
+    
+  &.owl-rtl
+    direction rtl
+    .item
+      float right
+
+.js-carousel .nav.disabled,
+.js-carousel .dots.disabled
+  display none
+
+.js-carousel .nav .prev,
+.js-carousel .nav .next,
+.js-carousel .dot
+  cursor pointer
+  cursor hand
+  -webkit-user-select none
+  -moz-user-select none
+  -ms-user-select none
+  user-select none
+  -khtml-user-select none
+
+.no-js
+  .js-carousel
+    display block
+
