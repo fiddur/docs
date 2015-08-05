@@ -1350,6 +1350,20 @@
         }
       }
     },
+    "express-sitemap": {
+      "version": "1.5.6",
+      "resolved": "https://registry.npmjs.org/express-sitemap/-/express-sitemap-1.5.6.tgz",
+      "dependencies": {
+        "setheaders": {
+          "version": "0.1.1",
+          "resolved": "https://registry.npmjs.org/setheaders/-/setheaders-0.1.1.tgz"
+        },
+        "tickle": {
+          "version": "1.2.0",
+          "resolved": "https://registry.npmjs.org/tickle/-/tickle-1.2.0.tgz"
+        }
+      }
+    },
     "gray-matter": {
       "version": "2.0.1",
       "resolved": "https://registry.npmjs.org/gray-matter/-/gray-matter-2.0.1.tgz",

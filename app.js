@@ -32,6 +32,7 @@ var nconf = require('nconf');
 var http = require('http');
 var path = require('path');
 var fs = require('fs');
+var sitemap = require('express-sitemap');
 
 var app = redirect(express());
 
@@ -262,7 +263,21 @@ require('./lib/sdk-snippets/login-widget2/snippets-routes')(app);
 require('./lib/sdk-snippets/login-widget/demos-routes')(app);
 
 app.use(nconf.get('BASE_URL'), require('./lib/packager'));
-app.use(nconf.get('BASE_URL'), require('./lib/sitemap'));
+
+// Sitemap
+var map = sitemap({
+  generate: app,
+  cache: 60000,
+  route: {
+    'ALL': {
+      changefreq: 'weekly',
+    }
+  }
+});
+app.get(nconf.get('BASE_URL') + '/sitemap.xml', function(req, res) {
+  map.XMLtoWeb(res);
+});
+
 app.use(nconf.get('BASE_URL') + '/meta', require('./lib/api'));
 
 // catch 404 and forward to error handler
