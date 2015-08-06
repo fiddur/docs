@@ -203,11 +203,15 @@ app.use(nconf.get('BASE_URL') + '/media', express.static(path.join(__dirname, 'd
 
 app.use(passport.initialize());
 app.use(passport.session());
+app.use(middleware.overrideIfAuthenticated);
+app.use(middleware.overrideIfClientInQs);
+app.use(middleware.overrideIfClientInQsForPublicAllowedUrls);
 app.use(middleware.setCurrentTenant);
+app.use(middleware.configuration);
 app.use(middleware.setUserIsOwner);
 app.use(middleware.defaultValues);
 app.use(middleware.urlVariables);
-app.use(middleware.overrideIfAuthenticated);
+app.use(middleware.embedded);
 
 var connections = require('./lib/connections');
 app.get('/ticket/step', function (req, res) {
