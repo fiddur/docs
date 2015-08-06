@@ -206,6 +206,7 @@ app.use(passport.session());
 app.use(middleware.setCurrentTenant);
 app.use(middleware.setUserIsOwner);
 app.use(middleware.defaultValues);
+app.use(middleware.urlVariables);
 
 var connections = require('./lib/connections');
 app.get('/ticket/step', function (req, res) {
