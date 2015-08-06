@@ -40,6 +40,24 @@
           "icon": "icon-budicon-289",
           "description": "What is Auth0 and how can it help you build applications.",
           "href": "/user-profile"
+        },
+        {
+          "name": "Multifactor Authentication",
+          "icon": "icon-budicon-243",
+          "description": "Add additional security with a second factor of authentication.",
+          "href": "/mfa"
+        },
+        {
+          "name": "Passwordless Authentication",
+          "icon": "icon-budicon-552",
+          "description": "Authenticate users without a password using SMS, Email, or TouchID.",
+          "href": "/connections/passwordless"
+        },
+        {
+          "name": "Auth0 Appliance",
+          "icon": "icon-budicon-552",
+          "description": "Deploy Auth0 to your own cloud or datacenter.",
+          "href": "/appliance"
         }
       ]
     },
@@ -180,59 +198,64 @@
       "description": "Learn all about what Auth0 offers as a service",
       "links": [
         {
-          "name": "Configure an Identity Provider",
+          "name": "Refresh Tokens",
           "icon": "icon-budicon-754",
-          "href": "#"
+          "href": "/refresh-token"
         },
         {
-          "name": "Multifactor Authentication",
+          "name": "Importing and Migrating Users to Auth0",
           "icon": "icon-budicon-754",
-          "href": "#"
+          "href": "/migrating"
         },
         {
-          "name": "Multifactor Authentication",
+          "name": "Customizing Sign Up Forms",
           "icon": "icon-budicon-754",
-          "href": "#"
+          "href": "/custom-signup"
         },
         {
-          "name": "Multifactor Authentication",
+          "name": "Linking Accounts",
           "icon": "icon-budicon-754",
-          "href": "#"
+          "href": "/link-accounts"
         },
         {
-          "name": "Multifactor Authentication",
+          "name": "Logout",
           "icon": "icon-budicon-754",
-          "href": "#"
+          "href": "/logout"
         },
         {
-          "name": "Multifactor Authentication",
+          "name": "Cookies vs. Tokens",
           "icon": "icon-budicon-754",
-          "href": "#"
+          "href": "/apps-apis"
         },
         {
-          "name": "Multifactor Authentication",
+          "name": "Connecting Active Directory",
           "icon": "icon-budicon-754",
-          "href": "#"
+          "href": "/connections/enterprise/active-directory"
         },
         {
-          "name": "Multifactor Authentication",
+          "name": "Using and Configuring SAML",
           "icon": "icon-budicon-754",
-          "href": "#"
+          "href": "/saml-configuration"
         },
         {
-          "name": "Multifactor Authentication",
+          "name": "User Profile",
           "icon": "icon-budicon-754",
-          "href": "#"
+          "href": "/user-profile"
         },
         {
-          "name": "Multifactor Authentication",
+          "name": "Setup and Use the Connector",
           "icon": "icon-budicon-754",
-          "href": "#"
+          "href": "/connector"
         },
         {
-          "name": "Multifactor Authentication",
+          "name": "Custom Password Strength",
           "icon": "icon-budicon-754",
-          "href": "#"
+          "href": "/password-strength"
+        },
+        {
+          "name": "Configure Emails",
+          "icon": "icon-budicon-778",
+          "href": "/email"
         }
       ]
     }
