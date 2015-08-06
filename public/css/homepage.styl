@@ -48,6 +48,53 @@ section
 
     +breakpoint("desktop")
       grid(6, 0, 'li');
+      
+  .circle-list.circle-list-howtos
+    grid(2, 0, 'li');
+    
+    +breakpoint("tablet")
+      grid(3, 0, 'li');
+    
+    .circle-logo
+      position: relative;
+      min-height: 5em;
+      width: 100%;
+      transition: none;
+      transform: none;
+
+      .title
+        padding-left: 4.5em;
+        padding-right: 1em;
+        text-align: left;
+        margin: 0;
+        
+        +breakpoint("tablet")
+          padding-top: 0.8em;
+          padding-left: 5.5em;
+          font-size: 15px;
+          max-width: 300px;
+
+      .logo
+        position: absolute;
+        top: 0;
+        left: 0;
+        border-radius: 3px;
+        font-size: 6px;
+        background-color: #A9B3BC;
+        transition: background-color 100ms cubic-bezier(0.455, 0.03, 0.515, 0.955);
+         
+        +breakpoint("tablet")
+          font-size: 8px;
+        
+        &:before
+          font-size: 3.5em;
+          color: white;
+          
+      &:hover .logo
+        background-color: color_oil;
+        
+        
+          
 
 .subcontent-box
   border-radius: 3px;
