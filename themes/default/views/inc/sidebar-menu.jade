@@ -6,15 +6,18 @@ nav.sidebar-menu(data-accordion-group)
       i.plus
       h2 Documentation
     .principal-content(data-content)
-      - for (var item in nav)
+      each val, index in nav
         .accordion(data-accordion)
           .nav-title(data-control)
             i.icon-budicon-461
-            h2= nav[item].name
+            h2= val.name
           ul.nav-content(data-content)
-            li
-              a(href="") Option
-            li
-              a(href="") Option
-            li
-              a(href="") Option
+            - if(val.links) 
+              each doc, index in val.links
+                li
+                  a(href!=doc.href)= doc.name
+            - if(val.sections)
+              each doc, index in val.sections
+                - if(doc.href)
+                    li
+                      a(href!=doc.href)= doc.name
