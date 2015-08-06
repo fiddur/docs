@@ -78,7 +78,7 @@ html(lang="en")
                   .row
                     - for (var link in current.links)
                       - var current2 = current.links[link];
-                      +showcaseItem(current2.name, current2.icon, current2.href, current2.description)
+                      +showcaseItem(current2.name, current2.icon, env.BASE_URL + current2.href, current2.description)
 
             - if(current.id === 'api')
               .api-docs
@@ -107,7 +107,7 @@ html(lang="en")
                               - var news = current.sections['announcements'];
                               - for (var current2 in news.links)
                                 li
-                                  a(href!=news.links[current2].href)= news.links[current2].name
+                                  a(href!=env.BASE_URL + news.links[current2].href)= news.links[current2].name
 
             
             - if(current.id === 'sdk')
@@ -116,7 +116,7 @@ html(lang="en")
                   - for (var link in current.links)
                     - var current2 = current.links[link];
                     li
-                      +circleLogo(current2.name, current2.slug, current2.href)
+                      +circleLogo(current2.name, current2.slug, env.BASE_URL + current2.href)
 
             - if(current.id === 'how-to')
               .container
@@ -124,7 +124,7 @@ html(lang="en")
                   - for (var link in current.links)
                     - var current2 = current.links[link];
                     li
-                      +circleLogo(current2.name, 'how-to', current2.href, current2.icon)
+                      +circleLogo(current2.name, 'how-to', env.BASE_URL + current2.href, current2.icon)
 
 
     include ../public/vendor/auth0-styleguide/lib/footer/demo.jade

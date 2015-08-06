@@ -49,13 +49,13 @@
         },
         {
           "name": "Passwordless Authentication",
-          "icon": "icon-budicon-552",
+          "icon": "icon-budicon-499",
           "description": "Authenticate users without a password using SMS, Email, or TouchID.",
           "href": "/connections/passwordless"
         },
         {
           "name": "Auth0 Appliance",
-          "icon": "icon-budicon-552",
+          "icon": "icon-budicon-359",
           "description": "Deploy Auth0 to your own cloud or datacenter.",
           "href": "/appliance"
         }
