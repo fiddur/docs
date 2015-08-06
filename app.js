@@ -226,7 +226,7 @@ app.get(nconf.get('BASE_URL') + '/switch', function (req, res) {
 });
 
 var quickstartCollections = require('./lib/collections/quickstarts');
-app.use(nconf.get('BASE_URL'), function(req, res) {
+app.get(nconf.get('BASE_URL'), function(req, res) {
   res.render('homepage', { quickstarts: quickstartCollections });
 });
 
