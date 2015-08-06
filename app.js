@@ -207,6 +207,8 @@ app.use(middleware.setCurrentTenant);
 app.use(middleware.setUserIsOwner);
 app.use(middleware.defaultValues);
 app.use(middleware.urlVariables);
+app.use(middleware.embedded);
+app.use(middleware.configuration);
 app.use(middleware.overrideIfAuthenticated);
 app.use(middleware.overrideIfClientInQs);
 app.use(middleware.overrideIfClientInQsForPublicAllowedUrls);
