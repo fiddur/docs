@@ -22,7 +22,7 @@
     "js-yaml": "^3.3.1",
     "limitd-client": "^1.0.3",
     "lodash": "^2.4.2",
-    "lsr": "https://registry.npmjs.org/lsr/-/lsr-1.0.0.tgz",
+    "lsr": "^1.0.0",
     "marked": "^0.3.3",
     "method-override": "^2.3.4",
     "mongo-getdb": "~1.0.1",
