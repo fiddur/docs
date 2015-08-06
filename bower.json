@@ -12,7 +12,7 @@
     "**/.*",
     "node_modules",
     "bower_components",
-    "themes/default/public/vendor/bower_components",
+    "public/vendor/bower_components",
     "test",
     "tests"
   ],

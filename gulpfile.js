@@ -4,13 +4,13 @@ var react = require('gulp-react');
 var autoprefixer = require('gulp-autoprefixer');
 
 gulp.task('react', function() {
-  gulp.src('themes/default/public/jsx/*.jsx')
+  gulp.src('public/jsx/*.jsx')
     .pipe(react())
-    .pipe(gulp.dest('themes/default/public/js/'))
+    .pipe(gulp.dest('public/js/'))
 });
 
 gulp.task('styles', function() {
-  gulp.src('themes/default/public/css/docs.styl')
+  gulp.src('public/css/docs.styl')
     .pipe(stylus({
       'include css': true,
       compress: true
@@ -19,11 +19,11 @@ gulp.task('styles', function() {
       browsers: ['last 2 versions'],
       cascade: false
     }))
-    .pipe(gulp.dest('themes/default/public/css/'));
+    .pipe(gulp.dest('public/css/'));
 });
 
 gulp.task('watch', function() {
-  gulp.watch('themes/default/public/**/*', ['build']);
+  gulp.watch('public/**/*', ['build']);
 });
 
 gulp.task('build', ['react', 'styles']);

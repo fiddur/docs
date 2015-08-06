@@ -129,7 +129,7 @@ passport.deserializeUser(function(id, done) {
   });
 });
 
-app.set('views', path.join(__dirname, 'themes/default/views'));
+app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'jade');
 app.enable('trust proxy');
 
@@ -197,7 +197,7 @@ app.use(methodOverride());
 
 app.use(nconf.get('BASE_URL') + '/media', express.static(path.join(__dirname, 'docs/media')));
 ['css', 'img', 'js', 'vendor'].forEach(function(folder) {
-  app.use(nconf.get('BASE_URL') + '/' + folder, express.static(path.join(__dirname, '/themes/default/public/', folder)));
+  app.use(nconf.get('BASE_URL') + '/' + folder, express.static(path.join(__dirname, '/public/', folder)));
 });
 
 
