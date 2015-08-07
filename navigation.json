@@ -81,15 +81,15 @@
           "links": [
             {
               "name": "Supported Protocols",
-              "href": "#"
+              "href": "https://auth0.com/docs/protocols"
             },
             {
-              "name": "Authentication Endpoints",
-              "href": "#"
+              "name": "API v1 vs v2",
+              "href": "https://auth0.com/docs/api/v2/changes"
             },
             {
-              "name": "Authentication Endpoints",
-              "href": "#"
+              "name": "Blacklisting JWT API Keys",
+              "href": "https://auth0.com/blog/2015/03/10/blacklist-json-web-token-api-keys/"
             }
           ]
         }
@@ -200,32 +200,38 @@
         {
           "name": "Refresh Tokens",
           "icon": "icon-budicon-754",
-          "href": "/refresh-token"
+          "href": "/refresh-token",
+          "description": "How to securely renew id tokens within your apps."
         },
         {
           "name": "Importing and Migrating Users to Auth0",
           "icon": "icon-budicon-754",
-          "href": "/migrating"
+          "href": "/migrating",
+          "description": "Import users from existing applications into Auth0."
         },
         {
           "name": "Customizing Sign Up Forms",
           "icon": "icon-budicon-754",
-          "href": "/custom-signup"
+          "href": "/custom-signup",
+          "description": "Deliver a customized signup experience to your users."
         },
         {
           "name": "Linking Accounts",
           "icon": "icon-budicon-754",
-          "href": "/link-accounts"
+          "href": "/link-accounts",
+          "description": "Unify a single user's identity using different identity providers."
         },
         {
           "name": "Logout",
           "icon": "icon-budicon-754",
-          "href": "/logout"
+          "href": "/logout",
+          "description": "Learn about clearing sso cookies and other logout operations."
         },
         {
           "name": "Cookies vs. Tokens",
           "icon": "icon-budicon-754",
-          "href": "/apps-apis"
+          "href": "/apps-apis",
+          "description": "Learn token-based authentication design vs cookie-based authentication."
         },
         {
           "name": "Connecting Active Directory",
