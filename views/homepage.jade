@@ -120,11 +120,11 @@ html(lang="en")
 
             - if(current.id === 'how-to')
               .container
-                ul.circle-list.circle-list-howtos
+                ul.list-howtos
                   - for (var link in current.links)
                     - var current2 = current.links[link];
                     li
-                      +circleLogo(current2.name, 'how-to', env.BASE_URL + current2.href, current2.icon)
+                      +howTo(current2.name, env.BASE_URL + current2.href, current2.icon, current2.description  || 'Learn more about ' + current2.name.toLowerCase() + '.')
 
 
     include ../public/vendor/auth0-styleguide/lib/footer/demo.jade

@@ -9,3 +9,11 @@ mixin circleLogo(name, slug, href, icon)
   a.circle-logo(href!=href, data-name!=slug)
     .logo(class!=icon || '')
     .title= name
+
+mixin howTo(name, href, icon, description)
+  a.how-to(href!=href)
+    .content
+      i(class!=icon || '')
+      .title= name
+      .description= description
+    .more Read More
