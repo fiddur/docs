@@ -70,9 +70,10 @@ html(lang="en")
           section.docs-content(data-swiftype-index="true")
             block content
 
-    include inc/document-footer
+          .fixit
+            a(href="#") Found a typo? Fix it
 
-    hr
+    include inc/document-footer
 
     include ../public/vendor/auth0-styleguide/lib/footer/demo.jade
 
@@ -133,6 +134,7 @@ html(lang="en")
     }
 
     $('.fixit a').attr('href', 'https://github.com/auth0/docs/edit/master/articles' + window.location.pathname.substr("#{env.BASE_URL}".length) + '.md');
+
 
   if (locals.user && user.tenants && user.tenants.length > 1)
     script.
