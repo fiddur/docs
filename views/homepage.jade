@@ -182,6 +182,7 @@ html(lang="en")
 
     var tnOpts = {};
     
+    tnOpts.basePath = '/docs';
     tnOpts.platforms = !{JSON.stringify(quickstarts)};
     tnOpts.singleTpl = $('#tutorial-template');
     tnOpts.userTenants = !{JSON.stringify(account.tenantList) || false};

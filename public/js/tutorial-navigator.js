@@ -4,7 +4,7 @@ TutorialNavigator = (function($, window, document) {
     handleClick: function(quickstart) {
       var question = this.props.getQuestion(quickstart.name);
 
-      page('/quickstart/' + quickstart.name);
+      page(this.props.tutorial.basePath + '/quickstart/' + quickstart.name);
     },
     render: function() {
       var quickstart = this.props.model;
@@ -73,7 +73,8 @@ TutorialNavigator = (function($, window, document) {
             React.createElement(Quickstart, {
               getQuestion: this.props.getQuestion, 
               key: i, 
-              model: quickstart}
+              model: quickstart, 
+              tutorial: this.props.tutorial}
             ));
       }.bind(this));
       
@@ -100,7 +101,7 @@ TutorialNavigator = (function($, window, document) {
         }
       }
 
-      page('/quickstart' + config.path);
+      page(tutorial.basePath + '/quickstart' + config.path);
     },
     render: function() {
       var tech = this.props.model;
@@ -167,17 +168,17 @@ TutorialNavigator = (function($, window, document) {
       var tutorial = this.props.tutorial;
 
       if(tutorial.appType) {
-        list.push(React.createElement("a", {href: "/quickstart/"}, React.createElement("span", {className: "text"}, this.getAppTypeName(tutorial.appType))));
+        list.push(React.createElement("a", {href: tutorial.basePath + "/quickstart/"}, React.createElement("span", {className: "text"}, this.getAppTypeName(tutorial.appType))));
       } else {
         return (React.createElement("div", null));
       }
 
       if(tutorial.tech1) {
-        list.push(React.createElement("a", {href: "/quickstart/" + tutorial.appType + "/"}, React.createElement("i", {className: "icon-budicon-461"}), React.createElement("span", {className: "text"}, this.props.getTechName(tutorial.appType, tutorial.tech1))));
+        list.push(React.createElement("a", {href: tutorial.basePath + "/quickstart/" + tutorial.appType + "/"}, React.createElement("i", {className: "icon-budicon-461"}), React.createElement("span", {className: "text"}, this.props.getTechName(tutorial.appType, tutorial.tech1))));
       }
 
       if(tutorial.tech2) {
-        list.push(React.createElement("a", {href: "/quickstart/" + tutorial.appType + "/" + tutorial.tech1}, React.createElement("i", {className: "icon-budicon-461"}), React.createElement("span", {className: "text"}, this.props.getTechName('backend', tutorial.tech2))));
+        list.push(React.createElement("a", {href: tutorial.basePath + "/quickstart/" + tutorial.appType + "/" + tutorial.tech1}, React.createElement("i", {className: "icon-budicon-461"}), React.createElement("span", {className: "text"}, this.props.getTechName('backend', tutorial.tech2))));
       }
 
       return (React.createElement("div", {className: "breadcrumbs"}, list));
@@ -438,7 +439,7 @@ TutorialNavigator = (function($, window, document) {
       var platformPath = this.getPlatformPath(this.state.appType);
       var path = '/quickstart/' + this.state.appType + '/' + this.state.tech1 + '/no-api/';
 
-      page(path);
+      page(this.props.basePath + path);
     },
     getInitialState: function () {
       return {
@@ -451,6 +452,7 @@ TutorialNavigator = (function($, window, document) {
         tutorialUrls: [],
         showTutorial: false,
         path: '',
+        basePath: this.props.basePath || '',
         clientID: (this.props.userTenants) ? this.props.userTenants[0].clients[0].clientID : null
       };
     },
@@ -502,16 +504,17 @@ TutorialNavigator = (function($, window, document) {
     },
     componentWillMount: function() {
       var component = this;
+      var basePath = this.props.basePath;
 
-      page('/', function() {
+      page(basePath + '/', function() {
         component.setState(component.getInitialState());
       });
 
-      page('/quickstart/', function() {
+      page(basePath + '/quickstart/', function() {
         component.setState(component.getInitialState());
       });
 
-      page('/quickstart/:apptype?', function(ctx) {
+      page(basePath + '/quickstart/:apptype?', function(ctx) {
         component.setState({
           question: component.getQuestion(ctx.params.apptype),
           options: ctx.params.apptype,
@@ -525,7 +528,7 @@ TutorialNavigator = (function($, window, document) {
         });
       });
 
-      page('/quickstart/:apptype/:platform?', function(ctx) {
+      page(basePath + '/quickstart/:apptype/:platform?', function(ctx) {
         var platformPath = component.getPlatformPath(ctx.params.apptype);
 
         if(ctx.params.apptype !== 'backend' && ctx.params.apptype !== 'webapp') {
@@ -556,7 +559,9 @@ TutorialNavigator = (function($, window, document) {
         }
       });
 
-      page('/quickstart/:apptype/:platform/:api?', function(ctx) {
+      console.log(component.state);
+
+      page(basePath + '/quickstart/:apptype/:platform/:api?', function(ctx) {
         var platformPath = component.getPlatformPath(ctx.params.apptype);
         var tech2 = ctx.params.api;
         var tutorialUrls = [platformPath + ctx.params.platform, '/server-apis/' + ctx.params.api];
