@@ -3,9 +3,8 @@ var Auth0Docs;
 Auth0Docs = (function($, window, document) {
   function init() {
     stickyNav();
-    submitFeedback();
-    chooseFeedback();
-    tabs();
+    navTabs();
+    feedbackSender();
 
     $('.accordion').accordion();
 
@@ -16,7 +15,7 @@ Auth0Docs = (function($, window, document) {
     renderCode();
   }
 
-  function tabs() {
+  function navTabs() {
     $('body').on('click', '.nav-tabs a', function(e) {
       e.preventDefault();
       
@@ -66,8 +65,8 @@ Auth0Docs = (function($, window, document) {
     setWaypoints('.sidebar-sbs');
   }
 
-  function chooseFeedback() {
-    $('.choose').on('click', function(e) {
+  function feedbackSender() {
+    $('.js-feedback-sender .choose').on('click', function(e) {
       e.preventDefault();
 
       $('.feedback-choose').hide();
@@ -78,12 +77,9 @@ Auth0Docs = (function($, window, document) {
         $('.feedback-no').show();
       }
     });
-  }
 
-  function submitFeedback() {
-    $('.send-feedback').submit(function(e) {
+    $('.js-feedback-sender form').submit(function(e) {
       e.preventDefault();
-      e.stopPropagation();
 
       $('.feedback-no').hide();
       $('.feedback-yes').show();

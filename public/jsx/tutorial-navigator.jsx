@@ -559,8 +559,6 @@ TutorialNavigator = (function($, window, document) {
         }
       });
 
-      console.log(component.state);
-
       page(basePath + '/quickstart/:apptype/:platform/:api?', function(ctx) {
         var platformPath = component.getPlatformPath(ctx.params.apptype);
         var tech2 = ctx.params.api;
