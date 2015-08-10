@@ -64,6 +64,31 @@ section
   li 
     margin: 15px 0;
 
+.package
+  background-color: #f8f8f8;
+  border: 1px solid rgba(0, 0, 0, 0.05);
+  border-radius: 3px;
+  padding: 20px;
+  
+  .btn
+    display: block;
+  
+  .info
+    position: relative;
+    padding-left: 60px;
+  
+  i 
+    position: absolute;
+    top: 5px;
+    left: 20px;
+    font-size: 20px;
+    opacity: 0.5;
+    
+  p 
+    margin-top: 0;
+    
+    +breakpoint("desktop")
+      margin: 0;
 
 .subcontent-box
   border-radius: 3px;
