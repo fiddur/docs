@@ -341,7 +341,8 @@ var application = {
   },
   stop: function (callback) {
     server.destroy(callback);
-  }
+  },
+  routes: app._router.stack
 };
 
 if (module.parent) {

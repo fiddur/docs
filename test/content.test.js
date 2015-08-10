@@ -6,7 +6,6 @@ var docsapp = require('../app');
 var nconf = require('nconf');
 var request = require('request');
 var assert = require('assert');
-var docUrls = require('../lib/doc-urls');
 var fs = require('fs');
 var path = require('path');
 var htmlparser = require('htmlparser2');
@@ -38,7 +37,13 @@ var getProgressBar = function(total, message) {
 
 var docPages = [];
 var loadDocPages = function(cb) {
-  var bar = getProgressBar(docUrls.length, '    Preloading HTML pages');
+  var routes = [];
+  docsapp.routes.forEach(function(route) {
+    if (route.route && route.route.path) {
+      routes.push(route.route.path);
+    }
+  });
+  var bar = getProgressBar(routes.length, '    Preloading HTML pages');
   var q = async.queue(function (url, done) {
     request(baseUrl + url, function (error, response, body) {
       if (error || response.statusCode !== 200) {
@@ -54,7 +59,7 @@ var loadDocPages = function(cb) {
     });
   }, 10);
 
-  q.push(docUrls);
+  q.push(routes);
 
   q.drain = function() {
     console.log('');
