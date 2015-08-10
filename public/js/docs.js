@@ -136,6 +136,31 @@ Auth0Docs = (function($, window, document) {
       if(sticky.length) {
         toggleSticky(sticky);
       }
+
+      if(sticky.hasClass('sidebar-sbs')) {
+        anchorSBS(sticky);
+      }
+
+      
+    }
+
+    function anchorSBS(sticky) {
+      var stickyHeight = sticky.find('.wrapper').outerHeight();
+      var stickyBottom = $(document).scrollTop() + stickyHeight;
+      var cDoc = sticky.closest('.js-doc-template').find('.docs-content');
+      var cDocBottom = (cDoc.offset().top + cDoc.outerHeight());
+      
+      if(!cDoc.length) {
+        return;
+      }
+
+      if(stickyBottom > cDocBottom) {
+        sticky.addClass('is-anchored').css({
+          'height': cDoc.outerHeight()
+        });
+      } else {
+        sticky.removeClass('is-anchored');
+      }
     }
 
     function onClickStickyNavLink(e) {
