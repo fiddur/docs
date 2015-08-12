@@ -168,7 +168,8 @@ TutorialNavigator = (function($, window, document) {
       var tutorial = this.props.tutorial;
 
       if(tutorial.appType) {
-        list.push(React.createElement("a", {href: tutorial.basePath + "/quickstart/"}, React.createElement("span", {className: "text"}, this.getAppTypeName(tutorial.appType))));
+        list.push(React.createElement("a", {href: tutorial.basePath + "/"}, React.createElement("span", {className: "text"}, "Documentation")));
+        list.push(React.createElement("a", {href: tutorial.basePath + "/quickstart/"}, React.createElement("i", {className: "icon-budicon-461"}), React.createElement("span", {className: "text"}, this.getAppTypeName(tutorial.appType))));
       } else {
         return (React.createElement("div", null));
       }

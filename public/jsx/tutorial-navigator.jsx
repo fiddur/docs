@@ -168,7 +168,8 @@ TutorialNavigator = (function($, window, document) {
       var tutorial = this.props.tutorial;
 
       if(tutorial.appType) {
-        list.push(<a href={tutorial.basePath + "/quickstart/"}><span className="text">{this.getAppTypeName(tutorial.appType)}</span></a>);
+        list.push(<a href={tutorial.basePath + "/"}><span className="text">Documentation</span></a>);
+        list.push(<a href={tutorial.basePath + "/quickstart/"}><i className="icon-budicon-461"></i><span className="text">{this.getAppTypeName(tutorial.appType)}</span></a>);
       } else {
         return (<div></div>);
       }
