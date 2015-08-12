@@ -12,6 +12,6 @@
   .feedback-yes(style="display: none")
     p Thank you for your feedback!
   .feedback-no(style="display: none")
-    form.send-feedback
+    form.send-feedback(action='${env.BASE_URL}/submit-feedback')
       textarea(placeholder="Sorry to hear that!, how can we help you?").form-control
       input(type="submit", value="Submit").submit.btn.btn-primary

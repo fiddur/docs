@@ -18,7 +18,7 @@ Auth0Docs = (function($, window, document) {
   function navTabs() {
     $('body').on('click', '.nav-tabs a', function(e) {
       e.preventDefault();
-      
+
       $(this).tab('show');
     });
   }
@@ -26,7 +26,7 @@ Auth0Docs = (function($, window, document) {
   function renderCode() {
     $('pre code').each(function(i, block) {
       var $snippet = $(this);
-      
+
       if(!$snippet.hasClass('hljs')) {
         hljs.highlightBlock(block);
         hljs.lineNumbersBlock(block);
@@ -53,8 +53,8 @@ Auth0Docs = (function($, window, document) {
       $template.find('.tab-pane.active h3').each(function() {
         var href = $(this).attr('id');
         var str = $(this).text();
-        
-        $collection.append('<li><a href="#' + href + '">' + str + '</a></li>')
+
+        $collection.append('<li><a href="#' + href + '">' + str + '</a></li>');
       });
 
       $collection.find('li').first().addClass('is-active');
@@ -68,12 +68,28 @@ Auth0Docs = (function($, window, document) {
   }
 
   function feedbackSender() {
+    var submitFeedback = function(positive, comment) {
+      var pageTitle = document.title;
+      var titleParts = document.title.split('-');
+      if (titleParts.length > 0) {
+        pageTitle = titleParts[0].trim();
+      }
+      var feedback = {
+        page_title: pageTitle,
+        page_url: window.location.href,
+        positive: positive,
+        comment: comment
+      };
+      $.post(window.BASE_URL + '/submit-feedback', feedback);
+    };
+
     $('.js-feedback-sender .choose').on('click', function(e) {
       e.preventDefault();
 
       $('.feedback-choose').hide();
 
       if ($(this).hasClass('choose-yes')) {
+        submitFeedback(true);
         $('.feedback-yes').show();
       } else {
         $('.feedback-no').show();
@@ -82,14 +98,14 @@ Auth0Docs = (function($, window, document) {
 
     $('.js-feedback-sender form').submit(function(e) {
       e.preventDefault();
-
+      submitFeedback(false, e.target[0].value);
       $('.feedback-no').hide();
       $('.feedback-yes').show();
     });
   }
 
   function setWaypoints(list, offset) {
-    var $module = $(list)
+    var $module = $(list);
 
     $module.find('li a').each(function() {
       var id = $(this).attr('href');
@@ -122,7 +138,7 @@ Auth0Docs = (function($, window, document) {
     var navOffset = 0;
 
     $(window)
-      .on('scroll', onScroll)
+      .on('scroll', onScroll);
 
     $('body').on('click', '.js-sticky-nav a', onClickStickyNavLink);
 
@@ -139,7 +155,7 @@ Auth0Docs = (function($, window, document) {
         anchorSBS(sticky);
       }
 
-      
+
     }
 
     function anchorSBS(sticky) {
@@ -147,7 +163,7 @@ Auth0Docs = (function($, window, document) {
       var stickyBottom = $(document).scrollTop() + stickyHeight;
       var cDoc = sticky.closest('.js-doc-template').find('.docs-content');
       var cDocBottom = (cDoc.offset().top + cDoc.outerHeight());
-      
+
       if(!cDoc.length) {
         return;
       }
@@ -224,7 +240,7 @@ Auth0Docs = (function($, window, document) {
     renderCode: renderCode,
     buildStepNav: buildStepNav,
     setWaypoints: setWaypoints
-  }
+  };
 })(jQuery, window, document);
 
 $(function() {

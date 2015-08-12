@@ -276,6 +276,7 @@ require('./lib/sdk-snippets/login-widget2/snippets-routes')(app);
 require('./lib/sdk-snippets/login-widget/demos-routes')(app);
 
 app.use(nconf.get('BASE_URL'), require('./lib/packager'));
+app.use(nconf.get('BASE_URL'), require('./lib/feedback'));
 
 // Sitemap
 var map = sitemap({
