@@ -125,12 +125,6 @@ describe('Content', function() {
         assert(page.body.indexOf('```') === -1, 'The page at ' + page.url + ' was not rendered correctly and contains invalid markdown characters.');
       });
     });
-
-    it('should not contain rendering errors', function() {
-      docPages.forEach(function(page) {
-        assert(page.body.indexOf('<span style="color:red;">ERROR:') === -1, 'The page at ' + page.url + ' was not rendered correctly and contains an error.');
-      });
-    });
   });
 
   describe('Media', function() {
