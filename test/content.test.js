@@ -11,10 +11,9 @@ var path = require('path');
 var htmlparser = require('htmlparser2');
 var async = require('async');
 var testConfig = require('../docs/tests.json');
-var urlJoin = require('url-join');
 var ProgressBar = require('progress');
 
-var baseUrl = urlJoin('http://localhost:' + nconf.get('PORT'), nconf.get('BASE_URL'));
+var baseUrl = 'http://localhost:' + nconf.get('PORT');
 
 if (nconf.get('DISABLE_CONTENT_TESTS')) {
   return;
@@ -45,9 +44,10 @@ var loadDocPages = function(cb) {
   });
   var bar = getProgressBar(routes.length, '    Preloading HTML pages');
   var q = async.queue(function (url, done) {
+    console.log(baseUrl + url);
     request(baseUrl + url, function (error, response, body) {
       if (error || response.statusCode !== 200) {
-        return done(error || 'Status code: ' + response.statusCode);
+        throw error || new Error('Status code: ' + response.statusCode);
       }
 
       docPages.push({
