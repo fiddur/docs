@@ -837,7 +837,7 @@ body
   img
     max-width 100%
 
-  h1
+  h1, h2:first-child
     font-size 40px
     font-weight 300
     color #333
@@ -881,7 +881,9 @@ body
 
 
 .related-howto
+  background-color #fafafa
   border-top 1px solid #EAEEF3
+  border-bottom 1px solid #EAEEF3
   padding 20px 0
   +breakpoint("tablet")
     padding 50px 0
@@ -903,45 +905,42 @@ body
     +breakpoint("tablet")
       grid(2, 0, ".item")
 
-  .item
-    margin 10px 0
-    i
-      color color_oil
-      font-size 26px
-      margin 0 10px 0 0
-      display inline-block
-      &:before
-        vertical-align middle
-    a
-      font-size 16px
-
+.feedback-sender
+  margin-top: 40px;
+  
+  h4
+    font-weight: 700;
+    color: #333;
+    line-height: 1.3;
+    font-size: 16px;
+    
   .feedback-choose
     clearfix()
     grid(2, 0, ".choose")
 
-  .choose
-    a
-      font-size 16px
-      color color_oil
+    .choose
+      a
+        font-size 16px
+        color color_oil
 
-    i
-      font-size 18px
-      width 35px
-      height 35px
-      display inline-block
-      border 1px solid rgba(#A9B3BC,.5)
-      border-radius 50%
-      text-align center
-      vertical-align middle
-      padding-top 8px
-      margin-right 10px
+      i
+        font-size 18px
+        width 35px
+        height 35px
+        display inline-block
+        border 1px solid rgba(#A9B3BC,.5)
+        border-radius 50%
+        text-align center
+        vertical-align middle
+        padding-top 8px
+        margin-right 10px
 
-    &:nth-child(1)
-      i
-        color color_green
-    &:nth-child(2)
-      i
-        color #E0485A
+      &:nth-child(1)
+        i
+          color color_green
+      &:nth-child(2)
+        i
+          color #E0485A
 
   .feedback-no
     clearfix()

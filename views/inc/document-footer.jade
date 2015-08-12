@@ -1,41 +1,15 @@
 .related-howto
   .container
     .row
-      .col-md-8
-        h3 Related how to's
+      .col-md-12
+        h3 Related Documents
+
         .articles-item
           .item
-            a(href="")
-              i.icon-budicon-754
-              | Configure an Identity Provider
+            +howTo("Configure an Identity Provider", env.BASE_URL, 'icon-budicon-754', 'Learn more about configuring identity providers.')
           .item
-            a(href="")
-              i.icon-budicon-754
-              | Adding user metadata
+            +howTo("Configure an Identity Provider", env.BASE_URL, 'icon-budicon-754', 'Learn more about configuring identity providers.')
           .item
-            a(href="")
-              i.icon-budicon-754
-              | Running tasks after authentication
+            +howTo("Configure an Identity Provider", env.BASE_URL, 'icon-budicon-754', 'Learn more about configuring identity providers.')
           .item
-            a(href="")
-              i.icon-budicon-754
-              | Using Webtasks to set Permissions
-      .col-md-4.js-feedback-sender
-        h3 Send feedback
-        p Did you find this document userful?
-          .feedback-choose
-            .choose.choose-yes
-              a(href="")
-                i.icon-budicon-470
-                | Yes
-            .choose.choose-no
-              a(href="")
-                i.icon-budicon-471
-                | No
-          .feedback-yes(style="display: none")
-            h5 Thank you for your feedback
-          .feedback-no(style="display: none")
-            form.send-feedback
-              textarea(placeholder="Sorry to hear that!, how can we help you?").form-control
-              input(type="submit", value="Submit").submit.btn.btn-primary
-hr
+            +howTo("Configure an Identity Provider", env.BASE_URL, 'icon-budicon-754', 'Learn more about configuring identity providers.')
