@@ -11,9 +11,11 @@ var path = require('path');
 var htmlparser = require('htmlparser2');
 var async = require('async');
 var testConfig = require('../docs/tests.json');
+var urlJoin = require('url-join');
+var docUrls = require('../lib/docs').docUrls;
 var ProgressBar = require('progress');
 
-var baseUrl = 'http://localhost:' + nconf.get('PORT');
+var baseUrl = urlJoin('http://localhost:' + nconf.get('PORT'), nconf.get('BASE_URL'));
 
 if (nconf.get('DISABLE_CONTENT_TESTS')) {
   return;
@@ -36,18 +38,13 @@ var getProgressBar = function(total, message) {
 
 var docPages = [];
 var loadDocPages = function(cb) {
-  var routes = [];
-  docsapp.routes.forEach(function(route) {
-    if (route.route && route.route.path) {
-      routes.push(route.route.path);
-    }
-  });
-  var bar = getProgressBar(routes.length, '    Preloading HTML pages');
+  var bar = getProgressBar(docUrls.length, '    Preloading HTML pages');
   var q = async.queue(function (url, done) {
-    console.log(baseUrl + url);
-    request(baseUrl + url, function (error, response, body) {
+
+    var pageUrl = baseUrl + url;
+    request(pageUrl, function (error, response, body) {
       if (error || response.statusCode !== 200) {
-        throw error || new Error('Status code: ' + response.statusCode);
+        throw error || new Error('Error loading "' + pageUrl + '". Status code: ' + response.statusCode);
       }
 
       docPages.push({
@@ -59,7 +56,7 @@ var loadDocPages = function(cb) {
     });
   }, 10);
 
-  q.push(routes);
+  q.push(docUrls);
 
   q.drain = function() {
     console.log('');
@@ -80,19 +77,6 @@ describe('Content', function() {
   });
 
   describe('HTML', function() {
-    var linksErrorPath = path.join(__dirname, '../links.error.log');
-    var linksRedirectsPath = path.join(__dirname, '../links.redirect.log');
-    before(function(done) {
-      var deleteFile = function(filePath) {
-        if (fs.existsSync(filePath)) {
-          fs.unlinkSync(filePath);
-        }
-      };
-      deleteFile(linksErrorPath);
-      deleteFile(linksRedirectsPath);
-      done();
-    });
-
     it('should not reference blacklisted urls', function(done) {
       this.timeout(5000);
 
