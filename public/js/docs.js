@@ -57,6 +57,8 @@ Auth0Docs = (function($, window, document) {
         $collection.append('<li><a href="#' + href + '">' + str + '</a></li>')
       });
 
+      $collection.find('li').first().addClass('is-active');
+
       return $collection;
     }
 

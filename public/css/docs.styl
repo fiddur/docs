@@ -809,6 +809,10 @@ body
     font-size 12px
     display block
     margin-bottom 15px
+    
+    &:focus
+      color: #0a86b1;
+
 
   li.is-active a
     color #333
@@ -817,6 +821,14 @@ body
 .docs-content
   padding-bottom 20px
   color color_oil
+  
+  pre code a,
+  pre code a span
+    color: #0a86b1 !important;
+    opacity: 1 !important;
+    
+    &:hover
+      color: #0a86b1 !important;
 
   +breakpoint("tablet")
     padding 30px 10px 60px
