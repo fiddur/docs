@@ -86,14 +86,14 @@ html(lang="en")
                   .row
                     .col-xs-6.col-md-4
                       - var explorer = current.sections['explorer'];
-                      a.icon-scale.api-link(href!=explorer.href)
+                      a.icon-scale.api-link(href!=env.BASE_URL + explorer.href)
                         i.icon-budicon-631
                         strong= explorer.name
                         p= explorer.description
                       br
                     .col-xs-6.col-md-4
                       - var endpoints = current.sections['auth-endpoints'];
-                      a.icon-scale.api-link(href!=endpoints.href)
+                      a.icon-scale.api-link(href!=env.BASE_URL + endpoints.href)
                         i.icon-budicon-638
                         strong= endpoints.name
                         p= endpoints.description
@@ -194,7 +194,10 @@ html(lang="en")
     };
 
     tnOpts.onTutorialReset = function($template) {
+      var $feedback = $('.js-feedback-sender');
       $('#tutorial-navigator, #homepage-content').removeClass('hide');
+      $feedback.find('.feedback-choose').show();
+      $feedback.find('.feedback-no, .feedback-yes').hide();
       Waypoint.refreshAll();
     };
 
