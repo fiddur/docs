@@ -1,4 +1,4 @@
-Node version: 0.10.30
+Node version: 1.8.4
 NPM version: 1.4.21
 
 ## Contribution Checklist
@@ -27,7 +27,7 @@ When you commit code to this repository, you should follow the following procedu
 ### Usage without Vagrant
 
 ```
-nave use 0.10.30
+nave use 1.8.4
 git submodule init
 git submodule update
 npm i
@@ -42,7 +42,7 @@ npm run watch
 Vagrant install production dependencies but not dev dependencies. Use this:
 
 ```
-nave use 0.10.30
+nave use 1.8.4
 git submodule init
 git submodule update
 npm i
