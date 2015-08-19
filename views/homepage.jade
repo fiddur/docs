@@ -124,7 +124,7 @@ html(lang="en")
                   - for (var link in current.links)
                     - var current2 = current.links[link];
                     li
-                      +howTo(current2.name, env.BASE_URL + current2.href, current2.icon, current2.description  || 'Learn more about ' + current2.name.toLowerCase() + '.')
+                      +howTo(current2.name, env.BASE_URL + current2.href, current2.icon, current2.description)
 
 
     include ../public/vendor/auth0-styleguide/lib/footer/demo.jade
