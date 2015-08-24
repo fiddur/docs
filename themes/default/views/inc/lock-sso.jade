@@ -23,18 +23,18 @@ script.
     };
 
     widget.on('signup ready', function() {
-      if (!window.analytics) return;
-      window.analytics.track('open:signup', getBasicInfo());
+      if (!window.metricsLib) return;
+      window.metricsLib.track('open:signup', getBasicInfo());
     });
 
     widget.on('signin ready', function() {
-      if (!window.analytics) return;
-      window.analytics.track('open:signin', getBasicInfo());
+      if (!window.metricsLib) return;
+      window.metricsLib.track('open:signin', getBasicInfo());
     });
 
     window.login = function () {
-      if (window.analytics) {
-        window.analytics.track('click:signin', getBasicInfo());
+      if (window.metricsLib) {
+        window.metricsLib.track('click:signin', getBasicInfo());
       }
       widget.hide(function() {
         widget.show(options);
@@ -42,8 +42,8 @@ script.
     };
 
     window.signup = function() {
-      if (window.analytics) {
-        window.analytics.track('click:signup', getBasicInfo());
+      if (window.metricsLib) {
+        window.metricsLib.track('click:signup', getBasicInfo());
       }
       widget.hide(function() {
         widget.showSignup(options);
