@@ -41,7 +41,8 @@ html(lang="en")
           if (!data || !data.sso) return;
           $('header.site-header .login')
             .attr('href', "#{locals.uiURL}")
-            .html('Open Dashboard');
+            .html('Open Dashboard')
+            .addClass('.user-authenticated');
         });
       }
     - var nav = navigation['categories'];
