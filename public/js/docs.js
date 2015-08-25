@@ -82,38 +82,6 @@ Auth0Docs = (function($, window, document) {
     };
   }
 
-  function buildStepNav($template) {
-    var $list = $template.find('.sidebar-sbs ul');
-
-    if(!$list.length) {
-      return;
-    }
-
-    function getList() {
-      var $collection = $('<ul>');
-
-      $template.find('.nav-tabs a').off('shown.bs.tab');
-      $template.find('.nav-tabs a').on('shown.bs.tab', function(e) {
-        buildStepNav($template);
-      });
-
-      $template.find('.tab-pane.active h3').each(function() {
-        var href = $(this).attr('id');
-        var str = $(this).text();
-
-        $collection.append('<li><a href="#' + href + '">' + str + '</a></li>');
-      });
-
-      $collection.find('li').first().addClass('is-active');
-
-      return $collection;
-    }
-
-    $list.replaceWith(getList());
-
-    setWaypoints('.sidebar-sbs');
-  }
-
   function feedbackSender() {
     var submitFeedback = function(positive, comment) {
       var pageTitle = document.title;
@@ -285,7 +253,6 @@ Auth0Docs = (function($, window, document) {
   return {
     init: init,
     renderCode: renderCode,
-    buildStepNav: buildStepNav,
     setWaypoints: setWaypoints,
     initSearch: initSearch
   };
