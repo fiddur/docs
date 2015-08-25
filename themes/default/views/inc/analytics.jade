@@ -29,7 +29,7 @@
       }
       metricsLib.load = function(segmentKey, dwhEndpoint){
         if(null != window.Auth0Metrics){
-          window.metricsLib = new Auth0Metrics(segmentKey, dwhEndpoint, 'manage');
+          window.metricsLib = new Auth0Metrics(segmentKey, dwhEndpoint, 'docs');
         }else{
           var script = document.createElement('script');
           script.type = 'text/javascript';
@@ -42,7 +42,7 @@
           }
           script.onload = function(){
             // Grab analytics and make it private
-            window.metricsLib = new Auth0Metrics(segmentKey, dwhEndpoint, 'manage');
+            window.metricsLib = new Auth0Metrics(segmentKey, dwhEndpoint, 'docs');
           }
           var first = document.getElementsByTagName('script')[0];
           first.parentNode.insertBefore(script, first);
@@ -53,6 +53,7 @@
       if (DWH_ENDPOINT) {
         //- We should catch for an undefined DWH_ENDPOINT
         metricsLib.load(SEGMENT_KEY, DWH_ENDPOINT);
+        metricsLib.page();
       } else {
         console.error("DWH_ENDPOINT must be defined for tracking to work.")
       }
