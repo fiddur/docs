@@ -77,30 +77,12 @@ html(lang="en")
               a(href='#', target='_blank') Suggestions? Typos? Edit this document on GitHub
     
     include ../public/vendor/auth0-styleguide/lib/footer/demo.jade
-
-  //- Start search feature scripts
+    
   script(src=env.BASE_URL + "/js/jquery.ba-hashchange.min.js", type="text/javascript")
-  script(src=env.BASE_URL + '/js/search.js')
-  //- End search feature scripts
-
   script(src=env.BASE_URL + '/js/highlight.min.js')
   script(src=env.BASE_URL + '/js/jquery.accordion.min.js')
   script(src=env.BASE_URL + '/js/jquery.waypoints.js')
   script(src=env.BASE_URL + '/js/docs.js')
-
-
-  //- script(type='text/javascript').
-  //-   !function ($) {
-  //-     $(function(){
-  //-     $('pre').each(function (i, e) {
-  //-       // Ignore 'pre' elements inside .api-explorer elements
-  //-       if ($(e).closest('.api-explorer').length === 0) {
-  //-         $(e).addClass('prettyprint linenums');
-  //-       }
-  //-     });
-  //-     window.prettyPrint && prettyPrint();
-  //-     })
-  //-   }(window.jQuery);
 
   //- Begin Inspectlet Embed Code
   script#inspectletjs(type="text/javascript").

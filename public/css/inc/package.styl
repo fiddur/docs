@@ -1,0 +1,49 @@
+.package
+  clearfix();
+  background-color: white;
+  border: 1px solid rgb(231, 233, 237);
+  border-radius: 3px;
+  padding: 20px;
+  
+  .btn
+    display: block;
+    
+  .button-area
+    padding: 0 20px;
+    
+    +breakpoint("desktop")
+      float: left;
+      width: 40%;
+  
+  .info
+    position: relative;
+    
+    +breakpoint("desktop")
+      float: left;
+      width: 60%;
+  
+  i 
+    display: block;
+    font-size: 20px;
+    opacity: 0.5;
+    text-align: center;
+    
+    +breakpoint("desktop")
+      position: absolute;
+      left: 20px;
+      top: 9px;
+    
+  p 
+    margin: 0;
+    margin-bottom: 15px;
+    text-align: center;
+    
+    +breakpoint("desktop")
+      text-align: left;
+      padding-left: 60px;
+      position: relative;
+      top: 6px;
+    
+  
+    
+
