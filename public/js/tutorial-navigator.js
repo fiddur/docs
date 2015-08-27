@@ -8,7 +8,7 @@ TutorialNavigator = (function($, window, document) {
     },
     render: function() {
       var quickstart = this.props.model;
-      
+
       return (
         React.createElement("div", {className: "quickstart", "data-type": quickstart.name, onClick: this.handleClick.bind(this, quickstart)}, 
           React.createElement("div", {className: "symbol"}), 
@@ -66,8 +66,8 @@ TutorialNavigator = (function($, window, document) {
     },
     render: function() {
       var list = [];
-      var hide = (this.props.tutorial.appType) ? 'hide ' : ''; 
-    
+      var hide = (this.props.tutorial.appType) ? 'hide ' : '';
+
       this.props.quickstarts.forEach(function(quickstart, i) {
           list.push(
             React.createElement(Quickstart, {
@@ -77,7 +77,7 @@ TutorialNavigator = (function($, window, document) {
               tutorial: this.props.tutorial}
             ));
       }.bind(this));
-      
+
       return (
         React.createElement("div", {key: this.props.tutorial, className: hide + "quickstart-list container"}, 
           React.createElement("div", {className: "js-carousel", ref: "carousel"}, list)
@@ -132,7 +132,7 @@ TutorialNavigator = (function($, window, document) {
           React.createElement("div", null)
         )
       }
-        
+
       this.props.options.forEach(function(tech, i) {
         var time = 20 * i;
 
@@ -140,7 +140,7 @@ TutorialNavigator = (function($, window, document) {
           React.createElement(Tech, {key: i, delay: time, model: tech, tutorial: this.props.tutorial})
         );
       }.bind(this));
-      
+
       return (
         React.createElement("div", {key: this.props.tutorial.options, className: classString + "container"}, 
           React.createElement("ul", {className: "circle-list"}, 
@@ -246,7 +246,7 @@ TutorialNavigator = (function($, window, document) {
       var title1 = this.props.getTechName(tutorial.appType, tutorial.tech1);
       var title2 = '';
       var title = title1 + ' Tutorial';
-      
+
       if(state.content1 && state.content2) {
         title2 = this.props.getTechName('backend', tutorial.tech2);
         title = title1 + ' + ' + title2;
@@ -327,15 +327,15 @@ TutorialNavigator = (function($, window, document) {
 
       if(tutorial.tutorialUrls.length > 1) {
         return $.when(
-          this.fetchDocument(tutorial.tutorialUrls[0], 'content1', '__a0tn1'), 
+          this.fetchDocument(tutorial.tutorialUrls[0], 'content1', '__a0tn1'),
           this.fetchDocument(tutorial.tutorialUrls[1], 'content2', '__a0tn2')
         ).then(this.onReady);
       }
-        
+
       return $.when(
         this.fetchDocument(tutorial.tutorialUrls[0], 'content1', '__a0tn1')
       ).then(this.onReady);
-      
+
     },
     render: function() {
       return (
@@ -444,7 +444,7 @@ TutorialNavigator = (function($, window, document) {
     },
     getInitialState: function () {
       return {
-        question: "Getting started?, Try our Quickstarts",
+        question: "Getting started? Try our quickstarts.",
         appType: null,
         options: null,
         skippable: null,
@@ -534,7 +534,7 @@ TutorialNavigator = (function($, window, document) {
 
         if(ctx.params.apptype !== 'backend' && ctx.params.apptype !== 'webapp') {
           component.setState({
-            options: 'backend', 
+            options: 'backend',
             appType: ctx.params.apptype,
             question: "Will you use a Backend or API with your application?",
             skippable: true,
@@ -546,7 +546,7 @@ TutorialNavigator = (function($, window, document) {
           });
         } else {
           component.setState({
-            options: null, 
+            options: null,
             appType: ctx.params.apptype,
             question: null,
             skippable: false,
@@ -573,8 +573,8 @@ TutorialNavigator = (function($, window, document) {
         }
 
         component.setState({
-          options: 'backend', 
-          appType: ctx.params.apptype, 
+          options: 'backend',
+          appType: ctx.params.apptype,
           skippable: false,
           tech1: ctx.params.platform,
           tech2: tech2,
@@ -604,7 +604,7 @@ TutorialNavigator = (function($, window, document) {
           React.createElement("div", {className: "banner tutorial-wizard"}, 
             React.createElement("div", {className: "container"}, 
               React.createElement("h1", null, "Documentation"), 
-              
+
               React.createElement("p", {className: (hasMoreTenants && !this.state.appType) ? 'hide' : 'question-text'}, this.state.question), 
 
               this.getTenantSwitcher(), 
@@ -621,7 +621,7 @@ TutorialNavigator = (function($, window, document) {
           React.createElement("div", {className: "tutorial-content"}, 
             React.createElement(Tutorial, {key: this.state.showTutorial, tutorial: this.state, getTechName: this.getTechName, template: this.props.singleTpl, onLoad: this.props.onTutorialLoad, onReset: this.props.onTutorialReset})
           )
-          
+
         )
       );
     }
@@ -631,5 +631,3 @@ TutorialNavigator = (function($, window, document) {
     init: TutorialNavigator
   }
 })(jQuery, window, document);
-
-
