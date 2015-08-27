@@ -113,6 +113,11 @@ Auth0Docs = (function($, window, document) {
 
     $('.js-feedback-sender form').submit(function(e) {
       e.preventDefault();
+
+      if(!$(this).find('textarea').val()) {
+        return alert('Please leave a comment before submitting');
+      }
+
       submitFeedback(false, e.target[0].value);
       $('.feedback-no').hide();
       $('.feedback-yes').show();
