@@ -7,7 +7,7 @@
   "dependencies": {
     "async": "^0.2.10",
     "auth0": "^0.8.2",
-    "babel": "^5.8.21",
+    "babel": "https://registry.npmjs.org/babel/-/babel-5.8.21.tgz",
     "body-parser": "^1.13.3",
     "cb": "^0.1.0",
     "cookie-parser": "^1.3.5",
@@ -16,10 +16,10 @@
     "express": "^4.13.3",
     "express-redirect": "^1.1.1",
     "express-session": "^1.11.3",
-    "express-sitemap": "^1.5.6",
+    "express-sitemap": "^1.6.0",
     "gray-matter": "^2.0.1",
     "jade": "^1.11.0",
-    "js-yaml": "^3.3.1",
+    "js-yaml": "^3.4.0",
     "limitd-client": "^1.0.3",
     "lodash": "^2.4.2",
     "lsr": "^1.0.0",
@@ -30,17 +30,16 @@
     "mongodb": "^1.4.39",
     "morgan": "^1.6.1",
     "nconf": "^0.7.2",
-    "passport": "~0.1.12",
-    "prerender-node": "^1.3.0",
+    "passport": "^0.2.2",
+    "prerender-node": "^2.0.2",
     "protobufjs": "^4.0.0",
     "randomstring": "^1.0.7",
-    "request": "^2.60.0",
+    "request": "^2.61.0",
     "server-destroy": "^1.0.1",
     "url-join": "0.0.1",
     "web-header": "git://github.com/auth0/web-header#0.4.12",
     "winston": "^1.0.1",
     "winston-email": "0.0.10",
-    "xtend": "~2.0.3",
     "yams": "^2.0.0"
   },
   "main": "app.js",
@@ -57,8 +56,7 @@
     "npm": "2.13.1"
   },
   "devDependencies": {
-    "bower": "~1.3.5",
-    "broken-link-checker": "^0.6.1",
+    "bower": "^1.4.1",
     "gulp": "^3.9.0",
     "gulp-autoprefixer": "^2.3.1",
     "gulp-react": "^3.0.1",
@@ -67,8 +65,8 @@
     "limiter": "^1.0.5",
     "mocha": "^2.2.5",
     "nodemon": "^1.3.7",
-    "npm-shrinkwrap": "5.2.0",
-    "nsp": "^0.5.2",
+    "npm-shrinkwrap": "^5.4.0",
+    "nsp": "^1.0.3",
     "progress": "^1.1.8"
   }
 }
