@@ -8,7 +8,7 @@ TutorialNavigator = (function($, window, document) {
     },
     render: function() {
       var quickstart = this.props.model;
-      
+
       return (
         <div className="quickstart" data-type={quickstart.name} onClick={this.handleClick.bind(this, quickstart)}>
           <div className="symbol"></div>
@@ -66,18 +66,18 @@ TutorialNavigator = (function($, window, document) {
     },
     render: function() {
       var list = [];
-      var hide = (this.props.tutorial.appType) ? 'hide ' : ''; 
-    
+      var hide = (this.props.tutorial.appType) ? 'hide ' : '';
+
       this.props.quickstarts.forEach(function(quickstart, i) {
           list.push(
-            <Quickstart 
+            <Quickstart
               getQuestion={this.props.getQuestion}
-              key={i} 
-              model={quickstart} 
+              key={i}
+              model={quickstart}
               tutorial={this.props.tutorial}
             />);
       }.bind(this));
-      
+
       return (
         <div key={this.props.tutorial} className={hide + "quickstart-list container"}>
           <div className="js-carousel" ref="carousel">{list}</div>
@@ -132,7 +132,7 @@ TutorialNavigator = (function($, window, document) {
           <div></div>
         )
       }
-        
+
       this.props.options.forEach(function(tech, i) {
         var time = 20 * i;
 
@@ -140,7 +140,7 @@ TutorialNavigator = (function($, window, document) {
           <Tech key={i} delay={time} model={tech} tutorial={this.props.tutorial} />
         );
       }.bind(this));
-      
+
       return (
         <div key={this.props.tutorial.options} className={classString + "container"}>
           <ul className="circle-list">
@@ -246,7 +246,7 @@ TutorialNavigator = (function($, window, document) {
       var title1 = this.props.getTechName(tutorial.appType, tutorial.tech1);
       var title2 = '';
       var title = title1 + ' Tutorial';
-      
+
       if(state.content1 && state.content2) {
         title2 = this.props.getTechName('backend', tutorial.tech2);
         title = title1 + ' + ' + title2;
@@ -327,15 +327,15 @@ TutorialNavigator = (function($, window, document) {
 
       if(tutorial.tutorialUrls.length > 1) {
         return $.when(
-          this.fetchDocument(tutorial.tutorialUrls[0], 'content1', '__a0tn1'), 
+          this.fetchDocument(tutorial.tutorialUrls[0], 'content1', '__a0tn1'),
           this.fetchDocument(tutorial.tutorialUrls[1], 'content2', '__a0tn2')
         ).then(this.onReady);
       }
-        
+
       return $.when(
         this.fetchDocument(tutorial.tutorialUrls[0], 'content1', '__a0tn1')
       ).then(this.onReady);
-      
+
     },
     render: function() {
       return (
@@ -345,7 +345,7 @@ TutorialNavigator = (function($, window, document) {
           </div>
           <div className={(!this.state.ready) ? 'loading-tutorial' : 'hide' }>
             <div className="auth0-spinner">
-              <div className="spinner"></div>  
+              <div className="spinner"></div>
             </div>
           </div>
         </div>
@@ -412,7 +412,7 @@ TutorialNavigator = (function($, window, document) {
 
       return (
         <div key={this.props.tutorial.appType} className={cssClass}>
-          <div className="text">Choose an account or application to customize your Tutorials</div> 
+          <div className="text">Choose an account or application to customize your Tutorials</div>
           <span className="icon icon-budicon-300"></span>
           <div className="custom-select">
             <span data-select-value>{this.state.tenant.tenant} <i className="icon-budicon-460"></i></span>
@@ -444,7 +444,7 @@ TutorialNavigator = (function($, window, document) {
     },
     getInitialState: function () {
       return {
-        question: "Getting started?, Try our Quickstarts",
+        question: "Getting started? Try our quickstarts.",
         appType: null,
         options: null,
         skippable: null,
@@ -534,7 +534,7 @@ TutorialNavigator = (function($, window, document) {
 
         if(ctx.params.apptype !== 'backend' && ctx.params.apptype !== 'webapp') {
           component.setState({
-            options: 'backend', 
+            options: 'backend',
             appType: ctx.params.apptype,
             question: "Will you use a Backend or API with your application?",
             skippable: true,
@@ -546,7 +546,7 @@ TutorialNavigator = (function($, window, document) {
           });
         } else {
           component.setState({
-            options: null, 
+            options: null,
             appType: ctx.params.apptype,
             question: null,
             skippable: false,
@@ -573,8 +573,8 @@ TutorialNavigator = (function($, window, document) {
         }
 
         component.setState({
-          options: 'backend', 
-          appType: ctx.params.apptype, 
+          options: 'backend',
+          appType: ctx.params.apptype,
           skippable: false,
           tech1: ctx.params.platform,
           tech2: tech2,
@@ -604,7 +604,7 @@ TutorialNavigator = (function($, window, document) {
           <div className="banner tutorial-wizard">
             <div className="container">
               <h1>Documentation</h1>
-              
+
               <p className={(hasMoreTenants && !this.state.appType) ? 'hide' : 'question-text'}>{this.state.question}</p>
 
               {this.getTenantSwitcher()}
@@ -621,7 +621,7 @@ TutorialNavigator = (function($, window, document) {
           <div className="tutorial-content">
             <Tutorial key={this.state.showTutorial} tutorial={this.state} getTechName={this.getTechName} template={this.props.singleTpl} onLoad={this.props.onTutorialLoad} onReset={this.props.onTutorialReset} />
           </div>
-          
+
         </div>
       );
     }
@@ -631,5 +631,3 @@ TutorialNavigator = (function($, window, document) {
     init: TutorialNavigator
   }
 })(jQuery, window, document);
-
-
