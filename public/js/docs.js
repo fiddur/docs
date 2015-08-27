@@ -38,11 +38,11 @@ Auth0Docs = (function($, window, document) {
   }
 
   function initSearch() {
-    var $searchInput = $('.search-input').filter(':visible');
+    var $searchInput = $('.search-input');
 
-    $('.search-input').attr('id', '');
+    var Swiftype = window.Swiftype || {};
 
-    $searchInput.attr('id', 'search-input');
+    Swiftype.additionalInputElements = ['#search-input-2'];
 
     // Install Swiftype widget
     (function(w,d,t,u,n,s,e){w['SwiftypeObject']=n;w[n]=w[n]||function(){
