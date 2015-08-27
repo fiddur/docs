@@ -718,53 +718,6 @@ body
     +breakpoint("tablet")
       max-height 100%!important
 
-.sidebar-sbs
-  margin-top 40px
-  display none
-  padding-top 20px
-
-  +breakpoint("desktop")
-    display block
-
-  &.is-fixed
-    .wrapper
-      width 139px
-      position fixed
-      top 20px
-      padding-bottom 40px
-      
-    &.is-anchored
-      .wrapper
-        position: absolute;
-        top: auto;
-        bottom: 0;
-
-  h2
-    font-size 13px
-    font-weight 700
-    text-transform uppercase
-    color color_oil
-    margin 0 0 20px
-
-  ul,
-  li
-    padding: 0;
-    margin: 0;
-    list-style: none;
-
-  li a
-    font-size 12px
-    display block
-    margin-bottom 15px
-    
-    &:focus
-      color: #0a86b1;
-
-
-  li.is-active a
-    color #333
-    font-weight 700
-
 .docs-content
   padding-bottom 20px
   color color_oil
@@ -821,10 +774,11 @@ body
     color #333
 
   code
-    background-color rgba(#EAEEF3,.2)
-    border 1px solid rgba(#979797,.2)
-    font-size 12px
-    color color_oil
+    border-radius: 4px;
+    font-size: 90%;
+    padding: 3px 8px;
+    color: #5c666f;
+    background: #eef0f1;
     
   pre
     margin-bottom 30px
@@ -840,7 +794,6 @@ body
       font-size 13px
     p
       margin 0
-
 
 .related-howto
   background-color #fafafa
