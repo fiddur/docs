@@ -1,7 +1,74 @@
 doctype html
 html(lang="en")
   head
-  body
-    h1= message
-    h2= error.status
-    pre #{error.stack}
+    title= 'Error - ' + site.title
+    meta(charset="utf-8")
+    meta(name='viewport', content='width=device-width, initial-scale=1.0')
+
+    - if (canonicalUrl)
+      link(href=canonicalUrl, rel="canonical")
+    link(href="//cdn.auth0.com/styleguide/latest/lib/logos/img/favicon.png", rel="shortcut icon")
+    link(href='//cdn.auth0.com/styleguide/latest/index.min.css', rel='stylesheet')
+    link(href="//cdn.auth0.com/web-header/latest/standalone.css", rel="stylesheet")
+    link(href=env.BASE_URL + '/css/docs.css', rel='stylesheet')
+
+    script(type='text/javascript', src='//use.typekit.net/iws6ohy.js')
+    script.
+      try{Typekit.load();}catch(e){}
+
+    <!--[if lt IE 9]>
+    script(src="http://html5shim.googlecode.com/svn/trunk/html5.js")
+    <![endif]-->
+
+    script.
+      window.BASE_URL = '#{env.BASE_URL}';
+    script(src=env.BASE_URL + "/js/shims/window.location.origin.js")
+    script(src='//cdn.auth0.com/styleguide/vendor/jquery-1.9.0.min.js')
+    script(src='//cdn.auth0.com/styleguide/vendor/bootstrap-3.2.0.min.js')
+
+    include inc/analytics
+    include inc/lock-sso
+    include inc/mixins
+
+  body.docs-single(data-swiftype-index="false")
+    header.site-header!= webheader
+    script.
+      if (null != window.widget) {
+        window.widget.getClient().getSSOData(false, function (err, data) {
+          if (!data || !data.sso) return;
+          $('header.site-header .login')
+            .attr('href', "#{locals.uiURL}")
+            .html('Open Dashboard');
+        });
+      }
+
+    .navigation-bar
+      .wrapper
+        .container
+          .breadcrumbs
+            a(href!=env.BASE_URL)
+              span.text Documentation
+            a
+              i.icon-budicon-461
+              span.text= title
+
+
+          form#search(role="search", action=env.BASE_URL + "/search", autocomplete="off")
+            .form-group.search-control
+              i.icon-budicon-489
+              input.search-input.form-control(type="text", placeholder="Search for docs", name="stq")
+
+    //- Start content
+    .js-doc-template.container
+      section.docs-content
+        h1= message
+        h2= error.status
+        pre #{error.stack}
+    
+    include ../public/vendor/auth0-styleguide/lib/footer/demo.jade
+    
+  script(src=env.BASE_URL + "/js/jquery.ba-hashchange.min.js", type="text/javascript")
+  script(src=env.BASE_URL + '/js/highlight.min.js')
+  script(src=env.BASE_URL + '/js/jquery.accordion.min.js')
+  script(src=env.BASE_URL + '/js/jquery.waypoints.js')
+  script(src=env.BASE_URL + '/js/docs.js')

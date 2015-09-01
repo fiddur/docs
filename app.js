@@ -299,9 +299,9 @@ app.use(nconf.get('BASE_URL') + '/meta', require('./lib/api'));
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
-    var err = new Error('Not Found');
-    err.status = 404;
-    next(err);
+  var err = new Error('Not Found');
+  err.status = 404;
+  next(err);
 });
 
 // error handlers
@@ -309,23 +309,27 @@ app.use(function(req, res, next) {
 // development error handler
 // will print stacktrace
 if (app.get('env') === 'development') {
-    app.use(function(err, req, res, next) {
-        res.status(err.status || 500);
-        res.render('error', {
-            message: err.message,
-            error: err
-        });
+  app.use(function(err, req, res, next) {
+    res.status(err.status || 500);
+    res.render('error', {
+      message: err.message,
+      error: err
     });
+  });
 }
 
 // production error handler
 // no stacktraces leaked to user
 app.use(function(err, req, res, next) {
-    res.status(err.status || 500);
-    res.render('error', {
-        message: err.message,
-        error: {}
-    });
+  var msg = 'There was an error processing your request. For assistance, contact support@auth0.com.';
+  if (err.status === 404) {
+    msg = 'Sorry, but the page you are looking for does not exist.';
+  }
+  res.status(err.status || 500);
+  res.render('error', {
+    message: msg,
+    error: {}
+  });
 });
 
 
