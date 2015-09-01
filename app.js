@@ -271,13 +271,8 @@ app.get(nconf.get('BASE_URL') + '/quickstart', alias(nconf.get('BASE_URL') || '/
 
 app.use(nconf.get('BASE_URL'), require('./lib/api-explorer'));
 app.use(nconf.get('BASE_URL'), require('./lib/docs').router);
-
-require('./lib/sdk-snippets/lock/demos-routes')(app);
-require('./lib/sdk-snippets/lock/snippets-routes')(app);
-require('./lib/sdk-snippets/login-widget2/demos-routes')(app);
-require('./lib/sdk-snippets/login-widget2/snippets-routes')(app);
-require('./lib/sdk-snippets/login-widget/demos-routes')(app);
-
+app.use(nconf.get('BASE_URL'), require('./lib/sdk-snippets/lock/demos-routes'));
+app.use(nconf.get('BASE_URL'), require('./lib/sdk-snippets/lock/snippets-routes'));
 app.use(nconf.get('BASE_URL'), require('./lib/packager'));
 app.use(nconf.get('BASE_URL'), require('./lib/feedback'));
 
