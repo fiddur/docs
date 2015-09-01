@@ -454,7 +454,7 @@ TutorialNavigator = (function($, window, document) {
         showTutorial: false,
         path: '',
         basePath: this.props.basePath || '',
-        clientID: (this.props.userTenants) ? this.props.userTenants[0].clients[0].clientID : null
+        clientID: (this.props.userTenants && this.props.userTenants.length > 0) ? this.props.userTenants[0].clients[0].clientID : null
       };
     },
     getQuestion: function(platformType) {

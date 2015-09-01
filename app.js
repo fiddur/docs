@@ -1,5 +1,5 @@
 require('babel/register')({
-  sourceMaps: (process.env.NODE_ENV === 'production') ? false : 'inline'
+  sourceMaps: (process.env.NODE_ENV === 'production') ? false : true
 });
 
 if (process.env.NODE_ENV !== 'development') {
