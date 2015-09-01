@@ -178,7 +178,7 @@ html(lang="en")
     tnOpts.basePath = '#{env.BASE_URL}';
     tnOpts.platforms = !{JSON.stringify(quickstarts)};
     tnOpts.singleTpl = $('#tutorial-template');
-    tnOpts.userTenants = !{JSON.stringify(account.tenantList) || false};
+    //- tnOpts.userTenants = !{JSON.stringify(account.tenantList) || false};
     tnOpts.onTutorialLoad = function($template) {
       $('#tutorial-navigator, #homepage-content').addClass('hide');
       // trigger code samples
