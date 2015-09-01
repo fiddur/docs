@@ -107,6 +107,7 @@ describe('Content', function() {
     it('should not contain raw markdown characters', function() {
       docPages.forEach(function(page) {
         assert(page.body.indexOf('```') === -1, 'The page at ' + page.url + ' was not rendered correctly and contains invalid markdown characters.');
+        assert(page.body.indexOf('###') === -1, 'The page at ' + page.url + ' was not rendered correctly and contains invalid markdown characters.');
       });
     });
   });
