@@ -43,12 +43,3 @@ html(lang="en")
         window.prettyPrint && prettyPrint()
       })
     }(window.jQuery);
-
-  script.
-    var sectionIndex = 1;
-    $('h2,h3,h4').each(function(){
-      $(this)
-        .attr('id', sectionIndex)
-        .prepend('<a class="anchor" href="#' + sectionIndex + '"><i class="fa fa-link"></i></a>');
-      sectionIndex++;
-    });

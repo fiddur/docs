@@ -88,14 +88,6 @@ html(lang="en")
     })();
 
   script.
-    var sectionIndex = 1;
-    $('h2,h3,h4').each(function(){
-      $(this)
-        .attr('id', sectionIndex)
-        .prepend('<a class="anchor" href="#' + sectionIndex + '"><i class="icon icon-budicon-345"></i></a>');
-      sectionIndex++;
-    });
-
     if(location.hash) {
       location.hash = location.hash;
     }
