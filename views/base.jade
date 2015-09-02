@@ -1,7 +1,10 @@
 doctype html
 html(lang="en")
   head
-    title= title + ' - ' + site.title
+    - if (title)
+      title= title + ' - ' + site.title
+    - else
+      title=site.title
     meta(charset="utf-8")
     include inc/sharing-metas
 
