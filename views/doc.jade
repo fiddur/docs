@@ -1,4 +1,45 @@
 extends base
 
 block content
-  != sections.content
+  header.site-header!= webheader
+  script.
+    if (null != window.widget) {
+      window.widget.getClient().getSSOData(false, function (err, data) {
+        if (!data || !data.sso) return;
+        $('header.site-header .login')
+          .attr('href', "#{locals.uiURL}")
+          .html('Open Dashboard');
+      });
+    }
+
+  .navigation-bar
+    .wrapper
+      .container
+        .breadcrumbs
+          a(href!=env.BASE_URL)
+            span.text Documentation
+          a
+            i.icon-budicon-461
+            span.text= title
+
+
+        form#search(role="search", action=env.BASE_URL + "/search", autocomplete="off")
+          .form-group.search-control
+            i.icon-budicon-489
+            input.search-input.form-control(type="text", placeholder="Search for docs", name="stq")
+
+  //- Start content
+  .js-doc-template.container
+    .row
+      .col-sm-3
+        include inc/sidebar-menu
+
+      .col-sm-9
+        section.docs-content(data-swiftype-index="true")
+          != sections.content
+
+
+        .fixit
+            a(href='#', target='_blank') Suggestions? Typos? Edit this document on GitHub
+  
+  include ../public/vendor/auth0-styleguide/lib/footer/demo.jade

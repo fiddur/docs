@@ -1,132 +1,100 @@
-doctype html
-html(lang="en")
-  head
-    title= site.title
-    meta(charset="utf-8")
-    include inc/sharing-metas
+extends base
 
-    meta(name='viewport', content='width=device-width, initial-scale=1.0')
-    meta(name="google-site-verification", content="4aSwkVvotRegQ6g32k-21r38Fls9sO8VT5LytKdin3o")
+block content
+  header.site-header!= webheader
+  script.
+    if (null != window.widget) {
+      window.widget.getClient().getSSOData(false, function (err, data) {
+        if (!data || !data.sso) return;
+        $('header.site-header .login')
+          .attr('href', "#{locals.uiURL}")
+          .html('Open Dashboard');
+      });
+    }
+  - var nav = navigation['categories'];
 
-    - if (canonicalUrl)
-      link(href=canonicalUrl, rel="canonical")
-    link(href="//cdn.auth0.com/styleguide/latest/lib/logos/img/favicon.png", rel="shortcut icon")
-    link(href='//cdn.auth0.com/styleguide/latest/index.min.css', rel='stylesheet')
-    link(href="//cdn.auth0.com/web-header/latest/standalone.css", rel="stylesheet")
+  #tutorial-navigator
+  include inc/tutorial-template
 
-    link(href=env.BASE_URL + '/css/docs.css', rel='stylesheet')
+  #homepage-content
+    .navigation-bar.js-sticky-nav
+      .wrapper
+        .container
+          ul.list-inline
+            - for (var item in nav)
+              li
+                a(href!="#" + nav[item].id)= nav[item].name
 
-    script(type='text/javascript', src='//use.typekit.net/iws6ohy.js')
-    script.
-      try{Typekit.load();}catch(e){}
+          form#search(role="search", action=env.BASE_URL + "/search", autocomplete="off")
+            .form-group.search-control
+              i.icon-budicon-489
+              input#search-input.search-input.form-control(type="text", placeholder="Search for docs", name="stq")
 
-    <!--[if lt IE 9]>
-    script(src="http://html5shim.googlecode.com/svn/trunk/html5.js")
-    <![endif]-->
+                
+    - for (var item in nav)
+      - var current = nav[item];
 
-    script(src=env.BASE_URL + "/js/shims/window.location.origin.js")
-    script(src='//cdn.auth0.com/styleguide/vendor/jquery-1.9.0.min.js')
-    script(src='//cdn.auth0.com/styleguide/vendor/bootstrap-3.2.0.min.js')
-
-    include inc/analytics
-    include inc/lock-sso
-    include inc/mixins
-
-  body.docs-home(data-swiftype-index="false")
-    header.site-header!= webheader
-    script.
-      if (null != window.widget) {
-        window.widget.getClient().getSSOData(false, function (err, data) {
-          if (!data || !data.sso) return;
-          $('header.site-header .login')
-            .attr('href', "#{locals.uiURL}")
-            .html('Open Dashboard');
-        });
-      }
-    - var nav = navigation['categories'];
-
-    #tutorial-navigator
-    include inc/tutorial-template
-
-    #homepage-content
-      .navigation-bar.js-sticky-nav
-        .wrapper
+        section.section-product(id!=current.id)
           .container
-            ul.list-inline
-              - for (var item in nav)
-                li
-                  a(href!="#" + nav[item].id)= nav[item].name
+            h2= current.name
+              span= current.description
+          
+          - if(current.id === 'product')
+            .showcase
+              .container
+                .row
+                  - for (var link in current.links)
+                    - var current2 = current.links[link];
+                    +showcaseItem(current2.name, current2.icon, env.BASE_URL + current2.href, current2.description)
 
-            form#search(role="search", action=env.BASE_URL + "/search", autocomplete="off")
-              .form-group.search-control
-                i.icon-budicon-489
-                input#search-input.search-input.form-control(type="text", placeholder="Search for docs", name="stq")
+          - if(current.id === 'api')
+            .api-docs
+              .container
+                .row
+                  .col-xs-6.col-md-4
+                    - var explorer = current.sections['explorer'];
+                    a.icon-scale.api-link(href!=env.BASE_URL + explorer.href)
+                      i.icon-budicon-631
+                      strong= explorer.name
+                      p= explorer.description
+                    br
+                  .col-xs-6.col-md-4
+                    - var endpoints = current.sections['auth-endpoints'];
+                    a.icon-scale.api-link(href!=env.BASE_URL + endpoints.href)
+                      i.icon-budicon-638
+                      strong= endpoints.name
+                      p= endpoints.description
+                    br
+                  .col-xs-12.col-md-4
+                    .subcontent-box
+                      .row
+                        .col-xs-12
+                          h3 Announcements
+                          ul
+                            - var news = current.sections['announcements'];
+                            - for (var current2 in news.links)
+                              li
+                                a(href!=env.BASE_URL + news.links[current2].href)= news.links[current2].name
 
-                  
-      - for (var item in nav)
-        - var current = nav[item];
-
-          section.section-product(id!=current.id)
+          
+          - if(current.id === 'sdk')
             .container
-              h2= current.name
-                span= current.description
-            
-            - if(current.id === 'product')
-              .showcase
-                .container
-                  .row
-                    - for (var link in current.links)
-                      - var current2 = current.links[link];
-                      +showcaseItem(current2.name, current2.icon, env.BASE_URL + current2.href, current2.description)
+              ul.circle-list
+                - for (var link in current.links)
+                  - var current2 = current.links[link];
+                  li
+                    +circleLogo(current2.name, current2.slug, env.BASE_URL + current2.href)
 
-            - if(current.id === 'api')
-              .api-docs
-                .container
-                  .row
-                    .col-xs-6.col-md-4
-                      - var explorer = current.sections['explorer'];
-                      a.icon-scale.api-link(href!=env.BASE_URL + explorer.href)
-                        i.icon-budicon-631
-                        strong= explorer.name
-                        p= explorer.description
-                      br
-                    .col-xs-6.col-md-4
-                      - var endpoints = current.sections['auth-endpoints'];
-                      a.icon-scale.api-link(href!=env.BASE_URL + endpoints.href)
-                        i.icon-budicon-638
-                        strong= endpoints.name
-                        p= endpoints.description
-                      br
-                    .col-xs-12.col-md-4
-                      .subcontent-box
-                        .row
-                          .col-xs-12
-                            h3 Announcements
-                            ul
-                              - var news = current.sections['announcements'];
-                              - for (var current2 in news.links)
-                                li
-                                  a(href!=env.BASE_URL + news.links[current2].href)= news.links[current2].name
-
-            
-            - if(current.id === 'sdk')
-              .container
-                ul.circle-list
-                  - for (var link in current.links)
-                    - var current2 = current.links[link];
-                    li
-                      +circleLogo(current2.name, current2.slug, env.BASE_URL + current2.href)
-
-            - if(current.id === 'how-to')
-              .container
-                ul.list-howtos
-                  - for (var link in current.links)
-                    - var current2 = current.links[link];
-                    li
-                      +howTo(current2.name, env.BASE_URL + current2.href, current2.icon, current2.description)
+          - if(current.id === 'how-to')
+            .container
+              ul.list-howtos
+                - for (var link in current.links)
+                  - var current2 = current.links[link];
+                  li
+                    +howTo(current2.name, env.BASE_URL + current2.href, current2.icon, current2.description)
 
 
-    include ../public/vendor/auth0-styleguide/lib/footer/demo.jade
+  include ../public/vendor/auth0-styleguide/lib/footer/demo.jade
 
   script(src=env.BASE_URL + "/js/jquery.ba-hashchange.min.js", type="text/javascript")
   script(src=env.BASE_URL + '/js/owl.carousel.min.js')
@@ -151,19 +119,7 @@ html(lang="en")
       })
     }(window.jQuery);
 
-  //- Begin Inspectlet Embed Code
-  script#inspectletjs(type="text/javascript").
-    window.__insp = window.__insp || [];
-    __insp.push(['wid', 1881287289]);
-    (function() {
-      function __ldinsp(){var insp = document.createElement('script'); insp.type = 'text/javascript'; insp.async = true; insp.id = "inspsync"; insp.src = ('https:' == document.location.protocol ? 'https' : 'http') + '://cdn.inspectlet.com/inspectlet.js'; var x = document.getElementsByTagName('script')[0]; x.parentNode.insertBefore(insp, x); }
-      if (window.attachEvent){
-        window.attachEvent('onload', __ldinsp);
-      }else{
-        window.addEventListener('load', __ldinsp, false);
-      }
-    })();
-
+  script.
     var tnOpts = {};
     
     tnOpts.basePath = '#{env.BASE_URL}';
@@ -189,36 +145,3 @@ html(lang="en")
       React.createElement(TutorialNavigator.init, tnOpts), 
         $('#tutorial-navigator').get(0)
     );
-
-    if(location.hash) {
-      location.hash = location.hash;
-    }
-
-    if (~['/', '/api', '/auth-api'].indexOf(window.location.pathname) ||
-        ~window.location.pathname.indexOf('/quickstart')) {
-      $('.fixit').hide();
-    }
-
-    $('.fixit a').attr('href', 'https://github.com/auth0/docs/edit/master/articles' + window.location.pathname.substr("#{env.BASE_URL}".length) + '.md');
-
-  if (locals.user && user.tenants && user.tenants.length > 1)
-    script.
-      var getCookie = function (name) {
-        var match = document.cookie.match(RegExp('(?:^|;\\s*)' + name + '=([^;]*)'));
-        return match ? match[1] : null;
-      };
-
-      var setCookie = function (name, value, days) {
-        var date = new Date();
-        date.setTime(date.getTime() + (days * 24 * 60 * 60 * 1000));
-        document.cookie = name + '=' + value + '; expires=' + date.toGMTString() + '; path=/; domain=#{env['COOKIE_SCOPE']}';
-      }
-
-      setCookie('#{env['CURRENT_TENANT_COOKIE']}', '#{user.tenant}', 7);
-
-      setInterval(function () {
-        var current_tenant = getCookie('#{env['CURRENT_TENANT_COOKIE']}');
-        if (current_tenant && current_tenant !== '#{user.tenant}') {
-          window.location.reload(true);
-        }
-      }, 3000);
