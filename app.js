@@ -220,7 +220,7 @@ app.use(middleware.overrideIfClientInQsForPublicAllowedUrls);
 
 var quickstartCollections = require('./lib/collections/quickstarts');
 app.get(nconf.get('BASE_URL'), function(req, res) {
-  res.render('homepage', { quickstarts: quickstartCollections });
+  res.render('homepage', { quickstarts: quickstartCollections, bodyClass: 'docs-home' });
 });
 
 /**
