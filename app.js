@@ -32,7 +32,6 @@ var nconf = require('nconf');
 var http = require('http');
 var path = require('path');
 var fs = require('fs');
-var sitemap = require('express-sitemap');
 
 var app = redirect(express());
 
@@ -217,23 +216,7 @@ app.use(middleware.overrideIfClientInQs);
 app.use(middleware.overrideIfClientInQsForPublicAllowedUrls);
 
 
-var connections = require('./lib/connections');
-app.get('/ticket/step', function (req, res) {
-  if (!req.query.ticket) return res.sendStatus(404);
-  connections.getCurrentStep(req.query.ticket, function (err, currentStep) {
-    if (err) return res.sendStatus(500);
-    if (!currentStep) return res.sendStatus(404);
-    res.send(currentStep);
-  });
-});
 
-app.get(nconf.get('BASE_URL') + '/switch', function (req, res) {
-  req.session.current_tenant = {
-    name: req.query.tenant,
-    region: req.query.region,
-  };
-  res.redirect(nconf.get('BASE_URL') || '/');
-});
 
 var quickstartCollections = require('./lib/collections/quickstarts');
 app.get(nconf.get('BASE_URL'), function(req, res) {
@@ -275,19 +258,27 @@ app.use(nconf.get('BASE_URL'), require('./lib/sdk-snippets/lock/demos-routes'));
 app.use(nconf.get('BASE_URL'), require('./lib/sdk-snippets/lock/snippets-routes'));
 app.use(nconf.get('BASE_URL'), require('./lib/packager'));
 app.use(nconf.get('BASE_URL'), require('./lib/feedback'));
+app.use(nconf.get('BASE_URL'), require('./lib/sitemap')(app));
 
-// Sitemap
-var map = sitemap({
-  generate: app,
-  cache: 60000,
-  route: {
-    'ALL': {
-      changefreq: 'weekly',
-    }
-  }
+
+// Any routes after this will not be in the sitemap
+
+var connections = require('./lib/connections');
+app.get('/ticket/step', function (req, res) {
+  if (!req.query.ticket) return res.sendStatus(404);
+  connections.getCurrentStep(req.query.ticket, function (err, currentStep) {
+    if (err) return res.sendStatus(500);
+    if (!currentStep) return res.sendStatus(404);
+    res.send(currentStep);
+  });
 });
-app.get(nconf.get('BASE_URL') + '/sitemap.xml', function(req, res) {
-  map.XMLtoWeb(res);
+
+app.get(nconf.get('BASE_URL') + '/switch', function (req, res) {
+  req.session.current_tenant = {
+    name: req.query.tenant,
+    region: req.query.region,
+  };
+  res.redirect(nconf.get('BASE_URL') || '/');
 });
 
 app.use(nconf.get('BASE_URL') + '/meta', require('./lib/api'));
