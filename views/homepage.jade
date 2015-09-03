@@ -74,7 +74,10 @@ block body
                             - var news = current.sections['announcements'];
                             - for (var current2 in news.links)
                               li
-                                a(href!=env.BASE_URL + news.links[current2].href)= news.links[current2].name
+                                - if (news.links[current2].href.indexOf('http') === 0) 
+                                  a(href!=news.links[current2].href)= news.links[current2].name
+                                - else
+                                  a(href!=env.BASE_URL + news.links[current2].href)= news.links[current2].name
 
           
           - if(current.id === 'sdk')
