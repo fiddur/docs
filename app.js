@@ -162,6 +162,15 @@ app.use(nconf.get('BASE_URL') + '/test', function (req, res) {
   res.sendStatus(200);
 });
 
+// Force all urls to be lowercase
+app.use(function(req, res, next) {
+  if (/[A-Z]/.test(req.url)) {
+    res.redirect(301, req.url.toLowerCase());
+  } else {
+    next();
+  }
+});
+
 app.use(function (req, res, next) {
   if (!nconf.get('BASE_URL') || req.url === '/') return next();
   req.url = req.url.replace(/\/$/,'');
