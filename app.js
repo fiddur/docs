@@ -146,13 +146,14 @@ if (nconf.get('NODE_ENV') === 'production') {
   });
 }
 
-if (nconf.get('PRERENDER_ENABLED')) {
-  // Add swiftype UserAgent bot
-  prerender.crawlerUserAgents.push('Swiftbot');
-  prerender.crawlerUserAgents.push('Slackbot-LinkExpanding');
-  // add prerender middleware
-  app.use(prerender);
-}
+// if (nconf.get('PRERENDER_ENABLED')) {
+//   prerender.set('prerenderToken', '7SWJORuMo0629Z5yqhmB');
+//   // Add swiftype UserAgent bot
+//   prerender.crawlerUserAgents.push('Swiftbot');
+//   prerender.crawlerUserAgents.push('Slackbot-LinkExpanding');
+//   // add prerender middleware
+//   app.use(prerender);
+// }
 
 app.use('/test', function (req, res) {
   res.sendStatus(200);
