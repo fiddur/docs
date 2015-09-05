@@ -36,7 +36,7 @@ html(lang="en")
     include inc/lock-sso
     include inc/mixins
 
-  body(class="#{bodyClass || 'docs-single'}" data-swiftype-index="false")
+  body(data-swiftype-index="false")
     block body
     
   script(src=env.BASE_URL + "/js/jquery.ba-hashchange.min.js", type="text/javascript")
