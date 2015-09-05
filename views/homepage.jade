@@ -1,150 +1,151 @@
 extends base
 
 block body
-  header.site-header!= webheader
-  script.
-    if (null != window.widget) {
-      window.widget.getClient().getSSOData(false, function (err, data) {
-        if (!data || !data.sso) return;
-        $('header.site-header .login')
-          .attr('href', "#{locals.uiURL}")
-          .html('Open Dashboard');
-      });
-    }
-  - var nav = navigation['categories'];
+  .docs-home
+    header.site-header!= webheader
+    script.
+      if (null != window.widget) {
+        window.widget.getClient().getSSOData(false, function (err, data) {
+          if (!data || !data.sso) return;
+          $('header.site-header .login')
+            .attr('href', "#{locals.uiURL}")
+            .html('Open Dashboard');
+        });
+      }
+    - var nav = navigation['categories'];
 
-  #tutorial-navigator
-  include inc/tutorial-template
+    #tutorial-navigator
+    include inc/tutorial-template
 
-  #homepage-content
-    .navigation-bar.js-sticky-nav
-      .wrapper
-        .container
-          ul.list-inline
-            - for (var item in nav)
-              li
-                a(href!="#" + nav[item].id)= nav[item].name
-
-          form#search(role="search", action=env.BASE_URL + "/search", autocomplete="off")
-            .form-group.search-control
-              i.icon-budicon-489
-              input#search-input.search-input.form-control(type="text", placeholder="Search for docs", name="stq")
-
-                
-    - for (var item in nav)
-      - var current = nav[item];
-
-        section.section-product(id!=current.id)
+    #homepage-content
+      .navigation-bar.js-sticky-nav
+        .wrapper
           .container
-            h2= current.name
-              span= current.description
-          
-          - if(current.id === 'product')
-            .showcase
+            ul.list-inline
+              - for (var item in nav)
+                li
+                  a(href!="#" + nav[item].id)= nav[item].name
+
+            form#search(role="search", action=env.BASE_URL + "/search", autocomplete="off")
+              .form-group.search-control
+                i.icon-budicon-489
+                input#search-input.search-input.form-control(type="text", placeholder="Search for docs", name="stq")
+
+                  
+      - for (var item in nav)
+        - var current = nav[item];
+
+          section.section-product(id!=current.id)
+            .container
+              h2= current.name
+                span= current.description
+            
+            - if(current.id === 'product')
+              .showcase
+                .container
+                  .row
+                    - for (var link in current.links)
+                      - var current2 = current.links[link];
+                      +showcaseItem(current2.name, current2.icon, env.BASE_URL + current2.href, current2.description)
+
+            - if(current.id === 'api')
+              .api-docs
+                .container
+                  .row
+                    .col-xs-6.col-md-4
+                      - var explorer = current.sections['explorer'];
+                      a.icon-scale.api-link(href!=env.BASE_URL + explorer.href)
+                        i.icon-budicon-631
+                        strong= explorer.name
+                        p= explorer.description
+                      br
+                    .col-xs-6.col-md-4
+                      - var endpoints = current.sections['auth-endpoints'];
+                      a.icon-scale.api-link(href!=env.BASE_URL + endpoints.href)
+                        i.icon-budicon-638
+                        strong= endpoints.name
+                        p= endpoints.description
+                      br
+                    .col-xs-12.col-md-4
+                      .subcontent-box
+                        .row
+                          .col-xs-12
+                            h3 Announcements
+                            ul
+                              - var news = current.sections['announcements'];
+                              - for (var current2 in news.links)
+                                li
+                                  - if (news.links[current2].href.indexOf('http') === 0) 
+                                    a(href!=news.links[current2].href)= news.links[current2].name
+                                  - else
+                                    a(href!=env.BASE_URL + news.links[current2].href)= news.links[current2].name
+
+            
+            - if(current.id === 'sdk')
               .container
-                .row
+                ul.circle-list
                   - for (var link in current.links)
                     - var current2 = current.links[link];
-                    +showcaseItem(current2.name, current2.icon, env.BASE_URL + current2.href, current2.description)
+                    li
+                      +circleLogo(current2.name, current2.slug, env.BASE_URL + current2.href)
 
-          - if(current.id === 'api')
-            .api-docs
+            - if(current.id === 'how-to')
               .container
-                .row
-                  .col-xs-6.col-md-4
-                    - var explorer = current.sections['explorer'];
-                    a.icon-scale.api-link(href!=env.BASE_URL + explorer.href)
-                      i.icon-budicon-631
-                      strong= explorer.name
-                      p= explorer.description
-                    br
-                  .col-xs-6.col-md-4
-                    - var endpoints = current.sections['auth-endpoints'];
-                    a.icon-scale.api-link(href!=env.BASE_URL + endpoints.href)
-                      i.icon-budicon-638
-                      strong= endpoints.name
-                      p= endpoints.description
-                    br
-                  .col-xs-12.col-md-4
-                    .subcontent-box
-                      .row
-                        .col-xs-12
-                          h3 Announcements
-                          ul
-                            - var news = current.sections['announcements'];
-                            - for (var current2 in news.links)
-                              li
-                                - if (news.links[current2].href.indexOf('http') === 0) 
-                                  a(href!=news.links[current2].href)= news.links[current2].name
-                                - else
-                                  a(href!=env.BASE_URL + news.links[current2].href)= news.links[current2].name
-
-          
-          - if(current.id === 'sdk')
-            .container
-              ul.circle-list
-                - for (var link in current.links)
-                  - var current2 = current.links[link];
-                  li
-                    +circleLogo(current2.name, current2.slug, env.BASE_URL + current2.href)
-
-          - if(current.id === 'how-to')
-            .container
-              ul.list-howtos
-                - for (var link in current.links)
-                  - var current2 = current.links[link];
-                  li
-                    +howTo(current2.name, env.BASE_URL + current2.href, current2.icon, current2.description)
+                ul.list-howtos
+                  - for (var link in current.links)
+                    - var current2 = current.links[link];
+                    li
+                      +howTo(current2.name, env.BASE_URL + current2.href, current2.icon, current2.description)
 
 
-  include ../public/vendor/auth0-styleguide/lib/footer/demo.jade
+    include ../public/vendor/auth0-styleguide/lib/footer/demo.jade
 
-  script(src=env.BASE_URL + "/js/jquery.ba-hashchange.min.js", type="text/javascript")
-  script(src=env.BASE_URL + '/js/owl.carousel.min.js')
-  script(src=env.BASE_URL + '/js/jquery.accordion.min.js')
-  script(src=env.BASE_URL + '/js/jquery.waypoints.js')
-  script(src=env.BASE_URL + '/js/highlight.min.js')
-  script(src=env.BASE_URL + '/js/page.min.js')
-  script(src=env.BASE_URL + '/js/react.min.js')
-  script(src=env.BASE_URL + '/js/tutorial-navigator.js')
-  script(src=env.BASE_URL + '/js/docs.js')
-  
-  script(type='text/javascript').
-    !function ($) {
-      $(function(){
-      $('pre').each(function (i, e) {
-        // Ignore 'pre' elements inside .api-explorer elements
-        if ($(e).closest('.api-explorer').length === 0) {
-          $(e).addClass('prettyprint');
-        }
-      });
-      window.prettyPrint && prettyPrint();
-      })
-    }(window.jQuery);
-
-  script.
-    var tnOpts = {};
+    script(src=env.BASE_URL + "/js/jquery.ba-hashchange.min.js", type="text/javascript")
+    script(src=env.BASE_URL + '/js/owl.carousel.min.js')
+    script(src=env.BASE_URL + '/js/jquery.accordion.min.js')
+    script(src=env.BASE_URL + '/js/jquery.waypoints.js')
+    script(src=env.BASE_URL + '/js/highlight.min.js')
+    script(src=env.BASE_URL + '/js/page.min.js')
+    script(src=env.BASE_URL + '/js/react.min.js')
+    script(src=env.BASE_URL + '/js/tutorial-navigator.js')
+    script(src=env.BASE_URL + '/js/docs.js')
     
-    tnOpts.basePath = '#{env.BASE_URL}';
-    tnOpts.platforms = !{JSON.stringify(quickstarts)};
-    tnOpts.singleTpl = $('#tutorial-template');
-    //- tnOpts.userTenants = !{JSON.stringify(account.tenantList) || false};
-    tnOpts.onTutorialLoad = function($template) {
-      $('#tutorial-navigator, #homepage-content').addClass('hide');
-      // trigger code samples
-      Auth0Docs.renderCode();
-    };
+    script(type='text/javascript').
+      !function ($) {
+        $(function(){
+        $('pre').each(function (i, e) {
+          // Ignore 'pre' elements inside .api-explorer elements
+          if ($(e).closest('.api-explorer').length === 0) {
+            $(e).addClass('prettyprint');
+          }
+        });
+        window.prettyPrint && prettyPrint();
+        })
+      }(window.jQuery);
 
-    tnOpts.onTutorialReset = function($template) {
-      var $feedback = $('.js-feedback-sender');
-      $('#tutorial-navigator, #homepage-content').removeClass('hide');
-      $feedback.find('.feedback-choose').show();
-      $feedback.find('.feedback-no, .feedback-yes').hide();
-      Waypoint.refreshAll();
-    };
+    script.
+      var tnOpts = {};
+      
+      tnOpts.basePath = '#{env.BASE_URL}';
+      tnOpts.platforms = !{JSON.stringify(quickstarts)};
+      tnOpts.singleTpl = $('#tutorial-template');
+      //- tnOpts.userTenants = !{JSON.stringify(account.tenantList) || false};
+      tnOpts.onTutorialLoad = function($template) {
+        $('#tutorial-navigator, #homepage-content').addClass('hide');
+        // trigger code samples
+        Auth0Docs.renderCode();
+      };
 
-    // Init Tutorial Navigator
-    React.render(
-      React.createElement(TutorialNavigator.init, tnOpts), 
-        $('#tutorial-navigator').get(0)
-    );
+      tnOpts.onTutorialReset = function($template) {
+        var $feedback = $('.js-feedback-sender');
+        $('#tutorial-navigator, #homepage-content').removeClass('hide');
+        $feedback.find('.feedback-choose').show();
+        $feedback.find('.feedback-no, .feedback-yes').hide();
+        Waypoint.refreshAll();
+      };
+
+      // Init Tutorial Navigator
+      React.render(
+        React.createElement(TutorialNavigator.init, tnOpts), 
+          $('#tutorial-navigator').get(0)
+      );
