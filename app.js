@@ -18,8 +18,6 @@ if (process.env.NODE_ENV !== 'production') {
 /**
  * Module dependencies.
  */
-
-var redirect = require('express-redirect');
 var prerender = require('prerender-node');
 var passport = require('passport');
 var express = require('express');
@@ -33,7 +31,7 @@ var http = require('http');
 var path = require('path');
 var fs = require('fs');
 
-var app = redirect(express());
+var app = express();
 
 var config_file = process.env.CONFIG_FILE || path.join(__dirname, 'config.json');
 var extra_configs = config_file.slice(0, -5) + '.d';
@@ -225,13 +223,6 @@ app.get(nconf.get('BASE_URL'), function(req, res) {
 });
 
 /**
- * Manage redirect 301 for deprecated links
- * to point to new links or documents
- */
-
-require('./lib/redirects')(app);
-
-/**
  * Register quickstart routes as an alias to index `/`
  * So that the tutorial navigator gets to load
  * quickstart collections and render
@@ -263,6 +254,7 @@ app.use(nconf.get('BASE_URL'), require('./lib/sitemap')(app));
 
 
 // Any routes after this will not be in the sitemap
+app.use(nconf.get('BASE_URL'), require('./lib/redirects'));
 
 var connections = require('./lib/connections');
 app.get('/ticket/step', function (req, res) {
