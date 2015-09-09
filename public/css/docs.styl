@@ -64,8 +64,20 @@ a {
   margin-bottom: 0px;
 }
 
+.anchor-heading {
+  position: relative;
+  cursor: pointer;
+}
+
+.anchor-heading:hover .anchor {
+  visibility: visible;
+}
+
 .anchor {
-  display: none;
+  position: absolute;
+  top: 0;
+  left: -25px;
+  visibility:hidden;
 }
 
 div.package span:first-child {

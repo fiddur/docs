@@ -15,6 +15,8 @@ Auth0Docs = (function($, window, document) {
     renderCode();
 
     initSearch();
+
+    setAnchorLinks();
   }
 
   function navTabs() {
@@ -23,6 +25,14 @@ Auth0Docs = (function($, window, document) {
 
       $(this).tab('show');
     });
+  }
+
+  function setAnchorLinks() {
+    $('body').on('click', '.docs-content h3', function() {
+      if($(this).attr('id')) {
+        window.location.hash = $(this).attr('id');
+      }
+    })
   }
 
   function renderCode() {

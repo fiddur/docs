@@ -134,6 +134,14 @@ block body
         $('#tutorial-navigator, #homepage-content').addClass('hide');
         // trigger code samples
         Auth0Docs.renderCode();
+        
+        // If it's loading from a set hash, load on the corresponding anchor.
+        if(window.location.hash) {
+          var current = window.location.hash;
+
+          window.location.hash = '';
+          window.location.hash = current;
+        }
       };
 
       tnOpts.onTutorialReset = function($template) {
