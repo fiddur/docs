@@ -1,0 +1,60 @@
+- if (env['AB_EXPERIMENTS_ENDPOINT'])
+  script(src="//cdn.auth0.com/js/ab/ab-0.js")
+  script(src="//cdn.auth0.com/js/ab/ab-loader-0.js")
+  script.
+    try {
+      window.abTestingLib.load({ fetchFn: function () { return $.get("#{env['AB_EXPERIMENTS_ENDPOINT']}"); }});
+      window.abTestingLib.integration('auth0metrics').start({ metrics: window.metricsLib});
+      window.abTestingLib.start();
+
+      setTimeout(function () {
+        $('.container').css('visibility', 'hidden');
+      }, 0);
+      
+      window.abTestingLib.onReady(function (ab) {
+        try {
+          window.ABExperiments = ab.getExperiments();
+          
+          executeABExperiments(window.ABExperiments);
+        } catch (e) {
+          console.error('Error running AB experiments.\n%s', e.message);
+          $('.container').css('visibility', 'visible');
+        }
+      });
+
+    } catch (e) {
+      console.error('Error initializing ABTesting lib. ABTesting will be disabled');
+      $('.container').css('visibility', 'visible');
+    }
+      
+    function executeABExperiments (experiments) {
+        var path = window.location.pathname;
+        var experiments = experiments;
+
+        if(!experiments) {
+          // Restore content
+          $('.container').css('visibility', 'visible');
+          return;
+        }
+
+        try {
+          var experimentsForPath = experiments.runAllByPath(path);
+          var winningVariants = [];
+
+          experimentsForPath.experiments.forEach(function (e) {
+            winningVariants = winningVariants.concat(e.getCurrentVariant().getPropertiesByType('js'));
+          });
+
+          var variantContext = {};
+          variantContext.$ = $;
+
+          winningVariants.forEach(function(v) {
+            v.runInContext(variantContext);
+          });
+        } catch (e) {
+          console.error("Error running experiments for path:%s", path);
+        } finally {
+          // Restore content
+          $('.container').css('visibility', 'visible');
+        }
+      }
