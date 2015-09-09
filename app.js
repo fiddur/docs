@@ -250,11 +250,8 @@ app.use(nconf.get('BASE_URL'), require('./lib/sdk-snippets/lock/demos-routes'));
 app.use(nconf.get('BASE_URL'), require('./lib/sdk-snippets/lock/snippets-routes'));
 app.use(nconf.get('BASE_URL'), require('./lib/packager'));
 app.use(nconf.get('BASE_URL'), require('./lib/feedback'));
-app.use(nconf.get('BASE_URL'), require('./lib/sitemap')(app));
-
-
-// Any routes after this will not be in the sitemap
 app.use(nconf.get('BASE_URL'), require('./lib/redirects'));
+app.use(nconf.get('BASE_URL'), require('./lib/sitemap'));
 
 var connections = require('./lib/connections');
 app.get('/ticket/step', function (req, res) {
