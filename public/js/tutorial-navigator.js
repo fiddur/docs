@@ -163,9 +163,21 @@ TutorialNavigator = (function($, window, document) {
 
       return options[appType];
     },
+    getPageTitle: function(appType, tech1, tech2) {
+      var pageTitle = window.SITE_TITLE;
+      if (appType && tech1 && tech2) {
+        pageTitle += ' - Getting started with ' + this.props.getTechName(appType, tech1) + ' and ' + this.props.getTechName('backend', tech2);
+      } else if (appType && tech1) {
+        pageTitle += ' - ' + this.props.getTechName(appType, tech1) + ' Quickstarts';
+      } else if (appType) {
+        pageTitle += ' - ' + this.getAppTypeName(appType) + ' Quickstarts';
+      }
+      return pageTitle;
+    },
     render: function() {
       var list = [];
       var tutorial = this.props.tutorial;
+
 
       if(tutorial.appType) {
         list.push(React.createElement("a", {href: tutorial.basePath + "/"}, React.createElement("span", {className: "text"}, "Documentation")));
@@ -182,6 +194,7 @@ TutorialNavigator = (function($, window, document) {
         list.push(React.createElement("a", {href: tutorial.basePath + "/quickstart/" + tutorial.appType + "/" + tutorial.tech1}, React.createElement("i", {className: "icon-budicon-461"}), React.createElement("span", {className: "text"}, this.props.getTechName('backend', tutorial.tech2))));
       }
 
+      document.title = this.getPageTitle(tutorial.appType, tutorial.tech1, tutorial.tech2);
       return (React.createElement("div", {className: "breadcrumbs"}, list));
     }
   });
