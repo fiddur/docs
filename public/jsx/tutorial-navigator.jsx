@@ -516,6 +516,12 @@ TutorialNavigator = (function($, window, document) {
 
       return '/' + paths[platformType] + '/';
     },
+    componentDidUpdate: function() {
+      return this.props.onTutorialUpdate(this.state);
+    },
+    componentDidMount: function() {
+      return this.props.onTutorialUpdate(this.state);
+    },
     componentWillMount: function() {
       var component = this;
       var basePath = this.props.basePath;
@@ -557,6 +563,8 @@ TutorialNavigator = (function($, window, document) {
             tutorialUrls: [platformPath + ctx.params.platform],
             showTutorial: false
           });
+
+          
         } else {
           component.setState({
             options: null,
@@ -632,7 +640,13 @@ TutorialNavigator = (function($, window, document) {
           </div>
 
           <div className="tutorial-content">
-            <Tutorial key={this.state.showTutorial} tutorial={this.state} getTechName={this.getTechName} template={this.props.singleTpl} onLoad={this.props.onTutorialLoad} onReset={this.props.onTutorialReset} />
+            <Tutorial 
+              key={this.state.showTutorial} 
+              tutorial={this.state}
+              getTechName={this.getTechName}
+              template={this.props.singleTpl}
+              onLoad={this.props.onTutorialLoad}
+              onReset={this.props.onTutorialReset} />
           </div>
 
         </div>
