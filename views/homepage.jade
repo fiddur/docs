@@ -152,6 +152,10 @@ block body
         Waypoint.refreshAll();
       };
 
+      tnOpts.onTutorialUpdate = function(state) {
+        // do any tracking here
+      };
+
       // Init Tutorial Navigator
       React.render(
         React.createElement(TutorialNavigator.init, tnOpts), 
