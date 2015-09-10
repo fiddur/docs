@@ -10,9 +10,10 @@
       $('.container').css('visibility', 'hidden');
       
       window.abTestingLib.onReady(function (ab) {
+        window.ABLibLoaded = true;
+        
         try {
           window.ABExperiments = ab.getExperiments();
-          
           executeABExperiments(window.ABExperiments);
         } catch (e) {
           console.error('Error running AB experiments.\n%s', e.message);
@@ -21,6 +22,7 @@
       });
 
     } catch (e) {
+      window.ABLibLoaded = true;
       console.error('Error initializing ABTesting lib. ABTesting will be disabled');
       $('.container').css('visibility', 'visible');
     }
@@ -29,6 +31,12 @@
         var path = window.location.pathname;
         var experiments = experiments;
 
+        console.log('Executing for path %s', window.location.pathname);
+        
+        if(!window.ABLibLoaded) {
+          return;
+        }
+        
         if(!experiments) {
           // Restore content
           $('.container').css('visibility', 'visible');
