@@ -213,7 +213,7 @@ app.use(middleware.embedded);
 app.use(middleware.overrideIfAuthenticated);
 app.use(middleware.overrideIfClientInQs);
 app.use(middleware.overrideIfClientInQsForPublicAllowedUrls);
-
+app.use(middleware.fetchABExperiments);
 
 
 

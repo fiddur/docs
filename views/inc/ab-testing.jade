@@ -1,15 +1,13 @@
-- if (env['AB_EXPERIMENTS_ENDPOINT'])
+- if (abExperiments)
   script(src="//cdn.auth0.com/js/ab/ab-0.js")
   script(src="//cdn.auth0.com/js/ab/ab-loader-0.js")
   script.
     try {
-      window.abTestingLib.load({ fetchFn: function () { return $.get("#{env['AB_EXPERIMENTS_ENDPOINT']}"); }});
+      window.abTestingLib.load({ experiments: !{abExperiments} });
       window.abTestingLib.integration('auth0metrics').start({ metrics: window.metricsLib});
       window.abTestingLib.start();
 
-      setTimeout(function () {
-        $('.container').css('visibility', 'hidden');
-      }, 0);
+      $('.container').css('visibility', 'hidden');
       
       window.abTestingLib.onReady(function (ab) {
         try {
