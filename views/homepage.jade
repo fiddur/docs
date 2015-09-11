@@ -153,7 +153,10 @@ block body
       };
 
       tnOpts.onTutorialUpdate = function(state) {
-        // do any tracking here
+        if (window.ABExperiments) {
+          // function definition can be found on inc/ab-testing
+          executeABExperiments(window.ABExperiments);
+        }
       };
 
       // Init Tutorial Navigator
