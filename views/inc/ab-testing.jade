@@ -1,6 +1,6 @@
 - if (abExperiments)
-  script(src="//cdn.auth0.com/js/ab/ab-0.js")
-  script(src="//cdn.auth0.com/js/ab/ab-loader-0.js")
+  script(src="//cdn.auth0.com/js/ab/ab-1.min.js")
+  script(src="//cdn.auth0.com/js/ab/ab-loader-1.min.js")
   script.
     try {
       window.abTestingLib.load({ experiments: !{abExperiments} });
@@ -31,8 +31,6 @@
         var path = window.location.pathname;
         var experiments = experiments;
 
-        console.log('Executing for path %s', window.location.pathname);
-        
         if(!window.ABLibLoaded) {
           return;
         }
