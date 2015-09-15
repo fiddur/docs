@@ -532,19 +532,22 @@ body
       color: white;
       padding: 30px 40px;
       margin-bottom: 20px;
+
       p
         line-height: 30px;
         color: color_blue
         margin: 0;
 
-    blockquote.warning
-      background: red;
-      p
-        color: white;
-        font-weight: bold;
-      a
-        color: white;
-        text-decoration: underline;
+      &.warning
+        background: blue;
+
+        p
+          color: white;
+          font-weight: bold;
+        a
+          color: white;
+          text-decoration: underline;
+
 
     img
       max-width: 100%;
@@ -812,6 +815,18 @@ body
     border: 1px solid rgb(231, 233, 237)
     border-radius 3px
     margin: 30px 0
+
+    &.warning
+      border: 0;
+      background-color: #E71B1B;
+      color: white !important;
+
+      *
+        color: white !important;
+
+      a
+        text-decoration: underline;
+
 
     code
       font-size 13px
