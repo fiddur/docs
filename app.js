@@ -61,7 +61,7 @@ nconf.file('global', { file: config_file })
     'DOMAIN_URL_API2_EXPLORER': 'login0.myauth0.com',
     'WIDGET_FALLBACK_CLIENTID': 'aCbTAJNi5HbsjPJtRpSP6BIoLPOrSj2C',
     'LEGACY_WIDGET_URL':  'https://cdn.auth0.com/w2/auth0-widget-5.2.min.js',
-    'LOGIN_WIDGET_URL':  'https://cdn.auth0.com/js/lock-6.2.min.js',
+    'LOGIN_WIDGET_URL':  'https://cdn.auth0.com/js/lock-7.8.min.js',
     'AUTH0JS_URL':       'https://cdn.auth0.com/w2/auth0-1.6.4.min.js',
     'AUTH0_ANGULAR_URL': 'http://cdn.auth0.com/w2/auth0-angular-1.1.js',
     'SENSITIVE_DATA_ENCRYPTION_KEY': '0123456789',
