@@ -107,8 +107,11 @@ TutorialNavigator = (function($, window, document) {
       var tech = this.props.model;
       var style = {
         animationDelay: this.props.delay + "ms",
+        WebkitAnimationDelay: this.props.delay + "ms",
         animationDuration: "200ms",
-        animationTimingFunction: "cubic-bezier(0.455, 0.03, 0.515, 0.955)"
+        WebkitAnimationDuration: "200ms",
+        animationTimingFunction: "cubic-bezier(0.455, 0.03, 0.515, 0.955)",
+        WebkitAnimationTimingFunction: "cubic-bezier(0.455, 0.03, 0.515, 0.955)"
       };
 
       return (

@@ -40,3 +40,18 @@ block body
             block content
           
     include ../public/vendor/auth0-styleguide/lib/footer/demo.jade
+
+  script(src=env.BASE_URL + '/js/docs.js')
+
+  script(type='text/javascript').
+    !function ($) {
+      $(function(){
+      $('pre').each(function (i, e) {
+        // Ignore 'pre' elements inside .api-explorer elements
+        if ($(e).closest('.api-explorer').length === 0) {
+          $(e).addClass('hljs');
+        }
+      });
+      //window.prettyPrint && prettyPrint();
+      })
+    }(window.jQuery);
