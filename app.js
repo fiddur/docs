@@ -233,7 +233,6 @@ function alias(route) {
   return function(req, res, next) {
     req.url = route;
     res.render('homepage', { quickstarts: quickstartCollections });
-    next();
   };
 }
 
