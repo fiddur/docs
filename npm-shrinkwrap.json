@@ -2484,6 +2484,10 @@
         }
       }
     },
+    "retry": {
+      "version": "0.8.0",
+      "resolved": "https://registry.npmjs.org/retry/-/retry-0.8.0.tgz"
+    },
     "server-destroy": {
       "version": "1.0.1",
       "resolved": "https://registry.npmjs.org/server-destroy/-/server-destroy-1.0.1.tgz"
