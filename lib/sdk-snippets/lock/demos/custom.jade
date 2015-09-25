@@ -6,26 +6,24 @@ html
       li {
         padding: 10px;
       }
+    .container
+      div#messages
+      ul#my-list
 
-    div#messages
-    ul#my-list
-
-    button.signin-google Sign in with Google
-    br
-    button.signin-facebook Sign in with Facebook
-    br
-    button.signin-waad Sign in with Windows Azure AD
-    br
-    button.signin-etc Sign in with ...
-    br
-    p --- or ---
-    label User
-    input(type="text", id="username")
-    br
-    label Password
-    input(type="password", id="password")
-    br
-    button.signin-db Sign in with Username/Password
+      h5 Use a Social or Enterprise connection
+      button.btn.btn-info.btn-xs.signin-google Sign in with Google
+      br
+      button.btn.btn-info.btn-xs.signin-facebook Sign in with Facebook
+      br
+      button.btn.btn-info.btn-xs.signin-waad Sign in with Windows Azure AD
+      br
+      button.btn.btn-info.btn-xs.signin-etc Sign in with ...
+      p --- or ---
+      form.form-inline
+        h5 Sign in with Username/Password
+        input(type="text", id="username", placeholder="username/email")
+        input(type="password", id="password", placeholder="password")
+        button.btn.btn-info.btn-xs.signin-db Submit
 
     script(src=auth0js_url)
     script(src='//ajax.googleapis.com/ajax/libs/jquery/1.9.0/jquery.min.js')
