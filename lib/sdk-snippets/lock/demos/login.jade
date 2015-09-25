@@ -1,7 +1,11 @@
 html
   head
-  body
-    button.btn.btn-lg.btn-default(onclick='show()') Login
+    link(rel="stylesheet" href="//cdn.auth0.com/styleguide/latest/index.min.css")
+  body(style="padding-top:30%;")
+    .container
+      .row
+        .col-xs-4.col-xs-offset-4.text-center
+          button.btn.btn-xs.btn-success(onclick='show()') Login
     script(src=widget_url)
     script.
       // define lock
