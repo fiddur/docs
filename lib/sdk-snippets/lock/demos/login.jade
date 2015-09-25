@@ -1,12 +1,12 @@
 html
   head
   body
-    button(onclick='show()') Login
+    button.btn.btn-lg.btn-default(onclick='show()') Login
     script(src=widget_url)
     script.
       // define lock
       var lock = new Auth0Lock('!{clientID}', '!{namespace}', {
-        assetsUrl:    '!{auth0_sdk_assets}'
+        assetsUrl: '!{auth0_sdk_assets}'
       });
 
       // define show function to invoke lock.show
