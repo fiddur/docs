@@ -1,5 +1,6 @@
 html
   head
+    link(rel="stylesheet" href="//cdn.auth0.com/styleguide/latest/index.min.css")
   body
-    p Sign In by redirecting to this link: 
+    p Sign In by redirecting to this link:
       a(href=tenant_domain + "/login?client=" + clientID)= tenant_domain + "/login?client=" + clientID

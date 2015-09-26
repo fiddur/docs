@@ -9,11 +9,14 @@ if account.loggedIn && account.clients && account.clients.length > 0 && !embedde
 
 div
   label Select how you want to trigger login:
-  select#widget-chooser
-    option(value="login") Login Widget - Modal
-    option(value="embedded") Login Widget - Inside a DIV
-    option(value="custom") Custom UI
-    option(value="redirect") Plain Link
+  select#widget-chooser.form-control
+      option(value="login") Lock widget - Modal
+      option(value="embedded") Lock widget - Inline Form
+      option(value="sms") Passwordless - SMS
+      option(value="magiclink") Passwordless - Magic Link
+      option(value="emailcode") Passwordless - Email Code
+      option(value="custom") Custom UI
+      option(value="redirect") Plain Link
 
 
 p This is how it will look on a browser...
@@ -28,6 +31,7 @@ p This is how it will look on a browser...
         i.icon-budicon-436
     .browser-address
       i.icon-budicon-285
+      span#browser-url.browser-url https://your-domain.com/login
   .browser-content(class="login-widget2")
     iframe#widget-demo(src='')
 
@@ -37,14 +41,18 @@ p Auth0 JavaScript libraries are Open Source:
   | #{" "}
   a(href="https://github.com/auth0/lock", target="_new") Auth0Lock
   | #{" & "}
+  a(href="https://github.com/auth0/lock-passwordless", target="_new") Auth0LockPasswordless
+  | #{" & "}
   a(href="https://github.com/auth0/auth0.js", target="_new") Auth0.js
 
 
 script.
   function refresh (method, clientId) {
-    $('#widget-demo').attr('src', '#{DOMAIN_URL_DOCS}/lock-demos/' + method + '?' + (clientId !== 'YOUR_CLIENT_ID' ? '&a=' + clientId : '') + '&callbackOnHash=#{callbackOnHashMode}' + '&backend=#{backend}');
+    var example_path = method + '?' + (clientId !== 'YOUR_CLIENT_ID' ? '&a=' + clientId : '') + '&callbackOnHash=#{callbackOnHashMode}' + '&backend=#{backend}';
+    var iframe_url = '#{DOMAIN_URL_DOCS}/lock-demos/' + example_path;
+    var snippet_url = '#{DOMAIN_URL_DOCS}/lock-snippets/' + example_path;
 
-    var snippet_url = '#{DOMAIN_URL_DOCS}/lock-snippets/' + method + '?' + (clientId !== 'YOUR_CLIENT_ID' ? '&a=' + clientId : '') + '&callbackOnHash=#{callbackOnHashMode}' + '&backend=#{backend}';
+    $('#widget-demo').attr('src', iframe_url);
 
     $.ajax({
       url: snippet_url,

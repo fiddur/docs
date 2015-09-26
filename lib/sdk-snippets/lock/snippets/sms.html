@@ -1,0 +1,17 @@
+<script src="<%= lock_passwordless_url %>"></script>
+<script type="text/javascript">
+  var clientID = '<%= account.clientId %>';
+  var domain = '<%= account.namespace %>';
+
+  var lock = new Auth0LockPasswordless(clientID, domain);
+
+  function open() {
+    lock.sms({
+      callbackURL: '<%= account.callback %>',
+      authParams: {
+        scope: 'openid profile'
+      }
+    });
+  }
+</script>
+<button onclick="window.open();">SMS</button>

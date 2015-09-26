@@ -10,13 +10,17 @@ p This is how it will look on a browser...
         i.icon-budicon-436
     .browser-address
       i.icon-budicon-285
+      span#browser-url.browser-url https://your-domain.com/login
   .browser-content(class="login-widget2")
     iframe#widget-demo(src='')
 
 
 script.
   function refresh (method, clientId) {
-    $('#widget-demo').attr('src', '#{DOMAIN_URL_DOCS}/lock-demos/' + method + '?' + (clientId !== 'YOUR_CLIENT_ID' ? '&a=' + clientId : '') + '&callbackOnHash=#{callbackOnHashMode}');
+    var example_path = method + '?' + (clientId !== 'YOUR_CLIENT_ID' ? '&a=' + clientId : '') + '&callbackOnHash=#{callbackOnHashMode}' + '&backend=#{backend}';
+    var iframe_url = '#{DOMAIN_URL_DOCS}/lock-demos/' + example_path;
+
+    $('#widget-demo').attr('src', iframe_url);
   }
 
   $('#client-chooser').change(function (e) {

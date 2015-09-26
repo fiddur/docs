@@ -7,18 +7,15 @@ html
         .col-xs-4.col-xs-offset-4.text-center
           button.btn.btn-xs.btn-success(onclick='show()') Login
 
-    script(src=widget_url)
+    script(src=lock_passwordless_url)
     script.
       // define lock
-      var lock = new Auth0Lock('!{clientID}', '!{namespace}', {
-        assetsUrl: '!{auth0_sdk_assets}'
-      });
+      var lock = new Auth0LockPasswordless('!{clientID}', '!{namespace}');
 
       // define show function to invoke lock.show
       function show() {
-        lock.show({
-          callbackURL:  '!{callback || 'http://YOUR_APP/callback'}',
-          responsetType: '!{callbackOnHash ? "token" : "code"}',
+        lock.sms({
+          callbackURL:  '!{callback || "http://YOUR_APP/callback"}',
           focusInput: false
         });
       }
