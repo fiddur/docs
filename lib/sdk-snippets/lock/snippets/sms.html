@@ -1,6 +1,9 @@
 <script src="https://cdn.auth0.com/js/lock-passwordless-0.min.js"></script>
 <script type="text/javascript">
-  var lock = new Auth0LockPasswordless('<%= account.clientId %>', '<%= account.namespace %>');
+  var clientID = '<%= account.clientId %>';
+  var domain = '<%= account.namespace %>';
+
+  var lock = new Auth0LockPasswordless(clientID, domain);
 
   function open() {
     lock.sms({
