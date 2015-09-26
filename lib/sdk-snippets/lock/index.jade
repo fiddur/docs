@@ -31,7 +31,7 @@ p This is how it will look on a browser...
         i.icon-budicon-436
     .browser-address
       i.icon-budicon-285
-      span#browser-url.browser-url
+      span#browser-url.browser-url https://your-domain.com/login
   .browser-content(class="login-widget2")
     iframe#widget-demo(src='')
 
@@ -53,7 +53,6 @@ script.
     var snippet_url = '#{DOMAIN_URL_DOCS}/lock-snippets/' + example_path;
 
     $('#widget-demo').attr('src', iframe_url);
-    $('#browser-url').text(iframe_url);
 
     $.ajax({
       url: snippet_url,
