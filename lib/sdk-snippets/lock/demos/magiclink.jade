@@ -7,7 +7,7 @@ html
         .col-xs-4.col-xs-offset-4.text-center
           button.btn.btn-xs.btn-success(onclick='show()') Login
 
-    script(src="//cdn.auth0.com/js/lock-passwordless-0.min.js")
+    script(src=lock_passwordless_url)
     script.
       // define lock
       var lock = new Auth0LockPasswordless('!{clientID}', '!{namespace}');
