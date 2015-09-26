@@ -1,0 +1,24 @@
+html
+  head
+    link(rel="stylesheet" href="//cdn.auth0.com/styleguide/latest/index.min.css")
+  body(style="padding-top:30%;")
+    .container
+      .row
+        .col-xs-4.col-xs-offset-4.text-center
+          button.btn.btn-xs.btn-success(onclick='show()') Login
+
+    script(src="//cdn.auth0.com/js/lock-passwordless-0.min.js")
+    script.
+      // define lock
+      var lock = new Auth0LockPasswordless('!{clientID}', '!{namespace}');
+
+      // define show function to invoke lock.show
+      function show() {
+        lock.magiclink({
+          callbackURL:  '!{callback || "http://YOUR_APP/callback"}',
+          focusInput: false
+        });
+      }
+
+      // invoke at load
+      show();

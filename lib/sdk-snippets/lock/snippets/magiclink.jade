@@ -5,8 +5,8 @@ mixin fiddletize(snippet)
       input(type="hidden", name="data", value='{"html":#{JSON.stringify(snippet)}}')
       input.edit-fiddle(type="submit", value="")
 
-div#widget-login.widget-tut()
+div#widget-magiclink.widget-tut()
   .snippet-header Copy this HTML/JS code on your website...
   pre(class="prettyprint")
-    code #{include_snippet('login')}
-  mixin fiddletize(include_snippet('login'))
+    code #{include_snippet('magiclink')}
+  mixin fiddletize(include_snippet('magiclink'))
