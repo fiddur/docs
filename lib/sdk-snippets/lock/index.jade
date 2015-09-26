@@ -52,8 +52,8 @@ script.
     var iframe_url = '#{DOMAIN_URL_DOCS}/lock-demos/' + example_path;
     var snippet_url = '#{DOMAIN_URL_DOCS}/lock-snippets/' + example_path;
 
-    $('#widget-demo').attr('src',  iframe_url);
-    $('#browser-url').text(snippet_url);
+    $('#widget-demo').attr('src', iframe_url);
+    $('#browser-url').text(iframe_url);
 
     $.ajax({
       url: snippet_url,
