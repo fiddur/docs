@@ -11,6 +11,7 @@ import logger from 'morgan';
 import nconf from 'nconf';
 import path from 'path';
 import fs from 'fs';
+import winston from 'winston';
 
 var app = express();
 
@@ -78,18 +79,6 @@ if (!nconf.get('AUTH0_DOMAIN') && nconf.get('AUTH0_TENANT') && nconf.get('DOMAIN
   nconf.set('AUTH0_DOMAIN', nconf.get('DOMAIN_URL_SERVER').replace('{tenant}', nconf.get('AUTH0_TENANT')));
 }
 
-if (nconf.get('PRERENDER_SERVICE_URL')) {
-  prerender.set('prerenderServiceUrl', nconf.get('PRERENDER_SERVICE_URL'));
-}
-
-if (nconf.get('PRERENDER_TOKEN')) {
-  prerender.set('prerenderToken', nconf.get('PREPRENDER_TOKEN'));
-}
-
-if (nconf.get('PRERENDER_PROTOCOL')) {
-  prerender.set('protocol', nconf.get('PRERENDER_PROTOCOL'));
-}
-
 require('./lib/setup-logger');
 
 passport.serializeUser(function(user, done) {
@@ -125,15 +114,6 @@ if (nconf.get('NODE_ENV') === 'production') {
     next();
   });
 }
-
-// if (nconf.get('PRERENDER_ENABLED')) {
-//   prerender.set('prerenderToken', '7SWJORuMo0629Z5yqhmB');
-//   // Add swiftype UserAgent bot
-//   prerender.crawlerUserAgents.push('Swiftbot');
-//   prerender.crawlerUserAgents.push('Slackbot-LinkExpanding');
-//   // add prerender middleware
-//   app.use(prerender);
-// }
 
 app.use('/test', function (req, res) {
   res.sendStatus(200);
@@ -278,6 +258,7 @@ if (app.get('env') === 'development') {
 // production error handler
 // no stacktraces leaked to user
 app.use(function(err, req, res, next) {
+  winston.error('Error loading route: ' + req.url, err);
   var msg = 'There was an error processing your request. For assistance, contact support@auth0.com.';
   if (err.status === 404) {
     msg = 'Sorry, but the page you are looking for does not exist.';
