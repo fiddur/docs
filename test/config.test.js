@@ -13,7 +13,7 @@ var navigation = yaml.safeLoad(fs.readFileSync(path.join(docsPath, '../config/na
 
 describe('Configuration', function() {
   describe('Navigation.yml', function() {
-    it.only('Has valid attributes for How To', function() {
+    it('Has valid attributes for How To', function() {
       var category = _.find(navigation.categories, { id: 'how-to'});
       assert.notEqual(category.name.length, 0, 'Invalid category name.');
       assert.notEqual(category.description.length, 0, 'Invalid category description');

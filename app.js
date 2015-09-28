@@ -1,35 +1,16 @@
-require('babel/register')({
-  sourceMaps: (process.env.NODE_ENV === 'production') ? false : true
-});
-
-if (process.env.NODE_ENV !== 'development') {
-  var cluster = require('cluster');
-
-  if (cluster.isMaster && !module.parent) {
-    return require('./master');
-  }
-}
-
-// FOR TEST ONLY!!!
-if (process.env.NODE_ENV !== 'production') {
-  process.env.NODE_TLS_REJECT_UNAUTHORIZED = '0';
-}
-
 /**
  * Module dependencies.
  */
-var prerender = require('prerender-node');
-var passport = require('passport');
-var express = require('express');
-var bodyParser = require('body-parser');
-var cookieParser = require('cookie-parser');
-var methodOverride = require('method-override');
-var session = require('express-session');
-var logger = require('morgan');
-var nconf = require('nconf');
-var http = require('http');
-var path = require('path');
-var fs = require('fs');
+import passport from 'passport';
+import express from 'express';
+import bodyParser from 'body-parser';
+import cookieParser from 'cookie-parser';
+import methodOverride from 'method-override';
+import session from 'express-session';
+import logger from 'morgan';
+import nconf from 'nconf';
+import path from 'path';
+import fs from 'fs';
 
 var app = express();
 
@@ -308,36 +289,4 @@ app.use(function(err, req, res, next) {
   });
 });
 
-
-/**
- * Export `docsapp` or boot a new https server
- * with it
- */
-
-var server;
-
-var application = {
-  start: function (callback) {
-    server = http.createServer(app);
-    var enableDestroy = require('server-destroy');
-    enableDestroy(server);
-    server.listen(nconf.get('PORT'), callback);
-  },
-  stop: function (callback) {
-    server.destroy(callback);
-  }
-};
-
-if (module.parent) {
-  module.exports = application;
-} else {
-  application.start(function () {
-    console.log('Server listening on http://localhost:' + nconf.get('PORT'));
-  });
-
-  process.on('SIGTERM', function () {
-    application.stop(function () {
-      process.exit(0);
-    });
-  });
-}
+export default app;
