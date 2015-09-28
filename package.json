@@ -43,12 +43,12 @@
     "winston-email": "0.0.10",
     "yams": "^2.0.0"
   },
-  "main": "start.js",
+  "main": "app.js",
   "scripts": {
     "test": "make test",
-    "start": "node start.js",
-    "watch": "NODE_ENV=development CONFIG_FILE=/etc/auth0-docs.json node ./node_modules/nodemon/bin/nodemon.js -e js,md,json,jade start.js",
-    "local": "NODE_ENV=development CONFIG_FILE=/etc/auth0-docs.json node start.js",
+    "start": "node app.js",
+    "watch": "NODE_ENV=development CONFIG_FILE=/etc/auth0-docs.json node ./node_modules/nodemon/bin/nodemon.js -e js,md,json,jade app.js",
+    "local": "NODE_ENV=development CONFIG_FILE=/etc/auth0-docs.json node app.js",
     "postinstall": "CI=true bower install --allow-root",
     "shrinkwrap": "npm-shrinkwrap"
   },
