@@ -1,16 +1,36 @@
+require('babel/register')({
+  sourceMaps: (process.env.NODE_ENV === 'production') ? false : true
+});
+
+if (process.env.NODE_ENV !== 'development') {
+  var cluster = require('cluster');
+
+  if (cluster.isMaster && !module.parent) {
+    return require('./master');
+  }
+}
+
+// FOR TEST ONLY!!!
+if (process.env.NODE_ENV !== 'production') {
+  process.env.NODE_TLS_REJECT_UNAUTHORIZED = '0';
+}
+
 /**
  * Module dependencies.
  */
-import passport from 'passport';
-import express from 'express';
-import bodyParser from 'body-parser';
-import cookieParser from 'cookie-parser';
-import methodOverride from 'method-override';
-import session from 'express-session';
-import logger from 'morgan';
-import nconf from 'nconf';
-import path from 'path';
-import fs from 'fs';
+var prerender = require('prerender-node');
+var passport = require('passport');
+var express = require('express');
+var bodyParser = require('body-parser');
+var cookieParser = require('cookie-parser');
+var methodOverride = require('method-override');
+var session = require('express-session');
+var logger = require('morgan');
+var nconf = require('nconf');
+var http = require('http');
+var path = require('path');
+var fs = require('fs');
+var winston = require('winston');
 
 var app = express();
 
@@ -78,18 +98,6 @@ if (!nconf.get('AUTH0_DOMAIN') && nconf.get('AUTH0_TENANT') && nconf.get('DOMAIN
   nconf.set('AUTH0_DOMAIN', nconf.get('DOMAIN_URL_SERVER').replace('{tenant}', nconf.get('AUTH0_TENANT')));
 }
 
-if (nconf.get('PRERENDER_SERVICE_URL')) {
-  prerender.set('prerenderServiceUrl', nconf.get('PRERENDER_SERVICE_URL'));
-}
-
-if (nconf.get('PRERENDER_TOKEN')) {
-  prerender.set('prerenderToken', nconf.get('PREPRENDER_TOKEN'));
-}
-
-if (nconf.get('PRERENDER_PROTOCOL')) {
-  prerender.set('protocol', nconf.get('PRERENDER_PROTOCOL'));
-}
-
 require('./lib/setup-logger');
 
 passport.serializeUser(function(user, done) {
@@ -125,15 +133,6 @@ if (nconf.get('NODE_ENV') === 'production') {
     next();
   });
 }
-
-// if (nconf.get('PRERENDER_ENABLED')) {
-//   prerender.set('prerenderToken', '7SWJORuMo0629Z5yqhmB');
-//   // Add swiftype UserAgent bot
-//   prerender.crawlerUserAgents.push('Swiftbot');
-//   prerender.crawlerUserAgents.push('Slackbot-LinkExpanding');
-//   // add prerender middleware
-//   app.use(prerender);
-// }
 
 app.use('/test', function (req, res) {
   res.sendStatus(200);
@@ -278,6 +277,7 @@ if (app.get('env') === 'development') {
 // production error handler
 // no stacktraces leaked to user
 app.use(function(err, req, res, next) {
+  winston.error('Error loading route: ' + req.url, err);
   var msg = 'There was an error processing your request. For assistance, contact support@auth0.com.';
   if (err.status === 404) {
     msg = 'Sorry, but the page you are looking for does not exist.';
@@ -289,4 +289,36 @@ app.use(function(err, req, res, next) {
   });
 });
 
-export default app;
+
+/**
+ * Export `docsapp` or boot a new https server
+ * with it
+ */
+
+var server;
+
+var application = {
+  start: function (callback) {
+    server = http.createServer(app);
+    var enableDestroy = require('server-destroy');
+    enableDestroy(server);
+    server.listen(nconf.get('PORT'), callback);
+  },
+  stop: function (callback) {
+    server.destroy(callback);
+  }
+};
+
+if (module.parent) {
+  module.exports = application;
+} else {
+  application.start(function () {
+    console.log('Server listening on http://localhost:' + nconf.get('PORT'));
+  });
+
+  process.on('SIGTERM', function () {
+    application.stop(function () {
+      process.exit(0);
+    });
+  });
+}
