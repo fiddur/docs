@@ -1,4 +1,4 @@
-var docsapp = require('../app');
+var docsapp = require('../start');
 var nconf = require('nconf');
 var request = require('request');
 var assert = require('assert');
