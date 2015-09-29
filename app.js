@@ -277,10 +277,12 @@ if (app.get('env') === 'development') {
 // production error handler
 // no stacktraces leaked to user
 app.use(function(err, req, res, next) {
-  winston.error('Error loading route: ' + req.url, err);
   var msg = 'There was an error processing your request. For assistance, contact support@auth0.com.';
   if (err.status === 404) {
     msg = 'Sorry, but the page you are looking for does not exist.';
+    winston.warn('Page not found: ' + req.url, { err: err });
+  } else {
+    winston.error('Error loading route: ' + req.url, { err: err });
   }
   res.status(err.status || 500);
   res.render('error', {
