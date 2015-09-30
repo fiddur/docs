@@ -63,7 +63,7 @@ nconf.file('global', { file: config_file })
     'WIDGET_FALLBACK_CLIENTID': 'aCbTAJNi5HbsjPJtRpSP6BIoLPOrSj2C',
     'LEGACY_WIDGET_URL':  'https://cdn.auth0.com/w2/auth0-widget-5.2.min.js',
     'LOGIN_WIDGET_URL':  'https://cdn.auth0.com/js/lock-7.9.min.js',
-    'LOCK_PASSWORDLESS_URL':  'https://cdn.auth0.com/js/lock-passwordless-0.1.min.js',
+    'LOCK_PASSWORDLESS_URL':  'https://cdn.auth0.com/js/lock-passwordless-1.0.min.js',
     'AUTH0JS_URL':       'https://cdn.auth0.com/w2/auth0-6.7.min.js',
     'AUTH0_ANGULAR_URL': 'http://cdn.auth0.com/w2/auth0-angular-1.1.js',
     'SENSITIVE_DATA_ENCRYPTION_KEY': '0123456789',
