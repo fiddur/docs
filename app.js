@@ -25,12 +25,12 @@ var bodyParser = require('body-parser');
 var cookieParser = require('cookie-parser');
 var methodOverride = require('method-override');
 var session = require('express-session');
-var logger = require('morgan');
 var nconf = require('nconf');
 var http = require('http');
 var path = require('path');
 var fs = require('fs');
 var winston = require('winston');
+var _ = require('lodash');
 
 var app = express();
 
@@ -79,7 +79,8 @@ nconf.file('global', { file: config_file })
     'BASE_URL': '',
     'MEDIA_URL': process.env.NODE_ENV === 'production' ? 'https://cdn.auth0.com/docs/media' : false,
     'DOCS_PATH': __dirname + '/docs/articles',
-    'PORT': 5050
+    'PORT': 5050,
+    'CONSOLE_LOG_LEVEL': 'debug'
   });
 
 if (nconf.get('COOKIE_NAME') !== 'auth0l') {
@@ -98,7 +99,9 @@ if (!nconf.get('AUTH0_DOMAIN') && nconf.get('AUTH0_TENANT') && nconf.get('DOMAIN
   nconf.set('AUTH0_DOMAIN', nconf.get('DOMAIN_URL_SERVER').replace('{tenant}', nconf.get('AUTH0_TENANT')));
 }
 
-require('./lib/setup-logger');
+require('./lib/logs/setup');
+var eventLogger = require('./lib/logs/eventLogger');
+eventLogger.watch(process);
 
 passport.serializeUser(function(user, done) {
   if (!nconf.get('db')) {
@@ -149,9 +152,8 @@ app.use(function (req, res, next) {
 });
 
 if (nconf.get('NODE_ENV') !== 'test') {
-  app.use(logger('dev'));
+  app.use(require('./lib/middleware/log_request'));
 }
-
 
 var middleware = require('./lib/middleware');
 var sessionStore = require('./lib/session-store');
@@ -302,9 +304,10 @@ var server;
 var application = {
   start: function (callback) {
     server = http.createServer(app);
+    eventLogger.watch(server);
     var enableDestroy = require('server-destroy');
     enableDestroy(server);
-    server.listen(nconf.get('PORT'), callback);
+    server.listen(nconf.get('PORT'), callback || _.noop);
   },
   stop: function (callback) {
     server.destroy(callback);
@@ -314,9 +317,7 @@ var application = {
 if (module.parent) {
   module.exports = application;
 } else {
-  application.start(function () {
-    console.log('Server listening on http://localhost:' + nconf.get('PORT'));
-  });
+  application.start();
 
   process.on('SIGTERM', function () {
     application.stop(function () {
