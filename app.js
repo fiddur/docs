@@ -80,7 +80,9 @@ nconf.file('global', { file: config_file })
     'MEDIA_URL': process.env.NODE_ENV === 'production' ? 'https://cdn.auth0.com/docs/media' : false,
     'DOCS_PATH': __dirname + '/docs/articles',
     'PORT': 5050,
-    'CONSOLE_LOG_LEVEL': 'debug'
+    'CONSOLE_LOG_LEVEL': 'debug',
+    'LOG_TO_KINESIS_LEVEL': 'info',
+    'LOG_TO_WEB_LEVEL':     'error',
   });
 
 if (nconf.get('COOKIE_NAME') !== 'auth0l') {
