@@ -1,0 +1,9 @@
+# Logrotate for auth0-docs
+
+/var/log/auth0-docs.log {
+  copytruncate
+  rotate 5
+  size 50M
+  su root
+  weekly
+}
