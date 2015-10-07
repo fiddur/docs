@@ -1,0 +1,51 @@
+# auth0-docs
+#
+# This upstart job configuration is managed by Debian build.
+#
+
+description "auth0 documentation service"
+author      "auth0"
+start on (local-filesystems and net-device-up IFACE=eth0)
+
+stop on shutdown
+
+
+respawn
+respawn limit 5 5
+
+console none
+
+limit nofile 10000 10000
+
+env BABEL_CACHE_PATH=/home/auth0-docs/.babel.json
+env CONFIG_FILE=/etc/auth0-docs.json
+env NODE_ENV=production
+env NODE_TLS_REJECT_UNAUTHORIZED=0
+
+# Set DIR and NODE_PATH here, if not set in /etc/default
+#DIR=""
+#NODE_PATH="/opt/iojs-v1.8.4-linux-x64/bin"
+#export PATH=$NODE_PATH:$PATH
+
+script
+  # If default file, source it
+  [ -f /etc/default/auth0_docs ] && . /etc/default/auth0_docs
+
+  exec start-stop-daemon \
+    -d "$DIR" \
+    --make-pidfile \
+    --pidfile /var/run/$UPSTART_JOB.pid \
+    --chuid auth0-docs \
+    --start \
+    --exec $NODE_PATH/node app.js  >> /var/log/auth0-docs.log 2>&1
+end script
+
+post-start script
+  exec >> /var/log/auth0-docs.log 2>&1
+  echo "`date`: starting $UPSTART_JOB"
+end script
+
+post-stop script
+  exec >> /var/log/auth0-docs.log 2>&1
+  echo "`date`: stopped $UPSTART_JOB"
+end script

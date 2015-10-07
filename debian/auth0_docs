@@ -1,0 +1,8 @@
+
+#Modify which default nodejs/iojs installation should use
+NODE_PATH=/opt/node-v1.8.4-linux-x64/bin
+
+# Installation dir
+export DIR=/opt/auth0/auth0-docs
+
+export PATH=$NODE_PATH:$PATH
