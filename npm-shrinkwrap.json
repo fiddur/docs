@@ -1,6 +1,6 @@
 {
   "name": "auth0-docs",
-  "version": "0.0.1",
+  "version": "0.0.0",
   "npm-shrinkwrap-version": "5.4.0",
   "node-version": "v1.8.4",
   "dependencies": {
@@ -165,9 +165,9 @@
       }
     },
     "auth0-common-logging": {
-      "version": "2.7.0",
-      "from": "auth0-common-logging@git+ssh://git@gitlab.auth0.com/devops/auth0-common-logging.git#4dd0252cf1e083ab50cc1bc52af1bbeb726b0259",
-      "resolved": "git+ssh://git@gitlab.auth0.com/devops/auth0-common-logging.git#4dd0252cf1e083ab50cc1bc52af1bbeb726b0259",
+      "version": "2.8.0",
+      "from": "auth0-common-logging@git+ssh://git@gitlab.auth0.com:devops/auth0-common-logging.git#11433b0b5f0e041190de22fdbeb4f69b89f2734b",
+      "resolved": "git+ssh://git@gitlab.auth0.com/devops/auth0-common-logging.git#11433b0b5f0e041190de22fdbeb4f69b89f2734b",
       "dependencies": {
         "lodash": {
           "version": "3.10.1",
