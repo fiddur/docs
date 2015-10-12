@@ -1,0 +1,10 @@
+extends ../../views/standard
+
+block content
+  h2#search-title Search results
+  | Type for any term on the top right search box and submit so we can help you find what you need to get started.
+  // Required for swiftype to work!
+  #search-results(style='position:relative;heigth:100px;')
+    .auth0-spinner
+      .spinner
+      .spinner-bg
