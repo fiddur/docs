@@ -83,6 +83,7 @@ nconf.file('global', { file: config_file })
     'CONSOLE_LOG_LEVEL': 'debug',
     'LOG_TO_KINESIS_LEVEL': 'info',
     'LOG_TO_WEB_LEVEL':     'error',
+    'SEARCH_ENGINE_ID': '010795999221123445302:urkvlewda8q' // Google Site Search ID
   });
 
 if (nconf.get('COOKIE_NAME') !== 'auth0l') {
