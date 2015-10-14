@@ -1,0 +1,80 @@
+- var nav = navigation['categories'];
+#homepage-content
+  .navigation-bar.js-sticky-nav
+    .wrapper
+      .container
+        ul.list-inline
+          - for (var item in nav)
+            li
+              a(href!="#" + nav[item].id)= nav[item].name
+
+        form#search(role="search", action=env.BASE_URL + "/search", autocomplete="off")
+          .form-group.search-control
+            i.icon-budicon-489
+            input#search-input.search-input.form-control(type="text", placeholder="Search for docs", name="q")
+
+              
+  - for (var item in nav)
+    - var current = nav[item];
+
+      section.section-product(id!=current.id)
+        .container
+          h2= current.name
+            span= current.description
+        
+        - if(current.id === 'product')
+          .showcase
+            .container
+              .row
+                - for (var link in current.links)
+                  - var current2 = current.links[link];
+                  +showcaseItem(current2.name, current2.icon, env.BASE_URL + current2.href, current2.description)
+
+        - if(current.id === 'api')
+          .api-docs
+            .container
+              .row
+                .col-xs-6.col-md-4
+                  - var explorer = current.sections['explorer'];
+                  a.icon-scale.api-link(href!=env.BASE_URL + explorer.href)
+                    i.icon-budicon-631
+                    strong= explorer.name
+                    p= explorer.description
+                  br
+                .col-xs-6.col-md-4
+                  - var endpoints = current.sections['auth-endpoints'];
+                  a.icon-scale.api-link(href!=env.BASE_URL + endpoints.href)
+                    i.icon-budicon-638
+                    strong= endpoints.name
+                    p= endpoints.description
+                  br
+                .col-xs-12.col-md-4
+                  .subcontent-box
+                    .row
+                      .col-xs-12
+                        h3 Announcements
+                        ul
+                          - var news = current.sections['announcements'];
+                          - for (var current2 in news.links)
+                            li
+                              - if (news.links[current2].href.indexOf('http') === 0) 
+                                a(href!=news.links[current2].href)= news.links[current2].name
+                              - else
+                                a(href!=env.BASE_URL + news.links[current2].href)= news.links[current2].name
+
+        
+        - if(current.id === 'sdk')
+          .container
+            ul.circle-list
+              - for (var link in current.links)
+                - var current2 = current.links[link];
+                li
+                  +circleLogo(current2.name, current2.slug, env.BASE_URL + current2.href)
+
+        - if(current.id === 'how-to')
+          .container
+            ul.list-howtos
+              - for (var link in current.links)
+                - var current2 = current.links[link];
+                li
+                  +howTo(current2.name, env.BASE_URL + current2.href, current2.icon, current2.description)

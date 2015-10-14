@@ -20,6 +20,10 @@
     "express": "^4.13.3",
     "express-redirect": "^1.1.1",
     "express-session": "^1.11.3",
+    "fluxible": "^0.5.4",
+    "fluxible-addons-react": "^0.1.8",
+    "fluxible-plugin-fetchr": "^0.3.8",
+    "fluxible-router": "^0.2.4",
     "gray-matter": "^2.0.1",
     "jade": "ntotten/jade#patch1",
     "js-yaml": "^3.4.0",
@@ -37,8 +41,10 @@
     "prerender-node": "^2.0.2",
     "protobufjs": "^4.0.0",
     "randomstring": "^1.0.7",
+    "react": "^0.13.3",
     "request": "^2.61.0",
     "retry": "^0.8.0",
+    "serialize-javascript": "^1.1.2",
     "server-destroy": "^1.0.1",
     "sitemap": "^1.1.1",
     "url-join": "0.0.1",
@@ -50,9 +56,10 @@
   "main": "app.js",
   "scripts": {
     "test": "make test",
-    "start": "node app.js",
-    "watch": "NODE_ENV=development CONFIG_FILE=/etc/auth0-docs.json node ./node_modules/nodemon/bin/nodemon.js -e js,md,json,jade app.js",
-    "local": "NODE_ENV=development CONFIG_FILE=/etc/auth0-docs.json node app.js",
+    "start": "node start.js",
+    "build": "CONFIG_FILE=/etc/auth0-docs.json webpack --config webpack.config.production.js --progress",
+    "dev": "NODE_ENV=development CONFIG_FILE=/etc/auth0-docs.json node webpack-dev-server.js & WEBPACK_PROXY_PORT=5050  NODE_ENV=development CONFIG_FILE=/etc/auth0-docs.json nodemon start.js -e js,jsx",
+    "local": "NODE_ENV=development CONFIG_FILE=/etc/auth0-docs.json node start.js",
     "postinstall": "CI=true bower install --allow-root",
     "shrinkwrap": "npm-shrinkwrap"
   },
@@ -61,17 +68,26 @@
     "npm": "2.13.1"
   },
   "devDependencies": {
+    "babel-core": "^5.8.25",
+    "babel-loader": "^5.3.2",
     "bower": "^1.4.1",
+    "bundle-loader": "^0.5.4",
     "gulp": "^3.9.0",
     "gulp-autoprefixer": "^2.3.1",
     "gulp-react": "^3.0.1",
     "gulp-stylus": "^2.0.6",
     "htmlparser2": "^3.8.2",
+    "jade-loader": "^0.7.1",
+    "json-loader": "^0.5.3",
     "limiter": "^1.0.5",
     "mocha": "^2.2.5",
     "nodemon": "^1.3.7",
     "npm-shrinkwrap": "^5.4.0",
     "nsp": "^1.0.3",
-    "progress": "^1.1.8"
+    "progress": "^1.1.8",
+    "react-hot-loader": "^1.3.0",
+    "webpack": "^1.12.2",
+    "webpack-dev-server": "^1.12.0",
+    "yaml-loader": "^0.1.0"
   }
 }
