@@ -1,42 +1,68 @@
 import React from 'react';
+import Breadcrumbs from './Breadcrumbs';
+import SearchBox from './SearchBox';
+import Tutorial from './Tutorial';
+import TutorialStore from '../stores/TutorialStore';
+import { getPlatformName, getTechTitle } from '../util/tutorials';
 
 class TutorialPage extends React.Component {
+  constructor(props, context) {
+    super(props, context);
+    this.state = this.getStoreState();
+  }
+  getStoreState () {
+    return this.context.getStore(TutorialStore).getState();
+  }
   componentDidMount () {
+    this.context
+      .getStore(TutorialStore)
+      .addChangeListener(this._onStoreChange.bind(this));
+
     if (document !== undefined) {
       var el = document.getElementById('homepage-content');
       el.classList.add('hide');
     }
   }
+  componentWillUnmount () {
+    this.context
+      .getStore(TutorialStore)
+      .removeChangeListener(this._onStoreChange.bind(this));
+  }
+  _onStoreChange () {
+    this.setState(this.getStoreState());
+  }
   render() {
+    var title1 = getTechTitle(this.state.quickstart, this.state.appType, this.state.tech1);
+    var title2 = getTechTitle(this.state.quickstart, 'backend', this.state.tech2);
       return (
-        <div id="tutorial-template" class="docs-single animated fadeIn">
-          <div class="navigation-bar">
-            <div class="wrapper">
-              <div class="container">
-                <div class="breadcrumbs"><a href="/"><span class="text">Documentation</span></a><a><i class="icon-budicon-461"></i><span class="text">title</span></a></div>
-                <form id="search" role="search" action="/search" autocomplete="off">
-                  <div class="form-group search-control"><i class="icon-budicon-489"></i>
-                    <input id="search-input-2" type="text" placeholder="Search for docs" name="stq" class="search-input form-control"/>
-                  </div>
-                </form>
+        <div id="tutorial-template" className="docs-single animated fadeIn">
+          <div className="navigation-bar">
+            <div className="wrapper">
+              <div className="container">
+                <Breadcrumbs />
+                <SearchBox />
               </div>
             </div>
           </div>
-          <div class="js-doc-template container">
-            <div class="row">
-              <div class="col-sm-3">
+          <div className="js-doc-template container">
+            <div className="row">
+              <div className="col-sm-3">
                 <div id="sidebar"></div>
               </div>
-              <div class="col-sm-9">
-                <section data-swiftype-index="true" class="docs-content">
-                  <h1 class="tutorial-title"></h1>
-                  <ul class="nav nav-tabs">
-                    <li class="active"><a href="#tutorial-1" data-toggle="tab">Tutorial 1</a></li>
-                    <li><a href="#tutorial-2" data-toggle="tab">Tutorial 2</a></li>
+              <div className="col-sm-9">
+                <section className="docs-content">
+                  <h1 className="tutorial-title">{title1 + ' + ' + title2}</h1>
+                  <ul className="nav nav-tabs">
+                    <li className="active"><a href="#tutorial-1" data-toggle="tab">{title1}</a></li>
+                    <li><a href="#tutorial-2" data-toggle="tab">{title2}</a></li>
                   </ul>
-                  <div class="tab-content">
-                    <div id="tutorial-1" class="tab-pane active"></div>
-                    <div id="tutorial-2" class="tab-pane"></div>
+                  <div className="tab-content">
+                    <div id="tutorial-1" className="tab-pane active">
+                      <Tutorial appType={this.state.appType} tech={this.state.tech1} />
+                    </div>
+                    <div id="tutorial-2" className="tab-pane">
+                      <Tutorial appType={this.state.appType} tech={this.state.tech2} />
+                    </div>
                   </div>
                 </section>
               </div>
@@ -46,5 +72,10 @@ class TutorialPage extends React.Component {
       );
   }
 }
+
+TutorialPage.contextTypes = {
+  getStore: React.PropTypes.func,
+  executeAction: React.PropTypes.func
+};
 
 export default TutorialPage;

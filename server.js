@@ -18,6 +18,7 @@ import React from 'react';
 import app from './client/app';
 import HtmlComponent from './client/components/Html';
 import { createElementWithContext } from 'fluxible-addons-react';
+import articleService from './lib/services/articleService';
 const htmlComponent = React.createFactory(HtmlComponent);
 const env = process.env.NODE_ENV;
 
@@ -180,6 +181,10 @@ server.get(nconf.get('BASE_URL') + '/switch', function (req, res) {
 
 server.use(nconf.get('BASE_URL') + '/meta', require('./lib/api'));
 
+var fetchrPlugin = app.getPlugin('FetchrPlugin');
+fetchrPlugin.registerService(articleService);
+server.use(fetchrPlugin.getXhrPath(), fetchrPlugin.getMiddleware());
+
 var quickstartMiddleware = require('./lib/quickstart').middleware;
 server.use(quickstartMiddleware, (req, res, next) => {
   let context = app.createContext();
@@ -200,6 +205,7 @@ server.use(quickstartMiddleware, (req, res, next) => {
     actionContext.executeAction(loadSettingsAction, {
       baseUrl: nconf.get('BASE_URL'),
       quickstart: res.locals.quickstart,
+      navigation: res.locals.navigation
     }, (err) => {
       if (err) {
         return next(err);

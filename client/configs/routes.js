@@ -1,3 +1,5 @@
+import loadArticleAction from '../actions/loadArticleAction';
+
 export default {
     home: {
         path: process.env.BASE_URL + '/',
@@ -52,7 +54,15 @@ export default {
           var tech2 = payload.get('params').get('tech2');
           context.dispatch('LOAD_TUTORIAL_NAVIGATOR', { appType: appType, tech1: tech1, tech2: tech2 });
           //context.dispatch('UPDATE_PAGE_TITLE', { pageTitle: pageId + ' [Dynamic Page] | flux-examples | routing' });
-          done();
+
+          context.executeAction(loadArticleAction, { appType: appType, tech: tech1 })
+          .then(context.executeAction(loadArticleAction, { appType: appType, tech: tech2 }))
+          .then(done)
+          .catch(function (err) {
+            // action had an error
+            console.log(err);
+            throw err;
+          });
         }
     }
 };

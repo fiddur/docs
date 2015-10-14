@@ -26,6 +26,18 @@ export function getQuestion(platformType) {
   return questions[platformType];
 }
 
+export function getPlatformSlug(platformType) {
+  var paths = {
+    'spa': 'client-platforms',
+    'native-mobile': 'native-platforms',
+    'webapp': 'server-platforms',
+    'hybrid': 'native-platforms',
+    'backend': 'server-apis'
+  };
+
+  return paths[platformType];
+}
+
 export function getPlatformCollection(quickstart, platformType) {
   if(!platformType) {
     return [];
@@ -52,17 +64,7 @@ export function getTechTitle(quickstart, appType, techName) {
   }
 }
 
-// static getPlatformSlug(platformType) {
-//   var paths = {
-//     'spa': 'client-platforms',
-//     'native-mobile': 'native-platforms',
-//     'webapp': 'server-platforms',
-//     'hybrid': 'native-platforms',
-//     'backend': 'server-apis'
-//   };
-//
-//   return paths[platformType];
-// }
+
 
 // getPageTitle(appType, tech1, tech2) {
 //   var pageTitle = window.SITE_TITLE;
