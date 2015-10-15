@@ -113,34 +113,7 @@ server.use(middleware.overrideIfClientInQs);
 server.use(middleware.overrideIfClientInQsForPublicAllowedUrls);
 server.use(middleware.fetchABExperiments);
 
-
-
-
-// var quickstartCollections = require('./lib/collections/quickstarts');
-// server.get(nconf.get('BASE_URL'), function(req, res) {
-//   res.render('homepage', { quickstarts: quickstartCollections, bodyClass: 'docs-home' });
-// });
-
-// /**
-//  * Register quickstart routes as an alias to index `/`
-//  * So that the tutorial navigator gets to load
-//  * quickstart collections and render
-//  */
-// var quickstart = require('./lib/quickstart');
-//
-// function alias(route) {
-//   return function(req, res, next) {
-//     req.url = route;
-//     res.render('homepage', { quickstarts: quickstartCollections });
-//   };
-// }
-//
-// quickstart.routes.forEach(function(route) {
-//   server.get(nconf.get('BASE_URL') + '/quickstart' + route, alias(nconf.get('BASE_URL') || '/'));
-// });
-//
-// server.get(nconf.get('BASE_URL') + '/quickstart', alias(nconf.get('BASE_URL') || '/'));
-
+// Routes
 server.use(nconf.get('BASE_URL'), require('./lib/api-explorer'));
 server.use(nconf.get('BASE_URL'), require('./lib/docs').router);
 server.use(nconf.get('BASE_URL'), require('./lib/sdk-snippets/lock/demos-routes'));
@@ -170,6 +143,7 @@ server.get(nconf.get('BASE_URL') + '/switch', function (req, res) {
 
 server.use(nconf.get('BASE_URL') + '/meta', require('./lib/api'));
 
+// React client middleware -> homepage, quickstart, etc.
 var quickstartMiddleware = require('./lib/quickstart').middleware;
 var reactMiddleware = require('./client/middleware');
 server.use(quickstartMiddleware, reactMiddleware);
