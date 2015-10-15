@@ -33,6 +33,7 @@ var webpackConfig = {
   plugins: [
     new webpack.DefinePlugin({
       'process.env': {
+        REACT_ENV: 'browser',
         NODE_ENV: JSON.stringify('production'),
         BASE_URL: JSON.stringify(nconf.get('BASE_URL'))
       }
@@ -42,6 +43,9 @@ var webpackConfig = {
       compress: {
         warnings: false
       }
+    }),
+    new webpack.ProvidePlugin({
+      'fetch': 'imports?this=>global!exports?global.fetch!whatwg-fetch'
     })
   ],
   devtool: 'source-map'

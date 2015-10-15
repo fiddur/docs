@@ -9,18 +9,7 @@ import methodOverride from 'method-override';
 import session from 'express-session';
 import nconf from 'nconf';
 import path from 'path';
-import jade from 'jade';
 import winston from 'winston';
-import serialize from 'serialize-javascript';
-import {navigateAction} from 'fluxible-router';
-import loadSettingsAction from './client/actions/loadSettingsAction';
-import React from 'react';
-import app from './client/app';
-import HtmlComponent from './client/components/Html';
-import { createElementWithContext } from 'fluxible-addons-react';
-import articleService from './lib/services/articleService';
-const htmlComponent = React.createFactory(HtmlComponent);
-const env = process.env.NODE_ENV;
 
 var server = express();
 
@@ -127,7 +116,7 @@ server.use(middleware.fetchABExperiments);
 
 
 
-var quickstartCollections = require('./lib/collections/quickstarts');
+// var quickstartCollections = require('./lib/collections/quickstarts');
 // server.get(nconf.get('BASE_URL'), function(req, res) {
 //   res.render('homepage', { quickstarts: quickstartCollections, bodyClass: 'docs-home' });
 // });
@@ -181,62 +170,9 @@ server.get(nconf.get('BASE_URL') + '/switch', function (req, res) {
 
 server.use(nconf.get('BASE_URL') + '/meta', require('./lib/api'));
 
-var fetchrPlugin = app.getPlugin('FetchrPlugin');
-fetchrPlugin.registerService(articleService);
-server.use(fetchrPlugin.getXhrPath(), fetchrPlugin.getMiddleware());
-
 var quickstartMiddleware = require('./lib/quickstart').middleware;
-server.use(quickstartMiddleware, (req, res, next) => {
-  let context = app.createContext();
-
-  var actionContext = context.getActionContext();
-  actionContext.executeAction(navigateAction, {
-    url: req.url
-  }, (err) => {
-    if (err) {
-      console.log(err);
-      if (err.statusCode && err.statusCode === 404) {
-        next();
-      } else {
-        next(err);
-      }
-      return;
-    }
-    actionContext.executeAction(loadSettingsAction, {
-      baseUrl: nconf.get('BASE_URL'),
-      quickstart: res.locals.quickstart,
-      navigation: res.locals.navigation
-    }, (err) => {
-      if (err) {
-        return next(err);
-      }
-
-      const content = React.renderToStaticMarkup(htmlComponent({
-          clientFile: nconf.get('BASE_URL') + '/js/' + (env === 'production' ? 'main.min.js' : 'main.js'),
-          context: context.getComponentContext(),
-          state: 'window.App=' + serialize(app.dehydrate(context)) + ';',
-          markup: React.renderToString(createElementWithContext(context))
-      }));
-
-      var options = {};
-      Object.keys(res.locals).forEach(function(key) {
-        options[key] = res.locals[key];
-      });
-      options.sections = { content: content };
-
-      jade.renderFile(path.resolve(__dirname, './views/homepage.jade'), options, function(err, html) {
-        if (err) {
-          return next(err);
-        }
-        res.type('html');
-        res.write(html);
-        res.end();
-      });
-
-    });
-
-  });
-});
+var reactMiddleware = require('./client/middleware');
+server.use(quickstartMiddleware, reactMiddleware);
 
 // catch 404 and forward to error handler
 server.use(function(req, res, next) {

@@ -15,7 +15,7 @@ class QuickstartList extends React.Component {
       .getStore(TutorialStore)
       .addChangeListener(this._onStoreChange.bind(this));
 
-    if (typeof window !== 'undefined' && $) {
+    if (typeof window !== 'undefined') {
       this.componentDidMountClient();
     }
   }

@@ -38,9 +38,13 @@ var webpackConfig = {
     new webpack.NoErrorsPlugin(),
     new webpack.DefinePlugin({
       'process.env': {
+        REACT_ENV: 'browser',
         NODE_ENV: JSON.stringify(process.env.NODE_ENV),
         BASE_URL: JSON.stringify(nconf.get('BASE_URL'))
       }
+    }),
+    new webpack.ProvidePlugin({
+      'fetch': 'imports?this=>global!exports?global.fetch!whatwg-fetch'
     })
   ],
   devtool: 'eval'

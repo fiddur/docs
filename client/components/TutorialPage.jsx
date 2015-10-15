@@ -57,12 +57,13 @@ class TutorialPage extends React.Component {
                     <li><a href="#tutorial-2" data-toggle="tab">{title2}</a></li>
                   </ul>
                   <div className="tab-content">
-                    <div id="tutorial-1" className="tab-pane active">
-                      <Tutorial appType={this.state.appType} tech={this.state.tech1} />
-                    </div>
-                    <div id="tutorial-2" className="tab-pane">
-                      <Tutorial appType={this.state.appType} tech={this.state.tech2} />
-                    </div>
+                    <Tutorial tabName="tutorial-1"
+                              default={true} 
+                              appType={this.state.appType}
+                              tech={this.state.tech1} />
+                    <Tutorial tabName="tutorial-2"
+                              appType="backend"
+                              tech={this.state.tech2} />
                   </div>
                 </section>
               </div>

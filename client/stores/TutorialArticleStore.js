@@ -1,21 +1,24 @@
 import { BaseStore } from 'fluxible/addons';
 
-class ArticleStore extends BaseStore {
+class TutorialArticleStore extends BaseStore {
   constructor(dispatcher) {
     super(dispatcher);
     this.articles = [];
   }
   handleArticledLoaded(payload) {
-    this.articles[payload.url] = payload.content;
+    this.articles[payload.appType + '/' + payload.tech] = payload.html;
     this.emitChange();
   }
   handleArticledLoadFailure(payload) {
     // TODO: Handle the error
   }
+  getArticle(appType, tech) {
+    return this.articles[appType + '/' + tech];
+  }
   getState() {
     return {
-      articles: this.articles,
-    };
+      articles: this.article
+    }
   }
   dehydrate() {
     return this.getState();
@@ -25,10 +28,10 @@ class ArticleStore extends BaseStore {
   }
 }
 
-ArticleStore.storeName = 'ArticleStore';
-ArticleStore.handlers = {
+TutorialArticleStore.storeName = 'TutorialArticleStore';
+TutorialArticleStore.handlers = {
   'RECEIVE_ARTICLE_SUCCESS': 'handleArticledLoaded',
   'RECEIVE_ARTICLE_FAILURE': 'handleArticledLoadFailure'
 };
 
-export default ArticleStore;
+export default TutorialArticleStore;

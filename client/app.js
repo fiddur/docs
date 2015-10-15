@@ -2,9 +2,9 @@ import Fluxible from 'fluxible';
 import Application from './components/Application';
 import ApplicationStore from './stores/ApplicationStore';
 import TutorialStore from './stores/TutorialStore';
+import TutorialArticleStore from './stores/TutorialArticleStore';
 import RouteStore from './stores/RouteStore';
-import fetchrPlugin from 'fluxible-plugin-fetchr';
-
+import serviceProxyPlugin from 'fluxible-plugin-service-proxy';
 
 
 // create new fluxible instance
@@ -13,15 +13,12 @@ var app = new Fluxible({
 });
 
 // register plugins
-let fetchrPluginInstance = fetchrPlugin({
-    xhrPath: process.env.BASE_URL + '/meta2' // Path for XHR to be served from
-});
-
-app.plug(fetchrPluginInstance);
+app.plug(serviceProxyPlugin());
 
 // register stores
 app.registerStore(RouteStore);
 app.registerStore(ApplicationStore);
 app.registerStore(TutorialStore);
+app.registerStore(TutorialArticleStore);
 
 module.exports = app;

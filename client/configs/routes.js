@@ -55,8 +55,18 @@ export default {
           context.dispatch('LOAD_TUTORIAL_NAVIGATOR', { appType: appType, tech1: tech1, tech2: tech2 });
           //context.dispatch('UPDATE_PAGE_TITLE', { pageTitle: pageId + ' [Dynamic Page] | flux-examples | routing' });
 
-          context.executeAction(loadArticleAction, { appType: appType, tech: tech1 })
-          .then(context.executeAction(loadArticleAction, { appType: appType, tech: tech2 }))
+          context.executeAction(loadArticleAction, {
+            appType: appType,
+            tech1: tech1,
+            tech2: tech2,
+            currentTech: tech1
+          })
+          .then(context.executeAction(loadArticleAction, {
+            appType: 'backend',
+            tech1: tech1,
+            tech2: tech2,
+            currentTech: tech2
+          }))
           .then(done)
           .catch(function (err) {
             // action had an error
