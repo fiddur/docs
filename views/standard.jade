@@ -38,6 +38,10 @@ block body
         .col-sm-9
           section.docs-content
             block content
+            
+          - if (!locals.user)
+            #try-banner-experiment(style="display:none;")
+              include ../public/vendor/auth0-styleguide/lib/try-banner/demo.jade
           
     include ../public/vendor/auth0-styleguide/lib/footer/demo.jade
 
