@@ -4,6 +4,7 @@
   copytruncate
   rotate 5
   size 50M
+  compress
   su root
   weekly
 }
