@@ -721,8 +721,21 @@ body
     +breakpoint("tablet")
       max-height 100%!important
 
+.try-banner
+  margin: 0;
+  padding: 60px 20px;
+
+  span
+    text-transform: uppercase;
+    font-size: 16px;
+    line-height: 30px;
+
+  .btn
+    position: relative;
+    top: 6px;
+
 .docs-content
-  padding-bottom 20px
+  clearfix()
   color color_oil
 
   pre code a,
@@ -734,7 +747,7 @@ body
       color: white !important;
 
   +breakpoint("tablet")
-    padding 30px 10px 60px
+    padding 30px 10px 10px
 
   .tutorial-title
     margin-bottom: 0;
