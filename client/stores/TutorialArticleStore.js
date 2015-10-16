@@ -17,7 +17,7 @@ class TutorialArticleStore extends BaseStore {
   }
   getState() {
     return {
-      articles: this.article
+      articles: this.articles
     }
   }
   dehydrate() {

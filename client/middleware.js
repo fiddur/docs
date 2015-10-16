@@ -13,15 +13,10 @@ import articleService from './services/articleService.server';
 const env = process.env.NODE_ENV;
 const htmlComponent = React.createFactory(HtmlComponent);
 
-
-
-
-
 export default function middleware(req, res, next) {
 
   // Register services
   app.getPlugin('ServiceProxyPlugin').registerService('articleService', articleService(req, res));
-
 
   let context = app.createContext();
 
@@ -58,7 +53,6 @@ export default function middleware(req, res, next) {
     if (err.statusCode && err.statusCode === 404) {
       next();
     } else {
-      console.log(err);
       next(err);
     }
   });
