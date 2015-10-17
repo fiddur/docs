@@ -47,7 +47,7 @@ var webpackConfig = {
       'fetch': 'imports?this=>global!exports?global.fetch!whatwg-fetch'
     })
   ],
-  devtool: 'eval'
+  devtool: 'source-map'
 };
 
 module.exports = webpackConfig;

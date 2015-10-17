@@ -1,4 +1,5 @@
 import { BaseStore } from 'fluxible/addons';
+import _ from 'lodash';
 
 class TutorialArticleStore extends BaseStore {
   constructor(dispatcher) {
@@ -6,14 +7,22 @@ class TutorialArticleStore extends BaseStore {
     this.articles = [];
   }
   handleArticledLoaded(payload) {
-    this.articles[payload.appType + '/' + payload.tech] = payload.html;
+    var article = _.find(this.articles, { appType: payload.appType, tech: payload.tech });
+    if (article) {
+      article = payload;
+    } else {
+      this.articles.push(payload);
+    }
     this.emitChange();
   }
   handleArticledLoadFailure(payload) {
     // TODO: Handle the error
   }
-  getArticle(appType, tech) {
-    return this.articles[appType + '/' + tech];
+  getArticleHtml(appType, tech) {
+    var article = _.find(this.articles, { appType: appType, tech: tech });
+    if (article) {
+      return article.html;
+    }
   }
   getState() {
     return {
@@ -30,8 +39,8 @@ class TutorialArticleStore extends BaseStore {
 
 TutorialArticleStore.storeName = 'TutorialArticleStore';
 TutorialArticleStore.handlers = {
-  'RECEIVE_ARTICLE_SUCCESS': 'handleArticledLoaded',
-  'RECEIVE_ARTICLE_FAILURE': 'handleArticledLoadFailure'
+  'RECIEVE_ARTICLE_SUCCESS': 'handleArticledLoaded',
+  'RECIEVE_ARTICLE_FAILURE': 'handleArticledLoadFailure'
 };
 
 export default TutorialArticleStore;

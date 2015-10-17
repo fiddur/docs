@@ -8,7 +8,7 @@ class Tutorial extends React.Component {
   }
   getStoreState () {
     return {
-      articleHtml: this.context.getStore(TutorialArticleStore).getArticle(this.props.appType, this.props.tech)
+      articleHtml: this.context.getStore(TutorialArticleStore).getArticleHtml(this.props.appType, this.props.tech)
     }
   }
   componentDidMount () {
