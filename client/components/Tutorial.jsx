@@ -41,11 +41,11 @@ class Tutorial extends React.Component {
       );
     } else {
       return (
-        <div className='loading-tutorial'>
-          <div className='auth0-spinner'>
-            <div className='spinner'></div>
+          <div id={this.props.tabName} className='loading-tutorial'>
+            <div className='auth0-spinner'>
+              <div className='spinner'></div>
+            </div>
           </div>
-        </div>
       );
     }
   }

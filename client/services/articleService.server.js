@@ -15,7 +15,7 @@ export default function(req, res) {
 
         var req2 = {
           query: {},
-          locals: req.locals,
+          locals: req.locals || {},
           url: `${process.env.BASE_URL}/${getPlatformSlug(payload.appType)}/${payload.currentTech}`
         };
         req2.query[payload.appType] = payload.tech1;

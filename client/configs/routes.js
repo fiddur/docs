@@ -48,31 +48,26 @@ export default {
         page: 'tech2',
         title: 'Home',
         handler: require('../components/TutorialPage'),
-        action: (context, payload, done) => {
+        action: (context, payload) => {
           var appType = payload.get('params').get('apptype');
           var tech1 = payload.get('params').get('tech1');
           var tech2 = payload.get('params').get('tech2');
           context.dispatch('LOAD_TUTORIAL_NAVIGATOR', { appType: appType, tech1: tech1, tech2: tech2 });
           //context.dispatch('UPDATE_PAGE_TITLE', { pageTitle: pageId + ' [Dynamic Page] | flux-examples | routing' });
-
-          context.executeAction(loadArticleAction, {
-            appType: appType,
-            tech1: tech1,
-            tech2: tech2,
-            currentTech: tech1
-          })
-          .then(context.executeAction(loadArticleAction, {
-            appType: 'backend',
-            tech1: tech1,
-            tech2: tech2,
-            currentTech: tech2
-          }))
-          .then(done)
-          .catch(function (err) {
-            // action had an error
-            console.log(err);
-            throw err;
-          });
+          return Promise.all([
+            context.executeAction(loadArticleAction, {
+              appType: appType,
+              tech1: tech1,
+              tech2: tech2,
+              currentTech: tech1
+            }),
+            context.executeAction(loadArticleAction, {
+              appType: 'backend',
+              tech1: tech1,
+              tech2: tech2,
+              currentTech: tech2
+            })
+          ]);
         }
     }
 };

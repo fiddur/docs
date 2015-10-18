@@ -11,7 +11,6 @@ export default function loadArticleAction(context, payload, done) {
     });
     done();
   }).catch((err) => {
-    console.log(err);
     context.dispatch('RECIEVE_ARTICLE_FAILURE', err);
     done();
   });
