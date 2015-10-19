@@ -15,6 +15,10 @@ class Tutorial extends React.Component {
     this.context
       .getStore(TutorialArticleStore)
       .addChangeListener(this._onStoreChange.bind(this));
+    this.highlightCode();
+  }
+  componentDidUpdate() {
+    this.highlightCode();
   }
   componentWillUnmount () {
     this.context
@@ -23,6 +27,11 @@ class Tutorial extends React.Component {
   }
   _onStoreChange () {
     this.setState(this.getStoreState());
+  }
+  highlightCode(html) {
+    if (typeof document !== 'undefined') {
+      Auth0Docs.renderCode();
+    }
   }
   createMarkup() {
     return {__html: this.state.articleHtml};

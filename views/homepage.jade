@@ -2,6 +2,11 @@ extends base
 
 block body
   script(src=env.BASE_URL + '/js/owl.carousel.min.js')
+  script(src=env.BASE_URL + '/js/page.min.js')
+  //-script(src=env.BASE_URL + '/js/react.min.js')
+  //-script(src=env.BASE_URL + '/js/tutorial-navigator.js')
+  script(src=env.BASE_URL + '/js/jquery.waypoints.js')
+  script(src=env.BASE_URL + '/js/docs.js')
   .docs-home
     header.site-header!= webheader
     script.
@@ -21,11 +26,7 @@ block body
     include ../public/vendor/auth0-styleguide/lib/footer/demo.jade
 
     
-    script(src=env.BASE_URL + '/js/page.min.js')
-    //-script(src=env.BASE_URL + '/js/react.min.js')
-    //-script(src=env.BASE_URL + '/js/tutorial-navigator.js')
-    script(src=env.BASE_URL + '/js/jquery.waypoints.js')
-    script(src=env.BASE_URL + '/js/docs.js')
+
     //- script.
     //-   var tnOpts = {};
     //-   
