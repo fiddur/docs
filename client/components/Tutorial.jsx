@@ -15,11 +15,6 @@ class Tutorial extends React.Component {
     this.context
       .getStore(TutorialArticleStore)
       .addChangeListener(this._onStoreChange.bind(this));
-
-    if (document !== undefined) {
-      var el = document.getElementById('homepage-content');
-      el.classList.add('hide');
-    }
   }
   componentWillUnmount () {
     this.context

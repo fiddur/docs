@@ -2,6 +2,7 @@ import React from 'react';
 import TutorialStore from '../stores/TutorialStore';
 import { connectToStores, provideContext } from 'fluxible-addons-react';
 import { getPlatformName, getTechTitle } from '../util/tutorials';
+var NavLink = require('fluxible-router').NavLink;
 
 class Breadcrumbs extends React.Component {
   constructor(props, context) {
@@ -22,19 +23,36 @@ class Breadcrumbs extends React.Component {
   }
   render() {
     var list = [];
-    if(this.state.appType) {
-      list.push(<a href={this.state.baseUrl + "/"}><span className="text">Documentation</span></a>);
-      list.push(<a href={this.state.baseUrl + "/quickstart/"}><i className="icon-budicon-461"></i><span className="text">{getPlatformName(this.state.appType)}</span></a>);
+    var s = this.state;
+    if(s.appType) {
+      list.push(
+        <NavLink href={`${s.baseUrl || '/'}`}>
+          <span className="text">Documentation</span>
+        </NavLink>
+      );
+      list.push(
+        <NavLink href={`${s.baseUrl}/quickstart/${s.appType}`}>
+          <i className="icon-budicon-461"></i><span className="text">{getPlatformName(s.appType)}</span>
+        </NavLink>
+      );
     } else {
       return (<div></div>);
     }
 
     if(this.state.tech1) {
-      list.push(<a href={this.state.baseUrl + "/quickstart/" + this.state.appType + "/"}><i className="icon-budicon-461"></i><span className="text">{getTechTitle(this.state.quickstart, this.state.appType, this.state.tech1)}</span></a>);
+      list.push(
+        <NavLink href={`${s.baseUrl}/quickstart/${s.appType}/${s.tech1}`}>
+          <i className="icon-budicon-461"></i><span className="text">{getTechTitle(s.quickstart, s.appType, s.tech1)}</span>
+        </NavLink>
+      );
     }
 
     if(this.state.tech2) {
-      list.push(<a href={this.state.baseUrl + "/quickstart/" + this.state.appType + "/" + this.state.tech1}><i className="icon-budicon-461"></i><span className="text">{getTechTitle(this.state.quickstart, 'backend', this.state.tech2)}</span></a>);
+      list.push(
+        <NavLink href={`${s.baseUrl}/quickstart/${s.appType}/${s.tech1}/${s.tech2}`}>
+          <i className="icon-budicon-461"></i><span className="text">{getTechTitle(s.quickstart, 'backend', s.tech2)}</span>
+        </NavLink>
+      );
     }
 
     return (<div className="breadcrumbs">{list}</div>);

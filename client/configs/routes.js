@@ -6,14 +6,12 @@ export default {
         method: 'get',
         page: 'home',
         title: 'Home',
-        handler: require('../components/TutorialNavigator')
-    },
-    quickstart: {
-        path: process.env.BASE_URL + '/quickstart',
-        method: 'get',
-        page: 'quickstart',
-        title: 'Home',
-        handler: require('../components/TutorialNavigator')
+        handler: require('../components/TutorialNavigator'),
+        action: (context, payload, done) => {
+          context.dispatch('LOAD_TUTORIAL_NAVIGATOR', {});
+          //context.dispatch('UPDATE_PAGE_TITLE', { pageTitle: pageId + ' [Dynamic Page] | flux-examples | routing' });
+          done();
+        }
     },
     apptype: {
         path: process.env.BASE_URL + '/quickstart/:apptype',
