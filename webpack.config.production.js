@@ -18,7 +18,6 @@ var webpackConfig = {
   module: {
     loaders: [{
       test: /\.(js|jsx)$/,
-      exclude: /node_modules/,
       exclude: [
         path.resolve(__dirname, 'node_modules'),
       ],

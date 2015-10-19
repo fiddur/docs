@@ -2,7 +2,7 @@
   "name": "auth0-docs",
   "version": "0.0.0",
   "npm-shrinkwrap-version": "5.4.1",
-  "node-version": "v1.8.4",
+  "node-version": "v4.0.0",
   "dependencies": {
     "async": {
       "version": "0.2.10",
@@ -1482,8 +1482,8 @@
       }
     },
     "fluxible": {
-      "version": "0.5.4",
-      "resolved": "https://registry.npmjs.org/fluxible/-/fluxible-0.5.4.tgz",
+      "version": "1.0.0",
+      "resolved": "https://registry.npmjs.org/fluxible/-/fluxible-1.0.0.tgz",
       "dependencies": {
         "dispatchr": {
           "version": "0.3.3",
@@ -1499,35 +1499,23 @@
             }
           }
         },
-        "es6-promise": {
-          "version": "3.0.2",
-          "resolved": "https://registry.npmjs.org/es6-promise/-/es6-promise-3.0.2.tgz"
-        },
         "is-promise": {
           "version": "2.1.0",
           "resolved": "https://registry.npmjs.org/is-promise/-/is-promise-2.1.0.tgz"
         },
-        "object-assign": {
-          "version": "4.0.1",
-          "resolved": "https://registry.npmjs.org/object-assign/-/object-assign-4.0.1.tgz"
-        },
         "setimmediate": {
-          "version": "1.0.2",
-          "resolved": "https://registry.npmjs.org/setimmediate/-/setimmediate-1.0.2.tgz"
+          "version": "1.0.4",
+          "resolved": "https://registry.npmjs.org/setimmediate/-/setimmediate-1.0.4.tgz"
         }
       }
     },
     "fluxible-addons-react": {
-      "version": "0.1.8",
-      "resolved": "https://registry.npmjs.org/fluxible-addons-react/-/fluxible-addons-react-0.1.8.tgz",
+      "version": "0.2.0",
+      "resolved": "https://registry.npmjs.org/fluxible-addons-react/-/fluxible-addons-react-0.2.0.tgz",
       "dependencies": {
         "hoist-non-react-statics": {
           "version": "1.0.3",
           "resolved": "https://registry.npmjs.org/hoist-non-react-statics/-/hoist-non-react-statics-1.0.3.tgz"
-        },
-        "object-assign": {
-          "version": "4.0.1",
-          "resolved": "https://registry.npmjs.org/object-assign/-/object-assign-4.0.1.tgz"
         }
       }
     },
@@ -1536,8 +1524,8 @@
       "resolved": "https://registry.npmjs.org/fluxible-plugin-service-proxy/-/fluxible-plugin-service-proxy-1.1.0.tgz"
     },
     "fluxible-router": {
-      "version": "0.2.4",
-      "resolved": "https://registry.npmjs.org/fluxible-router/-/fluxible-router-0.2.4.tgz",
+      "version": "0.3.0",
+      "resolved": "https://registry.npmjs.org/fluxible-router/-/fluxible-router-0.3.0.tgz",
       "dependencies": {
         "hoist-non-react-statics": {
           "version": "1.0.3",
@@ -1551,13 +1539,9 @@
           "version": "2.0.1",
           "resolved": "https://registry.npmjs.org/inherits/-/inherits-2.0.1.tgz"
         },
-        "object-assign": {
-          "version": "4.0.1",
-          "resolved": "https://registry.npmjs.org/object-assign/-/object-assign-4.0.1.tgz"
-        },
         "query-string": {
-          "version": "2.4.1",
-          "resolved": "https://registry.npmjs.org/query-string/-/query-string-2.4.1.tgz",
+          "version": "2.4.2",
+          "resolved": "https://registry.npmjs.org/query-string/-/query-string-2.4.2.tgz",
           "dependencies": {
             "strict-uri-encode": {
               "version": "1.0.2",
@@ -2446,8 +2430,8 @@
       "resolved": "https://registry.npmjs.org/randomstring/-/randomstring-1.0.7.tgz"
     },
     "react": {
-      "version": "0.13.3",
-      "resolved": "https://registry.npmjs.org/react/-/react-0.13.3.tgz",
+      "version": "0.14.0",
+      "resolved": "https://registry.npmjs.org/react/-/react-0.14.0.tgz",
       "dependencies": {
         "envify": {
           "version": "3.4.0",
@@ -2482,8 +2466,50 @@
               "resolved": "https://registry.npmjs.org/through/-/through-2.3.8.tgz"
             }
           }
+        },
+        "fbjs": {
+          "version": "0.3.2",
+          "resolved": "https://registry.npmjs.org/fbjs/-/fbjs-0.3.2.tgz",
+          "dependencies": {
+            "core-js": {
+              "version": "1.2.2",
+              "resolved": "https://registry.npmjs.org/core-js/-/core-js-1.2.2.tgz"
+            },
+            "loose-envify": {
+              "version": "1.1.0",
+              "resolved": "https://registry.npmjs.org/loose-envify/-/loose-envify-1.1.0.tgz",
+              "dependencies": {
+                "js-tokens": {
+                  "version": "1.0.2",
+                  "resolved": "https://registry.npmjs.org/js-tokens/-/js-tokens-1.0.2.tgz"
+                }
+              }
+            },
+            "promise": {
+              "version": "7.0.4",
+              "resolved": "https://registry.npmjs.org/promise/-/promise-7.0.4.tgz",
+              "dependencies": {
+                "asap": {
+                  "version": "2.0.3",
+                  "resolved": "https://registry.npmjs.org/asap/-/asap-2.0.3.tgz"
+                }
+              }
+            },
+            "ua-parser-js": {
+              "version": "0.7.9",
+              "resolved": "https://registry.npmjs.org/ua-parser-js/-/ua-parser-js-0.7.9.tgz"
+            },
+            "whatwg-fetch": {
+              "version": "0.9.0",
+              "resolved": "https://registry.npmjs.org/whatwg-fetch/-/whatwg-fetch-0.9.0.tgz"
+            }
+          }
         }
       }
+    },
+    "react-dom": {
+      "version": "0.14.0",
+      "resolved": "https://registry.npmjs.org/react-dom/-/react-dom-0.14.0.tgz"
     },
     "request": {
       "version": "2.61.0",

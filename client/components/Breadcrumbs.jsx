@@ -1,56 +1,38 @@
 import React from 'react';
-import TutorialStore from '../stores/TutorialStore';
-import { connectToStores, provideContext } from 'fluxible-addons-react';
 import { getPlatformName, getTechTitle } from '../util/tutorials';
 var NavLink = require('fluxible-router').NavLink;
 
 class Breadcrumbs extends React.Component {
-  constructor(props, context) {
-    super(props, context);
-    this.state = this.getStoreState();
-  }
-  getStoreState () {
-    return this.context.getStore(TutorialStore).getState();
-  }
-  componentDidMount () {
-      this.context.getStore(TutorialStore).addChangeListener(this._onStoreChange.bind(this));
-  }
-  componentWillUnmount () {
-      this.context.getStore(TutorialStore).removeChangeListener(this._onStoreChange.bind(this));
-  }
-  _onStoreChange () {
-      this.setState(this.getStoreState());
-  }
   render() {
     var list = [];
-    var s = this.state;
-    if(s.appType) {
+    var p = this.props;
+    if(p.appType) {
       list.push(
-        <NavLink href={`${s.baseUrl || '/'}`}>
+        <NavLink key="base" href={`${p.baseUrl || '/'}`}>
           <span className="text">Documentation</span>
         </NavLink>
       );
       list.push(
-        <NavLink href={`${s.baseUrl}/quickstart/${s.appType}`}>
-          <i className="icon-budicon-461"></i><span className="text">{getPlatformName(s.appType)}</span>
+        <NavLink key="apptype" href={`${p.baseUrl}/quickstart/${p.appType}`}>
+          <i className="icon-budicon-461"></i><span className="text">{getPlatformName(p.appType)}</span>
         </NavLink>
       );
     } else {
       return (<div></div>);
     }
 
-    if(this.state.tech1) {
+    if(p.tech1) {
       list.push(
-        <NavLink href={`${s.baseUrl}/quickstart/${s.appType}/${s.tech1}`}>
-          <i className="icon-budicon-461"></i><span className="text">{getTechTitle(s.quickstart, s.appType, s.tech1)}</span>
+        <NavLink key="tech1" href={`${p.baseUrl}/quickstart/${p.appType}/${p.tech1}`}>
+          <i className="icon-budicon-461"></i><span className="text">{getTechTitle(p.quickstart, p.appType, p.tech1)}</span>
         </NavLink>
       );
     }
 
-    if(this.state.tech2) {
+    if(p.tech2) {
       list.push(
-        <NavLink href={`${s.baseUrl}/quickstart/${s.appType}/${s.tech1}/${s.tech2}`}>
-          <i className="icon-budicon-461"></i><span className="text">{getTechTitle(s.quickstart, 'backend', s.tech2)}</span>
+        <NavLink key="tech2" href={`${p.baseUrl}/quickstart/${p.appType}/${p.tech1}/${p.tech2}`}>
+          <i className="icon-budicon-461"></i><span className="text">{getTechTitle(p.quickstart, 'backend', p.tech2)}</span>
         </NavLink>
       );
     }
@@ -58,10 +40,5 @@ class Breadcrumbs extends React.Component {
     return (<div className="breadcrumbs">{list}</div>);
   }
 }
-
-Breadcrumbs.contextTypes = {
-  getStore: React.PropTypes.func,
-  executeAction: React.PropTypes.func
-};
 
 export default Breadcrumbs;

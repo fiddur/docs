@@ -1,27 +1,15 @@
 import React from 'react';
-import TutorialStore from '../stores/TutorialStore';
 import Quickstart from './Quickstart';
 
 class QuickstartList extends React.Component {
-  constructor(props, context) {
-    super(props, context);
-    this.state = this.getStoreState();
-  }
-  getStoreState() {
-    return this.context.getStore(TutorialStore).getState();
-  }
   componentDidMount() {
-    this.context
-      .getStore(TutorialStore)
-      .addChangeListener(this._onStoreChange.bind(this));
-
     if (typeof window !== 'undefined') {
       this.componentDidMountClient();
     }
   }
   componentDidMountClient() {
     // Runs only on client, not on server
-    var $carousel = $(this.refs.carousel.getDOMNode());
+    var $carousel = $(this.refs.carousel);
 
     $carousel.owlCarousel({
       margin: 20,
@@ -60,20 +48,14 @@ class QuickstartList extends React.Component {
       }
     });
   }
-  componentWillUnmount() {
-    this.context
-      .getStore(TutorialStore)
-      .removeChangeListener(this._onStoreChange.bind(this));
-  }
-  _onStoreChange() {
-    this.setState(this.getStoreState());
-  }
   render() {
     var list = [];
-    var hide = (!this.state.quickstart.apptypes) ? 'hide ' : '';
+    var hide = (!this.props.quickstart.apptypes) ? 'hide ' : '';
 
-    this.state.quickstart.apptypes.forEach(function(appType, i) {
-        list.push(<Quickstart key={i} model={appType} />);
+    this.props.quickstart.apptypes.forEach(function(appType, i) {
+        list.push(
+          <Quickstart key={i} model={appType} baseUrl={this.props.baseUrl} />
+        );
     }.bind(this));
 
     return (
@@ -83,10 +65,5 @@ class QuickstartList extends React.Component {
     );
   }
 }
-
-QuickstartList.contextTypes = {
-  getStore: React.PropTypes.func,
-  executeAction: React.PropTypes.func,
-};
 
 export default QuickstartList;

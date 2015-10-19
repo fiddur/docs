@@ -8,9 +8,7 @@ class TutorialStore extends BaseStore {
     this.tech2 = null;
     //this.skippable = null;
     //this.showTutorial = false;
-    this.baseUrl = null;
     this.quickstart = null;
-    this.navigation = null;
   }
   handleTutorialNavLoaded(payload) {
     this.appType = payload.appType;
@@ -19,9 +17,7 @@ class TutorialStore extends BaseStore {
     this.emitChange();
   }
   handleSettingsLoaded(payload) {
-    this.baseUrl = payload.baseUrl;
     this.quickstart = payload.quickstart;
-    this.navigation = payload.navigation;
     this.emitChange();
   }
   getState() {
@@ -29,9 +25,7 @@ class TutorialStore extends BaseStore {
       appType: this.appType,
       tech1: this.tech1,
       tech2: this.tech2,
-      baseUrl: this.baseUrl,
       quickstart: this.quickstart,
-      navigation: this.navigation,
     };
   }
   dehydrate() {
@@ -42,8 +36,6 @@ class TutorialStore extends BaseStore {
     this.tech1 = state.tech1;
     this.tech2 = state.tech2;
     this.quickstart = state.quickstart;
-    this.baseUrl = state.baseUrl;
-    this.navigation = state.navigation;
   }
 }
 

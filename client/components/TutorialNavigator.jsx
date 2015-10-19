@@ -9,29 +9,9 @@ import {navigateAction} from 'fluxible-router';
 import { getQuestion } from '../util/tutorials';
 
 class TutorialNavigator extends React.Component {
-  constructor(props, context) {
-    super(props, context);
-    this.state = this.getStoreState();
-  }
-  getStoreState () {
-    return this.context.getStore(TutorialStore).getState();
-  }
-  componentDidMount () {
-    this.context
-      .getStore(TutorialStore)
-      .addChangeListener(this._onStoreChange.bind(this));
-  }
-  componentWillUnmount () {
-    this.context
-      .getStore(TutorialStore)
-      .removeChangeListener(this._onStoreChange.bind(this));
-  }
-  _onStoreChange () {
-    this.setState(this.getStoreState());
-  }
   handleSkip() {
     //var platformSlug = this.context.getStore(TutorialStore).getPlatformSlug(this.state.appType);
-    var url = '/quickstart/' + this.state.appType + '/' + this.state.tech1 + '/no-api/';
+    var url = '/quickstart/' + this.props.appType + '/' + this.props.tech1 + '/no-api/';
     this.context.executeAction(navigateAction, {
       url: url
     });
@@ -49,10 +29,10 @@ class TutorialNavigator extends React.Component {
     var hasMoreTenants = this.props.userTenants && this.props.userTenants.length > 1;
 
     var picker;
-    if (this.state.appType) {
-      picker = (<TechList />);
+    if (this.props.appType) {
+      picker = (<TechList {...this.props} />);
     } else {
-      picker = (<QuickstartList />);
+      picker = (<QuickstartList {...this.props} />);
     }
 
     return (
@@ -62,14 +42,14 @@ class TutorialNavigator extends React.Component {
             <div className="container">
               <h1>Documentation</h1>
 
-              <p className={(hasMoreTenants && !this.state.appType) ? 'hide' : 'question-text'}>{getQuestion(this.state.appType)}</p>
+              <p className={(hasMoreTenants && !this.props.appType) ? 'hide' : 'question-text'}>{getQuestion(this.props.appType)}</p>
 
               {this.getTenantSwitcher()}
 
               <button href="#" data-skip onClick={this.handleSkip}
-                className={(this.state.skippable) ? '' : 'hide' }>No, skip this</button>
+                className={(this.props.skippable) ? '' : 'hide' }>No, skip this</button>
               <br />
-              <Breadcrumbs />
+              <Breadcrumbs {...this.props} />
 
             </div>
 
@@ -86,5 +66,10 @@ TutorialNavigator.contextTypes = {
   getStore: React.PropTypes.func,
   executeAction: React.PropTypes.func,
 };
+
+TutorialNavigator = connectToStores(TutorialNavigator, [TutorialStore], (context, props) => {
+  return context.getStore(TutorialStore).getState();
+});
+
 
 export default TutorialNavigator;

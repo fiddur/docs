@@ -4,42 +4,18 @@ import SearchBox from './SearchBox';
 import Tutorial from './Tutorial';
 import TutorialStore from '../stores/TutorialStore';
 import { getPlatformName, getTechTitle } from '../util/tutorials';
+import { connectToStores, provideContext } from 'fluxible-addons-react';
 
 class TutorialPage extends React.Component {
-  constructor(props, context) {
-    super(props, context);
-    this.state = this.getStoreState();
-  }
-  getStoreState () {
-    return this.context.getStore(TutorialStore).getState();
-  }
-  componentDidMount () {
-    this.context
-      .getStore(TutorialStore)
-      .addChangeListener(this._onStoreChange.bind(this));
-
-    if (document !== undefined) {
-      var el = document.getElementById('homepage-content');
-      el.classList.add('hide');
-    }
-  }
-  componentWillUnmount () {
-    this.context
-      .getStore(TutorialStore)
-      .removeChangeListener(this._onStoreChange.bind(this));
-  }
-  _onStoreChange () {
-    this.setState(this.getStoreState());
-  }
   render() {
-    var title1 = getTechTitle(this.state.quickstart, this.state.appType, this.state.tech1);
-    var title2 = getTechTitle(this.state.quickstart, 'backend', this.state.tech2);
+    var title1 = getTechTitle(this.props.quickstart, this.props.appType, this.props.tech1);
+    var title2 = getTechTitle(this.props.quickstart, 'backend', this.props.tech2);
       return (
         <div id="tutorial-template" className="docs-single animated fadeIn">
           <div className="navigation-bar">
             <div className="wrapper">
               <div className="container">
-                <Breadcrumbs />
+                <Breadcrumbs {...this.props} />
                 <SearchBox />
               </div>
             </div>
@@ -58,12 +34,12 @@ class TutorialPage extends React.Component {
                   </ul>
                   <div className="tab-content">
                     <Tutorial tabName="tutorial-1"
-                              default={true} 
-                              appType={this.state.appType}
-                              tech={this.state.tech1} />
+                              default={true}
+                              appType={this.props.appType}
+                              tech={this.props.tech1} />
                     <Tutorial tabName="tutorial-2"
                               appType="backend"
-                              tech={this.state.tech2} />
+                              tech={this.props.tech2} />
                   </div>
                 </section>
               </div>
@@ -78,5 +54,9 @@ TutorialPage.contextTypes = {
   getStore: React.PropTypes.func,
   executeAction: React.PropTypes.func
 };
+
+TutorialPage = connectToStores(TutorialPage, [TutorialStore], (context, props) => {
+  return context.getStore(TutorialStore).getState();
+});
 
 export default TutorialPage;
