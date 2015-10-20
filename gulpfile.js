@@ -1,13 +1,6 @@
 var gulp = require('gulp');
 var stylus = require('gulp-stylus');
-var react = require('gulp-react');
 var autoprefixer = require('gulp-autoprefixer');
-
-gulp.task('react', function() {
-  gulp.src('public/jsx/*.jsx')
-    .pipe(react())
-    .pipe(gulp.dest('public/js/'))
-});
 
 gulp.task('styles', function() {
   gulp.src('public/css/docs.styl')
@@ -26,5 +19,5 @@ gulp.task('watch', function() {
   gulp.watch('public/**/*', ['build']);
 });
 
-gulp.task('build', ['react', 'styles']);
+gulp.task('build', ['styles']);
 gulp.task('default', ['build', 'watch']);

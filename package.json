@@ -77,7 +77,6 @@
     "bundle-loader": "^0.5.4",
     "gulp": "^3.9.0",
     "gulp-autoprefixer": "^2.3.1",
-    "gulp-react": "^3.0.1",
     "gulp-stylus": "^2.0.6",
     "htmlparser2": "^3.8.2",
     "json-loader": "^0.5.3",
