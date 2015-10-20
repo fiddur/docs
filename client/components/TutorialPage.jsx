@@ -8,6 +8,21 @@ import { getPlatformName, getTechTitle } from '../util/tutorials';
 import { connectToStores, provideContext } from 'fluxible-addons-react';
 
 class TutorialPage extends React.Component {
+  componentDidMount () {
+    this.initClient();
+  }
+  componentDidUpdate() {
+    this.initClient();
+  }
+  initClient(html) {
+    if (typeof document !== 'undefined') {
+      $('body').on('click', '.nav-tabs a', function(e) {
+        e.preventDefault();
+
+        $(this).tab('show');
+      });
+    }
+  }
   render() {
     var title1 = getTechTitle(this.props.quickstart, this.props.appType, this.props.tech1);
     var title2 = getTechTitle(this.props.quickstart, 'backend', this.props.tech2);

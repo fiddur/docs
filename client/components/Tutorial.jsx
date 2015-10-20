@@ -4,14 +4,15 @@ import { connectToStores, provideContext } from 'fluxible-addons-react';
 
 class Tutorial extends React.Component {
   componentDidMount () {
-    this.updateClient();
+    this.initClient();
   }
   componentDidUpdate() {
-    this.updateClient();
+    this.initClient();
   }
-  updateClient(html) {
+  initClient(html) {
     if (typeof document !== 'undefined') {
       Auth0Docs.renderCode();
+      Auth0Docs.setAnchorLinks();
       var article = this.refs.article;
       if (article) {
         var child = article.firstChild;

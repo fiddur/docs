@@ -1,28 +1,22 @@
+/* global hljs */
 var Auth0Docs;
 
 Auth0Docs = (function($, window, document) {
-  function init() {
-    //stickyNav();
-    navTabs();
-    feedbackSender();
-
-    $('.accordion').accordion();
-
+  function init(setupOnly) {
     hljs.configure({
       classPrefix: ''
     });
 
-    renderCode();
-
-    setAnchorLinks();
+    if (setupOnly !== true) {
+      feedbackSender();
+      initAccordion();
+      renderCode();
+      setAnchorLinks();
+    }
   }
 
-  function navTabs() {
-    $('body').on('click', '.nav-tabs a', function(e) {
-      e.preventDefault();
-
-      $(this).tab('show');
-    });
+  function initAccordion() {
+    $('.accordion').accordion();
   }
 
   function setAnchorLinks() {
@@ -220,11 +214,11 @@ Auth0Docs = (function($, window, document) {
 
   return {
     init: init,
+    initAccordion: initAccordion,
+    feedbackSender: feedbackSender,
+    stickyNav: stickyNav,
     renderCode: renderCode,
     setWaypoints: setWaypoints,
+    setAnchorLinks: setAnchorLinks
   };
 })(jQuery, window, document);
-
-$(function() {
-  Auth0Docs.init();
-});

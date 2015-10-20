@@ -7,15 +7,30 @@ import CircleLogo from './CircleLogo';
 import HowTo from './HowTo';
 import { connectToStores } from 'fluxible-addons-react';
 
-var InlineNav = ({categories}) => (
-  <ul className="list-inline">
-    {categories.map((category) => (
-      <li key={category.id}>
-        <a href={'#' + category.id}>{category.name}</a>
-      </li>
-    ))}
-  </ul>
-);
+class InlineNav extends React.Component {
+  componentDidMount () {
+    this.initClient();
+  }
+  componentDidUpdate() {
+    this.initClient();
+  }
+  initClient(html) {
+    if (typeof document !== 'undefined') {
+      Auth0Docs.stickyNav();
+    }
+  }
+  render() {
+    return (
+      <ul className="list-inline">
+        {this.props.categories.map((category) => (
+          <li key={category.id}>
+            <a href={'#' + category.id}>{category.name}</a>
+          </li>
+        ))}
+      </ul>
+    );
+  }
+}
 
 
 var ProductSection = ({category, baseUrl}) => (

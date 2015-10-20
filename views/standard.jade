@@ -17,7 +17,7 @@ block body
       .wrapper
         .container
           .breadcrumbs
-            a(href!=env.BASE_URL)
+            a(href!=env.BASE_URL || '/')
               span.text Documentation
             a
               i.icon-budicon-461
@@ -46,3 +46,7 @@ block body
     include ../public/vendor/auth0-styleguide/lib/footer/demo.jade
 
   script(src=env.BASE_URL + '/js/docs.js')
+  script.
+    $(function() {
+      Auth0Docs.init();
+    });

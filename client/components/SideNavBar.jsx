@@ -34,6 +34,17 @@ var CategorySection = ({category, baseUrl}) => {
 };
 
 class SideNavBar extends React.Component {
+  componentDidMount () {
+    this.initClient();
+  }
+  componentDidUpdate() {
+    this.initClient();
+  }
+  initClient(html) {
+    if (typeof document !== 'undefined') {
+      Auth0Docs.initAccordion();
+    }
+  }
   render() {
     if (this.props && this.props.categories) {
       return (
