@@ -26,6 +26,24 @@ export default {
           done();
         }
     },
+    backend: {
+      path: process.env.BASE_URL + '/quickstart/backend/:tech1',
+      method: 'get',
+      page: 'backend',
+      title: 'Home',
+      handler: require('../components/TutorialPage'),
+      action: (context, payload) => {
+        var appType = 'backend';
+        var tech1 = payload.get('params').get('tech1');
+        context.dispatch('LOAD_TUTORIAL_NAVIGATOR', { appType: appType, tech1: tech1 });
+        //context.dispatch('UPDATE_PAGE_TITLE', { pageTitle: pageId + ' [Dynamic Page] | flux-examples | routing' });
+        return context.executeAction(loadArticleAction, {
+          appType: appType,
+          tech1: tech1,
+          currentTech: tech1
+        });
+      }
+    },
     tech1: {
         path: process.env.BASE_URL + '/quickstart/:apptype/:tech1',
         method: 'get',
@@ -52,20 +70,25 @@ export default {
           var tech2 = payload.get('params').get('tech2');
           context.dispatch('LOAD_TUTORIAL_NAVIGATOR', { appType: appType, tech1: tech1, tech2: tech2 });
           //context.dispatch('UPDATE_PAGE_TITLE', { pageTitle: pageId + ' [Dynamic Page] | flux-examples | routing' });
-          return Promise.all([
+          var actions = [
             context.executeAction(loadArticleAction, {
               appType: appType,
               tech1: tech1,
               tech2: tech2,
               currentTech: tech1
-            }),
-            context.executeAction(loadArticleAction, {
-              appType: 'backend',
-              tech1: tech1,
-              tech2: tech2,
-              currentTech: tech2
             })
-          ]);
+          ];
+          if (tech2 !== 'no-api') {
+            actions.push(
+              context.executeAction(loadArticleAction, {
+                appType: 'backend',
+                tech1: tech1,
+                tech2: tech2,
+                currentTech: tech2
+              })
+            );
+          }
+          return Promise.all(actions);
         }
     }
 };

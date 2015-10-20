@@ -35,6 +35,21 @@ class TutorialNavigator extends React.Component {
       picker = (<QuickstartList {...this.props} />);
     }
 
+    var appType = this.props.appType;
+    var tech1 = this.props.tech1;
+    var skippable = false;
+    var question = getQuestion(this.props.appType);
+    if (appType && tech1) {
+      if (appType === 'native-mobile') {
+        skippable = true;
+      } else if (appType === 'spa') {
+        skippable = true;
+      } else if (appType === 'hybrid') {
+        skippable = true;
+      }
+      question = getQuestion('backend');
+    }
+
     return (
       <div id="tutorial-navigator">
         <div className='js-tutorial-navigator'>
@@ -42,12 +57,12 @@ class TutorialNavigator extends React.Component {
             <div className="container">
               <h1>Documentation</h1>
 
-              <p className={(hasMoreTenants && !this.props.appType) ? 'hide' : 'question-text'}>{getQuestion(this.props.appType)}</p>
+              <p className={(hasMoreTenants && !this.props.appType) ? 'hide' : 'question-text'}>{question}</p>
 
               {this.getTenantSwitcher()}
 
-              <button href="#" data-skip onClick={this.handleSkip}
-                className={(this.props.skippable) ? '' : 'hide' }>No, skip this</button>
+              <button href="#" data-skip onClick={this.handleSkip.bind(this)}
+                className={(skippable) ? '' : 'hide' }>No, skip this</button>
               <br />
               <Breadcrumbs {...this.props} />
 

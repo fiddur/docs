@@ -6,8 +6,6 @@ class TutorialStore extends BaseStore {
     this.appType = null;
     this.tech1 = null;
     this.tech2 = null;
-    //this.skippable = null;
-    //this.showTutorial = false;
     this.quickstart = null;
   }
   handleTutorialNavLoaded(payload) {

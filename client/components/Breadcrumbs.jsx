@@ -29,7 +29,7 @@ class Breadcrumbs extends React.Component {
       );
     }
 
-    if(p.tech2) {
+    if(p.tech2 && p.tech2 !== 'no-api') {
       list.push(
         <NavLink key="tech2" href={`${p.baseUrl}/quickstart/${p.appType}/${p.tech1}/${p.tech2}`}>
           <i className="icon-budicon-461"></i><span className="text">{getTechTitle(p.quickstart, 'backend', p.tech2)}</span>
