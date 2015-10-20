@@ -4,14 +4,18 @@ import { connectToStores, provideContext } from 'fluxible-addons-react';
 
 class Tutorial extends React.Component {
   componentDidMount () {
-    this.highlightCode();
+    this.updateClient();
   }
   componentDidUpdate() {
-    this.highlightCode();
+    this.updateClient();
   }
-  highlightCode(html) {
+  updateClient(html) {
     if (typeof document !== 'undefined') {
       Auth0Docs.renderCode();
+      var child = this.refs.article.firstChild;
+      if (child.nodeName === 'H2') {
+        child.classList.add('hide');
+      }
     }
   }
   createMarkup() {
@@ -22,7 +26,8 @@ class Tutorial extends React.Component {
       return (
         <div id={this.props.tabName}
           className={'tab-pane' + (this.props.default ? ' active' : '')}
-          dangerouslySetInnerHTML={this.createMarkup()} />
+          dangerouslySetInnerHTML={this.createMarkup()}
+          ref="article" />
       );
     } else {
       return (
