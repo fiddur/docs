@@ -32,5 +32,9 @@
           .tab-content
             .tab-pane.active#tutorial-1
             .tab-pane#tutorial-2
+            
+        - if (!locals.user)
+          #try-banner-experiment(style="display:none;")
+            include ../../public/vendor/auth0-styleguide/lib/try-banner/demo.jade
 
   include document-footer
