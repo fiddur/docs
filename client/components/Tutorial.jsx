@@ -12,9 +12,12 @@ class Tutorial extends React.Component {
   updateClient(html) {
     if (typeof document !== 'undefined') {
       Auth0Docs.renderCode();
-      var child = this.refs.article.firstChild;
-      if (child.nodeName === 'H2') {
-        child.classList.add('hide');
+      var article = this.refs.article;
+      if (article) {
+        var child = article.firstChild;
+        if (child.nodeName === 'H2') {
+          child.classList.add('hide');
+        }
       }
     }
   }

@@ -2,7 +2,7 @@ var Auth0Docs;
 
 Auth0Docs = (function($, window, document) {
   function init() {
-    stickyNav();
+    //stickyNav();
     navTabs();
     feedbackSender();
 

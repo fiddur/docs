@@ -6,7 +6,7 @@ export default {
         method: 'get',
         page: 'home',
         title: 'Home',
-        handler: require('../components/TutorialNavigator'),
+        handler: require('../components/Home'),
         action: (context, payload, done) => {
           context.dispatch('LOAD_TUTORIAL_NAVIGATOR', {});
           //context.dispatch('UPDATE_PAGE_TITLE', { pageTitle: pageId + ' [Dynamic Page] | flux-examples | routing' });
@@ -18,7 +18,7 @@ export default {
         method: 'get',
         page: 'apptype',
         title: 'Home',
-        handler: require('../components/TutorialNavigator'),
+        handler: require('../components/Home'),
         action: (context, payload, done) => {
           var appType = payload.get('params').get('apptype');
           context.dispatch('LOAD_TUTORIAL_NAVIGATOR', { appType: appType });
@@ -31,7 +31,7 @@ export default {
         method: 'get',
         page: 'tech1',
         title: 'Home',
-        handler: require('../components/TutorialNavigator'),
+        handler: require('../components/Home'),
         action: (context, payload, done) => {
           var appType = payload.get('params').get('apptype');
           var tech1 = payload.get('params').get('tech1');

@@ -3,6 +3,7 @@ import serialize from 'serialize-javascript';
 import {navigateAction} from 'fluxible-router';
 import loadSettingsAction from './actions/loadSettingsAction';
 import React from 'react';
+import ReactDOMServer from 'react-dom/server';
 import app from './app';
 import jade from 'jade';
 import path from 'path';
@@ -32,7 +33,7 @@ export default function middleware(req, res, next) {
         clientFile: nconf.get('BASE_URL') + '/js/' + (env === 'production' ? 'main.min.js' : 'main.js'),
         context: context.getComponentContext(),
         state: 'window.App=' + serialize(app.dehydrate(context)) + ';',
-        markup: React.renderToString(createElementWithContext(context))
+        markup: ReactDOMServer.renderToString(createElementWithContext(context))
     }));
 
     var options = {};

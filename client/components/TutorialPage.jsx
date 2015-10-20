@@ -1,6 +1,7 @@
 import React from 'react';
 import Breadcrumbs from './Breadcrumbs';
 import SearchBox from './SearchBox';
+import SideNavBar from './SideNavBar';
 import Tutorial from './Tutorial';
 import TutorialStore from '../stores/TutorialStore';
 import { getPlatformName, getTechTitle } from '../util/tutorials';
@@ -23,7 +24,7 @@ class TutorialPage extends React.Component {
           <div className="js-doc-template container">
             <div className="row">
               <div className="col-sm-3">
-                <div id="sidebar"></div>
+                <SideNavBar baseUrl={this.props.baseUrl} />
               </div>
               <div className="col-sm-9">
                 <section className="docs-content">

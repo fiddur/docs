@@ -3,6 +3,7 @@ import Application from './components/Application';
 import ApplicationStore from './stores/ApplicationStore';
 import TutorialStore from './stores/TutorialStore';
 import TutorialArticleStore from './stores/TutorialArticleStore';
+import NavigationStore from './stores/NavigationStore';
 import RouteStore from './stores/RouteStore';
 import serviceProxyPlugin from 'fluxible-plugin-service-proxy';
 
@@ -20,5 +21,6 @@ app.registerStore(RouteStore);
 app.registerStore(ApplicationStore);
 app.registerStore(TutorialStore);
 app.registerStore(TutorialArticleStore);
+app.registerStore(NavigationStore);
 
 module.exports = app;
