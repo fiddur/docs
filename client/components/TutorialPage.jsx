@@ -27,9 +27,13 @@ class TutorialPage extends React.Component {
     var title2 = '';
     var pageTitle = title1;
     var hasTutorial2 = this.props.tech2 && this.props.tech2 !== 'no-api';
+    var tutorial2Tab;
     if (hasTutorial2) {
       title2 = getTechTitle(this.props.quickstart, 'backend', this.props.tech2);
       pageTitle += ' + ' + title2;
+      tutorial2Tab = (
+        <Tutorial tabName="tutorial-2" appType="backend" tech={this.props.tech2} />
+      );
     }
     return (
       <div id="tutorial-template" className="docs-single animated fadeIn">
@@ -55,12 +59,10 @@ class TutorialPage extends React.Component {
                 </ul>
                 <div className="tab-content">
                   <Tutorial tabName="tutorial-1"
-                            default={true}
-                            appType={this.props.appType}
-                            tech={this.props.tech1} />
-                  <Tutorial tabName="tutorial-2"
-                            appType="backend"
-                            tech={this.props.tech2} />
+                    default={true}
+                    appType={this.props.appType}
+                    tech={this.props.tech1} />
+                  {tutorial2Tab}
                 </div>
               </section>
             </div>

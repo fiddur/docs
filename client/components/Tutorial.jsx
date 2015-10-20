@@ -16,7 +16,7 @@ class Tutorial extends React.Component {
       var article = this.refs.article;
       if (article) {
         var child = article.firstChild;
-        if (child.nodeName === 'H2') {
+        if (child.nodeName === 'H1' || child.nodeName === 'H2') {
           child.classList.add('hide');
         }
       }
