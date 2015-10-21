@@ -30,7 +30,7 @@ export default function middleware(req, res, next) {
     navigation: res.locals.navigation
   })).then(() => {
     const content = ReactDOMServer.renderToStaticMarkup(htmlComponent({
-        clientFile: nconf.get('BASE_URL') + '/js/' + (env === 'production' ? 'client.bundle.min.js' : 'client.bundle.js'),
+        clientFile: nconf.get('BASE_URL') + '/js/client.bundle.js',
         context: context.getComponentContext(),
         state: 'window.App=' + serialize(app.dehydrate(context)) + ';',
         markup: ReactDOMServer.renderToString(createElementWithContext(context))
