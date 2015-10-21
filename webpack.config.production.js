@@ -52,8 +52,7 @@ var webpackConfig = {
     }),
     new webpack.optimize.CommonsChunkPlugin({
       filename: 'commons.js',
-      minChunks: 2,
-      // chunks: ["pageA", "pageB"],
+      minChunks: 2
     }),
     new webpack.optimize.DedupePlugin(),
     new webpack.optimize.UglifyJsPlugin({
