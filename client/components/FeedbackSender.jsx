@@ -1,4 +1,5 @@
 import React from 'react';
+import initFeedbackSender from '../browser/feedbackSender';
 
 class FeedbackSender extends React.Component {
   componentDidMount () {
@@ -9,7 +10,7 @@ class FeedbackSender extends React.Component {
   }
   initClient(html) {
     if (typeof document !== 'undefined') {
-      Auth0Docs.feedbackSender();
+      initFeedbackSender();
     }
   }
   render() {

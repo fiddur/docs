@@ -8,15 +8,33 @@ var webpackConfig = {
   resolve: {
     extensions: ['', '.js', '.jsx']
   },
-  entry: [
-    'webpack-dev-server/client?http://localhost:3000',
-    'webpack/hot/only-dev-server',
-    './client/client.js'
-  ],
+  entry: {
+    client: [
+      'webpack-dev-server/client?http://localhost:3000',
+      'webpack/hot/only-dev-server',
+      './client/client.js',
+    ],
+    base: [
+      'webpack-dev-server/client?http://localhost:3000',
+      'webpack/hot/only-dev-server',
+      './client/base.js',
+    ],
+    standard: [
+      'webpack-dev-server/client?http://localhost:3000',
+      'webpack/hot/only-dev-server',
+      './client/standard.js'
+    ],
+    browser: [
+      'webpack-dev-server/client?http://localhost:3000',
+      'webpack/hot/only-dev-server',
+      './client/browser.js'
+    ]
+  },
   output: {
     path: path.resolve('./public/js'),
     publicPath: nconf.get('BASE_URL') + '/js/',
-    filename: 'main.js'
+    filename: '[name].bundle.js',
+    chunkFilename: '[id].chunk.js'
   },
   module: {
     loaders: [{
@@ -31,20 +49,26 @@ var webpackConfig = {
     }, {
       test: /\.json$/,
       loader: 'json-loader'
+    }, {
+      test: /\.styl$/,
+      loader: 'style-loader!css-loader!autoprefixer-loader!stylus-loader'
+    }, {
+      test: /\.(png|woff|woff2|eot|ttf|svg)$/,
+      loader: 'url-loader?limit=100000'
     }]
   },
   plugins: [
+    new webpack.ProvidePlugin({
+      'fetch': 'imports?this=>global!exports?global.fetch!whatwg-fetch'
+    }),
     new webpack.HotModuleReplacementPlugin(),
     new webpack.NoErrorsPlugin(),
+    new webpack.optimize.CommonsChunkPlugin('common', 'commons.js'),
     new webpack.DefinePlugin({
       'process.env': {
-        REACT_ENV: 'browser',
         NODE_ENV: JSON.stringify(process.env.NODE_ENV),
         BASE_URL: JSON.stringify(nconf.get('BASE_URL'))
       }
-    }),
-    new webpack.ProvidePlugin({
-      'fetch': 'imports?this=>global!exports?global.fetch!whatwg-fetch'
     })
   ],
   devtool: 'source-map'

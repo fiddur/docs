@@ -7,6 +7,8 @@ import { createElementWithContext } from 'fluxible-addons-react';
 import app from './app';
 import articleService from './services/articleService';
 
+require('./styles/docs.styl');
+
 const debugClient = debug('docs:react');
 const dehydratedState = window.App; // Sent from the server
 

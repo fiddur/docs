@@ -1,14 +1,9 @@
 extends base
 
+block head
+  script(src=env.BASE_URL + '/js/browser.bundle.js')
+
 block body
-  script(src=env.BASE_URL + '/js/owl.carousel.min.js')
-  script(src=env.BASE_URL + '/js/page.min.js')
-  script(src=env.BASE_URL + '/js/jquery.waypoints.js')
-  script(src=env.BASE_URL + '/js/docs.js')
-  script.
-    $(function() {
-      Auth0Docs.init(true);
-    });
   .docs-home
     header.site-header!= webheader
     script.

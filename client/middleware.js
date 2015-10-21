@@ -29,8 +29,8 @@ export default function middleware(req, res, next) {
     quickstart: res.locals.quickstart,
     navigation: res.locals.navigation
   })).then(() => {
-    const content = React.renderToStaticMarkup(htmlComponent({
-        clientFile: nconf.get('BASE_URL') + '/js/' + (env === 'production' ? 'main.min.js' : 'main.js'),
+    const content = ReactDOMServer.renderToStaticMarkup(htmlComponent({
+        clientFile: nconf.get('BASE_URL') + '/js/' + (env === 'production' ? 'client.bundle.min.js' : 'client.bundle.js'),
         context: context.getComponentContext(),
         state: 'window.App=' + serialize(app.dehydrate(context)) + ';',
         markup: ReactDOMServer.renderToString(createElementWithContext(context))

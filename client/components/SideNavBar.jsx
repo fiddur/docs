@@ -3,6 +3,7 @@ import {NavLink} from 'fluxible-router';
 import FeedbackSender from './FeedbackSender';
 import NavigationStore from '../stores/NavigationStore';
 import { connectToStores } from 'fluxible-addons-react';
+import initAccordion from '../browser/accordion';
 
 var CategorySection = ({category, baseUrl}) => {
   var links = category.links || [];
@@ -42,7 +43,7 @@ class SideNavBar extends React.Component {
   }
   initClient(html) {
     if (typeof document !== 'undefined') {
-      Auth0Docs.initAccordion();
+      initAccordion();
     }
   }
   render() {

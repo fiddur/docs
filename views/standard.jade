@@ -1,5 +1,8 @@
 extends base
 
+block head
+  script(src=env.BASE_URL + '/js/standard.bundle.js')
+
 block body
   .docs-single
     header.site-header!= webheader
@@ -44,9 +47,3 @@ block body
               include ../node_modules/auth0-styleguide/lib/try-banner/demo.jade
           
     include ../node_modules/auth0-styleguide/lib/footer/demo.jade
-
-  script(src=env.BASE_URL + '/js/docs.js')
-  script.
-    $(function() {
-      Auth0Docs.init();
-    });

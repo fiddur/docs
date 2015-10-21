@@ -6,6 +6,7 @@ import ShowcaseItem from './ShowcaseItem';
 import CircleLogo from './CircleLogo';
 import HowTo from './HowTo';
 import { connectToStores } from 'fluxible-addons-react';
+import initStickyNav from '../browser/stickyNav';
 
 class InlineNav extends React.Component {
   componentDidMount () {
@@ -16,7 +17,7 @@ class InlineNav extends React.Component {
   }
   initClient(html) {
     if (typeof document !== 'undefined') {
-      Auth0Docs.stickyNav();
+      initStickyNav();
     }
   }
   render() {

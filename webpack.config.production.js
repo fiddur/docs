@@ -8,12 +8,16 @@ var webpackConfig = {
   resolve: {
     extensions: ['', '.js', '.jsx']
   },
-  entry: [
-    './client/client.js'
-  ],
+  entry: {
+    client: './client/client.js',
+    base: './client/base.js',
+    standard: './client/standard.js',
+    browser: './client/browser.js'
+  },
   output: {
     path: path.resolve('./public/js'),
-    filename: 'main.min.js'
+    filename: '[name].bundle.js',
+    chunkFilename: '[id].chunk.js'
   },
   module: {
     loaders: [{
@@ -22,29 +26,42 @@ var webpackConfig = {
         path.resolve(__dirname, 'node_modules'),
       ],
       loaders: [
+        require.resolve('react-hot-loader'),
         require.resolve('babel-loader')
       ]
     }, {
       test: /\.json$/,
       loader: 'json-loader'
+    }, {
+      test: /\.styl$/,
+      loader: 'style-loader!css-loader!autoprefixer-loader!stylus-loader'
+    }, {
+      test: /\.(png|woff|woff2|eot|ttf|svg)$/,
+      loader: 'url-loader?limit=100000'
     }]
   },
   plugins: [
+    new webpack.ProvidePlugin({
+      'fetch': 'imports?this=>global!exports?global.fetch!whatwg-fetch'
+    }),
     new webpack.DefinePlugin({
       'process.env': {
-        REACT_ENV: 'browser',
         NODE_ENV: JSON.stringify('production'),
         BASE_URL: JSON.stringify(nconf.get('BASE_URL'))
       }
     }),
+    new webpack.optimize.CommonsChunkPlugin({
+      filename: 'commons.js',
+      minChunks: 2,
+      // chunks: ["pageA", "pageB"],
+    }),
     new webpack.optimize.DedupePlugin(),
     new webpack.optimize.UglifyJsPlugin({
+      minimize: true,
       compress: {
         warnings: false
-      }
-    }),
-    new webpack.ProvidePlugin({
-      'fetch': 'imports?this=>global!exports?global.fetch!whatwg-fetch'
+      },
+      sourceMap: false
     })
   ],
   devtool: 'source-map'
