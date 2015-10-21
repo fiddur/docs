@@ -11,7 +11,6 @@ import HtmlComponent from './components/Html';
 import { createElementWithContext } from 'fluxible-addons-react';
 import articleService from './services/articleService.server';
 
-const env = process.env.NODE_ENV;
 const htmlComponent = React.createFactory(HtmlComponent);
 
 export default function middleware(req, res, next) {
