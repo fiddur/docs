@@ -1,4 +1,4 @@
-/*globals document*/
+/*globals document, $*/
 
 import React from 'react';
 import ApplicationStore from '../stores/ApplicationStore';
@@ -20,9 +20,6 @@ class Application extends React.Component {
     const newProps = this.props;
     if (newProps.pageTitle !== prevProps.pageTitle) {
       document.title = newProps.pageTitle;
-    }
-    if (newProps.pageDescription !== prevProps.pageDescription) {
-      console.log(newProps.pageDescription);
     }
   }
 }

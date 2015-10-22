@@ -47,7 +47,7 @@
     "react-dom": "^0.14.0",
     "request": "^2.61.0",
     "retry": "^0.8.0",
-    "serialize-javascript": "^1.1.2",
+    "serialize-javascript": "https://registry.npmjs.org/serialize-javascript/-/serialize-javascript-1.1.2.tgz",
     "server-destroy": "^1.0.1",
     "sitemap": "^1.1.1",
     "url-join": "0.0.1",
