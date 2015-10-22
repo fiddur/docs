@@ -27,12 +27,12 @@ export default {
         }
     },
     backend: {
-      path: process.env.BASE_URL + '/quickstart/backend/:tech1',
+      path: process.env.BASE_URL + '/quickstart/:apptype(backend|webapp)/:tech1',
       method: 'get',
-      page: 'backend',
+      page: 'singletech',
       handler: require('../components/TutorialPage'),
       action: (context, payload) => {
-        var appType = 'backend';
+        var appType = payload.get('params').get('apptype');
         var tech1 = payload.get('params').get('tech1');
         context.dispatch('LOAD_TUTORIAL_NAVIGATOR', { appType: appType, tech1: tech1 });
         var quickstart = context.getStore(TutorialStore).getQuickstart();
