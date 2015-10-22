@@ -11,13 +11,9 @@ class ApplicationStore extends BaseStore {
     this.pageTitle = '';
     this.baseUrl = null;
   }
-  handlePageTitle(currentRoute) {
-    this.dispatcher.waitFor(RouteStore, () => {
-      if (currentRoute && currentRoute.get('title')) {
-        this.pageTitle = currentRoute.get('title');
-        this.emitChange();
-      }
-    });
+  handlePageTitle(payload) {
+    this.pageTitle = payload.pageTitle;
+    this.emitChange();
   }
   handleSettingsLoaded(payload) {
     this.baseUrl = payload.baseUrl;
@@ -54,7 +50,7 @@ class ApplicationStore extends BaseStore {
 
 ApplicationStore.storeName = 'ApplicationStore';
 ApplicationStore.handlers = {
-  'NAVIGATE_SUCCESS': 'handlePageTitle',
+  'UPDATE_PAGE_TITLE': 'handlePageTitle',
   'LOAD_SETTINGS': 'handleSettingsLoaded'
 };
 

@@ -63,17 +63,3 @@ export function getTechTitle(quickstart, appType, techName) {
     return result.title;
   }
 }
-
-
-
-// getPageTitle(appType, tech1, tech2) {
-//   var pageTitle = window.SITE_TITLE;
-//   if (appType && tech1 && tech2) {
-//     pageTitle += ' - Getting started with ' + this.props.getTechName(appType, tech1) + ' and ' + this.props.getTechName('backend', tech2);
-//   } else if (appType && tech1) {
-//     pageTitle += ' - ' + this.props.getTechName(appType, tech1) + ' Quickstarts';
-//   } else if (appType) {
-//     pageTitle += ' - ' + this.getAppTypeName(appType) + ' Quickstarts';
-//   }
-//   return pageTitle;
-// }

@@ -26,6 +26,9 @@ class TutorialStore extends BaseStore {
       quickstart: this.quickstart,
     };
   }
+  getQuickstart() {
+    return this.quickstart;
+  }
   dehydrate() {
     return this.getState();
   }

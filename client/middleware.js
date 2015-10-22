@@ -8,6 +8,7 @@ import app from './app';
 import jade from 'jade';
 import path from 'path';
 import HtmlComponent from './components/Html';
+import ApplicationStore from './stores/ApplicationStore';
 import { createElementWithContext } from 'fluxible-addons-react';
 import articleService from './services/articleService.server';
 
@@ -28,18 +29,22 @@ export default function middleware(req, res, next) {
     quickstart: res.locals.quickstart,
     navigation: res.locals.navigation
   })).then(() => {
+    var componentContext = context.getComponentContext();
     const content = ReactDOMServer.renderToStaticMarkup(htmlComponent({
         clientFile: nconf.get('BASE_URL') + '/js/client.bundle.js',
-        context: context.getComponentContext(),
+        context: componentContext,
         state: 'window.App=' + serialize(app.dehydrate(context)) + ';',
         markup: ReactDOMServer.renderToString(createElementWithContext(context))
     }));
+
+    var appStore = componentContext.getStore(ApplicationStore);
 
     var options = {};
     Object.keys(res.locals).forEach(function(key) {
       options[key] = res.locals[key];
     });
     options.sections = { content: content };
+    options.title = appStore.getPageTitle();
 
     jade.renderFile(path.resolve(__dirname, '../views/homepage.jade'), options, function(err, html) {
       if (err) {

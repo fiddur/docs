@@ -51,7 +51,8 @@ nconf.file('global', { file: config_file })
     'CONSOLE_LOG_LEVEL': 'debug',
     'LOG_TO_KINESIS_LEVEL': 'info',
     'LOG_TO_WEB_LEVEL':     'error',
-    'SEARCH_ENGINE_ID': '010795999221123445302:urkvlewda8q' // Google Site Search ID
+    'SEARCH_ENGINE_ID': '010795999221123445302:urkvlewda8q', // Google Site Search ID
+    'SITE_TITLE': 'Auth0 Docs'
   });
 
 if (nconf.get('COOKIE_NAME') !== 'auth0l') {
@@ -70,5 +71,6 @@ if (!nconf.get('AUTH0_DOMAIN') && nconf.get('AUTH0_TENANT') && nconf.get('DOMAIN
   nconf.set('AUTH0_DOMAIN', nconf.get('DOMAIN_URL_SERVER').replace('{tenant}', nconf.get('AUTH0_TENANT')));
 }
 
-// This env variable is used in /config/routes.js. Ensure it is set.
+// These env variables are used in /config/routes.js. Ensure they are set.
 process.env.BASE_URL = process.env.BASE_URL || nconf.get('BASE_URL');
+process.env.SITE_TITLE = process.env.SITE_TITLE || nconf.get('SITE_TITLE');
