@@ -63,3 +63,20 @@ export function getTechTitle(quickstart, appType, techName) {
     return result.title;
   }
 }
+
+export function getQuickstartMetdata(quickstart, appType, tech1, tech2) {
+  var meta = {};
+  if (appType && tech1 && tech2) {
+    meta.pageTitle = `${getTechTitle(quickstart, appType, tech1)} + ${getTechTitle(quickstart, 'backend', tech2)} Quickstart`;
+    meta.pageDescription = `Learn how to quickly add authentication to your ${getTechTitle(quickstart, appType, tech1)} app that connects to ${getPlatformName(quickstart, 'backend', tech2).toLowerCase()}. Authenticate with any social or enterprise identity provider.`;
+  } else if (appType && tech1) {
+    meta.pageTitle = `${getTechTitle(quickstart, appType, tech1)} Quickstarts`;
+    meta.pageDescription =  `Learn how to quickly add authentication to your ${getTechTitle(quickstart, appType, tech1)} app. Authenticate with any social or enterprise identity provider.`;
+  } else if (appType) {
+    meta.pageTitle = `${getPlatformName(appType).toLowerCase().toLowerCase()} Quickstarts`;
+    meta.pageDescription = `Browse ${getPlatformName(appType).toLowerCase()} quickstarts to learn how to quickly add authentication to your app.`;
+  } else {
+    meta.pageTitle = process.env.SITE_TITLE;
+  }
+  return meta;
+}

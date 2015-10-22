@@ -1,6 +1,6 @@
 import loadArticleAction from '../actions/loadArticleAction';
 import TutorialStore from '../stores/TutorialStore';
-import { getPlatformName, getTechTitle } from '../util/tutorials';
+import { getQuickstartMetdata } from '../util/tutorials';
 
 export default {
     home: {
@@ -10,9 +10,7 @@ export default {
         handler: require('../components/Home'),
         action: (context, payload, done) => {
           context.dispatch('LOAD_TUTORIAL_NAVIGATOR', {});
-          context.dispatch('UPDATE_PAGE_TITLE', {
-            pageTitle: process.env.SITE_TITLE
-          });
+          context.dispatch('UPDATE_PAGE_METADATA', getQuickstartMetdata());
           done();
         }
     },
@@ -24,9 +22,7 @@ export default {
         action: (context, payload, done) => {
           var appType = payload.get('params').get('apptype');
           context.dispatch('LOAD_TUTORIAL_NAVIGATOR', { appType: appType });
-          context.dispatch('UPDATE_PAGE_TITLE', {
-            pageTitle: `${getPlatformName(appType)} Quickstarts`
-          });
+          context.dispatch('UPDATE_PAGE_METADATA', getQuickstartMetdata(null, appType));
           done();
         }
     },
@@ -40,9 +36,7 @@ export default {
         var tech1 = payload.get('params').get('tech1');
         context.dispatch('LOAD_TUTORIAL_NAVIGATOR', { appType: appType, tech1: tech1 });
         var quickstart = context.getStore(TutorialStore).getQuickstart();
-        context.dispatch('UPDATE_PAGE_TITLE', {
-          pageTitle: `${getTechTitle(quickstart, appType, tech1)} Quickstarts`
-        });
+        context.dispatch('UPDATE_PAGE_METADATA', getQuickstartMetdata(quickstart, appType, tech1));
         return context.executeAction(loadArticleAction, {
           appType: appType,
           tech1: tech1,
@@ -60,9 +54,7 @@ export default {
           var tech1 = payload.get('params').get('tech1');
           context.dispatch('LOAD_TUTORIAL_NAVIGATOR', { appType: appType, tech1: tech1 });
           var quickstart = context.getStore(TutorialStore).getQuickstart();
-          context.dispatch('UPDATE_PAGE_TITLE', {
-            pageTitle: `${getTechTitle(quickstart, appType, tech1)} Quickstarts`
-          });
+          context.dispatch('UPDATE_PAGE_METADATA', getQuickstartMetdata(quickstart, appType, tech1));
           done();
         }
     },
@@ -77,9 +69,7 @@ export default {
           var tech2 = payload.get('params').get('tech2');
           context.dispatch('LOAD_TUTORIAL_NAVIGATOR', { appType: appType, tech1: tech1, tech2: tech2 });
           var quickstart = context.getStore(TutorialStore).getQuickstart();
-          context.dispatch('UPDATE_PAGE_TITLE', {
-            pageTitle: `${getTechTitle(quickstart, appType, tech1)} + ${getTechTitle(quickstart, 'backend', tech2)} Quickstart`
-          });
+          context.dispatch('UPDATE_PAGE_METADATA', getQuickstartMetdata(quickstart, appType, tech1, tech2));
           var actions = [
             context.executeAction(loadArticleAction, {
               appType: appType,

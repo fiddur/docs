@@ -1,5 +1,9 @@
 //- Meta
-meta(name='description', content='Get started using Auth0. Implement authentication for any kind of application in minutes.')
+- if (description)
+  meta(name='description', content=description)
+- else
+  meta(name='description', content='Get started using Auth0. Implement authentication for any kind of application in minutes.')
+
 meta(name='author', content='Auth0')
 meta(name='keywords', content='auth0, authentication, sso, passwordless, user, profile, applications, identity, providers, nodejs, ruby, scala, angular, go, php, rails')
 

@@ -45,6 +45,7 @@ export default function middleware(req, res, next) {
     });
     options.sections = { content: content };
     options.title = appStore.getPageTitle();
+    options.description = appStore.getPageDescription();
 
     jade.renderFile(path.resolve(__dirname, '../views/homepage.jade'), options, function(err, html) {
       if (err) {

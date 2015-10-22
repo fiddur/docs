@@ -18,10 +18,12 @@ class Application extends React.Component {
 
   componentDidUpdate(prevProps, prevState) {
     const newProps = this.props;
-    if (newProps.pageTitle === prevProps.pageTitle) {
-      return;
+    if (newProps.pageTitle !== prevProps.pageTitle) {
+      document.title = newProps.pageTitle;
     }
-    document.title = newProps.pageTitle;
+    if (newProps.pageDescription !== prevProps.pageDescription) {
+      console.log(newProps.pageDescription);
+    }
   }
 }
 
@@ -33,6 +35,7 @@ export default handleHistory(provideContext(connectToStores(
     return {
       currentPageName: appStore.getCurrentPageName(),
       pageTitle: appStore.getPageTitle(),
+      pageDescription: appStore.getPageDescription(),
       pages: appStore.getPages(),
       baseUrl: appStore.getBaseUrl()
     };
