@@ -177,6 +177,7 @@
     },
     "auth0-styleguide": {
       "version": "2.2.5",
+      "from": "auth0-styleguide@git://github.com/auth0/styleguide.git#d0f4a56b3de8428feef1122ea950e9512090bd35",
       "resolved": "git://github.com/auth0/styleguide.git#d0f4a56b3de8428feef1122ea950e9512090bd35"
     },
     "aws-kinesis-writable": {
@@ -1596,6 +1597,10 @@
           }
         }
       }
+    },
+    "highlight.js": {
+      "version": "8.9.1",
+      "resolved": "https://registry.npmjs.org/highlight.js/-/highlight.js-8.9.1.tgz"
     },
     "jade": {
       "version": "1.11.0",
