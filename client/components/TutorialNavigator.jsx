@@ -10,8 +10,7 @@ import { getQuestion } from '../util/tutorials';
 
 class TutorialNavigator extends React.Component {
   handleSkip() {
-    //var platformSlug = this.context.getStore(TutorialStore).getPlatformSlug(this.state.appType);
-    var url = '/quickstart/' + this.props.appType + '/' + this.props.tech1 + '/no-api/';
+    var url = `${process.env.BASE_URL}/quickstart/${this.props.appType}/${this.props.tech1}/no-api/`;
     this.context.executeAction(navigateAction, {
       url: url
     });
