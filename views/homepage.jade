@@ -31,7 +31,7 @@ block body
                 i.icon-budicon-489
                 input#search-input.search-input.form-control(type="text", placeholder="Search for docs", name="q")
 
-                  
+
       - for (var item in nav)
         - var current = nav[item];
 
@@ -39,7 +39,7 @@ block body
             .container
               h2= current.name
                 span= current.description
-            
+
             - if(current.id === 'product')
               .showcase
                 .container
@@ -75,12 +75,12 @@ block body
                               - var news = current.sections['announcements'];
                               - for (var current2 in news.links)
                                 li
-                                  - if (news.links[current2].href.indexOf('http') === 0) 
+                                  - if (news.links[current2].href.indexOf('http') === 0)
                                     a(href!=news.links[current2].href)= news.links[current2].name
                                   - else
                                     a(href!=env.BASE_URL + news.links[current2].href)= news.links[current2].name
 
-            
+
             - if(current.id === 'sdk')
               .container
                 ul.circle-list
@@ -107,9 +107,9 @@ block body
     script(src=env.BASE_URL + '/js/jquery.waypoints.js')
     script(src=env.BASE_URL + '/js/docs.js')
 
-    script.
+    script(rel="nofollow").
       var tnOpts = {};
-      
+
       tnOpts.basePath = '#{env.BASE_URL}';
       tnOpts.platforms = !{JSON.stringify(quickstarts)};
       tnOpts.singleTpl = $('#tutorial-template');
@@ -118,7 +118,7 @@ block body
         $('#tutorial-navigator, #homepage-content').addClass('hide');
         // trigger code samples
         Auth0Docs.renderCode();
-        
+
         // If it's loading from a set hash, load on the corresponding anchor.
         if(window.location.hash) {
           var current = window.location.hash;
@@ -145,6 +145,6 @@ block body
 
       // Init Tutorial Navigator
       React.render(
-        React.createElement(TutorialNavigator.init, tnOpts), 
+        React.createElement(TutorialNavigator.init, tnOpts),
           $('#tutorial-navigator').get(0)
       );
