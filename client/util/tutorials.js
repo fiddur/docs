@@ -1,4 +1,5 @@
 import _ from 'lodash';
+import strings from '../../lib/strings';
 
 export function getPlatformName(platformType) {
   var options = {
@@ -82,7 +83,7 @@ export function getQuickstartMetdata(quickstart, appType, tech1, tech2) {
     meta.pageTitle = `${getPlatformName(appType)} Quickstarts`;
     meta.pageDescription = `Browse ${getPlatformName(appType).toLowerCase()} quickstarts to learn how to quickly add authentication to your app.`;
   } else {
-    meta.pageTitle = process.env.SITE_TITLE;
+    meta.pageTitle = strings.SITE_TITLE;
   }
   return meta;
 }

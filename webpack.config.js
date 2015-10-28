@@ -69,8 +69,7 @@ var webpackConfig = {
     }),
     new webpack.DefinePlugin({
       'process.env': {
-        NODE_ENV: JSON.stringify(process.env.NODE_ENV),
-        SITE_TITLE: JSON.stringify(nconf.get('SITE_TITLE'))
+        NODE_ENV: JSON.stringify(process.env.NODE_ENV)
       }
     })
   ],

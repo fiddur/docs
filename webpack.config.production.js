@@ -46,8 +46,7 @@ var webpackConfig = {
     }),
     new webpack.DefinePlugin({
       'process.env': {
-        NODE_ENV: JSON.stringify('production'),
-        SITE_TITLE: JSON.stringify(nconf.get('SITE_TITLE'))
+        NODE_ENV: JSON.stringify('production')
       }
     }),
     new webpack.optimize.CommonsChunkPlugin({
