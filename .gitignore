@@ -4,4 +4,5 @@
 node_modules
 *.log
 config.json
-.bower-*
+public/js/*
+*.orig
