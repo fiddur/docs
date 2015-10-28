@@ -71,6 +71,6 @@ if (!nconf.get('AUTH0_DOMAIN') && nconf.get('AUTH0_TENANT') && nconf.get('DOMAIN
   nconf.set('AUTH0_DOMAIN', nconf.get('DOMAIN_URL_SERVER').replace('{tenant}', nconf.get('AUTH0_TENANT')));
 }
 
-// These env variables are used in /config/routes.js. Ensure they are set.
+// These env variables are used in client script files. Ensure they are set.
 process.env.BASE_URL = process.env.BASE_URL || nconf.get('BASE_URL');
 process.env.SITE_TITLE = process.env.SITE_TITLE || nconf.get('SITE_TITLE');

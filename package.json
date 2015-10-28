@@ -61,7 +61,7 @@
   "scripts": {
     "test": "make test",
     "start": "node start.js",
-    "build": "CONFIG_FILE=/etc/auth0-docs.json webpack --config webpack.config.production.js --progress",
+    "build": "webpack --config webpack.config.production.js --progress",
     "dev": "mongod & NODE_ENV=development PORT=3000 node webpack-dev-server.js & WEBPACK_PROXY_PORT=5050  NODE_ENV=development nodemon start.js -e js,jsx,jade,styl",
     "shrinkwrap": "npm-shrinkwrap",
     "postinstall": "npm run build"

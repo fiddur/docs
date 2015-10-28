@@ -70,7 +70,6 @@ var webpackConfig = {
     new webpack.DefinePlugin({
       'process.env': {
         NODE_ENV: JSON.stringify(process.env.NODE_ENV),
-        BASE_URL: JSON.stringify(nconf.get('BASE_URL')),
         SITE_TITLE: JSON.stringify(nconf.get('SITE_TITLE'))
       }
     })

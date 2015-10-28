@@ -2,9 +2,17 @@ import loadArticleAction from '../actions/loadArticleAction';
 import TutorialStore from '../stores/TutorialStore';
 import { getQuickstartMetdata } from '../util/tutorials';
 
+var baseUrl = '';
+if (typeof window !== 'undefined') {
+  baseUrl = window.BASE_URL;
+  console.log('BASE_URL: ' + baseUrl)
+} else {
+  baseUrl = process.env.BASE_URL;
+}
+
 export default {
     home: {
-        path: process.env.BASE_URL + '/',
+        path: `${baseUrl}/`,
         method: 'get',
         page: 'home',
         handler: require('../components/Home'),
@@ -15,7 +23,7 @@ export default {
         }
     },
     apptype: {
-        path: process.env.BASE_URL + '/quickstart/:apptype',
+        path: `${baseUrl}/quickstart/:apptype`,
         method: 'get',
         page: 'apptype',
         handler: require('../components/Home'),
@@ -27,7 +35,7 @@ export default {
         }
     },
     backend: {
-      path: process.env.BASE_URL + '/quickstart/:apptype(backend|webapp)/:tech1',
+      path: `${baseUrl}/quickstart/:apptype(backend|webapp)/:tech1`,
       method: 'get',
       page: 'singletech',
       handler: require('../components/TutorialPage'),
@@ -45,7 +53,7 @@ export default {
       }
     },
     tech1: {
-        path: process.env.BASE_URL + '/quickstart/:apptype/:tech1',
+        path: `${baseUrl}/quickstart/:apptype/:tech1`,
         method: 'get',
         page: 'tech1',
         handler: require('../components/Home'),
@@ -59,7 +67,7 @@ export default {
         }
     },
     tech2: {
-        path: process.env.BASE_URL + '/quickstart/:apptype/:tech1/:tech2',
+        path: `${baseUrl}/quickstart/:apptype/:tech1/:tech2`,
         method: 'get',
         page: 'tech2',
         handler: require('../components/TutorialPage'),
