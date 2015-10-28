@@ -31,7 +31,8 @@ nave use 1.8.4
 git submodule init
 git submodule update
 npm i
-npm run dev
+mongod &
+npm run watch
 ```
 
 > If you see an error like `Error: bind EMFILE` you need to run the following command `ulimit -n 2048`
@@ -47,11 +48,11 @@ git submodule update
 npm i
 ```
 
-Running and deubgging in vagrant
+Running in vagrant with watch
 
 ```
-sudo service auth0-docs start
-sudo xtail auth0-docs | bunyan
+sudo service auth0-docs stop
+npm run watch
 ```
 
 ## Installing or Updating dependencies

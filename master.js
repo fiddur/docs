@@ -43,4 +43,9 @@ process.on('SIGHUP', function () {
   for(var id in cluster.workers) {
     cluster.workers[id].process.kill('SIGTERM');
   }
+}).once('SIGUSR2', function () {
+  for(var id in cluster.workers) {
+    cluster.workers[id].process.kill('SIGTERM');
+  }
+  process.kill(process.pid, 'SIGUSR2');
 });
