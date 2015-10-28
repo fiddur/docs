@@ -3,6 +3,7 @@ import TutorialArticleStore from '../stores/TutorialArticleStore';
 import { connectToStores, provideContext } from 'fluxible-addons-react';
 import highlightCode from '../browser/highlightCode';
 import setAnchorLinks from '../browser/anchorLinks';
+import loadSdkSnippet from '../browser/loadSdkSnippet';
 
 class Tutorial extends React.Component {
   componentDidMount () {
@@ -15,6 +16,7 @@ class Tutorial extends React.Component {
     if (typeof document !== 'undefined') {
       highlightCode();
       setAnchorLinks();
+      loadSdkSnippet();
       var article = this.refs.article;
       if (article) {
         var child = article.firstChild;
