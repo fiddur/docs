@@ -5,4 +5,4 @@ WORKDIR /usr/app
 
 EXPOSE 5050
 
-CMD db="" node app.js
+CMD db="" node start.js
