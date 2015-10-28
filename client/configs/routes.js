@@ -4,7 +4,7 @@ import { getQuickstartMetdata } from '../util/tutorials';
 
 var baseUrl = '';
 if (typeof window !== 'undefined') {
-  baseUrl = window.BASE_URL;
+  baseUrl = window.CONFIG.baseUrl;
 } else {
   baseUrl = process.env.BASE_URL;
 }

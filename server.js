@@ -112,6 +112,7 @@ server.use(middleware.overrideIfAuthenticated);
 server.use(middleware.overrideIfClientInQs);
 server.use(middleware.overrideIfClientInQsForPublicAllowedUrls);
 server.use(middleware.fetchABExperiments);
+server.use(middleware.clientConfig); // MUST BE LAST!!!
 
 // Routes
 server.use(nconf.get('BASE_URL'), require('./lib/api-explorer'));

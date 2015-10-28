@@ -21,8 +21,7 @@ html(lang="en")
     script(src="http://html5shim.googlecode.com/svn/trunk/html5.js")
     <![endif]-->
 
-    script.
-      window.BASE_URL = '#{env.BASE_URL}';
+    script!= CLIENT_CONFIG
     script(src='//code.jquery.com/jquery-1.11.3.min.js')
     script(src='//cdn.auth0.com/styleguide/vendor/bootstrap-3.2.0.min.js')
     script(src=env.BASE_URL + '/js/commons.js')

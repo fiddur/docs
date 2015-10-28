@@ -56,3 +56,7 @@ export default function highlightCode() {
     }
   });
 }
+
+if (typeof window !== 'undefined') {
+  window.highlightCode = highlightCode;
+}

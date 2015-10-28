@@ -6,6 +6,7 @@ import Tutorial from './Tutorial';
 import TutorialStore from '../stores/TutorialStore';
 import { getPlatformName, getTechTitle } from '../util/tutorials';
 import { connectToStores, provideContext } from 'fluxible-addons-react';
+import loadSdkSnippet from '../browser/loadSdkSnippet';
 
 class TutorialPage extends React.Component {
   componentDidMount () {
@@ -19,6 +20,11 @@ class TutorialPage extends React.Component {
       $('body').on('click', '.nav-tabs a', function(e) {
         e.preventDefault();
         $(this).tab('show');
+      });
+      loadSdkSnippet({
+        callbackOnHashMode: false,
+        backend: this.props.tech2 ? '' : this.props.tech1, // Only set this if we are using a single tech.
+        clientId: window.CONFIG.account.clientId,
       });
     }
   }

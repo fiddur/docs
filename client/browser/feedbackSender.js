@@ -13,7 +13,7 @@ export default function feedbackSender() {
       positive: positive,
       comment: comment
     };
-    $.post(window.BASE_URL + '/submit-feedback', feedback);
+    $.post(window.CONFIG.baseUrl + '/submit-feedback', feedback);
   };
 
   $('.js-feedback-sender .choose').on('click', function(e) {
