@@ -1,0 +1,9 @@
+{
+  "directory": "public/vendor",
+  "analytics": false,
+  "storage": {
+    "packages": ".bower-cache",
+    "registry": ".bower-registry"
+  },
+  "tmp": ".bower-tmp"
+}

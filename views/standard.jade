@@ -1,8 +1,5 @@
 extends base
 
-block head
-  script(src=env.BASE_URL + '/js/standard.bundle.js')
-
 block body
   .docs-single
     header.site-header!= webheader
@@ -20,7 +17,7 @@ block body
       .wrapper
         .container
           .breadcrumbs
-            a(href!=env.BASE_URL || '/')
+            a(href!=env.BASE_URL)
               span.text Documentation
             a
               i.icon-budicon-461
@@ -44,6 +41,8 @@ block body
             
           - if (!locals.user)
             #try-banner
-              include ../node_modules/auth0-styleguide/lib/try-banner/demo.jade
+              include ../public/vendor/auth0-styleguide/lib/try-banner/demo.jade
           
-    include ../node_modules/auth0-styleguide/lib/footer/demo.jade
+    include ../public/vendor/auth0-styleguide/lib/footer/demo.jade
+
+  script(src=env.BASE_URL + '/js/docs.js')

@@ -2,7 +2,7 @@
  * Module dependencies.
  */
 
-var docsapp = require('../start');
+var docsapp = require('../app');
 var nconf = require('nconf');
 var request = require('request');
 var assert = require('assert');
