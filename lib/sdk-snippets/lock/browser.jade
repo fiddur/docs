@@ -13,20 +13,4 @@ p This is how it will look on a browser...
       span#browser-url.browser-url https://your-domain.com/login
   .browser-content(class="login-widget2")
     iframe#widget-demo(src='')
-
-
-script.
-  function refresh (method, clientId) {
-    var example_path = method + '?' + (clientId !== 'YOUR_CLIENT_ID' ? '&a=' + clientId : '') + '&callbackOnHash=#{callbackOnHashMode}' + '&backend=#{backend}';
-    var iframe_url = '#{DOMAIN_URL_DOCS}/lock-demos/' + example_path;
-
-    $('#widget-demo').attr('src', iframe_url);
-  }
-
-  $('#client-chooser').change(function (e) {
-    var method = $('#widget-chooser').val();
-    var clientId = $(this).val();
-    refresh(method, clientId);
-  });
-
-  refresh('login', '#{account.clientId}');
+  
