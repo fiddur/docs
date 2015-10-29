@@ -13,8 +13,9 @@ export default {
       url += '&a=' + payload.clientId;
     }
 
-    return window.fetch(url)
-    .then(function(response) {
+    return window.fetch(url, {
+      credentials: 'include'
+    }).then(function(response) {
       return response.text();
     });
   }
