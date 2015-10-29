@@ -13,7 +13,7 @@ export default {
       url += '&a=' + payload.clientId;
     }
 
-    return window.fetch(url, {
+    return fetch(url, {
       credentials: 'include'
     }).then(function(response) {
       return response.text();
