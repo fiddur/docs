@@ -15,13 +15,19 @@ class Tutorial extends React.Component {
     if (typeof document !== 'undefined') {
       highlightCode();
       setAnchorLinks();
-      var article = this.refs.article;
-      if (article) {
-        var child = article.firstChild;
-        if (child.nodeName === 'H1' || child.nodeName === 'H2') {
-          child.classList.add('hide');
+      var removeHeader = () => {
+        var article = this.refs.article;
+        if (article) {
+          var child = article.firstChild;
+          if (child.nodeName === 'H1' || child.nodeName === 'H2') {
+            child.classList.add('hide');
+          } else if (child.nodeName === 'P' && child.textContent === '') {
+            article.removeChild(child);
+            removeHeader();
+          }
         }
-      }
+      };
+      removeHeader();
     }
   }
   createMarkup() {
