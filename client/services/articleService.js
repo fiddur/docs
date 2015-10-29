@@ -13,9 +13,22 @@ export default {
       url += '&a=' + payload.clientId;
     }
 
+    function checkStatus(response) {
+      if (response.status >= 200 && response.status < 300) {
+        return response;
+      } else {
+        var error = new Error(response.statusText);
+        error.status = response.status;
+        error.response = response;
+        throw error;
+      }
+    }
+
     return fetch(url, {
       credentials: 'include'
-    }).then(function(response) {
+    })
+    .then(checkStatus)
+    .then(function(response) {
       return response.text();
     });
   }

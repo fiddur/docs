@@ -1,6 +1,7 @@
 import loadArticleAction from '../actions/loadArticleAction';
 import TutorialStore from '../stores/TutorialStore';
 import { getQuickstartMetdata } from '../util/tutorials';
+import {navigateAction} from 'fluxible-router';
 
 var baseUrl = '';
 if (typeof window !== 'undefined') {
