@@ -123,6 +123,7 @@ server.use(nconf.get('BASE_URL'), require('./lib/packager'));
 server.use(nconf.get('BASE_URL'), require('./lib/feedback'));
 server.use(nconf.get('BASE_URL'), require('./lib/redirects'));
 server.use(nconf.get('BASE_URL'), require('./lib/sitemap'));
+server.use(nconf.get('BASE_URL'), require('./lib/search'));
 
 var connections = require('./lib/connections');
 server.get('/ticket/step', function (req, res) {

@@ -47,7 +47,7 @@ class TutorialPage extends React.Component {
           <div className="wrapper">
             <div className="container">
               <Breadcrumbs {...this.props} />
-              <SearchBox />
+              <SearchBox baseUrl={this.props.baseUrl} />
             </div>
           </div>
         </div>

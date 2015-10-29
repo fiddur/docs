@@ -59,7 +59,7 @@ var ApiSection = ({category, baseUrl}) => {
   );
 
   var announcementLink = (announcement) => {
-    if (announcement.href.indexOf('http')) {
+    if (announcement.href.indexOf('http') > -1) {
       return (<a href={announcement.href}>{announcement.name}</a>);
     } else {
       return (<a href={baseUrl + announcement.href}>{announcement.name}</a>);
