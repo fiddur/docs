@@ -4,14 +4,28 @@ import React from 'react';
 import ApplicationStore from '../stores/ApplicationStore';
 import { connectToStores, provideContext } from 'fluxible-addons-react';
 import { handleHistory } from 'fluxible-router';
+import ErrorPage from './ErrorPage';
 
 class Application extends React.Component {
   render() {
     var Handler = this.props.currentRoute.get('handler');
 
+    if (Handler) {
+      if (this.props.currentNavigateError) {
+        var status = this.props.currentNavigateError.message === "Not Found" ? 404 : 500;
+        Handler = <ErrorPage status={status} />;
+      }
+      else {
+        Handler = <Handler baseUrl={this.props.baseUrl} />;
+      }
+    }
+    else {
+        Handler = <ErrorPage status={404}  />;
+    }
+
     return (
       <div>
-        <Handler baseUrl={this.props.baseUrl} />
+        {Handler}
       </div>
     );
   }

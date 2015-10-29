@@ -18,7 +18,6 @@ export default function(req, res) {
           locals: req.locals || {},
           url: `/${getPlatformSlug(payload.appType)}/${payload.currentTech}`
         };
-        console.log(req2)
         req2.query[payload.appType] = payload.tech1;
         if(payload.tech2) {
           req2.query.api = payload.tech2;
@@ -31,6 +30,11 @@ export default function(req, res) {
         }, (err) => {
           if (err) {
             return reject(err);
+          }
+          if (!res.doc) {
+            var error = new Error('No document found at ' + req2.url);
+            error.status = 404;
+            return reject(error);
           }
           res.locals.sections = res.doc.processSections(res.locals, true /* absolute links */);
           var options = {};
