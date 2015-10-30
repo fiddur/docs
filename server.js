@@ -10,6 +10,7 @@ import session from 'express-session';
 import nconf from 'nconf';
 import path from 'path';
 import winston from 'winston';
+import strings from './lib/strings';
 
 var server = express();
 
@@ -112,6 +113,7 @@ server.use(middleware.overrideIfAuthenticated);
 server.use(middleware.overrideIfClientInQs);
 server.use(middleware.overrideIfClientInQsForPublicAllowedUrls);
 server.use(middleware.fetchABExperiments);
+server.use(middleware.clientConfig); // MUST BE LAST!!!
 
 // Routes
 server.use(nconf.get('BASE_URL'), require('./lib/api-explorer'));
@@ -122,6 +124,7 @@ server.use(nconf.get('BASE_URL'), require('./lib/packager'));
 server.use(nconf.get('BASE_URL'), require('./lib/feedback'));
 server.use(nconf.get('BASE_URL'), require('./lib/redirects'));
 server.use(nconf.get('BASE_URL'), require('./lib/sitemap'));
+server.use(nconf.get('BASE_URL'), require('./lib/search'));
 
 var connections = require('./lib/connections');
 server.get('/ticket/step', function (req, res) {
@@ -172,9 +175,9 @@ if (server.get('env') === 'development') {
 // production error handler
 // no stacktraces leaked to user
 server.use(function(err, req, res, next) {
-  var msg = 'There was an error processing your request. For assistance, contact support@auth0.com.';
+  var msg = strings.ERROR_PROCESSING_REQUEST;
   if (err.status === 404) {
-    msg = 'Sorry, but the page you are looking for does not exist.';
+    msg = strings.PAGE_NOT_FOUND;
     winston.warn('Page not found: ' + req.url, { err: err });
   } else {
     winston.error('Error loading route: ' + req.url, { err: err });

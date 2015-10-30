@@ -1,18 +1,12 @@
-/* global $, sdk_config */
-import highlightCode from './highlightCode';
+/* global $ */
 
-export default function loadSdkSnippet() {
-  var widgetDemo = $('#widget-demo');
-  if (!widgetDemo) {
-    return;
-  }
+export default function loadSdkSnippet(options) {
+  var refresh = function(method, clientId) {
+    var example_path = method + '?' + (clientId !== 'YOUR_CLIENT_ID' ? '&a=' + clientId : '') + `&callbackOnHash=${options.callbackOnHashMode}&backend=${options.backend}`;
+    var iframe_url = `${window.CONFIG.baseUrl}/lock-demos/${example_path}`;
+    var snippet_url = `${window.CONFIG.baseUrl}/lock-snippets/${example_path}`;
 
-  function refresh (method, clientId) {
-    var example_path = method + '?' + (clientId !== 'YOUR_CLIENT_ID' ? '&a=' + clientId : '') + `&callbackOnHash=${sdk_config.callbackOnHashMode}&backend=${sdk_config.backend}`;
-    var iframe_url = `${window.DOMAIN_URL_DOCS}/lock-demos/${example_path}`;
-    var snippet_url = `${window.DOMAIN_URL_DOCS}/lock-snippets/${example_path}`;
-
-    widgetDemo.attr('src', iframe_url);
+    $('#widget-demo').attr('src', iframe_url);
 
     $.ajax({
       url: snippet_url,
@@ -22,13 +16,13 @@ export default function loadSdkSnippet() {
       }
     }).done(function (data) {
       $('#widget-snippet').html(data);
-      highlightCode();
+      window.highlightCode();
     });
-  }
+  };
 
   $('#widget-chooser').change(function (e) {
     var method = $(this).val();
-    var clientId = $('#client-chooser').length === 0 ? sdk_config.clientId : ($('#client-chooser').val() || '');
+    var clientId = $('#client-chooser').length === 0 ? options.clientId : ($('#client-chooser').val() || '');
     refresh(method, clientId);
   });
 
@@ -38,6 +32,12 @@ export default function loadSdkSnippet() {
     refresh(method, clientId);
   });
 
-  $('#widget-chooser').val($('#widget-chooser option:first').attr('value'));
-  $('#widget-chooser').change();
+  var widgetChooser = document.getElementById('widget-chooser');;
+  if (widgetChooser) {
+    $(widgetChooser).val($('#widget-chooser option:first').attr('value'));
+    $(widgetChooser).change();
+  } else {
+    refresh('login', options.clientId);
+  }
+
 }

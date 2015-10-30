@@ -7,6 +7,7 @@ import { connectToStores, provideContext } from 'fluxible-addons-react';
 import { customNavigationAction } from '../action/customNavigationAction';
 import highlightCode from '../browser/highlightCode';
 import setAnchorLinks from '../browser/anchorLinks';
+import loadSdkSnippet from '../browser/loadSdkSnippet';
 
 class TutorialPage extends React.Component {
   componentDidMount () {
@@ -21,6 +22,11 @@ class TutorialPage extends React.Component {
         e.preventDefault();
         $(this).tab('show');
       });
+      loadSdkSnippet({
+        callbackOnHashMode: false,
+        backend: this.props.tech2 ? '' : this.props.tech1, // Only set this if we are using a single tech.
+        clientId: window.CONFIG.account.clientId,
+      });
     }
   }
   render() {
@@ -32,6 +38,11 @@ class TutorialPage extends React.Component {
     var onDocumentLoaded = function(){
       highlightCode();
       setAnchorLinks();
+      loadSdkSnippet({
+        callbackOnHashMode: false,
+        backend: this.props.tech2 ? '' : this.props.tech1, // Only set this if we are using a single tech.
+        clientId: window.CONFIG.account.clientId,
+      });
       var removeHeader = () => {
         var article = this.refs.article;
         if (article) {
@@ -60,7 +71,7 @@ class TutorialPage extends React.Component {
           <div className="wrapper">
             <div className="container">
               <Breadcrumbs {...this.props} customNavigationAction={customNavigationAction} />
-              <SearchBox />
+              <SearchBox aseUrl={this.props.baseUrl} />
             </div>
           </div>
         </div>
@@ -85,6 +96,13 @@ class TutorialPage extends React.Component {
                   {tutorial2Tab}
                 </div>
               </section>
+
+              <div id="try-banner">
+                <div className="try-banner">
+                  <span>Try Auth0 for FREE</span>
+                  <a href="javascript:signup()" className="btn btn-success btn-lg">Create free Account</a>
+                </div>
+              </div>
             </div>
           </div>
         </div>

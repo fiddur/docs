@@ -8,8 +8,14 @@ require('./styles/docs.styl');
 require('./vendor/jquery.accordion.js');
 import accordion from './browser/accordion';
 import highlightCode from './browser/highlightCode';
+import loadSdkSnippet from './browser/loadSdkSnippet';
 
 $(function() {
   accordion();
   highlightCode();
+  loadSdkSnippet({
+    callbackOnHashMode: false,
+    backend: window.CONFIG.sdkSnippet.backend,
+    clientId: window.CONFIG.account.clientId,
+  });
 });

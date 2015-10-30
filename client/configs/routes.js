@@ -1,9 +1,10 @@
 import { TutorialStore, ArticleLoadAction } from 'auth0-tutorial-navigator';
 import { getQuickstartMetdata } from '../util/tutorials';
+import {navigateAction} from 'fluxible-router';
 
 var baseUrl = '';
 if (typeof window !== 'undefined') {
-  baseUrl = window.BASE_URL;
+  baseUrl = window.CONFIG.baseUrl;
 } else {
   baseUrl = process.env.BASE_URL;
 }
