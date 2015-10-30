@@ -34,14 +34,6 @@ class Tutorial extends React.Component {
     return {__html: this.props.articleHtml};
   }
   render() {
-    return (
-        <div id={this.props.tabName} className='loading-tutorial'>
-          <div className='auth0-spinner'>
-            <div className='spinner'></div>
-          </div>
-        </div>
-    );
-    
     if (this.props.articleHtml) {
       return (
         <div id={this.props.tabName}
