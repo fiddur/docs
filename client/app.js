@@ -1,8 +1,7 @@
 import Fluxible from 'fluxible';
 import Application from './components/Application';
 import ApplicationStore from './stores/ApplicationStore';
-import TutorialStore from './stores/TutorialStore';
-import TutorialArticleStore from './stores/TutorialArticleStore';
+import { TutorialStore, ArticleStore } from 'auth0-tutorial-navigator';
 import NavigationStore from './stores/NavigationStore';
 import RouteStore from './stores/RouteStore';
 import serviceProxyPlugin from 'fluxible-plugin-service-proxy';
@@ -20,7 +19,7 @@ app.plug(serviceProxyPlugin());
 app.registerStore(RouteStore);
 app.registerStore(ApplicationStore);
 app.registerStore(TutorialStore);
-app.registerStore(TutorialArticleStore);
+app.registerStore(ArticleStore);
 app.registerStore(NavigationStore);
 
 module.exports = app;

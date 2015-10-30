@@ -1,5 +1,4 @@
-import loadArticleAction from '../actions/loadArticleAction';
-import TutorialStore from '../stores/TutorialStore';
+import { TutorialStore, ArticleLoadAction } from 'auth0-tutorial-navigator';
 import { getQuickstartMetdata } from '../util/tutorials';
 
 var baseUrl = '';
@@ -43,8 +42,9 @@ export default {
         var tech1 = payload.get('params').get('tech1');
         context.dispatch('LOAD_TUTORIAL_NAVIGATOR', { appType: appType, tech1: tech1 });
         var quickstart = context.getStore(TutorialStore).getQuickstart();
+        var baseUrl = context.getStore(TutorialStore).getBaseUrl();
         context.dispatch('UPDATE_PAGE_METADATA', getQuickstartMetdata(quickstart, appType, tech1));
-        return context.executeAction(loadArticleAction, {
+        return context.executeAction(ArticleLoadAction, {
           appType: appType,
           tech1: tech1,
           currentTech: tech1
@@ -76,9 +76,10 @@ export default {
           var tech2 = payload.get('params').get('tech2');
           context.dispatch('LOAD_TUTORIAL_NAVIGATOR', { appType: appType, tech1: tech1, tech2: tech2 });
           var quickstart = context.getStore(TutorialStore).getQuickstart();
+          var baseUrl = context.getStore(TutorialStore).getBaseUrl();
           context.dispatch('UPDATE_PAGE_METADATA', getQuickstartMetdata(quickstart, appType, tech1, tech2));
           var actions = [
-            context.executeAction(loadArticleAction, {
+            context.executeAction(ArticleLoadAction, {
               appType: appType,
               tech1: tech1,
               tech2: tech2,
@@ -87,7 +88,7 @@ export default {
           ];
           if (tech2 !== 'no-api') {
             actions.push(
-              context.executeAction(loadArticleAction, {
+              context.executeAction(ArticleLoadAction, {
                 appType: 'backend',
                 tech1: tech1,
                 tech2: tech2,

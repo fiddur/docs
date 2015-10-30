@@ -1,7 +1,8 @@
 import nconf from 'nconf';
 import serialize from 'serialize-javascript';
-import {navigateAction} from 'fluxible-router';
-import loadSettingsAction from './actions/loadSettingsAction';
+import { navigateAction } from 'fluxible-router';
+// import loadSettingsAction from './actions/loadSettingsAction';
+import { InitialSettingsAction, ServiceName } from 'auth0-tutorial-navigator';
 import React from 'react';
 import ReactDOMServer from 'react-dom/server';
 import app from './app';
@@ -11,29 +12,31 @@ import HtmlComponent from './components/Html';
 import ApplicationStore from './stores/ApplicationStore';
 import { createElementWithContext } from 'fluxible-addons-react';
 import articleService from './services/articleService.server';
+import { customNavigationAction } from './action/customNavigationAction';
 
 const htmlComponent = React.createFactory(HtmlComponent);
 
 export default function middleware(req, res, next) {
 
   // Register services
-  app.getPlugin('ServiceProxyPlugin').registerService('articleService', articleService(req, res));
+  app.getPlugin('ServiceProxyPlugin').registerService(ServiceName, articleService(req, res));
 
   let context = app.createContext();
-
   var actionContext = context.getActionContext();
+
   actionContext.executeAction(navigateAction, {
     url: req.url
-  }).then(actionContext.executeAction(loadSettingsAction, {
+  }).then(actionContext.executeAction(InitialSettingsAction, {
     baseUrl: nconf.get('BASE_URL'),
     quickstart: res.locals.quickstart,
-    navigation: res.locals.navigation
+    navigation: res.locals.navigation,
+    customNavigationAction : customNavigationAction
   })).then(() => {
     var componentContext = context.getComponentContext();
     const content = ReactDOMServer.renderToStaticMarkup(htmlComponent({
         clientFile: nconf.get('BASE_URL') + '/js/client.bundle.js',
         context: componentContext,
-        state: 'window.App=' + serialize(app.dehydrate(context)) + ';',
+        state: 'window.App=' + serialize(app.dehydrate(context)) + ';',//window.NavigateAction=' + navigateAction +';',
         markup: ReactDOMServer.renderToString(createElementWithContext(context))
     }));
 

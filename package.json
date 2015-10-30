@@ -10,8 +10,8 @@
     "auth0": "^0.8.2",
     "auth0-common-logging": "git+ssh://git@gitlab.auth0.com:devops/auth0-common-logging.git#v2.8.0",
     "auth0-styleguide": "git://github.com/auth0/styleguide.git#2.2.5",
+    "auth0-tutorial-navigator": "git://github.com/auth0/tutorial-navigator.git#tutorial-navigator-widget",
     "aws-kinesis-writable": "^1.3.1",
-    "babel": "https://registry.npmjs.org/babel/-/babel-5.8.21.tgz",
     "body-parser": "^1.13.3",
     "bunyan": "^1.5.1",
     "cb": "^0.1.0",
@@ -29,6 +29,7 @@
     "highlight.js": "^8.9.1",
     "jade": "ntotten/jade#patch1",
     "js-yaml": "^3.4.0",
+    "jsonp": "^0.2.0",
     "limitd-client": "^1.0.3",
     "lodash": "^2.4.2",
     "lsr": "^1.0.0",
@@ -42,6 +43,7 @@
     "passport": "^0.2.2",
     "prerender-node": "^2.0.2",
     "protobufjs": "^4.0.0",
+    "q": "^1.4.1",
     "randomstring": "^1.0.7",
     "react": "^0.14.0",
     "react-dom": "^0.14.0",
@@ -57,11 +59,16 @@
     "winston-email": "0.0.10",
     "yams": "^2.0.0"
   },
+  "peerDependencies": {
+    "fluxible": ">=1.0.0",
+    "react": "^0.14.0",
+    "react-dom": "^0.14.0"
+  },
   "main": "app.js",
   "scripts": {
     "test": "make test",
     "start": "node start.js",
-    "build": "webpack --config webpack.config.production.js --progress",
+    "build": "webpack --config webpack.config.js --progress",
     "dev": "mongod & NODE_ENV=development PORT=3000 node webpack-dev-server.js & WEBPACK_PROXY_PORT=5050  NODE_ENV=development nodemon start.js -e js,jsx,jade,styl",
     "shrinkwrap": "npm-shrinkwrap",
     "postinstall": "npm run build"
