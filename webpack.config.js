@@ -42,6 +42,7 @@ var webpackConfig = {
       exclude: [
         path.resolve(__dirname, 'node_modules'),
       ],
+      noParse: [/autoit.js/],
       loaders: [
         require.resolve('react-hot-loader'),
         require.resolve('babel-loader')
@@ -54,6 +55,7 @@ var webpackConfig = {
       loader: 'style-loader!css-loader!autoprefixer-loader!stylus-loader'
     }, {
       test: /\.(png|woff|woff2|eot|ttf|svg)$/,
+      noParse: [/autoit.js/],
       loader: 'url-loader?limit=100000'
     }]
   },
