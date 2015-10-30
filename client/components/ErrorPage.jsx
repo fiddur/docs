@@ -1,9 +1,8 @@
 import React from 'react';
-import Breadcrumbs from './Breadcrumbs';
+import { Breadcrumbs, TutorialStore } from 'auth0-tutorial-navigator';
 import SearchBox from './SearchBox';
 import SideNavBar from './SideNavBar';
 import strings from '../../lib/strings';
-import TutorialStore from '../stores/TutorialStore';
 import { connectToStores } from 'fluxible-addons-react';
 
 class ErrorPage extends React.Component {

@@ -1,5 +1,4 @@
 import React from 'react';
-// import TutorialNavigator from './TutorialNavigator';
 import { TutorialNavigator } from 'auth0-tutorial-navigator';
 import NavigationStore from '../stores/NavigationStore';
 import SearchBox from './SearchBox';
