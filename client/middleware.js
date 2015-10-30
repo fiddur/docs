@@ -1,7 +1,6 @@
 import nconf from 'nconf';
 import serialize from 'serialize-javascript';
 import { navigateAction } from 'fluxible-router';
-// import loadSettingsAction from './actions/loadSettingsAction';
 import { InitialSettingsAction, ServiceName } from 'auth0-tutorial-navigator';
 import React from 'react';
 import ReactDOMServer from 'react-dom/server';

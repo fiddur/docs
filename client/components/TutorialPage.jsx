@@ -71,7 +71,7 @@ class TutorialPage extends React.Component {
           <div className="wrapper">
             <div className="container">
               <Breadcrumbs {...this.props} customNavigationAction={customNavigationAction} />
-              <SearchBox aseUrl={this.props.baseUrl} />
+              <SearchBox baseUrl={this.props.baseUrl} />
             </div>
           </div>
         </div>
