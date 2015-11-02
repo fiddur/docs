@@ -49,6 +49,11 @@ export default function highlightCode() {
   $('pre code').each(function(i, block) {
     var $snippet = $(this);
 
+    // Dont do highlight on auth api snippets
+    if ($snippet.parents('.api-explorer.nocode').length) {
+      return;
+    }
+
     if(!$snippet.hasClass('hljs')) {
       hljs.highlightBlock(block);
       hljs.lineNumbersBlock(block);
