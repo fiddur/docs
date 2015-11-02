@@ -89,7 +89,7 @@
     "mocha": "^2.2.5",
     "nodemon": "^1.3.7",
     "npm-shrinkwrap": "^5.4.0",
-    "nsp": "^1.0.3",
+    "nsp": "^2.0.0",
     "progress": "^1.1.8",
     "react-hot-loader": "^1.3.0",
     "style-loader": "^0.13.0",
