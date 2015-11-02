@@ -7,7 +7,7 @@ import CircleLogo from './CircleLogo';
 import HowTo from './HowTo';
 import { connectToStores } from 'fluxible-addons-react';
 import initStickyNav from '../browser/stickyNav';
-import { customNavigationAction } from '../action/customNavigationAction';
+import { quickstartNavigationAction } from '../action/quickstartNavigationAction';
 
 class InlineNav extends React.Component {
   componentDidMount () {
@@ -199,7 +199,7 @@ class Home extends React.Component {
 
     return (
       <div>
-        <TutorialNavigator {...this.props} customNavigationAction={customNavigationAction} onQuickstartLoaded={onQuickstartLoaded}/>
+        <TutorialNavigator {...this.props} customNavigationAction={quickstartNavigationAction} onQuickstartLoaded={onQuickstartLoaded}/>
         <div className="navigation-bar js-sticky-nav">
           <div className="wrapper">
             <div className="container">

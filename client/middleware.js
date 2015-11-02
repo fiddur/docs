@@ -11,7 +11,7 @@ import HtmlComponent from './components/Html';
 import ApplicationStore from './stores/ApplicationStore';
 import { createElementWithContext } from 'fluxible-addons-react';
 import articleService from './services/articleService.server';
-import { customNavigationAction } from './action/customNavigationAction';
+import { quickstartNavigationAction } from './action/quickstartNavigationAction';
 
 const htmlComponent = React.createFactory(HtmlComponent);
 
@@ -28,8 +28,7 @@ export default function middleware(req, res, next) {
   }).then(actionContext.executeAction(InitialSettingsAction, {
     baseUrl: nconf.get('BASE_URL'),
     quickstart: res.locals.quickstart,
-    navigation: res.locals.navigation,
-    customNavigationAction : customNavigationAction
+    navigation: res.locals.navigation
   })).then(() => {
     var componentContext = context.getComponentContext();
     const content = ReactDOMServer.renderToStaticMarkup(htmlComponent({

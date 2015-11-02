@@ -4,7 +4,7 @@ import SideNavBar from './SideNavBar';
 import { TutorialStore, Breadcrumbs, Tutorial } from 'auth0-tutorial-navigator';
 import { getPlatformName, getTechTitle } from '../util/tutorials';
 import { connectToStores, provideContext } from 'fluxible-addons-react';
-import { customNavigationAction } from '../action/customNavigationAction';
+import { quickstartNavigationAction } from '../action/quickstartNavigationAction';
 import highlightCode from '../browser/highlightCode';
 import setAnchorLinks from '../browser/anchorLinks';
 import loadSdkSnippet from '../browser/loadSdkSnippet';
@@ -70,7 +70,7 @@ class TutorialPage extends React.Component {
         <div className="navigation-bar">
           <div className="wrapper">
             <div className="container">
-              <Breadcrumbs {...this.props} customNavigationAction={customNavigationAction} />
+              <Breadcrumbs {...this.props} customNavigationAction={quickstartNavigationAction} />
               <SearchBox baseUrl={this.props.baseUrl} />
             </div>
           </div>
