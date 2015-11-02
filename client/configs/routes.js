@@ -1,4 +1,4 @@
-import { TutorialStore, ArticleLoadAction } from 'auth0-tutorial-navigator';
+import { TutorialStore, loadArticleAction } from 'auth0-tutorial-navigator';
 import { getQuickstartMetdata } from '../util/tutorials';
 import {navigateAction} from 'fluxible-router';
 
@@ -45,7 +45,7 @@ export default {
         var quickstart = context.getStore(TutorialStore).getQuickstart();
         var baseUrl = context.getStore(TutorialStore).getBaseUrl();
         context.dispatch('UPDATE_PAGE_METADATA', getQuickstartMetdata(quickstart, appType, tech1));
-        return context.executeAction(ArticleLoadAction, {
+        return context.executeAction(loadArticleAction, {
           appType: appType,
           tech1: tech1,
           currentTech: tech1
@@ -80,7 +80,7 @@ export default {
           var baseUrl = context.getStore(TutorialStore).getBaseUrl();
           context.dispatch('UPDATE_PAGE_METADATA', getQuickstartMetdata(quickstart, appType, tech1, tech2));
           var actions = [
-            context.executeAction(ArticleLoadAction, {
+            context.executeAction(loadArticleAction, {
               appType: appType,
               tech1: tech1,
               tech2: tech2,
@@ -89,7 +89,7 @@ export default {
           ];
           if (tech2 !== 'no-api') {
             actions.push(
-              context.executeAction(ArticleLoadAction, {
+              context.executeAction(loadArticleAction, {
                 appType: 'backend',
                 tech1: tech1,
                 tech2: tech2,

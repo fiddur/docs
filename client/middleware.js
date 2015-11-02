@@ -1,7 +1,7 @@
 import nconf from 'nconf';
 import serialize from 'serialize-javascript';
 import { navigateAction } from 'fluxible-router';
-import { InitialSettingsAction, ServiceName } from 'auth0-tutorial-navigator';
+import { loadSettingsAction, Constants } from 'auth0-tutorial-navigator';
 import React from 'react';
 import ReactDOMServer from 'react-dom/server';
 import app from './app';
@@ -18,14 +18,14 @@ const htmlComponent = React.createFactory(HtmlComponent);
 export default function middleware(req, res, next) {
 
   // Register services
-  app.getPlugin('ServiceProxyPlugin').registerService(ServiceName, articleService(req, res));
+  app.getPlugin('ServiceProxyPlugin').registerService(Constants.ArticleServiceName, articleService(req, res));
 
   let context = app.createContext();
   var actionContext = context.getActionContext();
 
   actionContext.executeAction(navigateAction, {
     url: req.url
-  }).then(actionContext.executeAction(InitialSettingsAction, {
+  }).then(actionContext.executeAction(loadSettingsAction, {
     baseUrl: nconf.get('BASE_URL'),
     quickstart: res.locals.quickstart,
     navigation: res.locals.navigation
