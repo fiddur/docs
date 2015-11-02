@@ -42,7 +42,6 @@ var webpackConfig = {
       exclude: [
         path.resolve(__dirname, 'node_modules'),
       ],
-      noParse: [/autoit.js/],
       loaders: [
         require.resolve('react-hot-loader'),
         require.resolve('babel-loader')
