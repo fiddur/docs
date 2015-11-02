@@ -58,11 +58,6 @@
     "winston-email": "0.0.10",
     "yams": "^2.0.0"
   },
-  "peerDependencies": {
-    "fluxible": ">=1.0.0",
-    "react": "^0.14.0",
-    "react-dom": "^0.14.0"
-  },
   "main": "app.js",
   "scripts": {
     "test": "make test",
