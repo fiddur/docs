@@ -55,7 +55,6 @@ var webpackConfig = {
       loader: 'style-loader!css-loader!autoprefixer-loader!stylus-loader'
     }, {
       test: /\.(png|woff|woff2|eot|ttf|svg)$/,
-      noParse: [/autoit.js/],
       loader: 'url-loader?limit=100000'
     }]
   },
