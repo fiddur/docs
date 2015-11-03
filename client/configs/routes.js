@@ -16,10 +16,11 @@ export default {
         method: 'get',
         page: 'home',
         handler: require('../components/Home'),
-        action: (context, payload, done) => {
+        action: (context, payload) => {
           context.dispatch('LOAD_TUTORIAL_NAVIGATOR', {});
-          context.dispatch('UPDATE_PAGE_METADATA', getQuickstartMetdata());
-          done();
+          return getQuickstartMetdata().then((metadata) => {
+            context.dispatch('UPDATE_PAGE_METADATA', metadata);
+          });
         }
     },
     apptype: {
@@ -27,11 +28,12 @@ export default {
         method: 'get',
         page: 'apptype',
         handler: require('../components/Home'),
-        action: (context, payload, done) => {
+        action: (context, payload) => {
           var appType = payload.get('params').get('apptype');
-          context.dispatch('LOAD_TUTORIAL_NAVIGATOR', { appType: appType });
-          context.dispatch('UPDATE_PAGE_METADATA', getQuickstartMetdata(null, appType));
-          done();
+          return getQuickstartMetdata(null, appType).then((metadata) => {
+            context.dispatch('LOAD_TUTORIAL_NAVIGATOR', { appType: appType });
+            context.dispatch('UPDATE_PAGE_METADATA', metadata);
+          });
         }
     },
     backend: {
@@ -42,14 +44,15 @@ export default {
       action: (context, payload) => {
         var appType = payload.get('params').get('apptype');
         var tech1 = payload.get('params').get('tech1');
-        context.dispatch('LOAD_TUTORIAL_NAVIGATOR', { appType: appType, tech1: tech1 });
         var quickstart = context.getStore(TutorialStore).getQuickstart();
-        context.dispatch('UPDATE_PAGE_METADATA', getQuickstartMetdata(quickstart, appType, tech1));
-        return context.executeAction(loadArticleAction, {
+        return getQuickstartMetdata(quickstart, appType, tech1).then((metadata) => {
+          context.dispatch('LOAD_TUTORIAL_NAVIGATOR', { appType: appType, tech1: tech1 });
+          context.dispatch('UPDATE_PAGE_METADATA', metadata);
+        }).then(context.executeAction(loadArticleAction, {
           appType: appType,
           tech1: tech1,
           currentTech: tech1
-        });
+        }));
       }
     },
     tech1: {
@@ -57,13 +60,14 @@ export default {
         method: 'get',
         page: 'tech1',
         handler: require('../components/Home'),
-        action: (context, payload, done) => {
+        action: (context, payload) => {
           var appType = payload.get('params').get('apptype');
           var tech1 = payload.get('params').get('tech1');
-          context.dispatch('LOAD_TUTORIAL_NAVIGATOR', { appType: appType, tech1: tech1 });
           var quickstart = context.getStore(TutorialStore).getQuickstart();
-          context.dispatch('UPDATE_PAGE_METADATA', getQuickstartMetdata(quickstart, appType, tech1));
-          done();
+          return getQuickstartMetdata(quickstart, appType, tech1).then((metadata) => {
+            context.dispatch('LOAD_TUTORIAL_NAVIGATOR', { appType: appType, tech1: tech1 });
+            context.dispatch('UPDATE_PAGE_METADATA', metadata);
+          });
         }
     },
     tech2: {
@@ -75,28 +79,27 @@ export default {
           var appType = payload.get('params').get('apptype');
           var tech1 = payload.get('params').get('tech1');
           var tech2 = payload.get('params').get('tech2');
-          context.dispatch('LOAD_TUTORIAL_NAVIGATOR', { appType: appType, tech1: tech1, tech2: tech2 });
           var quickstart = context.getStore(TutorialStore).getQuickstart();
-          context.dispatch('UPDATE_PAGE_METADATA', getQuickstartMetdata(quickstart, appType, tech1, tech2));
-          var actions = [
-            context.executeAction(loadArticleAction, {
-              appType: appType,
-              tech1: tech1,
-              tech2: tech2,
-              currentTech: tech1
-            })
-          ];
-          if (tech2 !== 'no-api') {
-            actions.push(
-              context.executeAction(loadArticleAction, {
+          return getQuickstartMetdata(quickstart, appType, tech1, tech2).then((metadata) => {
+            context.dispatch('LOAD_TUTORIAL_NAVIGATOR', { appType: appType, tech1: tech1, tech2: tech2 });
+            context.dispatch('UPDATE_PAGE_METADATA', metadata);
+          }).then(context.executeAction(loadArticleAction, {
+            appType: appType,
+            tech1: tech1,
+            tech2: tech2,
+            currentTech: tech1
+          })).then(() => {
+            if (tech2 !== 'no-api') {
+              return context.executeAction(loadArticleAction, {
                 appType: 'backend',
                 tech1: tech1,
                 tech2: tech2,
                 currentTech: tech2
-              })
-            );
-          }
-          return Promise.all(actions);
+              });
+            } else {
+              return Promise.resolve();
+            }
+          });
         }
     }
 };

@@ -66,24 +66,51 @@ export function getTechTitle(quickstart, appType, techName) {
 }
 
 export function getQuickstartMetdata(quickstart, appType, tech1, tech2) {
-  var meta = {};
-  if (appType && tech1 && tech2) {
-    if (tech2 === 'no-api') {
-      meta.pageTitle = `${getTechTitle(quickstart, appType, tech1)} Quickstart`;
-      meta.pageDescription = `Learn how to quickly add authentication to your ${getTechTitle(quickstart, appType, tech1)} app. Authenticate with any social or enterprise identity provider.`;
-    } else {
-      meta.pageTitle = `${getTechTitle(quickstart, appType, tech1)} + ${getTechTitle(quickstart, 'backend', tech2)} Quickstart`;
-      meta.pageDescription = `Learn how to quickly add authentication to your ${getTechTitle(quickstart, appType, tech1)} app that connects to ${getTechTitle(quickstart, 'backend', tech2)}. Authenticate with any social or enterprise identity provider.`;
+  return new Promise((resolve, reject) => {
+    if (appType && !getPlatformSlug(appType)) {
+      var err = new Error('nvalid AppType.');
+      err.statusCode = 404;
+      return reject(err);
     }
 
-  } else if (appType && tech1) {
-    meta.pageTitle = `${getTechTitle(quickstart, appType, tech1)} Quickstarts`;
-    meta.pageDescription =  `Learn how to quickly add authentication to your ${getTechTitle(quickstart, appType, tech1)} app. Authenticate with any social or enterprise identity provider.`;
-  } else if (appType) {
-    meta.pageTitle = `${getPlatformName(appType)} Quickstarts`;
-    meta.pageDescription = `Browse ${getPlatformName(appType).toLowerCase()} quickstarts to learn how to quickly add authentication to your app.`;
-  } else {
-    meta.pageTitle = strings.SITE_TITLE;
-  }
-  return meta;
+    var meta = {};
+    if (appType && tech1 && tech2) {
+      if (tech2 === 'no-api') {
+        let title1 = getTechTitle(quickstart, appType, tech1);
+        if (!title1) {
+          var err = new Error('Invalid technology.');
+          err.statusCode = 404;
+          return reject(err);
+        }
+        meta.pageTitle = `${title1} Quickstart`;
+        meta.pageDescription = `Learn how to quickly add authentication to your ${title1} app. Authenticate with any social or enterprise identity provider.`;
+      } else {
+        let title1 = getTechTitle(quickstart, appType, tech1);
+        let title2 = getTechTitle(quickstart, 'backend', tech2);
+        if (!title1 || !title2) {
+          var err = new Error('Invalid technology.');
+          err.statusCode = 404;
+          return reject(err);
+        }
+        meta.pageTitle = `${title1} + ${title2} Quickstart`;
+        meta.pageDescription = `Learn how to quickly add authentication to your ${title1} app that connects to ${title2}. Authenticate with any social or enterprise identity provider.`;
+      }
+
+    } else if (appType && tech1) {
+      let title1 = getTechTitle(quickstart, appType, tech1);
+      if (!title1) {
+        var err = new Error('Invalid technology.');
+        err.statusCode = 404;
+        return reject(err);
+      }
+      meta.pageTitle = `${title1} Quickstarts`;
+      meta.pageDescription =  `Learn how to quickly add authentication to your ${title1} app. Authenticate with any social or enterprise identity provider.`;
+    } else if (appType) {
+      meta.pageTitle = `${getPlatformName(appType)} Quickstarts`;
+      meta.pageDescription = `Browse ${getPlatformName(appType).toLowerCase()} quickstarts to learn how to quickly add authentication to your app.`;
+    } else {
+      meta.pageTitle = strings.SITE_TITLE;
+    }
+    return resolve(meta);
+  });
 }
