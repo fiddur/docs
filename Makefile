@@ -66,6 +66,6 @@ test-shrinkwrap-status:
 	@echo shrinkwrap is okay
 
 test-sec-deps:
-	@./node_modules/.bin/nsp audit-shrinkwrap
+	@./node_modules/.bin/nsp check
 
 .PHONY: test
