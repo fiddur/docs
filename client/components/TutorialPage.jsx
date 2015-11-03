@@ -35,7 +35,7 @@ class TutorialPage extends React.Component {
     var pageTitle = title1;
     var hasTutorial2 = this.props.tech2 && this.props.tech2 !== 'no-api';
     var tutorial2Tab;
-    var onDocumentLoaded = function(){
+    var componentLoadedInBrowser = function(){
       highlightCode();
       setAnchorLinks();
       loadSdkSnippet({
@@ -62,7 +62,7 @@ class TutorialPage extends React.Component {
       title2 = getTechTitle(this.props.quickstart, 'backend', this.props.tech2);
       pageTitle += ' + ' + title2;
       tutorial2Tab = (
-        <Tutorial tabName="tutorial-2" appType="backend" tech={this.props.tech2} onDocumentLoaded={onDocumentLoaded} />
+        <Tutorial tabName="tutorial-2" appType="backend" tech={this.props.tech2} componentLoadedInBrowser={componentLoadedInBrowser} />
       );
     }
     return (
@@ -90,7 +90,7 @@ class TutorialPage extends React.Component {
                 <div className="tab-content">
                   <Tutorial tabName="tutorial-1"
                     default={true}
-                    onDocumentLoaded={onDocumentLoaded}
+                    componentLoadedInBrowser={componentLoadedInBrowser}
                     appType={this.props.appType}
                     tech={this.props.tech1} />
                   {tutorial2Tab}

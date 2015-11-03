@@ -157,7 +157,7 @@ var CategorySection = ({category, baseUrl}) => {
 
 class Home extends React.Component {
   render() {
-    var onQuickstartLoaded = function(){
+    var componentLoadedInBrowser = function(){
       var $carousel = $(this.refs.carousel);
       $carousel.owlCarousel({
         margin: 20,
@@ -199,7 +199,7 @@ class Home extends React.Component {
 
     return (
       <div>
-        <TutorialNavigator {...this.props} customNavigationAction={quickstartNavigationAction} onQuickstartLoaded={onQuickstartLoaded}/>
+        <TutorialNavigator {...this.props} customNavigationAction={quickstartNavigationAction} componentLoadedInBrowser={componentLoadedInBrowser}/>
         <div className="navigation-bar js-sticky-nav">
           <div className="wrapper">
             <div className="container">
