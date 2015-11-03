@@ -9,10 +9,12 @@ require('./vendor/jquery.accordion.js');
 import accordion from './browser/accordion';
 import highlightCode from './browser/highlightCode';
 import loadSdkSnippet from './browser/loadSdkSnippet';
+import initFeedbackSender from './browser/feedbackSender';
 
 $(function() {
   accordion();
   highlightCode();
+  initFeedbackSender();
   loadSdkSnippet({
     callbackOnHashMode: false,
     backend: window.CONFIG.sdkSnippet.backend,
