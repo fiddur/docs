@@ -5,8 +5,7 @@ import ReactDOM from 'react-dom';
 import debug from 'debug';
 import { createElementWithContext } from 'fluxible-addons-react';
 import app from './app';
-import articleService from './services/articleService';
-import { Constants } from 'auth0-tutorial-navigator';
+import { Constants, articleService } from 'auth0-tutorial-navigator';
 
 require('./styles/docs.styl');
 

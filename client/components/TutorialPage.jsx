@@ -106,8 +106,7 @@ class TutorialPage extends React.Component {
             </div>
           </div>
         </div>
-      </div>
-    );
+      </div>);
   }
 }
 
