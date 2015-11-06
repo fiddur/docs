@@ -41,7 +41,7 @@ build_deb: check-fpm-installed check-version-variable check-deb-variables
 	--url ' $(GIT_URL)' --version $(VERSION_NUMBER) -n auth0-docs \
 	-x '**/.git*' -x '*.tgz' -x '**/test/*' \
 	--description 'Jenkins build $(VERSION_NUMBER) - git commit $(GIT_BRANCH)-$(GIT_COMMIT)' \
-	-t deb -s dir docs
+	-t deb -s dir auth0-docs
 
 	git checkout .
 
