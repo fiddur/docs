@@ -33,4 +33,4 @@ fi
 rm $file_default.postinst $file_init.postinst 2> /dev/null || true
 
 # Copy logrotate script
-cp /opt/auth0/$NAME/debian/auth0-$NAME-logs /etc/logrotate.d/
+cp /opt/auth0/auth0-$NAME/debian/auth0-$NAME-logs /etc/logrotate.d/
