@@ -5,4 +5,4 @@
 NAME="docs"
 
 service auth0-$NAME stop || true
-rm /etc/logrotate.d/auth0-$NAME-logs
+rm -f /etc/logrotate.d/auth0-$NAME-logs
