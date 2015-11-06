@@ -2,7 +2,7 @@ import { navigateAction } from 'fluxible-router';
 
 export default {
   quickstartNavigationAction : function(context, payload, done) {
-    var url = '/';
+    var url = payload.baseUrl || '' +  '/';
 
     if (payload.appType){
       url += `quickstart/${payload.appType}/`;
