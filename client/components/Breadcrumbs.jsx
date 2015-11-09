@@ -8,12 +8,12 @@ class Breadcrumbs extends React.Component {
     var p = this.props;
     if(p.appType) {
       list.push(
-        <NavLink key="base" href={`${p.baseUrl || '/'}`}>
+        <NavLink key="base" href="/docs">
           <span className="text">Documentation</span>
         </NavLink>
       );
       list.push(
-        <NavLink key="apptype" href={`${p.baseUrl}/quickstart/${p.appType}`}>
+        <NavLink key="apptype" href={`/docs/quickstart/${p.appType}`}>
           <i className="icon-budicon-461"></i><span className="text">{getPlatformName(p.appType)}</span>
         </NavLink>
       );
@@ -23,7 +23,7 @@ class Breadcrumbs extends React.Component {
 
     if(p.tech1) {
       list.push(
-        <NavLink key="tech1" href={`${p.baseUrl}/quickstart/${p.appType}/${p.tech1}`}>
+        <NavLink key="tech1" href={`/docs/quickstart/${p.appType}/${p.tech1}`}>
           <i className="icon-budicon-461"></i><span className="text">{getTechTitle(p.quickstart, p.appType, p.tech1)}</span>
         </NavLink>
       );
@@ -31,7 +31,7 @@ class Breadcrumbs extends React.Component {
 
     if(p.tech2 && p.tech2 !== 'no-api') {
       list.push(
-        <NavLink key="tech2" href={`${p.baseUrl}/quickstart/${p.appType}/${p.tech1}/${p.tech2}`}>
+        <NavLink key="tech2" href={`/docs/quickstart/${p.appType}/${p.tech1}/${p.tech2}`}>
           <i className="icon-budicon-461"></i><span className="text">{getTechTitle(p.quickstart, 'backend', p.tech2)}</span>
         </NavLink>
       );

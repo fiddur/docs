@@ -34,23 +34,23 @@ class InlineNav extends React.Component {
 }
 
 
-var ProductSection = ({category, baseUrl}) => (
+var ProductSection = ({category}) => (
   <div className="showcase">
     <div className="container">
       <div className="row">
         {category.links.map((link, i) => (
-          <ShowcaseItem key={i} {...link} baseUrl={baseUrl} />
+          <ShowcaseItem key={i} {...link} />
         ))}
       </div>
     </div>
   </div>
 );
 
-var ApiSection = ({category, baseUrl}) => {
+var ApiSection = ({category}) => {
 
   var boxContainer = (item, icon) => (
     <div className="col-xs-6 col-md-4">
-      <a className="icon-scale api-link" href={baseUrl + item.href}>
+      <a className="icon-scale api-link" href={item.href}>
         <i className={icon} />
         <strong>{item.name}</strong>
         <p>{item.description}</p>
@@ -62,7 +62,7 @@ var ApiSection = ({category, baseUrl}) => {
     if (announcement.href.indexOf('http') > -1) {
       return (<a href={announcement.href}>{announcement.name}</a>);
     } else {
-      return (<a href={baseUrl + announcement.href}>{announcement.name}</a>);
+      return (<a href={announcement.href}>{announcement.name}</a>);
     }
   }
 
@@ -94,46 +94,46 @@ var ApiSection = ({category, baseUrl}) => {
   );
 };
 
-var SdkSection = ({category, baseUrl}) => (
+var SdkSection = ({category}) => (
   <div className="container">
     <ul className="circle-list">
       {category.links.map((link, i) => (
         <li key={i}>
-          <CircleLogo {...link} baseUrl={baseUrl} />
+          <CircleLogo {...link} />
         </li>
       ))}
     </ul>
   </div>
 );
 
-var HowToSection = ({category, baseUrl}) => (
+var HowToSection = ({category}) => (
   <div className="container">
     <ul className="list-howtos">
       {category.links.map((link, i) => (
         <li key={i}>
-          <HowTo {...link} baseUrl={baseUrl} />
+          <HowTo {...link} />
         </li>
       ))}
     </ul>
   </div>
 );
 
-var CategorySection = ({category, baseUrl}) => {
+var CategorySection = ({category}) => {
   var sectionContainer;
   var className;
   switch (category.id) {
     case 'product':
       className = 'section-p'
-      sectionContainer = (category) => (<ProductSection category={category} baseUrl={baseUrl} />);
+      sectionContainer = (category) => (<ProductSection category={category} />);
       break;
     case 'api':
-      sectionContainer = (category) => (<ApiSection category={category} baseUrl={baseUrl} />);
+      sectionContainer = (category) => (<ApiSection category={category} />);
       break;
     case 'sdk':
-      sectionContainer = (category) => (<SdkSection category={category} baseUrl={baseUrl} />);
+      sectionContainer = (category) => (<SdkSection category={category} />);
       break;
     case 'how-to':
-      sectionContainer = (category) => (<HowToSection category={category} baseUrl={baseUrl} />);
+      sectionContainer = (category) => (<HowToSection category={category} />);
       break;
   }
 
@@ -164,12 +164,12 @@ class Home extends React.Component {
           <div className="wrapper">
             <div className="container">
               <InlineNav categories={this.props.categories} />
-              <SearchBox baseUrl={this.props.baseUrl} />
+              <SearchBox />
             </div>
           </div>
         </div>
         {this.props.categories.map((category) => (
-          <CategorySection key={category.id} category={category} baseUrl={this.props.baseUrl} />
+          <CategorySection key={category.id} category={category} />
         ))}
       </div>
     );

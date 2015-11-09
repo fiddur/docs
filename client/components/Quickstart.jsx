@@ -5,7 +5,7 @@ class Quickstart extends React.Component {
   handleClick(quickstart) {
     // var question = this.props.getQuestion(quickstart.name);
     //
-    var url = this.props.baseUrl + '/quickstart/' + quickstart.name;
+    var url = '/docs/quickstart/' + quickstart.name;
     this.context.executeAction(navigateAction, {
       url: url
     });

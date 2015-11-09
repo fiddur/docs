@@ -47,14 +47,14 @@ class TutorialPage extends React.Component {
           <div className="wrapper">
             <div className="container">
               <Breadcrumbs {...this.props} />
-              <SearchBox baseUrl={this.props.baseUrl} />
+              <SearchBox />
             </div>
           </div>
         </div>
         <div className="js-doc-template container">
           <div className="row">
             <div className="col-sm-3">
-              <SideNavBar baseUrl={this.props.baseUrl} />
+              <SideNavBar />
             </div>
             <div className="col-sm-9">
               <section className="docs-content">

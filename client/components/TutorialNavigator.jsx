@@ -10,7 +10,7 @@ import { getQuestion } from '../util/tutorials';
 
 class TutorialNavigator extends React.Component {
   handleSkip() {
-    var url = `${window.CONFIG.baseUrl}/quickstart/${this.props.appType}/${this.props.tech1}/no-api/`;
+    var url = `/docs/quickstart/${this.props.appType}/${this.props.tech1}/no-api/`;
     this.context.executeAction(navigateAction, {
       url: url
     });

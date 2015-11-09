@@ -8,7 +8,7 @@ var request = require('request');
 var assert = require('assert');
 var urlJoin = require('url-join');
 
-var baseUrl = urlJoin('http://localhost:' + nconf.get('PORT'), nconf.get('BASE_URL'));
+var baseUrl = urlJoin('http://localhost:' + nconf.get('PORT'), '/docs');
 
 describe('Application', function() {
   after(function (done) {

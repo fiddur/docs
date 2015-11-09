@@ -15,7 +15,7 @@ var urlJoin = require('url-join');
 var docUrls = require('../lib/docs').docUrls;
 var ProgressBar = require('progress');
 
-var baseUrl = urlJoin('http://localhost:' + nconf.get('PORT'), nconf.get('BASE_URL'));
+var baseUrl = urlJoin('http://localhost:' + nconf.get('PORT'), '/docs');
 
 if (nconf.get('DISABLE_CONTENT_TESTS')) {
   return;

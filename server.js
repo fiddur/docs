@@ -52,19 +52,15 @@ if (nconf.get('NODE_ENV') === 'production') {
   });
 }
 
-server.use('/test', function (req, res) {
+server.use('/docs/test', function (req, res) {
   res.sendStatus(200);
 });
 
-server.use(nconf.get('BASE_URL') + '/test', function (req, res) {
-  res.sendStatus(200);
-});
-
-server.use(function (req, res, next) {
-  if (!nconf.get('BASE_URL') || req.url === '/') return next();
-  req.url = req.url.replace(/\/$/,'');
-  next();
-});
+// server.use('/docs', function (req, res, next) {
+//   if (req.url === '/docs') return next();
+//   req.url = req.url.replace(/\/$/,'');
+//   next();
+// });
 
 if (nconf.get('NODE_ENV') !== 'test') {
   server.use(require('./lib/middleware/log_request'));
@@ -95,9 +91,9 @@ server.use(bodyParser.json());
 server.use(bodyParser.urlencoded({ extended: false }));
 server.use(methodOverride());
 
-server.use(nconf.get('BASE_URL') + '/media', express.static(path.join(__dirname, 'docs/media')));
+server.use('/docs/media', express.static(path.join(__dirname, 'docs/media')));
 ['css', 'img', 'js', 'vendor'].forEach(function(folder) {
-  server.use(nconf.get('BASE_URL') + '/' + folder, express.static(path.join(__dirname, '/public/', folder)));
+  server.use(folder, express.static(path.join(__dirname, '/public/', folder)));
 });
 
 
@@ -116,18 +112,18 @@ server.use(middleware.fetchABExperiments);
 server.use(middleware.clientConfig); // MUST BE LAST!!!
 
 // Routes
-server.use(nconf.get('BASE_URL'), require('./lib/api-explorer'));
-server.use(nconf.get('BASE_URL'), require('./lib/docs').router);
-server.use(nconf.get('BASE_URL'), require('./lib/sdk-snippets/lock/demos-routes'));
-server.use(nconf.get('BASE_URL'), require('./lib/sdk-snippets/lock/snippets-routes'));
-server.use(nconf.get('BASE_URL'), require('./lib/packager'));
-server.use(nconf.get('BASE_URL'), require('./lib/feedback'));
-server.use(nconf.get('BASE_URL'), require('./lib/redirects'));
-server.use(nconf.get('BASE_URL'), require('./lib/sitemap'));
-server.use(nconf.get('BASE_URL'), require('./lib/search'));
+server.use('/docs', require('./lib/api-explorer'));
+server.use('/docs', require('./lib/docs').router);
+server.use('/docs', require('./lib/sdk-snippets/lock/demos-routes'));
+server.use('/docs', require('./lib/sdk-snippets/lock/snippets-routes'));
+server.use('/docs', require('./lib/packager'));
+server.use('/docs', require('./lib/feedback'));
+server.use('/docs', require('./lib/redirects'));
+server.use('/docs', require('./lib/sitemap'));
+server.use('/docs', require('./lib/search'));
 
 var connections = require('./lib/connections');
-server.get('/ticket/step', function (req, res) {
+server.get('/docs/ticket/step', function (req, res) {
   if (!req.query.ticket) return res.sendStatus(404);
   connections.getCurrentStep(req.query.ticket, function (err, currentStep) {
     if (err) return res.sendStatus(500);
@@ -136,20 +132,25 @@ server.get('/ticket/step', function (req, res) {
   });
 });
 
-server.get(nconf.get('BASE_URL') + '/switch', function (req, res) {
+server.get('/docs/switch', function (req, res) {
   req.session.current_tenant = {
     name: req.query.tenant,
     region: req.query.region,
   };
-  res.redirect(nconf.get('BASE_URL') || '/');
+  res.redirect('/docs');
 });
 
-server.use(nconf.get('BASE_URL') + '/meta', require('./lib/api'));
+server.use('/docs/meta', require('./lib/api'));
 
 // React client middleware -> homepage, quickstart, etc.
 var quickstartMiddleware = require('./lib/quickstart').middleware;
 var reactMiddleware = require('./client/middleware');
 server.use(quickstartMiddleware, reactMiddleware);
+
+// This is just for localhost
+server.get('/', function(req, res) {
+  res.redirect('/docs');
+});
 
 // catch 404 and forward to error handler
 server.use(function(req, res, next) {
