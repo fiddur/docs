@@ -1,0 +1,271 @@
+.quickstart-list
+  &.container
+    padding: 0;
+    padding-top: 30px;
+    margin: 0 auto;
+
+  +breakpoint("desktop")
+    min-height: 302px;
+
+  .item
+    animation: fadeIn 300ms;
+
+#tutorial-template
+  .loading-tutorial
+    padding-top: 150px;
+
+#tutorial-navigator
+  min-height: 525px;
+  background: #F3F3F3;
+  position: relative;
+
+  .question-text,
+  .tenant-switcher
+    margin: 20px 0;
+    margin-bottom: 10px;
+    display: inline-block;
+    color: color_oil;
+    font-size: 20px;
+
+  .tenant-switcher
+    max-width: 320px;
+
+    +breakpoint("tablet")
+      max-width: none;
+
+    .text
+      margin-bottom: 15px;
+      font-size: 16px;
+
+      +breakpoint("tablet")
+        font-size: 20px;
+
+    .icon
+      font-size: 16px;
+      opacity: 0.5;
+      position: relative;
+      top: 0.2em;
+      padding-left: 1px;
+
+    .custom-select
+      margin: 0 10px;
+      max-width: 30vw;
+
+  .tutorial-content
+    display: none;
+
+  .is-result
+    .tutorial-content
+      display: block;
+
+    .tutorial-wizard
+      display: none;
+
+  [data-skip]
+    background: none;
+    outline: none;
+    border: 0;
+    background-color: #EB5424;
+    font-size: 13px;
+    border-radius: 3px;
+    font-weight: bold;
+    text-transform: uppercase;
+    color: #fff;
+    margin: 0 15px;
+    padding: 6px 15px;
+
+
+  .circle-list
+    padding: 0;
+    padding-top: 10px;
+    padding-bottom: 30px;
+    list-style: none;
+    text-align: center;
+    margin: 0 auto;
+
+    +breakpoint("tablet")
+      max-width: 800px;
+
+    +breakpoint("desktop")
+      max-width: none;
+
+    li
+      display: inline-block;
+      vertical-align: top;
+      margin: 10px 15px;
+      cursor: pointer;
+
+      +breakpoint("mobile-landscape")
+        margin: 10px 30px;
+
+  .circle-logo
+    font-size: 12px;
+
+    +breakpoint("tablet")
+      font-size: 13px;
+
+
+.breadcrumbs
+  font-size: 12px;
+  margin: 15px 10px;
+  padding: 3px 15px;
+  line-height: 2.5;
+  background: white;
+  border-radius: 3px;
+  display: inline-block;
+  box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.08);
+
+  i
+    font-size: 12px;
+    animation: none;
+    margin: 0;
+    position: relative;
+    top: 3px;
+    margin-left: 7px;
+    margin-right: 5px;
+    opacity: 0.5;
+
+  a
+    color: color_oil;
+    font-weight: normal;
+    display: inline-block;
+
+  .plus
+    padding: 0 5px;
+
+  .text
+    color: color_oil;
+    border-radius: 20px;
+
+    &:hover
+      opacity: 1;
+
+.quickstart
+  cursor: pointer;
+  padding: 15px 10px;
+  border-radius: 3px;
+  transition: background 100ms ease;
+  margin-bottom: 5px;
+  animation-timing-function: cubic-bezier(0.455, 0.03, 0.515, 0.955);
+  animation-duration: 200ms;
+
+  .btn
+    letter-spacing: 0.005em;
+
+  .title
+    display: block;
+    color: #333;
+
+  .cta
+    opacity: 0;
+    transition: opacity 100ms ease;
+
+  .description.description
+    color: color_oil;
+    line-height: normal;
+    font-size: 1rem;
+    margin-bottom: 10px;
+    max-width: 180px;
+
+  .sample
+    opacity: 0.5;
+    font-size: 12px;
+
+  &[data-type="webapp"]
+    .symbol
+      &:after
+        background-image: url('../../public/img/quickstarts/webapp.svg');
+
+  &[data-type="spa"]
+    .symbol
+      &:after
+        background-image: url('../../public/img/quickstarts/spa.svg');
+
+  &[data-type="hybrid"]
+    .symbol
+      &:after
+        background-image: url('../../public/img/quickstarts/hybrid.svg');
+
+  &[data-type="native-mobile"]
+    .symbol
+      &:after
+        background-image: url('../../public/img/quickstarts/native-mobile.svg');
+
+  &[data-type="backend"]
+    .symbol
+      &:after
+        background-image: url('../../public/img/quickstarts/backend.svg');
+
+
+  .symbol
+    display: inline-block;
+    background: color_green;
+    border-radius: 50%;
+    height: 100px;
+    width: 100px;
+    margin-bottom: 20px;
+    background: white;
+    position: relative;
+
+    &:after
+      position: absolute;
+      top: 0;
+      left: 0;
+      content: "";
+      display: block;
+      height: 100%;
+      width: 100%;
+      background-size: 50% 50%;
+      background-repeat: no-repeat;
+      background-position: center center;
+
+    i
+      font-size: 40px;
+      top: 30%;
+      animation: none;
+      color: #363C42;
+
+.quickstart:hover
+  +breakpoint("desktop")
+    background: white;
+    color: color_oil;
+    box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.1);
+
+    .symbol
+      background: #F3F3F3;
+
+    .cta
+      opacity: 1;
+
+@media screen and (max-width: 992px)
+  .quickstart
+    cursor: default;
+    opacity: 0.3;
+    background: #A9B3BC;
+    box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.1);
+    pointer-events: none;
+
+    .symbol
+      opacity: 0.5;
+
+    .cta
+      opacity: 1;
+      pointer-events: none;
+
+  .center .quickstart
+    cursor: pointer;
+    background: white;
+    color: color_oil;
+    pointer-events: auto;
+    opacity: 1;
+
+    .cta
+      opacity: 1;
+      pointer-events: auto;
+
+    i,
+    .symbol
+      opacity: 1;
+
+    .symbol
+      background: #F3F3F3;
