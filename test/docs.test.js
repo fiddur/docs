@@ -13,6 +13,8 @@ describe('Docs', function() {
   describe('compiler', function() {
 
     it('should compile all docs', function(done) {
+      this.timeout(10000); // This test takes a while to run.
+
       lsr
         .sync(docsPath)
         .forEach(function(fileStat) {
