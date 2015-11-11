@@ -38,7 +38,6 @@ export default {
       var appType = payload.get('params').get('apptype');
       var tech1 = payload.get('params').get('tech1');
       var quickstart = context.getStore(TutorialStore).getQuickstart();
-      var basePath = context.getStore(TutorialStore).getBaseUrl()
       return Promise.all([
         getQuickstartMetdata(quickstart, appType, tech1).then((metadata) => {
           context.dispatch('LOAD_TUTORIAL_NAVIGATOR', {
@@ -48,7 +47,6 @@ export default {
           context.dispatch('UPDATE_PAGE_METADATA', metadata);
         }),
         context.executeAction(loadArticleAction, {
-          baseUrl: basePath,
           appType: appType,
           tech1: tech1,
           currentTech: tech1
@@ -84,7 +82,6 @@ export default {
       var tech1 = payload.get('params').get('tech1');
       var tech2 = payload.get('params').get('tech2');
       var quickstart = context.getStore(TutorialStore).getQuickstart();
-      var basePath = context.getStore(TutorialStore).getBaseUrl()
       var actions = [
         getQuickstartMetdata(quickstart, appType, tech1, tech2).then((metadata) => {
           context.dispatch('LOAD_TUTORIAL_NAVIGATOR', {
@@ -95,7 +92,6 @@ export default {
           context.dispatch('UPDATE_PAGE_METADATA', metadata);
         }),
         context.executeAction(loadArticleAction, {
-          baseUrl: basePath,
           appType: appType,
           tech1: tech1,
           tech2: tech2,
@@ -105,7 +101,6 @@ export default {
       if (tech2 !== 'no-api') {
         actions.push(
           context.executeAction(loadArticleAction, {
-            baseUrl: basePath,
             appType: 'backend',
             tech1: tech1,
             tech2: tech2,

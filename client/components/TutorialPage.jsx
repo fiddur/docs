@@ -38,11 +38,6 @@ class TutorialPage extends React.Component {
     var componentLoadedInBrowser = function(){
       highlightCode();
       setAnchorLinks();
-      loadSdkSnippet({
-        callbackOnHashMode: false,
-        backend: this.props.tech2 ? '' : this.props.tech1, // Only set this if we are using a single tech.
-        clientId: window.CONFIG.account.clientId,
-      });
       var removeHeader = () => {
         var article = this.refs.article;
         if (article) {
@@ -70,7 +65,7 @@ class TutorialPage extends React.Component {
         <div className="navigation-bar">
           <div className="wrapper">
             <div className="container">
-              <Breadcrumbs {...this.props} customNavigationAction={quickstartNavigationAction} />
+              <Breadcrumbs {...this.props}  customNavigationAction={quickstartNavigationAction} />
               <SearchBox />
             </div>
           </div>
