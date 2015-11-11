@@ -2,9 +2,9 @@
 
 export default function loadSdkSnippet(options) {
   var refresh = function(method, clientId) {
-    var example_path = method + '?' + (clientId !== 'YOUR_CLIENT_ID' ? '&a=' + clientId : '') + `&callbackOnHash=${options.callbackOnHashMode}&backend=${options.backend}`;
-    var iframe_url = `${window.CONFIG.baseUrl}/lock-demos/${example_path}`;
-    var snippet_url = `${window.CONFIG.baseUrl}/lock-snippets/${example_path}`;
+    var example_path = method + '?' + (clientId && clientId !== 'YOUR_CLIENT_ID' ? 'a=' + clientId : '') + `&callbackOnHash=${options.callbackOnHashMode}&backend=${options.backend}`;
+    var iframe_url = `/docs/lock-demos/${example_path}`;
+    var snippet_url = `/docs/lock-snippets/${example_path}`;
 
     $('#widget-demo').attr('src', iframe_url);
 
@@ -32,7 +32,7 @@ export default function loadSdkSnippet(options) {
     refresh(method, clientId);
   });
 
-  var widgetChooser = document.getElementById('widget-chooser');;
+  var widgetChooser = document.getElementById('widget-chooser');
   if (widgetChooser) {
     $(widgetChooser).val($('#widget-chooser option:first').attr('value'));
     $(widgetChooser).change();

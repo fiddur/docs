@@ -1,5 +1,6 @@
 /* global $ */
 
+require("babel-polyfill");
 require('./styles/docs.styl');
 
 // We require the jquery.accordion.js here, rather than in

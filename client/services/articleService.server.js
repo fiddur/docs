@@ -12,7 +12,7 @@ export default function(req, res) {
     loadArticle: function(payload) {
       return new Promise((resolve, reject) => {
         var req2 = {
-          query: {},
+          query: { },
           locals: req.locals || {},
           url: `/${getPlatformSlug(payload.appType)}/${payload.currentTech}`
         };

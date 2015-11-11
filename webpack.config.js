@@ -32,7 +32,7 @@ var webpackConfig = {
   },
   output: {
     path: path.resolve('./public/js'),
-    publicPath: nconf.get('BASE_URL') + '/js/',
+    publicPath: '/docs/js/',
     filename: '[name].bundle.js',
     chunkFilename: '[id].chunk.js'
   },
