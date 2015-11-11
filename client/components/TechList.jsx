@@ -25,7 +25,6 @@ class TechList extends React.Component {
         <Tech key={i}
           delay={time}
           skippable={skippable}
-          baseUrl={this.props.baseUrl}
           tech={tech}
           tech1={this.props.tech1}
           appType={this.props.appType} />

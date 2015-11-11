@@ -1,7 +1,7 @@
 import React from 'react';
 
-var HowTo = ({name, icon, href, description, baseUrl}) => (
-  <a className="how-to" href={baseUrl + href}>
+var HowTo = ({name, icon, href, description}) => (
+  <a className="how-to" href={href}>
     <div className="content">
       <i className={icon} />
       <div className="title">{name}</div>

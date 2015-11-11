@@ -12,11 +12,11 @@ class Application extends React.Component {
 
     if (Handler) {
       if (this.props.currentNavigateError) {
-        var status = this.props.currentNavigateError.message === "Not Found" ? 404 : 500;
+        var status = this.props.currentNavigateError.message === 'Not Found' ? 404 : 500;
         Handler = <ErrorPage status={status} />;
       }
       else {
-        Handler = <Handler baseUrl={this.props.baseUrl} />;
+        Handler = <Handler />;
       }
     }
     else {
@@ -47,8 +47,7 @@ export default handleHistory(provideContext(connectToStores(
       currentPageName: appStore.getCurrentPageName(),
       pageTitle: appStore.getPageTitle(),
       pageDescription: appStore.getPageDescription(),
-      pages: appStore.getPages(),
-      baseUrl: appStore.getBaseUrl()
+      pages: appStore.getPages()
     };
   }
 )), { enableScroll: false });

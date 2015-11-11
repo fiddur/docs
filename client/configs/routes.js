@@ -1,18 +1,10 @@
 import loadArticleAction from '../actions/loadArticleAction';
 import TutorialStore from '../stores/TutorialStore';
 import { getQuickstartMetdata } from '../util/tutorials';
-import { navigateAction } from 'fluxible-router';
-
-var baseUrl = '';
-if (typeof window !== 'undefined') {
-  baseUrl = window.CONFIG.baseUrl;
-} else {
-  baseUrl = process.env.BASE_URL;
-}
 
 export default {
   home: {
-    path: `${baseUrl}/`,
+    path: '/docs',
     method: 'get',
     page: 'home',
     handler: require('../components/Home'),
@@ -24,7 +16,7 @@ export default {
     }
   },
   apptype: {
-    path: `${baseUrl}/quickstart/:apptype`,
+    path: '/docs/quickstart/:apptype',
     method: 'get',
     page: 'apptype',
     handler: require('../components/Home'),
@@ -39,7 +31,7 @@ export default {
     }
   },
   backend: {
-    path: `${baseUrl}/quickstart/:apptype(backend|webapp)/:tech1`,
+    path: '/docs/quickstart/:apptype(backend|webapp)/:tech1',
     method: 'get',
     page: 'singletech',
     handler: require('../components/TutorialPage'),
@@ -64,7 +56,7 @@ export default {
     }
   },
   tech1: {
-    path: `${baseUrl}/quickstart/:apptype/:tech1`,
+    path: '/docs/quickstart/:apptype/:tech1',
     method: 'get',
     page: 'tech1',
     handler: require('../components/Home'),
@@ -82,7 +74,7 @@ export default {
     }
   },
   tech2: {
-    path: `${baseUrl}/quickstart/:apptype/:tech1/:tech2`,
+    path: '/docs/quickstart/:apptype/:tech1/:tech2',
     method: 'get',
     page: 'tech2',
     handler: require('../components/TutorialPage'),

@@ -3,7 +3,7 @@ import { navigateAction } from 'fluxible-router';
 
 class Tech extends React.Component {
   handleClick(tech) {
-    var url = `${this.props.baseUrl}/quickstart/${this.props.appType}/`;
+    var url = `/docs/quickstart/${this.props.appType}/`;
     if(this.props.tech1) {
       url += `${this.props.tech1}/${tech.name}`;
     } else {

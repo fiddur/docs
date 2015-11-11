@@ -14,7 +14,7 @@ export default function(req, res) {
       return new Promise((resolve, reject) => {
 
         var req2 = {
-          query: {},
+          query: { },
           locals: req.locals || {},
           url: `/${getPlatformSlug(payload.appType)}/${payload.currentTech}`
         };

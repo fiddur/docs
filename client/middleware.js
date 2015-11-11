@@ -25,13 +25,12 @@ export default function middleware(req, res, next) {
   actionContext.executeAction(navigateAction, {
     url: req.url
   }).then(actionContext.executeAction(loadSettingsAction, {
-    baseUrl: nconf.get('BASE_URL'),
     quickstart: res.locals.quickstart,
     navigation: res.locals.navigation
   })).then(() => {
     var componentContext = context.getComponentContext();
     const content = ReactDOMServer.renderToStaticMarkup(htmlComponent({
-        clientFile: nconf.get('BASE_URL') + '/js/client.bundle.js',
+        clientFile: '/docs/js/client.bundle.js',
         context: componentContext,
         state: 'window.App=' + serialize(app.dehydrate(context)) + ';',
         markup: ReactDOMServer.renderToString(createElementWithContext(context))

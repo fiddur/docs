@@ -44,7 +44,6 @@ nconf.file('global', { file: config_file })
     'GITHUB_DOCS_ORG': 'auth0',
     'GITHUB_DOCS_REPO': 'docs',
     'PRERENDER_ENABLED': false,
-    'BASE_URL': '',
     'MEDIA_URL': process.env.NODE_ENV === 'production' ? 'https://cdn.auth0.com/docs/media' : false,
     'DOCS_PATH': __dirname + '/docs/articles',
     'PORT': 5050,
@@ -69,6 +68,3 @@ if (!nconf.get('AUTH0JS_URL')) {
 if (!nconf.get('AUTH0_DOMAIN') && nconf.get('AUTH0_TENANT') && nconf.get('DOMAIN_URL_SERVER')) {
   nconf.set('AUTH0_DOMAIN', nconf.get('DOMAIN_URL_SERVER').replace('{tenant}', nconf.get('AUTH0_TENANT')));
 }
-
-// This variable is used in the client scripts and must be an env varible
-process.env.BASE_URL = process.env.BASE_URL || nconf.get('BASE_URL');

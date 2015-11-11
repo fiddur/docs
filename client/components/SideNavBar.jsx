@@ -5,7 +5,7 @@ import NavigationStore from '../stores/NavigationStore';
 import { connectToStores } from 'fluxible-addons-react';
 import initAccordion from '../browser/accordion';
 
-var CategorySection = ({category, baseUrl}) => {
+var CategorySection = ({category}) => {
   var links = category.links || [];
   if (links.length === 0) {
     for (let key in category.sections) {
@@ -25,7 +25,7 @@ var CategorySection = ({category, baseUrl}) => {
         {links.map((doc, i) => {
           return (
             <li key={i}>
-              <a href={baseUrl + doc.href}>{doc.name}</a>
+              <a href={doc.href}>{doc.name}</a>
             </li>
           );
         })}
@@ -58,7 +58,7 @@ class SideNavBar extends React.Component {
               </div>
               <div className="principal-content" data-content="data-content">
                 {this.props.categories.map((category) => (
-                  <CategorySection key={category.id} category={category} baseUrl={this.props.baseUrl} />
+                  <CategorySection key={category.id} category={category} />
                 ))}
               </div>
             </div>

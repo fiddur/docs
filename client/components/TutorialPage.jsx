@@ -23,8 +23,8 @@ class TutorialPage extends React.Component {
       });
       loadSdkSnippet({
         callbackOnHashMode: false,
-        backend: this.props.tech2 ? '' : this.props.tech1, // Only set this if we are using a single tech.
-        clientId: window.CONFIG.account.clientId,
+        backend: this.props.tech2 ? this.props.tech2 : this.props.tech1,
+        // clientId: get from store,
       });
     }
   }
@@ -47,14 +47,14 @@ class TutorialPage extends React.Component {
           <div className="wrapper">
             <div className="container">
               <Breadcrumbs {...this.props} />
-              <SearchBox baseUrl={this.props.baseUrl} />
+              <SearchBox />
             </div>
           </div>
         </div>
         <div className="js-doc-template container">
           <div className="row">
             <div className="col-sm-3">
-              <SideNavBar baseUrl={this.props.baseUrl} />
+              <SideNavBar />
             </div>
             <div className="col-sm-9">
               <section className="docs-content">
