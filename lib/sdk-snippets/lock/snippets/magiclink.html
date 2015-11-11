@@ -6,7 +6,7 @@
   var lock = new Auth0LockPasswordless(clientID, domain);
 
   function open() {
-    lock.magicklink({
+    lock.magiclink({
       callbackURL: '<%= account.callback %>',
       authParams: {
         scope: 'openid profile'
