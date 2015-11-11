@@ -52,6 +52,10 @@ if (nconf.get('NODE_ENV') === 'production') {
   });
 }
 
+server.use('/test', function (req, res) {
+  res.sendStatus(200);
+});
+
 server.use('/docs/test', function (req, res) {
   res.sendStatus(200);
 });
@@ -93,7 +97,7 @@ server.use(methodOverride());
 
 server.use('/docs/media', express.static(path.join(__dirname, 'docs/media')));
 ['css', 'img', 'js', 'vendor'].forEach(function(folder) {
-  server.use(folder, express.static(path.join(__dirname, '/public/', folder)));
+  server.use('/docs/' + folder, express.static(path.join(__dirname, '/public/', folder)));
 });
 
 
@@ -103,13 +107,12 @@ server.use(middleware.setCurrentTenant);
 server.use(middleware.configuration);
 server.use(middleware.setUserIsOwner);
 server.use(middleware.defaultValues);
-server.use(middleware.urlVariables);
 server.use(middleware.embedded);
 server.use(middleware.overrideIfAuthenticated);
 server.use(middleware.overrideIfClientInQs);
 server.use(middleware.overrideIfClientInQsForPublicAllowedUrls);
+server.use(middleware.urlVariables);
 server.use(middleware.fetchABExperiments);
-server.use(middleware.clientConfig); // MUST BE LAST!!!
 
 // Routes
 server.use('/docs', require('./lib/api-explorer'));

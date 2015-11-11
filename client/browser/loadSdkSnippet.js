@@ -2,7 +2,7 @@
 
 export default function loadSdkSnippet(options) {
   var refresh = function(method, clientId) {
-    var example_path = method + '?' + (clientId !== 'YOUR_CLIENT_ID' ? '&a=' + clientId : '') + `&callbackOnHash=${options.callbackOnHashMode}&backend=${options.backend}`;
+    var example_path = method + '?' + (clientId && clientId !== 'YOUR_CLIENT_ID' ? 'a=' + clientId : '') + `&callbackOnHash=${options.callbackOnHashMode}&backend=${options.backend}`;
     var iframe_url = `/docs/lock-demos/${example_path}`;
     var snippet_url = `/docs/lock-snippets/${example_path}`;
 

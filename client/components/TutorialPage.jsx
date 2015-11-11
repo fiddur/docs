@@ -23,8 +23,8 @@ class TutorialPage extends React.Component {
       });
       loadSdkSnippet({
         callbackOnHashMode: false,
-        backend: this.props.tech2 ? '' : this.props.tech1, // Only set this if we are using a single tech.
-        clientId: window.CONFIG.account.clientId,
+        backend: this.props.tech2 ? this.props.tech2 : this.props.tech1,
+        // clientId: get from store,
       });
     }
   }
