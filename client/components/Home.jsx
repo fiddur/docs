@@ -58,14 +58,6 @@ var ApiSection = ({category}) => {
     </div>
   );
 
-  var announcementLink = (announcement) => {
-    if (announcement.href.indexOf('http') > -1) {
-      return (<a href={announcement.href}>{announcement.name}</a>);
-    } else {
-      return (<a href={announcement.href}>{announcement.name}</a>);
-    }
-  }
-
   return (
     <div className="api-docs">
       <div className="container">
@@ -80,7 +72,7 @@ var ApiSection = ({category}) => {
                   <ul>
                     {category.sections['announcements'].links.map((announcement, i) => (
                       <li key={i}>
-                        {announcementLink(announcement)}
+                        <a href={announcement.href}>{announcement.name}</a>
                       </li>
                     ))}
                   </ul>
