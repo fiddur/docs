@@ -181,8 +181,8 @@
       "resolved": "git://github.com/auth0/styleguide.git#d0f4a56b3de8428feef1122ea950e9512090bd35"
     },
     "auth0-tutorial-navigator": {
-      "version": "1.0.0",
-      "resolved": "git://github.com/auth0/tutorial-navigator.git#249fa0b6fb642c6ef8d584edac1353101fe6c2a4",
+      "version": "1.0.1",
+      "resolved": "git://github.com/auth0/tutorial-navigator.git#19068a9c6ca5df083d99061a6683495825604aef",
       "dependencies": {
         "auth0-styleguide": {
           "version": "2.1.2",
@@ -201,8 +201,8 @@
               "resolved": "https://registry.npmjs.org/fbjs/-/fbjs-0.1.0-alpha.7.tgz",
               "dependencies": {
                 "core-js": {
-                  "version": "1.2.5",
-                  "resolved": "https://registry.npmjs.org/core-js/-/core-js-1.2.5.tgz"
+                  "version": "1.2.6",
+                  "resolved": "https://registry.npmjs.org/core-js/-/core-js-1.2.6.tgz"
                 },
                 "promise": {
                   "version": "7.0.4",
