@@ -20,7 +20,7 @@ $(function() {
   setAnchorLinks();
   loadSdkSnippet({
     callbackOnHashMode: false,
-    backend: window.CONFIG.sdkSnippet.backend,
-    clientId: window.CONFIG.account.clientId,
+    //backend: window.CONFIG.sdkSnippet.backend,
+    //clientId:
   });
 });
