@@ -6,9 +6,6 @@ var _ = require('lodash');
 var assert = require('assert');
 
 var docsPath = nconf.get('DOCS_PATH') || path.resolve(__dirname, '../docs/articles');
-
-var settings = yaml.safeLoad(fs.readFileSync(path.join(docsPath, '../config/settings.yml')));
-var menus = yaml.safeLoad(fs.readFileSync(path.join(docsPath, '../config/menus.yml')));
 var navigation = yaml.safeLoad(fs.readFileSync(path.join(docsPath, '../config/navigation.yml')));
 
 describe('Configuration', function() {
