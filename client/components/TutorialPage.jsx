@@ -1,11 +1,12 @@
 import React from 'react';
-import Breadcrumbs from './Breadcrumbs';
 import SearchBox from './SearchBox';
 import SideNavBar from './SideNavBar';
-import Tutorial from './Tutorial';
-import TutorialStore from '../stores/TutorialStore';
+import { TutorialStore, Breadcrumbs, Tutorial } from 'auth0-tutorial-navigator';
 import { getPlatformName, getTechTitle } from '../util/tutorials';
 import { connectToStores, provideContext } from 'fluxible-addons-react';
+import { quickstartNavigationAction } from '../action/quickstartNavigationAction';
+import highlightCode from '../browser/highlightCode';
+import setAnchorLinks from '../browser/anchorLinks';
 import loadSdkSnippet from '../browser/loadSdkSnippet';
 
 class TutorialPage extends React.Component {
@@ -34,11 +35,29 @@ class TutorialPage extends React.Component {
     var pageTitle = title1;
     var hasTutorial2 = this.props.tech2 && this.props.tech2 !== 'no-api';
     var tutorial2Tab;
+    var componentLoadedInBrowser = function(){
+      highlightCode();
+      setAnchorLinks();
+      var removeHeader = () => {
+        var article = this.refs.article;
+        if (article) {
+          var child = article.firstChild;
+          if (child.nodeName === 'H1' || child.nodeName === 'H2') {
+            child.classList.add('hide');
+          } else if (child.nodeName === 'P' && child.textContent === '') {
+            article.removeChild(child);
+            removeHeader();
+          }
+        }
+      };
+      removeHeader();
+    };
+
     if (hasTutorial2) {
       title2 = getTechTitle(this.props.quickstart, 'backend', this.props.tech2);
       pageTitle += ' + ' + title2;
       tutorial2Tab = (
-        <Tutorial tabName="tutorial-2" appType="backend" tech={this.props.tech2} />
+        <Tutorial tabName="tutorial-2" appType="backend" tech={this.props.tech2} componentLoadedInBrowser={componentLoadedInBrowser} />
       );
     }
     return (
@@ -46,7 +65,7 @@ class TutorialPage extends React.Component {
         <div className="navigation-bar">
           <div className="wrapper">
             <div className="container">
-              <Breadcrumbs {...this.props} />
+              <Breadcrumbs {...this.props}  customNavigationAction={quickstartNavigationAction} />
               <SearchBox />
             </div>
           </div>
@@ -66,6 +85,7 @@ class TutorialPage extends React.Component {
                 <div className="tab-content">
                   <Tutorial tabName="tutorial-1"
                     default={true}
+                    componentLoadedInBrowser={componentLoadedInBrowser}
                     appType={this.props.appType}
                     tech={this.props.tech1} />
                   {tutorial2Tab}
@@ -81,8 +101,7 @@ class TutorialPage extends React.Component {
             </div>
           </div>
         </div>
-      </div>
-    );
+      </div>);
   }
 }
 

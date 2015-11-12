@@ -1,5 +1,5 @@
 import React from 'react';
-import TutorialNavigator from './TutorialNavigator';
+import { TutorialNavigator } from 'auth0-tutorial-navigator';
 import NavigationStore from '../stores/NavigationStore';
 import SearchBox from './SearchBox';
 import ShowcaseItem from './ShowcaseItem';
@@ -7,6 +7,7 @@ import CircleLogo from './CircleLogo';
 import HowTo from './HowTo';
 import { connectToStores } from 'fluxible-addons-react';
 import initStickyNav from '../browser/stickyNav';
+import { quickstartNavigationAction } from '../action/quickstartNavigationAction';
 
 class InlineNav extends React.Component {
   componentDidMount () {
@@ -133,7 +134,6 @@ var CategorySection = ({category}) => {
     throw 'Invalid category id';
   }
 
-
   return (
     <section className="section-product" id={category.id}>
       <div className="container">
@@ -149,9 +149,49 @@ var CategorySection = ({category}) => {
 
 class Home extends React.Component {
   render() {
+    var componentLoadedInBrowser = function(){
+      var $carousel = $(this.refs.carousel);
+      $carousel.owlCarousel({
+        margin: 20,
+        center: true,
+        dots: true,
+        navContainerClass: 'nav',
+        navClass: ['prev', 'next'],
+        baseClass: 'js-carousel',
+        itemClass: 'item',
+        dotsClass: 'dots',
+        dotClass: 'dot',
+        nav: false,
+        responsive: {
+          0: {
+            items: 1,
+            stagePadding: 60
+          },
+          380: {
+            items: 2,
+            stagePadding: 0
+          },
+          570: {
+            items: 3,
+            stagePadding: 0
+          },
+          768: {
+            items: 4,
+            stagePadding: 0
+          },
+          992: {
+            items: 5,
+            stagePadding: 0,
+            center: false,
+            dots: false
+          }
+        }
+      });
+    };
+
     return (
       <div>
-        <TutorialNavigator {...this.props} />
+        <TutorialNavigator {...this.props} customNavigationAction={quickstartNavigationAction} componentLoadedInBrowser={componentLoadedInBrowser}/>
         <div className="navigation-bar js-sticky-nav">
           <div className="wrapper">
             <div className="container">

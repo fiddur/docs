@@ -10,9 +10,7 @@ var viewname = path.resolve(__dirname, '../../views/doc-embedded.jade');
 export default function(req, res) {
   return {
     loadArticle: function(payload) {
-
       return new Promise((resolve, reject) => {
-
         var req2 = {
           query: { },
           locals: req.locals || {},

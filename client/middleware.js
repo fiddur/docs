@@ -1,7 +1,7 @@
 import nconf from 'nconf';
 import serialize from 'serialize-javascript';
-import {navigateAction} from 'fluxible-router';
-import loadSettingsAction from './actions/loadSettingsAction';
+import { navigateAction } from 'fluxible-router';
+import { loadSettingsAction, Constants } from 'auth0-tutorial-navigator';
 import React from 'react';
 import ReactDOMServer from 'react-dom/server';
 import app from './app';
@@ -11,17 +11,18 @@ import HtmlComponent from './components/Html';
 import ApplicationStore from './stores/ApplicationStore';
 import { createElementWithContext } from 'fluxible-addons-react';
 import articleService from './services/articleService.server';
+import { quickstartNavigationAction } from './action/quickstartNavigationAction';
 
 const htmlComponent = React.createFactory(HtmlComponent);
 
 export default function middleware(req, res, next) {
 
   // Register services
-  app.getPlugin('ServiceProxyPlugin').registerService('articleService', articleService(req, res));
+  app.getPlugin('ServiceProxyPlugin').registerService(Constants.ArticleServiceName, articleService(req, res));
 
   let context = app.createContext();
-
   var actionContext = context.getActionContext();
+
   actionContext.executeAction(navigateAction, {
     url: req.url
   }).then(actionContext.executeAction(loadSettingsAction, {
@@ -32,7 +33,7 @@ export default function middleware(req, res, next) {
     const content = ReactDOMServer.renderToStaticMarkup(htmlComponent({
         clientFile: '/docs/js/client.bundle.js',
         context: componentContext,
-        state: 'window.App=' + serialize(app.dehydrate(context)) + ';',
+        state: 'window.App=' + serialize(app.dehydrate(context)) + ';',//window.NavigateAction=' + navigateAction +';',
         markup: ReactDOMServer.renderToString(createElementWithContext(context))
     }));
 

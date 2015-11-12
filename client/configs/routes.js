@@ -1,5 +1,4 @@
-import loadArticleAction from '../actions/loadArticleAction';
-import TutorialStore from '../stores/TutorialStore';
+import { TutorialStore, loadArticleAction } from 'auth0-tutorial-navigator';
 import { getQuickstartMetdata } from '../util/tutorials';
 
 export default {
