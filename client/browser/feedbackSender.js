@@ -16,28 +16,22 @@ export default function feedbackSender() {
     $.post('/docs/submit-feedback', feedback);
   };
 
-  $('.js-feedback-sender .choose').on('click', function(e) {
+  $('.js-feedback-sender .choose').one('click', function(e) {
     e.preventDefault();
 
     $('.feedback-choose').hide();
-
     if ($(this).hasClass('choose-yes')) {
-      submitFeedback(true);
       $('.feedback-yes').show();
+      submitFeedback(true);
     } else {
       $('.feedback-no').show();
     }
   });
 
-  $('.js-feedback-sender form').submit(function(e) {
+  $('.js-feedback-sender form').one('submit', function(e) {
     e.preventDefault();
-
-    if(!$(this).find('textarea').val()) {
-      return alert('Please leave a comment before submitting');
-    }
-
-    submitFeedback(false, e.target[0].value);
     $('.feedback-no').hide();
     $('.feedback-yes').show();
+    submitFeedback(false, e.target[0].value);
   });
 }
