@@ -63,8 +63,8 @@ var ApiSection = ({category}) => {
     <div className="api-docs">
       <div className="container">
         <div className="row">
-          {boxContainer(category.sections['explorer'], 'icon-budicon-631')}
           {boxContainer(category.sections['auth-endpoints'], 'icon-budicon-638')}
+          {boxContainer(category.sections['explorer'], 'icon-budicon-631')}
           <div className="col-xs-12 col-md-4">
             <div className="subcontent-box">
               <div className="row">
