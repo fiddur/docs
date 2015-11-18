@@ -181,8 +181,8 @@
       "resolved": "git://github.com/auth0/styleguide.git#d0f4a56b3de8428feef1122ea950e9512090bd35"
     },
     "auth0-tutorial-navigator": {
-      "version": "1.0.1",
-      "resolved": "git://github.com/auth0/tutorial-navigator.git#19068a9c6ca5df083d99061a6683495825604aef",
+      "version": "1.0.2",
+      "resolved": "git://github.com/auth0/tutorial-navigator.git#29df4867888805b5884e3b6a15e7b936337d0331",
       "dependencies": {
         "auth0-styleguide": {
           "version": "2.1.2",
@@ -245,10 +245,6 @@
         "lodash": {
           "version": "3.10.1",
           "resolved": "https://registry.npmjs.org/lodash/-/lodash-3.10.1.tgz"
-        },
-        "q": {
-          "version": "1.4.1",
-          "resolved": "https://registry.npmjs.org/q/-/q-1.4.1.tgz"
         }
       }
     },
