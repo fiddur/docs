@@ -21,7 +21,7 @@ then
 		service auth0-$NAME start
 	else
 		echo "Reloading"
-		service auth0-$NAME reload
+		service auth0-$NAME reload || service auth0-$NAME restart
 	fi
 else
 	echo "Restarting"
