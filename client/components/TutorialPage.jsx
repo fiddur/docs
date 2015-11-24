@@ -7,7 +7,6 @@ import { connectToStores, provideContext } from 'fluxible-addons-react';
 import { quickstartNavigationAction } from '../action/quickstartNavigationAction';
 import highlightCode from '../browser/highlightCode';
 import setAnchorLinks from '../browser/anchorLinks';
-import loadSdkSnippet from '../browser/loadSdkSnippet';
 
 class TutorialPage extends React.Component {
   componentDidMount () {
@@ -33,11 +32,15 @@ class TutorialPage extends React.Component {
     var componentLoadedInBrowser = function(){
       highlightCode();
       setAnchorLinks();
-      loadSdkSnippet({
-        callbackOnHashMode: false,
-        backend: this.props.tech2 ? this.props.tech2 : this.props.tech1,
-        // clientId: get from store,
-      });
+
+      // Execute any scripts that came with the article
+      if (this.refs.article && this.refs.article.innerHTML) {
+        var dom = $(this.refs.article.innerHTML);
+        dom.filter('script').each(function(){
+          $.globalEval(this.text || this.textContent || this.innerHTML || '');
+        });
+      }
+
       var removeHeader = () => {
         var article = this.refs.article;
         if (article) {
