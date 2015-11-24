@@ -22,11 +22,6 @@ class TutorialPage extends React.Component {
         e.preventDefault();
         $(this).tab('show');
       });
-      loadSdkSnippet({
-        callbackOnHashMode: false,
-        backend: this.props.tech2 ? this.props.tech2 : this.props.tech1,
-        // clientId: get from store,
-      });
     }
   }
   render() {
@@ -38,6 +33,11 @@ class TutorialPage extends React.Component {
     var componentLoadedInBrowser = function(){
       highlightCode();
       setAnchorLinks();
+      loadSdkSnippet({
+        callbackOnHashMode: false,
+        backend: this.props.tech2 ? this.props.tech2 : this.props.tech1,
+        // clientId: get from store,
+      });
       var removeHeader = () => {
         var article = this.refs.article;
         if (article) {

@@ -8,14 +8,26 @@ export default function loadSdkSnippet(options) {
 
     $('#widget-demo').attr('src', iframe_url);
 
-    $.ajax({
-      url: snippet_url,
-      cache: false,
-      xhrFields: {
-        withCredentials: true
+    function checkStatus(response) {
+      if (response.status >= 200 && response.status < 400) {
+        return response;
+      } else {
+        var error = new Error(response.statusText);
+        error.status = response.status;
+        error.response = response;
+        throw error;
       }
-    }).done(function (data) {
-      $('#widget-snippet').html(data);
+    }
+
+    return fetch(snippet_url, {
+      credentials: 'include'
+    })
+    .then(checkStatus)
+    .then(function(response) {
+      return response.text();
+    })
+    .then(function(text) {
+      $('#widget-snippet').html(text);
       window.highlightCode();
     });
   };
