@@ -16,7 +16,7 @@ export default function feedbackSender() {
     $.post('/docs/submit-feedback', feedback);
   };
 
-  $('.js-feedback-sender .choose').one('click', function(e) {
+  $('.js-feedback-sender .choose').unbind('click').one('click', function(e) {
     e.preventDefault();
 
     $('.feedback-choose').hide();
@@ -28,7 +28,7 @@ export default function feedbackSender() {
     }
   });
 
-  $('.js-feedback-sender form').one('submit', function(e) {
+  $('.js-feedback-sender form').unbind('submit').one('submit', function(e) {
     e.preventDefault();
     $('.feedback-no').hide();
     $('.feedback-yes').show();
