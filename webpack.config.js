@@ -66,7 +66,7 @@ var webpackConfig = {
     new webpack.NoErrorsPlugin(),
     new webpack.optimize.CommonsChunkPlugin({
       name: 'commons',
-      filename: 'commons.js',
+      filename: 'commons.bundle.js',
       minChunks: 2
     }),
     new webpack.DefinePlugin({

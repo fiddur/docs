@@ -12,6 +12,7 @@ import ApplicationStore from './stores/ApplicationStore';
 import { createElementWithContext } from 'fluxible-addons-react';
 import articleService from './services/articleService.server';
 import { quickstartNavigationAction } from './action/quickstartNavigationAction';
+import { getAssetBundleUrl } from '../lib/utils';
 
 const htmlComponent = React.createFactory(HtmlComponent);
 
@@ -31,10 +32,10 @@ export default function middleware(req, res, next) {
   })).then(() => {
     var componentContext = context.getComponentContext();
     const content = ReactDOMServer.renderToStaticMarkup(htmlComponent({
-        clientFile: '/docs/js/client.bundle.js',
-        context: componentContext,
-        state: 'window.App=' + serialize(app.dehydrate(context)) + ';',//window.NavigateAction=' + navigateAction +';',
-        markup: ReactDOMServer.renderToString(createElementWithContext(context))
+      clientFile: getAssetBundleUrl('client'),
+      context: componentContext,
+      state: 'window.App=' + serialize(app.dehydrate(context)) + ';',//window.NavigateAction=' + navigateAction +';',
+      markup: ReactDOMServer.renderToString(createElementWithContext(context))
     }));
 
     var appStore = componentContext.getStore(ApplicationStore);
