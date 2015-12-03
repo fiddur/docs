@@ -1,5 +1,6 @@
 var webpack = require('webpack');
 var path = require('path');
+var Clean = require('clean-webpack-plugin');
 
 require('./config');
 
@@ -40,6 +41,7 @@ var webpackConfig = {
     }]
   },
   plugins: [
+    new Clean(['/docs/js/']),
     new webpack.ProvidePlugin({
       Promise: 'imports?this=>global!exports?global.Promise!es6-promise',
       fetch: 'imports?this=>global!exports?global.fetch!whatwg-fetch',
@@ -60,11 +62,10 @@ var webpackConfig = {
       compress: {
         warnings: false
       },
-      sourceMap: false
+      sourceMap: true
     }),
     function() {
       this.plugin('done', function(stats) {
-        console.log(stats.toJson().assetsByChunkName)
         require('fs').writeFileSync(
           path.join(__dirname, './public/js/assets.json'),
           JSON.stringify(stats.toJson().assetsByChunkName));
