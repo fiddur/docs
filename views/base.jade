@@ -8,7 +8,7 @@ html(lang="en")
     meta(charset="utf-8")
     include inc/sharing-metas
 
-    meta(name='viewport', content='width=device-width, initial-scale=1.0')
+    meta(name="viewport", content="width=device-width, initial-scale=1.0")
     meta(name="google-site-verification", content="4aSwkVvotRegQ6g32k-21r38Fls9sO8VT5LytKdin3o")
     
     - if (env.PINGDOM_ID)
@@ -26,7 +26,7 @@ html(lang="en")
     - if (canonicalUrl)
       link(href=canonicalUrl, rel="canonical")
     link(href="//cdn.auth0.com/styleguide/latest/lib/logos/img/favicon.png", rel="shortcut icon")
-    link(href='//cdn.auth0.com/styleguide/latest/index.min.css', rel='stylesheet')
+    link(href="//cdn.auth0.com/styleguide/latest/index.min.css", rel="stylesheet")
     link(href="//cdn.auth0.com/web-header/latest/standalone.css", rel="stylesheet")
 
     <!--[if lt IE 9]>
@@ -38,7 +38,7 @@ html(lang="en")
     script.
       Raven.config('https://29ef6b5c3bbd4b9ba9f5710014e20c03@app.getsentry.com/57750').install()
     script(src='//cdn.auth0.com/styleguide/vendor/bootstrap-3.2.0.min.js')
-    script(src='/docs/js/commons.js')
+    script(src=getAssetBundleUrl('commons'))
 
     block head
 

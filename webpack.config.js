@@ -1,6 +1,6 @@
 var webpack = require('webpack');
 var path = require('path');
-var nconf = require('nconf');
+var Clean = require('clean-webpack-plugin');
 
 require('./config');
 
@@ -58,6 +58,7 @@ var webpackConfig = {
     }]
   },
   plugins: [
+    new Clean(['/docs/js/']),
     new webpack.ProvidePlugin({
       Promise: 'imports?this=>global!exports?global.Promise!es6-promise',
       fetch: 'imports?this=>global!exports?global.fetch!whatwg-fetch',
@@ -66,7 +67,7 @@ var webpackConfig = {
     new webpack.NoErrorsPlugin(),
     new webpack.optimize.CommonsChunkPlugin({
       name: 'commons',
-      filename: 'commons.js',
+      filename: 'commons.bundle.js',
       minChunks: 2
     }),
     new webpack.DefinePlugin({

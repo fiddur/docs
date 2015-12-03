@@ -1,7 +1,7 @@
 extends base
 
 block head
-  script(src='/docs/js/base.bundle.js')
+  script(src=getAssetBundleUrl('base'))
 
 block body
   // Add this css so site header doesn't transform when API explorer loads

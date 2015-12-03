@@ -1,5 +1,6 @@
 var webpack = require('webpack');
 var path = require('path');
+var Clean = require('clean-webpack-plugin');
 
 require('./config');
 
@@ -15,8 +16,8 @@ var webpackConfig = {
   },
   output: {
     path: path.resolve('./public/js'),
-    filename: '[name].bundle.js',
-    chunkFilename: '[id].chunk.js'
+    filename: '[name].[chunkhash].bundle.js',
+    chunkFilename: '[id].[chunkhash].chunk.js'
   },
   module: {
     loaders: [{
@@ -40,6 +41,7 @@ var webpackConfig = {
     }]
   },
   plugins: [
+    new Clean(['/docs/js/']),
     new webpack.ProvidePlugin({
       Promise: 'imports?this=>global!exports?global.Promise!es6-promise',
       fetch: 'imports?this=>global!exports?global.fetch!whatwg-fetch',
@@ -51,7 +53,7 @@ var webpackConfig = {
     }),
     new webpack.optimize.CommonsChunkPlugin({
       name: 'commons',
-      filename: 'commons.js',
+      filename: 'commons.[chunkhash].bundle.js',
       minChunks: 2
     }),
     new webpack.optimize.DedupePlugin(),
@@ -60,8 +62,15 @@ var webpackConfig = {
       compress: {
         warnings: false
       },
-      sourceMap: false
-    })
+      sourceMap: true
+    }),
+    function() {
+      this.plugin('done', function(stats) {
+        require('fs').writeFileSync(
+          path.join(__dirname, './public/js/assets.json'),
+          JSON.stringify(stats.toJson().assetsByChunkName));
+      });
+    }
   ],
   devtool: 'source-map'
 };
