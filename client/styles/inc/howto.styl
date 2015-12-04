@@ -8,10 +8,10 @@
   position: relative;
   width: 100%;
   transition: background 100ms cubic-bezier(0.455, 0.03, 0.515, 0.955);
-  
+
   +breakpoint("mobile-landscape")
     min-height: 160px;
-    
+
   +breakpoint("tablet")
     min-height: 180px;
 
@@ -20,34 +20,34 @@
     margin-bottom: 10px;
     font-weight: bold;
     color: #333;
-    
+
   i
     display: block;
     height: 40px;
     width: 40px;
-    border: 1px solid color_oil;
+    border: 1px solid color_text_gray;
     position: absolute;
     top: 30px;
     left: 20px;
     border-radius: 50%;
     font-size: 20px;
-    color: color_oil;
-    
+    color: color_text_gray;
+    opacity: 0.7;
+
     &:before
       position: relative;
       top: 9px;
       left: 8px;
-    
+
   .description
     font-size: 14px;
-    color: color_oil;
-    
+    color: color_text_gray;
+
   .more
     position: absolute;
     bottom: 20px;
     color: #087BA0;
-      
+
   &:hover
     background: white;
     box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.1);
-  
