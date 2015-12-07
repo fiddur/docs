@@ -176,9 +176,9 @@
       }
     },
     "auth0-styleguide": {
-      "version": "2.2.5",
-      "from": "auth0-styleguide@git://github.com/auth0/styleguide.git#d0f4a56b3de8428feef1122ea950e9512090bd35",
-      "resolved": "git://github.com/auth0/styleguide.git#d0f4a56b3de8428feef1122ea950e9512090bd35"
+      "version": "2.2.7",
+      "from": "auth0-styleguide@git://github.com/auth0/styleguide.git#75412486e066f082a0873687cf29d6dc51b3bf33",
+      "resolved": "git://github.com/auth0/styleguide.git#75412486e066f082a0873687cf29d6dc51b3bf33"
     },
     "auth0-tutorial-navigator": {
       "version": "1.0.2",
@@ -2279,9 +2279,9 @@
       "resolved": "https://registry.npmjs.org/url-join/-/url-join-0.0.1.tgz"
     },
     "web-header": {
-      "version": "0.4.12",
-      "from": "web-header@git://github.com/auth0/web-header.git#743fe63c5e90428d0fd36fd4179afef701299bed",
-      "resolved": "git://github.com/auth0/web-header.git#743fe63c5e90428d0fd36fd4179afef701299bed"
+      "version": "0.5.4",
+      "from": "web-header@git://github.com/auth0/web-header.git#fdec02de6ec6dddfbd6d32c8c4392c7054a83ce3",
+      "resolved": "git://github.com/auth0/web-header.git#fdec02de6ec6dddfbd6d32c8c4392c7054a83ce3"
     },
     "whatwg-fetch": {
       "version": "0.10.1",
