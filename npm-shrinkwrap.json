@@ -176,9 +176,9 @@
       }
     },
     "auth0-styleguide": {
-      "version": "2.2.5",
-      "from": "auth0-styleguide@git://github.com/auth0/styleguide.git#d0f4a56b3de8428feef1122ea950e9512090bd35",
-      "resolved": "git://github.com/auth0/styleguide.git#d0f4a56b3de8428feef1122ea950e9512090bd35"
+      "version": "2.2.7",
+      "from": "auth0-styleguide@git://github.com/auth0/styleguide.git#75412486e066f082a0873687cf29d6dc51b3bf33",
+      "resolved": "git://github.com/auth0/styleguide.git#75412486e066f082a0873687cf29d6dc51b3bf33"
     },
     "auth0-tutorial-navigator": {
       "version": "1.0.2",
@@ -1127,8 +1127,8 @@
       }
     },
     "fluxible": {
-      "version": "1.0.0",
-      "resolved": "https://registry.npmjs.org/fluxible/-/fluxible-1.0.0.tgz",
+      "version": "1.0.3",
+      "resolved": "https://registry.npmjs.org/fluxible/-/fluxible-1.0.3.tgz",
       "dependencies": {
         "dispatchr": {
           "version": "0.3.3",
@@ -1169,8 +1169,8 @@
       "resolved": "https://registry.npmjs.org/fluxible-plugin-service-proxy/-/fluxible-plugin-service-proxy-1.1.0.tgz"
     },
     "fluxible-router": {
-      "version": "0.3.0",
-      "resolved": "https://registry.npmjs.org/fluxible-router/-/fluxible-router-0.3.0.tgz",
+      "version": "0.3.2",
+      "resolved": "https://registry.npmjs.org/fluxible-router/-/fluxible-router-0.3.2.tgz",
       "dependencies": {
         "hoist-non-react-statics": {
           "version": "1.0.3",
@@ -1925,8 +1925,8 @@
       "resolved": "https://registry.npmjs.org/randomstring/-/randomstring-1.0.7.tgz"
     },
     "react": {
-      "version": "0.14.0",
-      "resolved": "https://registry.npmjs.org/react/-/react-0.14.0.tgz",
+      "version": "0.14.3",
+      "resolved": "https://registry.npmjs.org/react/-/react-0.14.3.tgz",
       "dependencies": {
         "envify": {
           "version": "3.4.0",
@@ -1967,8 +1967,8 @@
           "resolved": "https://registry.npmjs.org/fbjs/-/fbjs-0.3.2.tgz",
           "dependencies": {
             "core-js": {
-              "version": "1.2.2",
-              "resolved": "https://registry.npmjs.org/core-js/-/core-js-1.2.2.tgz"
+              "version": "1.2.6",
+              "resolved": "https://registry.npmjs.org/core-js/-/core-js-1.2.6.tgz"
             },
             "loose-envify": {
               "version": "1.1.0",
@@ -2003,8 +2003,8 @@
       }
     },
     "react-dom": {
-      "version": "0.14.0",
-      "resolved": "https://registry.npmjs.org/react-dom/-/react-dom-0.14.0.tgz"
+      "version": "0.14.3",
+      "resolved": "https://registry.npmjs.org/react-dom/-/react-dom-0.14.3.tgz"
     },
     "request": {
       "version": "2.61.0",
@@ -2279,13 +2279,13 @@
       "resolved": "https://registry.npmjs.org/url-join/-/url-join-0.0.1.tgz"
     },
     "web-header": {
-      "version": "0.4.12",
-      "from": "web-header@git://github.com/auth0/web-header.git#743fe63c5e90428d0fd36fd4179afef701299bed",
-      "resolved": "git://github.com/auth0/web-header.git#743fe63c5e90428d0fd36fd4179afef701299bed"
+      "version": "0.5.4",
+      "from": "web-header@git://github.com/auth0/web-header.git#fdec02de6ec6dddfbd6d32c8c4392c7054a83ce3",
+      "resolved": "git://github.com/auth0/web-header.git#fdec02de6ec6dddfbd6d32c8c4392c7054a83ce3"
     },
     "whatwg-fetch": {
-      "version": "0.10.0",
-      "resolved": "https://registry.npmjs.org/whatwg-fetch/-/whatwg-fetch-0.10.0.tgz"
+      "version": "0.10.1",
+      "resolved": "https://registry.npmjs.org/whatwg-fetch/-/whatwg-fetch-0.10.1.tgz"
     },
     "winston": {
       "version": "1.0.1",
