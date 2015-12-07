@@ -30,7 +30,7 @@ nconf.file('global', { file: config_file })
     'DOMAIN_URL_API2_EXPLORER': 'login0.myauth0.com',
     'WIDGET_FALLBACK_CLIENTID': 'aCbTAJNi5HbsjPJtRpSP6BIoLPOrSj2C',
     'LEGACY_WIDGET_URL':  'https://cdn.auth0.com/w2/auth0-widget-5.2.min.js',
-    'LOGIN_WIDGET_URL':  'https://cdn.auth0.com/js/lock-7.9.min.js',
+    'LOGIN_WIDGET_URL':  'https://cdn.auth0.com/js/lock-7.12.min.js',
     'LOCK_PASSWORDLESS_URL':  'https://cdn.auth0.com/js/lock-passwordless-1.0.min.js',
     'AUTH0JS_URL':       'https://cdn.auth0.com/w2/auth0-6.7.min.js',
     'AUTH0_ANGULAR_URL': 'http://cdn.auth0.com/w2/auth0-angular-1.1.js',
@@ -43,7 +43,6 @@ nconf.file('global', { file: config_file })
     'AUTH0_EMPLOYEE_EMAIL_DOMAIN': '@auth0.com',
     'GITHUB_DOCS_ORG': 'auth0',
     'GITHUB_DOCS_REPO': 'docs',
-    'PRERENDER_ENABLED': false,
     'MEDIA_URL': (process.env.NODE_ENV === 'production' && nconf.get('DISABLE_CDN') !== 1) ? 'https://cdn.auth0.com/docs/media' : false,
     'ASSET_URL': (process.env.NODE_ENV === 'production' && nconf.get('DISABLE_CDN') !== 1) ? 'https://cdn.auth0.com/docs/assets' : false,
     'DOCS_PATH': __dirname + '/docs/articles',
@@ -52,7 +51,8 @@ nconf.file('global', { file: config_file })
     'LOG_TO_KINESIS_LEVEL': 'info',
     'LOG_TO_WEB_LEVEL':     'error',
     'SEARCH_ENGINE_ID': '010795999221123445302:urkvlewda8q', // Google Site Search ID
-    'PINGDOM_ID': '565cb401abe53d7b2cda7732'
+    'PINGDOM_ID': process.env.NODE_ENV === 'production' ? '565cb401abe53d7b2cda7732' : false,
+    'SENTRY_DSN': process.env.NODE_ENV === 'production' ? 'https://29ef6b5c3bbd4b9ba9f5710014e20c03@app.getsentry.com/57750' : false
   });
 
 if (nconf.get('COOKIE_NAME') !== 'auth0l') {
