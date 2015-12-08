@@ -16,14 +16,14 @@
           window.ABExperiments = ab.getExperiments();
           executeABExperiments(window.ABExperiments);
         } catch (e) {
-          console.error('Error running AB experiments.\n%s', e.message);
+          console && console.error('Error running AB experiments.\n%s', e.message);
           $('.container').css('visibility', 'visible');
         }
       });
 
     } catch (e) {
       window.ABLibLoaded = true;
-      console.error('Error initializing ABTesting lib. ABTesting will be disabled');
+      console && console.error('Error initializing ABTesting lib. ABTesting will be disabled');
       $('.container').css('visibility', 'visible');
     }
       
@@ -56,7 +56,7 @@
             v.runInContext(variantContext);
           });
         } catch (e) {
-          console.error("Error running experiments for path:%s", path);
+          console && console.error("Error running experiments for path:%s", path);
         } finally {
           // Restore content
           $('.container').css('visibility', 'visible');
