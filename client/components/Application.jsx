@@ -7,7 +7,13 @@ import { handleHistory } from 'fluxible-router';
 import ErrorPage from './ErrorPage';
 
 class Application extends React.Component {
+
   render() {
+    // Temporary fix for: https://github.com/yahoo/fluxible-router/issues/108
+    if (!this.props.currentRoute && typeof document !== 'undefined') {
+      document.location = document.location;
+    }
+
     var Handler = this.props.currentRoute.get('handler');
 
     if (Handler) {
