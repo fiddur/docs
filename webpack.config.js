@@ -1,6 +1,7 @@
 var webpack = require('webpack');
 var path = require('path');
 var Clean = require('clean-webpack-plugin');
+var ExtractTextPlugin = require('extract-text-webpack-plugin');
 
 require('./config');
 
@@ -51,14 +52,14 @@ var webpackConfig = {
       loader: 'json-loader'
     }, {
       test: /\.styl$/,
-      loader: 'style-loader!css-loader!autoprefixer-loader!stylus-loader'
+      loader: ExtractTextPlugin.extract('style-loader', 'css-loader!autoprefixer-loader!stylus-loader')
     }, {
       test: /\.(png|woff|woff2|eot|ttf|svg)$/,
       loader: 'url-loader?limit=100000'
     }]
   },
   plugins: [
-    new Clean(['/docs/js/']),
+    new Clean(['./public/js/']),
     new webpack.ProvidePlugin({
       Promise: 'imports?this=>global!exports?global.Promise!es6-promise',
       fetch: 'imports?this=>global!exports?global.fetch!whatwg-fetch',
@@ -70,6 +71,7 @@ var webpackConfig = {
       filename: 'commons.bundle.js',
       minChunks: 2
     }),
+    new ExtractTextPlugin('[name].css'),
     new webpack.DefinePlugin({
       'process.env': {
         NODE_ENV: JSON.stringify(process.env.NODE_ENV)
