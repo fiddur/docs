@@ -2335,8 +2335,8 @@
       "resolved": "https://registry.npmjs.org/server-destroy/-/server-destroy-1.0.1.tgz"
     },
     "sitemap": {
-      "version": "1.1.1",
-      "resolved": "https://registry.npmjs.org/sitemap/-/sitemap-1.1.1.tgz",
+      "version": "1.4.1",
+      "resolved": "git://github.com/ekalinin/sitemap.js.git#21fd776cab0d1a947db6243914ae6a68bb735e74",
       "dependencies": {
         "underscore": {
           "version": "1.8.3",
