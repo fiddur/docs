@@ -49,7 +49,7 @@
     "retry": "^0.8.0",
     "serialize-javascript": "^1.1.2",
     "server-destroy": "^1.0.1",
-    "sitemap": "^1.1.1",
+    "sitemap": "ekalinin/sitemap.js#1.4.1",
     "url-join": "0.0.1",
     "web-header": "git://github.com/auth0/web-header.git#0.5.4",
     "whatwg-fetch": "^0.10.1",
