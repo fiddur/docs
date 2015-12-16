@@ -2,12 +2,13 @@ import React from 'react';
 import ShowcaseItem from './ShowcaseItem';
 import CircleLogo from './CircleLogo';
 import HowTo from './HowTo';
+import {NavLink} from 'fluxible-router';
 
-export var ProductSection = ({category}) => (
+export var ProductSection = ({category, top}) => (
   <div className="showcase">
     <div className="container">
       <div className="row">
-        {category.links.map((link, i) => (
+        {(top ? category.links.slice(0, top) : category.links).map((link, i) => (
           <ShowcaseItem key={i} {...link} />
         ))}
       </div>
@@ -39,7 +40,7 @@ export var ApiSection = ({category}) => {
                 <div className="col-xs-12">
                   <h3>Announcements</h3>
                   <ul>
-                    {category.sections['announcements'].links.map((announcement, i) => (
+                    {category.sections['announcements'].links.slice(0, 3).map((announcement, i) => (
                       <li key={i}>
                         <a href={announcement.href}>{announcement.name}</a>
                       </li>
@@ -55,10 +56,10 @@ export var ApiSection = ({category}) => {
   );
 };
 
-export var SdkSection = ({category}) => (
+export var SdkSection = ({category, top}) => (
   <div className="container">
     <ul className="circle-list">
-      {category.links.map((link, i) => (
+      {(top ? category.links.slice(0, top) : category.links).map((link, i) => (
         <li key={i}>
           <CircleLogo {...link} />
         </li>
@@ -67,10 +68,10 @@ export var SdkSection = ({category}) => (
   </div>
 );
 
-export var HowToSection = ({category}) => (
+export var HowToSection = ({category, top}) => (
   <div className="container">
     <ul className="list-howtos">
-      {category.links.map((link, i) => (
+      {(top ? category.links.slice(0, top) : category.links).map((link, i) => (
         <li key={i}>
           <HowTo {...link} />
         </li>
@@ -79,22 +80,36 @@ export var HowToSection = ({category}) => (
   </div>
 );
 
-export var CategorySection = ({category}) => {
+export var CategorySection = ({category, linkTo}) => {
+
+  var getSectionTitle = (name, routeName) => {
+    if (routeName && linkTo !== false) {
+      return (<span><NavLink routeName={routeName}>{name}</NavLink></span>);
+    } else {
+      return (<span>{name}</span>);
+    }
+  }
+
   var sectionContainer;
+  var sectionTitle;
   var className;
   switch (category.id) {
   case 'product':
-    className = 'section-p'
-    sectionContainer = (category) => (<ProductSection category={category} />);
+    className = 'section-p';
+    sectionTitle = getSectionTitle(category.name);
+    sectionContainer = (category) => (<ProductSection category={category} top={9} />);
     break;
   case 'api':
+    sectionTitle = getSectionTitle(category.name);
     sectionContainer = (category) => (<ApiSection category={category} />);
     break;
   case 'sdk':
-    sectionContainer = (category) => (<SdkSection category={category} />);
+    sectionTitle = getSectionTitle(category.name, 'sdks');
+    sectionContainer = (category) => (<SdkSection category={category} top={18} />);
     break;
   case 'how-to':
-    sectionContainer = (category) => (<HowToSection category={category} />);
+    sectionTitle = getSectionTitle(category.name, 'howTos');
+    sectionContainer = (category) => (<HowToSection category={category} top={12} />);
     break;
   }
 
@@ -106,7 +121,7 @@ export var CategorySection = ({category}) => {
     <section className="section-product" id={category.id}>
       <div className="container">
         <h2>
-          <span>{category.name}</span>
+          {sectionTitle}
           <span>{category.description}</span>
         </h2>
       </div>

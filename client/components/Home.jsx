@@ -1,36 +1,12 @@
 import React from 'react';
 import { TutorialNavigator } from 'auth0-tutorial-navigator';
 import NavigationStore from '../stores/NavigationStore';
-import SearchBox from './SearchBox';
 import { connectToStores } from 'fluxible-addons-react';
-import initStickyNav from '../browser/stickyNav';
 import { quickstartNavigationAction } from '../action/quickstartNavigationAction';
 import { CategorySection } from './NavigationSections';
+import InlineNav from './InlineNav';
 
-class InlineNav extends React.Component {
-  componentDidMount () {
-    this.initClient();
-  }
-  componentDidUpdate() {
-    this.initClient();
-  }
-  initClient(html) {
-    if (typeof document !== 'undefined') {
-      initStickyNav();
-    }
-  }
-  render() {
-    return (
-      <ul className="list-inline">
-        {this.props.categories.map((category) => (
-          <li key={category.id}>
-            <a href={'#' + category.id}>{category.name}</a>
-          </li>
-        ))}
-      </ul>
-    );
-  }
-}
+
 
 class Home extends React.Component {
   render() {
@@ -77,14 +53,7 @@ class Home extends React.Component {
     return (
       <div>
         <TutorialNavigator {...this.props} customNavigationAction={quickstartNavigationAction} componentLoadedInBrowser={componentLoadedInBrowser}/>
-        <div className="navigation-bar js-sticky-nav">
-          <div className="wrapper">
-            <div className="container">
-              <InlineNav categories={this.props.categories} />
-              <SearchBox />
-            </div>
-          </div>
-        </div>
+        <InlineNav categories={this.props.categories} />
         {this.props.categories.map((category) => (
           <CategorySection key={category.id} category={category} />
         ))}

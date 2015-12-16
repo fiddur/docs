@@ -1,5 +1,4 @@
 import React from 'react';
-import {NavLink} from 'fluxible-router';
 import FeedbackSender from './FeedbackSender';
 import NavigationStore from '../stores/NavigationStore';
 import { connectToStores } from 'fluxible-addons-react';
