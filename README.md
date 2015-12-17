@@ -85,8 +85,3 @@ make test-shrinkwrap-status
 ```
 make test-sec-deps
 ```
-
-## Documents metadata properties
-
-- `sitemap`: (Boolean) Instruct when to skip indexation into the `sitemap.xml`. Defaults to `true`.
-- `public`: (Boolean) Instruct when to avoid indexation from public exposure. Defaults to `true`.
