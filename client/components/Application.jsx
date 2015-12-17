@@ -56,4 +56,4 @@ export default handleHistory(provideContext(connectToStores(
       pages: appStore.getPages()
     };
   }
-)), { enableScroll: false });
+)));
