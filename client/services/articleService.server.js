@@ -6,6 +6,8 @@ import path from 'path';
 import jade from 'jade';
 
 var viewname = path.resolve(__dirname, '../../views/doc-embedded.jade');
+var localMiddlewares = middlewares.slice(0);
+localMiddlewares.push(setConfiguration);
 
 export default function(req, res) {
   return {
@@ -21,9 +23,7 @@ export default function(req, res) {
           req2.query.api = payload.tech2;
         }
 
-        middlewares.push(setConfiguration);
-
-        async.eachSeries(middlewares, (middleware, next) => {
+        async.eachSeries(localMiddlewares, (middleware, next) => {
           middleware(req2, res, next);
         }, (err) => {
           if (err) {
