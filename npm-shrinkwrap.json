@@ -165,9 +165,9 @@
       }
     },
     "auth0-common-logging": {
-      "version": "2.8.0",
-      "from": "auth0-common-logging@git+ssh://git@gitlab.auth0.com/devops/auth0-common-logging.git#11433b0b5f0e041190de22fdbeb4f69b89f2734b",
-      "resolved": "git+ssh://git@gitlab.auth0.com/devops/auth0-common-logging.git#11433b0b5f0e041190de22fdbeb4f69b89f2734b",
+      "version": "2.10.0",
+      "from": "auth0-common-logging@git+ssh://git@gitlab.auth0.com:devops/auth0-common-logging.git#4dfd517835f512c3d602210b6ccec381518d3a84",
+      "resolved": "git+ssh://git@gitlab.auth0.com:devops/auth0-common-logging.git#4dfd517835f512c3d602210b6ccec381518d3a84",
       "dependencies": {
         "lodash": {
           "version": "3.10.1",
@@ -2336,6 +2336,7 @@
     },
     "sitemap": {
       "version": "1.4.1",
+      "from": "sitemap@git://github.com/ekalinin/sitemap.js.git#21fd776cab0d1a947db6243914ae6a68bb735e74",
       "resolved": "git://github.com/ekalinin/sitemap.js.git#21fd776cab0d1a947db6243914ae6a68bb735e74",
       "dependencies": {
         "underscore": {
