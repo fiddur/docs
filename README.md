@@ -1,5 +1,5 @@
-Node version: 1.8.4
-NPM version: 1.4.21
+Node version: 4.2.x
+NPM version: 2.7.x
 
 ## Contribution Checklist
 When you commit code to this repository, you should follow the following procedures.
