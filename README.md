@@ -27,7 +27,7 @@ When you commit code to this repository, you should follow the following procedu
 ### Usage without Vagrant
 
 ```
-nave use 1.8.4
+nave use 4.2
 git submodule init
 git submodule update
 npm i
@@ -41,7 +41,7 @@ npm run dev
 Vagrant install production dependencies but not dev dependencies. Use this:
 
 ```
-nave use 1.8.4
+nave use 4.2
 git submodule init
 git submodule update
 npm i
