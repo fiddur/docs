@@ -1784,9 +1784,45 @@
         }
       }
     },
-    "marked": {
-      "version": "0.3.5",
-      "resolved": "https://registry.npmjs.org/marked/-/marked-0.3.5.tgz"
+    "markdown-it": {
+      "version": "5.1.0",
+      "resolved": "https://registry.npmjs.org/markdown-it/-/markdown-it-5.1.0.tgz",
+      "dependencies": {
+        "argparse": {
+          "version": "1.0.4",
+          "resolved": "https://registry.npmjs.org/argparse/-/argparse-1.0.4.tgz",
+          "dependencies": {
+            "lodash": {
+              "version": "4.0.0",
+              "resolved": "https://registry.npmjs.org/lodash/-/lodash-4.0.0.tgz"
+            },
+            "sprintf-js": {
+              "version": "1.0.3",
+              "resolved": "https://registry.npmjs.org/sprintf-js/-/sprintf-js-1.0.3.tgz"
+            }
+          }
+        },
+        "entities": {
+          "version": "1.1.1",
+          "resolved": "https://registry.npmjs.org/entities/-/entities-1.1.1.tgz"
+        },
+        "linkify-it": {
+          "version": "1.2.0",
+          "resolved": "https://registry.npmjs.org/linkify-it/-/linkify-it-1.2.0.tgz"
+        },
+        "mdurl": {
+          "version": "1.0.1",
+          "resolved": "https://registry.npmjs.org/mdurl/-/mdurl-1.0.1.tgz"
+        },
+        "uc.micro": {
+          "version": "1.0.0",
+          "resolved": "https://registry.npmjs.org/uc.micro/-/uc.micro-1.0.0.tgz"
+        }
+      }
+    },
+    "markdown-it-container": {
+      "version": "2.0.0",
+      "resolved": "https://registry.npmjs.org/markdown-it-container/-/markdown-it-container-2.0.0.tgz"
     },
     "method-override": {
       "version": "2.3.5",
