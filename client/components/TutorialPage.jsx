@@ -15,13 +15,31 @@ class TutorialPage extends React.Component {
   componentDidUpdate() {
     this.initClient();
   }
-  initClient(html) {
+  initClient() {
     if (typeof document !== 'undefined') {
       $('body').on('click', '.nav-tabs a', function(e) {
         e.preventDefault();
         $(this).tab('show');
       });
+      this.metrics();
     }
+  }
+  metrics() {
+    // auth0-metrics is safelly loaded in `<head>` block...
+    var metrics = window.metricsLib;
+    // ... but only when `env['SEGMENT_KEY']` is defined
+    if (!!metrics) {
+      return false;
+    }
+
+    $('#package .btn').off('click').on('click', function() {
+      metrics.track('download:tutorial-seed', {
+        'clientID': window.widget.getClient()._clientID || '',
+        'tutorial-apptype': this.props.apptype || '',
+        'tutorial-platform': this.props.tech1 || '',
+        'tutorial-api': this.props.tech2 || ''
+      });
+    });
   }
   render() {
     var title1 = getTechTitle(this.props.quickstart, this.props.appType, this.props.tech1);
