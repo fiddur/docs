@@ -11,18 +11,17 @@ import setAnchorLinks from '../browser/anchorLinks';
 class TutorialPage extends React.Component {
   componentDidMount () {
     this.initClient();
-    this.metrics();
   }
   componentDidUpdate() {
     this.initClient();
-    this.metrics();
   }
-  initClient(html) {
+  initClient() {
     if (typeof document !== 'undefined') {
       $('body').on('click', '.nav-tabs a', function(e) {
         e.preventDefault();
         $(this).tab('show');
       });
+      this.metrics();
     }
   }
   metrics() {
