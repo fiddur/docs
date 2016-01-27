@@ -71,11 +71,17 @@ export var SdkSection = ({category, top}) => (
 export var HowToSection = ({category, top}) => (
   <div className="container">
     <ul className="list-howtos">
-      {(top ? category.links.slice(0, top) : category.links).map((link, i) => (
-        <li key={i}>
-          <HowTo {...link} />
-        </li>
-      ))}
+      {(top ? category.links.slice(0, top) : category.links).map((link, i) => {
+        var elem = [];
+
+        if(i % 3 === 0) {
+          elem.push(<div className="row" />);
+        }
+
+        elem.push(<li key={i}><HowTo {...link} /></li>);
+
+        return elem;
+      })}
     </ul>
   </div>
 );
