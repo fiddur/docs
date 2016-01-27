@@ -124,6 +124,7 @@ server.use('/docs', require('./lib/feedback'));
 server.use('/docs', require('./lib/redirects'));
 server.use('/docs', require('./lib/sitemap'));
 server.use('/docs', require('./lib/search'));
+server.use('/docs', require('./lib/updates'));
 
 var connections = require('./lib/connections');
 server.get('/docs/ticket/step', function (req, res) {

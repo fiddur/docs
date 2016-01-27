@@ -1,0 +1,24 @@
+extends ../../views/standard
+
+mixin update(name, updates)
+  if updates.length > 0
+    h3=name
+    ul
+      each update in updates
+        li
+          h4.update-header=update.title
+          if update.tags.length > 0
+            div
+              each tag in update.tags
+                span(class='label label-default label-update')=tag
+          div!=update.description
+
+block content
+  h1=title
+  each update in updates
+    h2=update.title
+    +update('Added', update.added)
+    +update('Fixed', update.fixed)
+    +update('Changed', update.changed)
+    hr.update-space
+    

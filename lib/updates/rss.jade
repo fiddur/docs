@@ -1,0 +1,19 @@
+doctype xml
+
+mixin updates(pubDate, updates)
+  each update in updates
+    item
+      title= update.title
+      link https://auth0.com/docs/updates
+      description <![CDATA[!{update.description}]]>
+      pubDate= new Date(pubDate).toUTCString()
+
+rss(version='2.0')
+  channel
+    title=title
+    link https://auth0.com/docs/updates
+    description Updates to Auth0 content, samples, SDKs, and documentation.
+    each update in updates
+      +updates(update.date, update.added)
+      +updates(update.date, update.fixed)
+      +updates(update.date, update.changed)
