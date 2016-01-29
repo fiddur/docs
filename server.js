@@ -11,6 +11,7 @@ import nconf from 'nconf';
 import path from 'path';
 import winston from 'winston';
 import strings from './lib/strings';
+import helmet from 'helmet';
 
 var server = express();
 
@@ -93,6 +94,14 @@ server.use(session({
 
 server.use(bodyParser.json());
 server.use(bodyParser.urlencoded({ extended: false }));
+
+
+// security headers
+server.use(helmet.frameguard('deny'));
+server.use(helmet.hsts( { maxAge: 31536000000 } ));
+server.use(helmet.xssFilter());
+server.use(helmet.noSniff());
+
 server.use(methodOverride());
 
 server.use('/docs/media', express.static(path.join(__dirname, 'docs/media')));

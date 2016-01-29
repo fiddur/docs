@@ -27,6 +27,7 @@
     "fluxible-plugin-service-proxy": "^1.1.0",
     "fluxible-router": "^0.3.2",
     "gray-matter": "^2.0.1",
+    "helmet": "^0.14.0",
     "highlight.js": "^8.9.1",
     "jade": "^1.11.0",
     "js-yaml": "^3.4.0",
