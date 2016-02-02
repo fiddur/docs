@@ -97,7 +97,7 @@ server.use(bodyParser.urlencoded({ extended: false }));
 
 
 // security headers
-server.use(helmet.frameguard('deny'));
+server.use(helmet.frameguard('sameorigin'));
 server.use(helmet.hsts( { maxAge: 31536000000 } ));
 server.use(helmet.xssFilter());
 server.use(helmet.noSniff());
