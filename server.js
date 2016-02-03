@@ -98,8 +98,12 @@ server.use(bodyParser.urlencoded({ extended: false }));
 
 // security headers
 var ALLOWED_ORIGINS = nconf.get('ALLOWED_ORIGINS');
+if (ALLOWED_ORIGINS) {
+  server.use(helmet.frameguard('allow-from', ALLOWED_ORIGINS));
+} else {
+  server.use(helmet.frameguard('sameorigin'));
+}
 
-server.use(helmet.frameguard('allow-from', ALLOWED_ORIGINS));
 server.use(helmet.hsts( { maxAge: 31536000000 } ));
 server.use(helmet.xssFilter());
 server.use(helmet.noSniff());
