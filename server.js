@@ -75,7 +75,7 @@ if (nconf.get('NODE_ENV') !== 'test') {
 var middleware = require('./lib/middleware');
 var sessionStore = require('./lib/session-store');
 
-server.use(middleware.cors);
+
 server.use(cookieParser());
 server.use(session({
   secret: nconf.get('sessionSecret'),
@@ -97,7 +97,9 @@ server.use(bodyParser.urlencoded({ extended: false }));
 
 
 // security headers
-//server.use(helmet.frameguard());
+server.use(middleware.csp);
+server.use(middleware.frameOptions);
+server.use(middleware.cors);
 server.use(helmet.hsts( { maxAge: 31536000000 } ));
 server.use(helmet.xssFilter());
 server.use(helmet.noSniff());
