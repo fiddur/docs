@@ -1,4 +1,3 @@
-import nconf from 'nconf';
 import serialize from 'serialize-javascript';
 import { navigateAction } from 'fluxible-router';
 import { loadSettingsAction, Constants } from 'auth0-tutorial-navigator';
@@ -11,8 +10,8 @@ import HtmlComponent from './components/Html';
 import ApplicationStore from './stores/ApplicationStore';
 import { createElementWithContext } from 'fluxible-addons-react';
 import articleService from './services/articleService.server';
-import { quickstartNavigationAction } from './action/quickstartNavigationAction';
 import { getAssetBundleUrl } from '../lib/utils';
+import loadUserAction from './action/loadUserAction';
 
 const htmlComponent = React.createFactory(HtmlComponent);
 
@@ -30,6 +29,15 @@ export default function middleware(req, res, next) {
     quickstart: res.locals.quickstart,
     navigation: res.locals.navigation
   })).then(() => {
+    if (req.user) {
+      return actionContext.executeAction(loadUserAction, {
+        user: {
+          id: req.user.id,
+          email: req.user.email
+        }
+      });
+    }
+  }).then(() => {
     var componentContext = context.getComponentContext();
     const content = ReactDOMServer.renderToStaticMarkup(htmlComponent({
       clientFile: getAssetBundleUrl('client'),

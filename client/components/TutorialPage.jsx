@@ -7,6 +7,7 @@ import { connectToStores, provideContext } from 'fluxible-addons-react';
 import { quickstartNavigationAction } from '../action/quickstartNavigationAction';
 import highlightCode from '../browser/highlightCode';
 import setAnchorLinks from '../browser/anchorLinks';
+import UserStore from '../stores/UserStore';
 
 class TutorialPage extends React.Component {
   componentDidMount () {
@@ -81,6 +82,19 @@ class TutorialPage extends React.Component {
         <Tutorial tabName="tutorial-2" appType="backend" tech={this.props.tech2} componentLoadedInBrowser={componentLoadedInBrowser} />
       );
     }
+
+    var tryBanner;
+    if (!this.props.isAuthenticated) {
+      tryBanner = (
+        <div id="try-banner">
+          <div className="try-banner">
+            <span>Try Auth0 for FREE</span>
+            <a href="javascript:signup()" className="btn btn-success btn-lg">Create free Account</a>
+          </div>
+        </div>
+      );
+    }
+
     return (
       <div id="tutorial-template" className="docs-single animated fadeIn">
         <div className="navigation-bar">
@@ -112,13 +126,7 @@ class TutorialPage extends React.Component {
                   {tutorial2Tab}
                 </div>
               </section>
-
-              <div id="try-banner">
-                <div className="try-banner">
-                  <span>Try Auth0 for FREE</span>
-                  <a href="javascript:signup()" className="btn btn-success btn-lg">Create free Account</a>
-                </div>
-              </div>
+              {tryBanner}
             </div>
           </div>
         </div>
@@ -131,8 +139,10 @@ TutorialPage.contextTypes = {
   executeAction: React.PropTypes.func
 };
 
-TutorialPage = connectToStores(TutorialPage, [TutorialStore], (context, props) => {
-  return context.getStore(TutorialStore).getState();
+TutorialPage = connectToStores(TutorialPage, [TutorialStore, UserStore], (context, props) => {
+  var state = context.getStore(TutorialStore).getState();
+  state.isAuthenticated = context.getStore(UserStore).isAuthenticated();
+  return state;
 });
 
 export default TutorialPage;
