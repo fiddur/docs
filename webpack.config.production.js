@@ -1,7 +1,9 @@
 var webpack = require('webpack');
 var path = require('path');
 var Clean = require('clean-webpack-plugin');
-var ExtractTextPlugin = require("extract-text-webpack-plugin");
+var ExtractTextPlugin = require('extract-text-webpack-plugin');
+var autoprefixer = require('autoprefixer');
+var precss = require('precss');
 
 require('./config');
 
@@ -35,7 +37,7 @@ var webpackConfig = {
       loader: 'json-loader'
     }, {
       test: /\.styl$/,
-      loader: ExtractTextPlugin.extract('style-loader', 'css-loader!autoprefixer-loader!stylus-loader')
+      loader: ExtractTextPlugin.extract('style-loader', 'css-loader!postcss-loader!stylus-loader')
     }, {
       test: /\.(png|woff|woff2|eot|ttf|svg)$/,
       loader: 'url-loader?limit=100000'
@@ -74,7 +76,11 @@ var webpackConfig = {
       });
     }
   ],
-  devtool: 'source-map'
+  postcss: function () {
+    return [autoprefixer, precss];
+  },
+  devtool: 'source-map',
+  bail: true
 };
 
 module.exports = webpackConfig;
