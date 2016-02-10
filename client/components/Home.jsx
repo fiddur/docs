@@ -3,7 +3,10 @@ import { TutorialNavigator } from 'auth0-tutorial-navigator';
 import NavigationStore from '../stores/NavigationStore';
 import { connectToStores } from 'fluxible-addons-react';
 import { quickstartNavigationAction } from '../action/quickstartNavigationAction';
-import { CategorySection } from './NavigationSections';
+import HomeSectionContainer from './HomeSectionContainer';
+import TableOfContents from './TableOfContents';
+import ProductSection from './ProductSection';
+import ApiSection from './ApiSection';
 import InlineNav from './InlineNav';
 
 
@@ -50,13 +53,45 @@ class Home extends React.Component {
       });
     };
 
+
+    var homeNavCategories = [];
+    var productCategory;
+    var apiCategory;
+    var tocCategory;
+    var tocCategories = [];
+    this.props.categories.map(category => {
+      switch (category.id) {
+      case 'product':
+        productCategory = category;
+        homeNavCategories[0] = category;
+        break;
+      case 'api':
+        apiCategory = category;
+        homeNavCategories[1] = category;
+        break;
+      case 'toc':
+        tocCategory = category;
+        homeNavCategories[2] = category;
+        break;
+      default:
+        tocCategories.push(category);
+        break;
+      }
+    });
+
     return (
       <div>
-        <TutorialNavigator {...this.props} customNavigationAction={quickstartNavigationAction} componentLoadedInBrowser={componentLoadedInBrowser}/>
-        <InlineNav categories={this.props.categories} />
-        {this.props.categories.map((category) => (
-          <CategorySection key={category.id} category={category} />
-        ))}
+        <TutorialNavigator {...this.props} customNavigationAction={quickstartNavigationAction} componentLoadedInBrowser={componentLoadedInBrowser} />
+        <InlineNav categories={homeNavCategories} />
+        <HomeSectionContainer {...productCategory}>
+          <ProductSection category={productCategory} />
+        </HomeSectionContainer>
+        <HomeSectionContainer {...apiCategory}>
+          <ApiSection category={apiCategory} />
+        </HomeSectionContainer>
+        <HomeSectionContainer {...tocCategory}>
+          <TableOfContents categories={tocCategories} />
+        </HomeSectionContainer>
       </div>
     );
   }

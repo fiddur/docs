@@ -8,6 +8,7 @@ import { quickstartNavigationAction } from '../action/quickstartNavigationAction
 import highlightCode from '../browser/highlightCode';
 import setAnchorLinks from '../browser/anchorLinks';
 import UserStore from '../stores/UserStore';
+import TopNav from './TopNav';
 
 class TutorialPage extends React.Component {
   componentDidMount () {
@@ -94,17 +95,18 @@ class TutorialPage extends React.Component {
         </div>
       );
     }
+    // <div className="navigation-bar">
+    //   <div className="wrapper">
+    //     <div className="container">
+    //       <Breadcrumbs {...this.props}  customNavigationAction={quickstartNavigationAction} />
+    //       <SearchBox />
+    //     </div>
+    //   </div>
+    // </div>
 
     return (
       <div id="tutorial-template" className="docs-single animated fadeIn">
-        <div className="navigation-bar">
-          <div className="wrapper">
-            <div className="container">
-              <Breadcrumbs {...this.props}  customNavigationAction={quickstartNavigationAction} />
-              <SearchBox />
-            </div>
-          </div>
-        </div>
+        <TopNav />
         <div className="js-doc-template container">
           <div className="row">
             <div className="col-sm-3">

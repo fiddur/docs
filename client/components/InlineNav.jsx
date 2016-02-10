@@ -16,7 +16,7 @@ export default class InlineNav extends React.Component {
   }
   render() {
     return (
-      <div className="navigation-bar js-sticky-nav">
+      <div className="navigation-bar js-sticky-nav docs-top-nav">
         <div className="wrapper">
           <div className="container">
             <ul className="list-inline">
