@@ -1,0 +1,94 @@
+// Dev Center
+.devcenter-banner
+  margin-bottom: 40px;
+  height: 112px;
+
+  .circle-logo
+    float: left;
+    margin-right: 30px;
+
+  h1
+    margin-bottom: 0px;
+
+  p
+    color: #999;
+    font-size: 1.5rem;
+    margin-top: 0px;
+
+.list-scenarios
+  list-style: none;
+  padding: 0;
+  grid(1, 0, 'li');
+
+  +breakpoint("mobile-landscape")
+    grid(2, 20px, 'li');
+
+  +breakpoint("desktop")
+    grid(3, 20px, 'li');
+
+  li
+    margin: 15px 0;
+
+  > div.row
+    display: none;
+
+    +breakpoint("desktop")
+      display: inherit;
+
+  .scenario
+    display: inline-block;
+    text-decoration: none;
+    color: black;
+    padding: 30px;
+    padding-top: 0px;
+    padding-left: 50px;
+    position: relative;
+    width: 100%;
+    transition: background 100ms cubic-bezier(0.455, 0.03, 0.515, 0.955);
+
+    +breakpoint("mobile-landscape")
+      min-height: 120px;
+
+    +breakpoint("tablet")
+      min-height: 120px;
+
+    .title
+      font-size: 16px;
+      margin-bottom: 10px;
+      font-weight: bold;
+      color: #333;
+
+    i
+      display: block;
+      height: 40px;
+      width: 40px;
+      border: 1px solid color_text_gray;
+      position: absolute;
+      top: 0px;
+      left: 0px;
+      border-radius: 50%;
+      font-size: 20px;
+      color: color_text_gray;
+      opacity: 0.7;
+
+      &:before
+        position: relative;
+        top: 7px;
+        left: 9px;
+
+    .description
+      font-size: 14px;
+      color: color_text_gray;
+
+    .more
+      position: absolute;
+      bottom: 20px;
+      color: #087BA0;
+
+
+  .resource
+    +breakpoint("mobile-landscape")
+      min-height: 40px;
+
+    +breakpoint("tablet")
+      min-height: 60px;

@@ -1,0 +1,47 @@
+
+.boxed
+  background: #f5f7f9;
+  padding: 20px 25px;
+  padding-bottom: 10px;
+
+  .title
+    display: block;
+    border-bottom: 1px solid #ddd;
+    padding-bottom: 7px;
+    position: relative;
+
+  .list
+    display: block;
+
+  .back, .feature
+    border: 0;
+    padding: 0;
+
+  .feature
+    color: #333;
+    font-weight: bold;
+    font-size: 12px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+
+    .section-name
+      display: inline;
+
+    &:before
+      content: "With ";
+      padding-left: 0;
+      background: none;
+      line-height: normal;
+      height: auto;
+      font-weight: bold;
+      letter-spacing: 1px;
+
+
+    &:after
+      display: inline;
+      content: " you can";
+      font-family: 'avenir-next-web', 'Avenir', Helvetica, sans-serif;
+      text-transform: uppercase;
+      position: static;
+      font-weight: bold;
+      letter-spacing: 1px;
