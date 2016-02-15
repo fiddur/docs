@@ -57,8 +57,13 @@ class Home extends React.Component {
     var homeNavCategories = [];
     var productCategory;
     var apiCategory;
-    var tocCategory;
+    var tocCategory = {
+      id: 'toc',
+      name: 'Guides & SDKs',
+      description: 'References and documentation'
+    };
     var tocCategories = [];
+    homeNavCategories[2] = tocCategory;
     this.props.categories.map(category => {
       switch (category.id) {
       case 'product':
@@ -68,10 +73,6 @@ class Home extends React.Component {
       case 'api':
         apiCategory = category;
         homeNavCategories[1] = category;
-        break;
-      case 'toc':
-        tocCategory = category;
-        homeNavCategories[2] = category;
         break;
       default:
         tocCategories.push(category);
