@@ -45,7 +45,7 @@ nconf.file('global', { file: config_file })
     'GITHUB_DOCS_REPO': 'docs',
     'MEDIA_URL': (process.env.NODE_ENV === 'production' && nconf.get('DISABLE_CDN') !== 1) ? 'https://cdn.auth0.com/docs/media' : false,
     'ASSET_URL': (process.env.NODE_ENV === 'production' && nconf.get('DISABLE_CDN') !== 1) ? 'https://cdn.auth0.com/docs/assets' : false,
-    'DOCS_PATH': __dirname + '/docs/articles',
+    'DOCS_PATH': path.resolve(__dirname, './docs/'),
     'PORT': 5050,
     'CONSOLE_LOG_LEVEL': 'debug',
     'LOG_TO_KINESIS_LEVEL': 'info',
