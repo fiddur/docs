@@ -42,8 +42,8 @@ var TableOfContents = ({categories}) => {
             {linkGroup('platform')}
           </div>
           <div className="col-md-4">
-            {linkGroup('sdk')}
-            {linkGroup('web-frameworks')}
+            {linkGroup('dev-center')}
+            {linkGroup('web-framework')}
           </div>
           <div className="col-md-4">
             {linkGroup('ui-component', true)}
