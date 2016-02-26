@@ -106,7 +106,7 @@ class TutorialPage extends React.Component {
 
     return (
       <div id="tutorial-template" className="docs-single animated fadeIn">
-        <TopNav />
+        <TopNav {...this.props} />
         <div className="js-doc-template container">
           <div className="row">
             <div className="col-sm-3">
