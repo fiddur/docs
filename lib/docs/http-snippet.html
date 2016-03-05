@@ -1,0 +1,19 @@
+<pre style="display: none;"></pre>
+<div>
+  <!-- Nav tabs -->
+  <ul class="nav nav-tabs" role="tablist">
+    <% _.forEach(snippets, function(snippet) { %>
+      <li role="presentation" class="<%= snippet.key === 'shell' ? 'active' : '' %>"><a href="#<%- snippet.key %>" aria-controls="profile" role="tab" data-toggle="tab"><%= snippet.title %></a></li>
+    <% }); %>
+  </ul>
+
+  <!-- Tab panes -->
+  <div class="tab-content">
+    <% _.forEach(snippets, function(snippet) { %>
+      <div role="tabpanel" class="tab-pane <%= snippet.key === 'shell' ? 'active' : '' %>" id="<%- snippet.key %>">
+        <pre><code class="<%- snippet.css %>"><%= snippet.code %></code></pre>
+      </div>
+    <% }); %>
+  </div>
+
+</div>
