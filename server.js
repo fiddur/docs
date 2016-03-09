@@ -103,6 +103,7 @@ server.use(middleware.cors);
 server.use(helmet.hsts( { maxAge: 31536000000 } ));
 server.use(helmet.xssFilter());
 server.use(helmet.noSniff());
+server.use(helmet.hidePoweredBy());
 
 server.use(methodOverride());
 
