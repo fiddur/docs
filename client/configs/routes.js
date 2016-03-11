@@ -8,6 +8,12 @@ export default {
     handler: require('../components/Home'),
     action: tutorialNavigatorActions.home
   },
+  quickstart: {
+    path: '/docs/quickstart',
+    method: 'get',
+    page: 'quickstart',
+    handler: require('../components/Home'),
+  },
   apptype: {
     path: '/docs/quickstart/:apptype',
     method: 'get',
@@ -35,23 +41,5 @@ export default {
     page: 'tech2',
     handler: require('../components/TutorialPage'),
     action: tutorialNavigatorActions.tech2
-  },
-  // product: {
-  //   path: '/docs/product',
-  //   method: 'get',
-  //   page: 'product',
-  //   handler: require('../components/CategorySectionPage'),
-  // },
-  sdks: {
-    path: '/docs/sdks',
-    method: 'get',
-    page: 'sdk',
-    handler: require('../components/CategorySectionPage'),
-  },
-  howTos: {
-    path: '/docs/how-tos',
-    method: 'get',
-    page: 'how-to',
-    handler: require('../components/CategorySectionPage'),
   }
 };

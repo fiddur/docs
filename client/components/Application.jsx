@@ -14,7 +14,7 @@ class Application extends React.Component {
       document.location = document.location;
     }
 
-    var Handler = this.props.currentRoute.get('handler');
+    var Handler = this.props.currentRoute.handler;
 
     if (Handler) {
       if (this.props.currentNavigateError) {
@@ -26,7 +26,7 @@ class Application extends React.Component {
       }
     }
     else {
-        Handler = <ErrorPage status={404}  />;
+      Handler = <ErrorPage status={404}  />;
     }
 
     return (

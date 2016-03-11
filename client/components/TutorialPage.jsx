@@ -95,6 +95,7 @@ class TutorialPage extends React.Component {
       );
     }
 
+
     return (
       <div id="tutorial-template" className="docs-single animated fadeIn">
         <div className="navigation-bar">

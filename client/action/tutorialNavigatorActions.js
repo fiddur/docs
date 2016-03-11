@@ -11,7 +11,7 @@ export default {
   },
 
   appType: function(context, payload) {
-    var appType = payload.get('params').get('apptype');
+    var appType = payload.params.apptype;
     return getQuickstartMetdata(null, appType).then((metadata) => {
       context.dispatch('LOAD_TUTORIAL_NAVIGATOR', {
         appType: appType
@@ -21,8 +21,8 @@ export default {
   },
 
   backend: function(context, payload) {
-    var appType = payload.get('params').get('apptype');
-    var tech1 = payload.get('params').get('tech1');
+    var appType = payload.params.apptype;
+    var tech1 = payload.params.tech1;
     var quickstart = context.getStore(TutorialStore).getQuickstart();
     return Promise.all([
       getQuickstartMetdata(quickstart, appType, tech1).then((metadata) => {
@@ -41,8 +41,8 @@ export default {
   },
 
   tech1: function(context, payload) {
-    var appType = payload.get('params').get('apptype');
-    var tech1 = payload.get('params').get('tech1');
+    var appType = payload.params.apptype;
+    var tech1 = payload.params.tech1;
     var quickstart = context.getStore(TutorialStore).getQuickstart();
     return getQuickstartMetdata(quickstart, appType, tech1).then((metadata) => {
       context.dispatch('LOAD_TUTORIAL_NAVIGATOR', {
@@ -54,9 +54,9 @@ export default {
   },
 
   tech2: function(context, payload) {
-    var appType = payload.get('params').get('apptype');
-    var tech1 = payload.get('params').get('tech1');
-    var tech2 = payload.get('params').get('tech2');
+    var appType = payload.params.apptype;
+    var tech1 = payload.params.tech1;
+    var tech2 = payload.params.tech2;
     var quickstart = context.getStore(TutorialStore).getQuickstart();
     var actions = [
       getQuickstartMetdata(quickstart, appType, tech1, tech2).then((metadata) => {
