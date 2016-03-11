@@ -39,11 +39,14 @@ var TableOfContents = ({categories}) => {
         <div className="row">
           <div className="col-md-4">
             {linkGroup('start')}
-            {linkGroup('platform')}
+            {/*{linkGroup('platform')}*/}
+            {linkGroup('web-framework')}
           </div>
           <div className="col-md-4">
-            {linkGroup('dev-center')}
-            {linkGroup('web-framework')}
+            {/*{linkGroup('dev-center')}
+            {linkGroup('web-framework')}*/}
+            {linkGroup('sdk')}
+            {linkGroup('plugin')}
           </div>
           <div className="col-md-4">
             {linkGroup('ui-component', true)}

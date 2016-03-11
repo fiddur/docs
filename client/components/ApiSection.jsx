@@ -23,7 +23,7 @@ var ApiSection = ({category}) => {
             <div className="subcontent-box">
               <div className="row">
                 <div className="col-xs-12">
-                  <h3>Announcements</h3>
+                  <h3>Additional Resources</h3>
                   <ul>
                     {category.sections['announcements'].links.slice(0, 3).map((announcement, i) => (
                       <li key={i}>
