@@ -182,10 +182,12 @@
     },
     "auth0-tutorial-navigator": {
       "version": "1.0.2",
+      "from": "auth0-tutorial-navigator@git://github.com/auth0/tutorial-navigator.git#6b3b1570eced15df3136c3a9762ba885a7b951a0",
       "resolved": "git://github.com/auth0/tutorial-navigator.git#6b3b1570eced15df3136c3a9762ba885a7b951a0",
       "dependencies": {
         "auth0-styleguide": {
           "version": "2.1.2",
+          "from": "auth0-styleguide@git://github.com/auth0/styleguide.git#017be9b56136a64c7fd7bea5b861dd41808a5dce",
           "resolved": "git://github.com/auth0/styleguide.git#017be9b56136a64c7fd7bea5b861dd41808a5dce"
         },
         "flux": {
