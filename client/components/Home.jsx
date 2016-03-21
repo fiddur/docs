@@ -8,6 +8,7 @@ import TableOfContents from './TableOfContents';
 import ProductSection from './ProductSection';
 import ApiSection from './ApiSection';
 import InlineNav from './InlineNav';
+import TryBanner from './TryBanner';
 
 
 
@@ -80,22 +81,10 @@ class Home extends React.Component {
       }
     });
 
-    var tryBanner;
-    if (!this.props.isAuthenticated) {
-      tryBanner = (
-        <div id="try-banner">
-          <div className="try-banner try-banner-alt">
-            <span>{'Don\'t have an account yet?'}</span>
-            <a href="javascript:signup()" className="btn btn-success btn-lg">Try Auth0 for Free</a>
-          </div>
-        </div>
-      );
-    }
-
     return (
       <div>
         <TutorialNavigator {...this.props} customNavigationAction={quickstartNavigationAction} componentLoadedInBrowser={componentLoadedInBrowser} />
-        {tryBanner}
+        <TryBanner isAuthenticated={this.props.isAuthenticated} />
         <InlineNav categories={homeNavCategories} />
         <HomeSectionContainer {...productCategory}>
           <ProductSection category={productCategory} />
