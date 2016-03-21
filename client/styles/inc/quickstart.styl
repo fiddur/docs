@@ -140,7 +140,7 @@
     &:hover
       opacity: 1;
 
-.quickstart
+#tutorial-navigator .quickstart
   cursor: pointer;
   padding: 15px 10px;
   border-radius: 3px;
@@ -152,13 +152,17 @@
   .btn
     letter-spacing: 0.005em;
 
+
   .title
     display: block;
     color: #333;
 
   .cta
-    opacity: 0;
+    opacity: 1;
     transition: opacity 100ms ease;
+
+    +breakpoint("desktop")
+      opacity: 0;
 
   .description.description
     color: color_text_gray !important;
@@ -199,13 +203,15 @@
 
   .symbol
     display: inline-block;
-    background: color_green;
+    background: #F3F3F3;
     border-radius: 50%;
     height: 100px;
     width: 100px;
     margin-bottom: 20px;
-    background: white;
     position: relative;
+
+    +breakpoint("desktop")
+      background-color: white;
 
     &:after
       position: absolute;
