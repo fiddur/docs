@@ -1833,20 +1833,20 @@
       }
     },
     "limitd-client": {
-      "version": "1.7.1",
-      "resolved": "https://registry.npmjs.org/limitd-client/-/limitd-client-1.7.1.tgz",
+      "version": "1.8.0",
+      "resolved": "https://registry.npmjs.org/limitd-client/-/limitd-client-1.8.0.tgz",
       "dependencies": {
         "async": {
-          "version": "1.5.0",
-          "resolved": "https://registry.npmjs.org/async/-/async-1.5.0.tgz"
+          "version": "1.5.2",
+          "resolved": "https://registry.npmjs.org/async/-/async-1.5.2.tgz"
         },
         "length-prefixed-stream": {
           "version": "1.4.0",
           "resolved": "https://registry.npmjs.org/length-prefixed-stream/-/length-prefixed-stream-1.4.0.tgz",
           "dependencies": {
             "readable-stream": {
-              "version": "2.0.4",
-              "resolved": "https://registry.npmjs.org/readable-stream/-/readable-stream-2.0.4.tgz",
+              "version": "2.0.6",
+              "resolved": "https://registry.npmjs.org/readable-stream/-/readable-stream-2.0.6.tgz",
               "dependencies": {
                 "core-util-is": {
                   "version": "1.0.2",
@@ -1857,8 +1857,8 @@
                   "resolved": "https://registry.npmjs.org/inherits/-/inherits-2.0.1.tgz"
                 },
                 "isarray": {
-                  "version": "0.0.1",
-                  "resolved": "https://registry.npmjs.org/isarray/-/isarray-0.0.1.tgz"
+                  "version": "1.0.0",
+                  "resolved": "https://registry.npmjs.org/isarray/-/isarray-1.0.0.tgz"
                 },
                 "process-nextick-args": {
                   "version": "1.0.6",
@@ -1900,13 +1900,39 @@
             }
           }
         },
+        "tcp-client-failover": {
+          "version": "1.0.1",
+          "resolved": "https://registry.npmjs.org/tcp-client-failover/-/tcp-client-failover-1.0.1.tgz",
+          "dependencies": {
+            "lodash": {
+              "version": "4.7.0",
+              "resolved": "https://registry.npmjs.org/lodash/-/lodash-4.7.0.tgz"
+            },
+            "reconnect-net": {
+              "version": "1.0.0",
+              "resolved": "https://registry.npmjs.org/reconnect-net/-/reconnect-net-1.0.0.tgz",
+              "dependencies": {
+                "reconnect-core": {
+                  "version": "1.1.0",
+                  "resolved": "https://registry.npmjs.org/reconnect-core/-/reconnect-core-1.1.0.tgz",
+                  "dependencies": {
+                    "backoff": {
+                      "version": "2.3.0",
+                      "resolved": "https://registry.npmjs.org/backoff/-/backoff-2.3.0.tgz"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
         "through2": {
-          "version": "2.0.0",
-          "resolved": "https://registry.npmjs.org/through2/-/through2-2.0.0.tgz",
+          "version": "2.0.1",
+          "resolved": "https://registry.npmjs.org/through2/-/through2-2.0.1.tgz",
           "dependencies": {
             "readable-stream": {
-              "version": "2.0.4",
-              "resolved": "https://registry.npmjs.org/readable-stream/-/readable-stream-2.0.4.tgz",
+              "version": "2.0.6",
+              "resolved": "https://registry.npmjs.org/readable-stream/-/readable-stream-2.0.6.tgz",
               "dependencies": {
                 "core-util-is": {
                   "version": "1.0.2",
@@ -1917,8 +1943,8 @@
                   "resolved": "https://registry.npmjs.org/inherits/-/inherits-2.0.1.tgz"
                 },
                 "isarray": {
-                  "version": "0.0.1",
-                  "resolved": "https://registry.npmjs.org/isarray/-/isarray-0.0.1.tgz"
+                  "version": "1.0.0",
+                  "resolved": "https://registry.npmjs.org/isarray/-/isarray-1.0.0.tgz"
                 },
                 "process-nextick-args": {
                   "version": "1.0.6",

@@ -32,7 +32,7 @@
     "httpsnippet": "^1.16.5",
     "jade": "^1.11.0",
     "js-yaml": "^3.5.3",
-    "limitd-client": "^1.7.1",
+    "limitd-client": "^1.8.0",
     "lodash": "^4.5.1",
     "lsr": "^1.0.0",
     "markdown-it": "^6.0.0",
