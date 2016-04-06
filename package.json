@@ -68,11 +68,11 @@
     "build-dev": "webpack --config webpack.config.js --progress",
     "dev": "mongod & NODE_ENV=development PORT=3000 node webpack-dev-server.js & WEBPACK_PROXY_PORT=5050  NODE_ENV=development nodemon start.js -e js,jsx,jade,styl,md,html,yml",
     "shrinkwrap": "npm-shrinkwrap",
-    "postinstall": "npm run build"
+    "preinstall": "bash heroku/setup-ssh.sh",
+    "postinstall": "bash heroku/cleanup-ssh.sh && npm run build"
   },
   "engines": {
-    "node": "1.8.4",
-    "npm": "2.13.1"
+    "node": "4.3"
   },
   "devDependencies": {
     "autoprefixer": "^6.3.1",
