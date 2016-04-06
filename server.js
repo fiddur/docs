@@ -126,6 +126,9 @@ server.use(middleware.overrideIfClientInQsForPublicAllowedUrls);
 server.use(middleware.urlVariables);
 server.use(middleware.fetchABExperiments);
 
+// React sidebar
+server.use(require('./client/sidebar'));
+
 // Routes
 server.use('/docs', require('./lib/api-explorer'));
 server.use('/docs', require('./lib/docs').router);

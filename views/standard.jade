@@ -35,8 +35,7 @@ block body
     //- Start content
     .js-doc-template.container
       .row
-        .col-sm-3
-          include inc/sidebar-menu
+        .col-sm-3!= locals.sidebar
 
         .col-sm-9
           section.docs-content
