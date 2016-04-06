@@ -3,9 +3,6 @@
   "scripts": {
   },
   "env": {
-  	"HEROKU_GIT_SSH_KEY": {
-  		"required": true
-  	},
     "NPM_CONFIG_PRODUCTION": {
       "required": true
     }
