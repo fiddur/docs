@@ -5,6 +5,9 @@
   "env": {
     "NPM_CONFIG_PRODUCTION": {
       "required": true
+    },
+    "NODE_ENV": {
+      "required": true
     }
   },
   "addons": []
