@@ -165,9 +165,8 @@
       }
     },
     "auth0-common-logging": {
-      "version": "2.10.0",
-      "from": "auth0-common-logging@git+ssh://git@gitlab.auth0.com:devops/auth0-common-logging.git#4dfd517835f512c3d602210b6ccec381518d3a84",
-      "resolved": "git+ssh://git@gitlab.auth0.com:devops/auth0-common-logging.git#4dfd517835f512c3d602210b6ccec381518d3a84",
+      "version": "2.11.0",
+      "resolved": "git://github.com/auth0/auth0-common-logging.git#4a7eb1b5711544840ef7178d5d958289b9cd4130",
       "dependencies": {
         "lodash": {
           "version": "3.10.1",
@@ -177,7 +176,6 @@
     },
     "auth0-styleguide": {
       "version": "2.2.7",
-      "from": "auth0-styleguide@git://github.com/auth0/styleguide.git#75412486e066f082a0873687cf29d6dc51b3bf33",
       "resolved": "git://github.com/auth0/styleguide.git#75412486e066f082a0873687cf29d6dc51b3bf33"
     },
     "auth0-tutorial-navigator": {
@@ -2878,7 +2876,6 @@
     },
     "web-header": {
       "version": "0.5.4",
-      "from": "web-header@git://github.com/auth0/web-header.git#fdec02de6ec6dddfbd6d32c8c4392c7054a83ce3",
       "resolved": "git://github.com/auth0/web-header.git#fdec02de6ec6dddfbd6d32c8c4392c7054a83ce3"
     },
     "whatwg-fetch": {
