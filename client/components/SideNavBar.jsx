@@ -2,7 +2,6 @@ import React from 'react';
 import FeedbackSender from './FeedbackSender';
 import NavigationStore from '../stores/NavigationStore';
 import { connectToStores } from 'fluxible-addons-react';
-import initAccordion from '../browser/accordion';
 
 var CategorySection = ({category}) => {
   var links = category.links || [];
@@ -15,12 +14,11 @@ var CategorySection = ({category}) => {
     }
   }
   return (
-    <div className="accordion" data-accordion="data-accordion">
-      <div className="nav-title" data-control="data-control">
-        <i className="icon-budicon-461"></i>
+    <div>
+      <div className="nav-title">
         <h2>{category.name}</h2>
       </div>
-      <ul className="nav-content" data-content="data-content">
+      <ul className="nav-content">
         {links.map((doc, i) => {
           return (
             <li key={i}>
@@ -34,28 +32,16 @@ var CategorySection = ({category}) => {
 };
 
 class SideNavBar extends React.Component {
-  componentDidMount () {
-    this.initClient();
-  }
-  componentDidUpdate() {
-    this.initClient();
-  }
-  initClient(html) {
-    if (typeof document !== 'undefined') {
-      initAccordion();
-    }
-  }
   render() {
     if (this.props && this.props.categories) {
       return (
         <div id="sidebar">
-          <nav className="sidebar-menu" data-accordion-group="data-accordion-group">
-            <div className="accordion" data-accordion="data-accordion">
-              <div className="principal-title" data-control="data-control">
-                <i className="plus"></i>
+          <nav className="sidebar-menu">
+            <div>
+              <div className="principal-title">
                 <h2>Documentation</h2>
               </div>
-              <div className="principal-content" data-content="data-content">
+              <div className="principal-content">
                 {this.props.categories.map((category) => (
                   <CategorySection key={category.id} category={category} />
                 ))}
