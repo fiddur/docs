@@ -32,6 +32,8 @@ npm i
 npm run dev
 ```
 
+Open the site on `http://localhost:3000/docs` in your browser.
+
 > If you see an error like `Error: bind EMFILE` you need to run the following command `ulimit -n 2048`
 
 ### Usage with vagrant
