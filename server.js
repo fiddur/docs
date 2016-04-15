@@ -163,9 +163,7 @@ server.get('/docs/switch', function (req, res) {
 server.use('/docs/meta', require('./lib/api'));
 
 // React client middleware -> homepage, quickstart, etc.
-var quickstartMiddleware = require('./lib/quickstart').middleware;
-var reactMiddleware = require('./client/middleware');
-server.use(quickstartMiddleware, reactMiddleware);
+server.use(require('./client/middleware'));
 
 // This is just for localhost
 server.get('/', function(req, res) {
