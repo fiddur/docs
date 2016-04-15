@@ -120,6 +120,7 @@ server.use(middleware.configuration);
 server.use(middleware.setUserIsOwner);
 server.use(middleware.defaultValues);
 server.use(middleware.embedded);
+server.use(middleware.appendTicket);
 server.use(middleware.overrideIfAuthenticated);
 server.use(middleware.overrideIfClientInQs);
 server.use(middleware.overrideIfClientInQsForPublicAllowedUrls);
@@ -131,7 +132,7 @@ server.use(require('./client/sidebar'));
 
 // Routes
 server.use('/docs', require('./lib/api-explorer'));
-server.use('/docs', require('./lib/docs').router);
+server.use('/docs', require('./lib/docs'));
 server.use('/docs', require('./lib/sdk-snippets/lock/demos-routes'));
 server.use('/docs', require('./lib/sdk-snippets/lock/snippets-routes'));
 server.use('/docs', require('./lib/packager'));
