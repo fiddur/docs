@@ -21,24 +21,24 @@ export default function(req, res) {
           return reject(error);
         }
 
-        var options = _.clone(res.locals);
-        options.configuration[payload.appType] = payload.tech1
+        var locals = _.clone(res.locals);
+        locals.configuration[payload.appType] = payload.tech1
         if(payload.tech2) {
-          options.configuration.api = payload.tech2;
+          locals.configuration.api = payload.tech2;
         }
-        // options.configuration.frontend = req.query.frontend || null;
-        // options.configuration.api = req.query.api || null;
-        // options.configuration.backend = req.query.backend || null;
-        // options.configuration.mobile = req.query.mobile || null;
+
+        locals.configuration.internal = req.query.internal === 'true';
+
+        // locals.configuration.frontend = req.query.frontend || null;
+        // locals.configuration.api = req.query.api || null;
+        // locals.configuration.backend = req.query.backend || null;
+        // locals.configuration.mobile = req.query.mobile || null;
         // // combination data
-        // options.configuration.thirdParty = req.query['3rd'] || req.query.thirdparty || req.query.thirdpParty || false;
-        // options.configuration.hybrid = req.query.hybrid || false;
+        // locals.configuration.thirdParty = req.query['3rd'] || req.query.thirdparty || req.query.thirdpParty || false;
+        // locals.configuration.hybrid = req.query.hybrid || false;
 
-
-
-
-        options.sections = processSections(doc, options, true /* absolute links */);
-        jade.renderFile(viewname, options, function(err, html) {
+        locals.sections = processSections(doc, locals, true /* absolute links */);
+        jade.renderFile(viewname, locals, function(err, html) {
           if (err) {
             return reject(err);
           } else {
