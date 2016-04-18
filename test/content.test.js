@@ -12,7 +12,7 @@ var htmlparser = require('htmlparser2');
 var async = require('async');
 var testConfig = require('../docs/tests.json');
 var urlJoin = require('url-join');
-var docUrls = require('../lib/docs').docUrls;
+var docUrls = require('../lib/docs/builder').docUrls;
 var ProgressBar = require('progress');
 
 var baseUrl = urlJoin('http://localhost:' + nconf.get('PORT'), '/docs');
