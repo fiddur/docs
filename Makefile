@@ -1,5 +1,5 @@
 REPORTER ?= list
-TEST_DB=mongodb://localhost:27017/auth11-tests
+TEST_DB=mongodb://localhost:27017/auth0-docs-test
 TEST_NODE_ENV=test
 NODE_VERSION="4.2.3"
 
