@@ -1,0 +1,152 @@
+// architecture scenario cards
+.architecture-scenarios-card
+  background-color #fff
+  border-radius 3px
+  display block
+  margin-bottom 15px
+  overflow hidden
+  padding-bottom 61px
+  position relative
+  +breakpoint('tablet')
+    margin-bottom 30px
+
+  // Showcase card header
+  .header
+    background color_oil
+    width 100%
+    margin-bottom 20px
+    overflow hidden
+    height 114px
+    padding 20px 20px
+    text-align center
+
+    display table
+
+    .logo
+      background-color white
+      border-radius 50%
+      display inline-block
+      vertical-align middle
+      font-size 20px
+      text-align center
+      width 60px
+      height 60px
+
+      i
+        position relative
+        color #222228
+        top 16px
+        left -1px
+        font-size 28px
+
+    figure
+      display table-cell
+      vertical-align middle
+
+    img
+      max-width 250px
+      max-height 40px
+
+  .content
+    padding 0 20px
+
+    h1
+      color #000
+      font-size 26px
+      line-height 1.3
+      margin 0 0 20px
+
+    p
+      color #253045
+      clear left
+      line-height 26px
+      margin 0
+
+  // Showcase card footer
+  .footer
+    clearfix()
+    border-top 1px solid rgba(151, 151, 151, 0.3)
+    margin 0 20px 0 20px
+    padding 20px 0
+    text-align center
+    position absolute
+    right 0
+    bottom 0
+    left 0
+
+    .moar
+      color #9b9b9b
+      font-size 12px
+      line-height 20px
+      text-transform uppercase
+
+    .go
+      //background url('img/icon-go.png') no-repeat scroll 0 0 transparent
+      background-size 21px 20px
+      float right
+      width 21px
+      height 20px
+
+// Showcase cards :hover state
+.showcase-card:hover
+  text-decoration none
+
+  .footer
+    .moar
+      color #333
+
+    .go
+      -webkit-animation hover .35s ease-in-out
+      animation hover .35s ease-in-out
+
+// Showcase cards :focus state
+.showcase-card:focus
+  text-decoration none
+
+// Showcase Main card
+.showcase-main-card
+  .showcase-card
+    padding-bottom 0
+    height auto!important
+
+  // Showcase card header
+  .header
+    p
+      clear none
+
+    span
+      float none
+      margin-right 0
+      margin-bottom 19px
+
+  .content
+    padding-bottom 20px
+
+  // Showcase card footer
+  .footer
+    position static
+
+// Showcase :hover icon .go animation
+@-webkit-keyframes hover {
+  0% {
+    -webkit-transform scale(1)
+  }
+  50% {
+    -webkit-transform scale(1.1)
+  }
+  100% {
+    -webkit-transform scale(1)
+  }
+}
+
+@keyframes hover {
+  0% {
+    transform scale(1)
+  }
+  50% {
+    transform scale(1.1)
+  }
+  100% {
+    transform: scale(1)
+  }
+}
