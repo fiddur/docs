@@ -120,7 +120,6 @@ server.use(middleware.configuration);
 server.use(middleware.setUserIsOwner);
 server.use(middleware.defaultValues);
 server.use(middleware.embedded);
-server.use(middleware.appendTicket);
 server.use(middleware.overrideIfAuthenticated);
 server.use(middleware.overrideIfClientInQs);
 server.use(middleware.overrideIfClientInQsForPublicAllowedUrls);
@@ -141,16 +140,6 @@ server.use('/docs', require('./lib/redirects'));
 server.use('/docs', require('./lib/sitemap'));
 server.use('/docs', require('./lib/search'));
 server.use('/docs', require('./lib/updates'));
-
-var connections = require('./lib/connections');
-server.get('/docs/ticket/step', function (req, res) {
-  if (!req.query.ticket) return res.sendStatus(404);
-  connections.getCurrentStep(req.query.ticket, function (err, currentStep) {
-    if (err) return res.sendStatus(500);
-    if (!currentStep) return res.sendStatus(404);
-    res.send(currentStep);
-  });
-});
 
 server.get('/docs/switch', function (req, res) {
   req.session.current_tenant = {
