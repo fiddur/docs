@@ -1,0 +1,90 @@
+.architecture-scenarios-section
+  &:last-of-type
+    padding-bottom 30px
+
+.architecture-scenarios-content
+  padding-top 10px
+  h5
+    color rgba(0, 0, 0, 0.54)
+    border-bottom 1px solid #E3E5E7
+    padding-bottom 5px
+
+.architecture-scenarios-card
+  height 350px
+  background #ffffff
+  color rgba(0, 0, 0, 0.87)
+  border 1px solid #F5F7F9
+  text-align center
+  border-radius 3px
+  position relative
+  margin-bottom 20px
+  +breakpoint('desktop')
+    height 320px
+    width calc((100% - 18px) / 2)
+    margin-right 18px
+    float left
+  &:nth-of-type(2n)
+    margin-right 0
+
+  h4
+    margin 20px 0
+    line-height 1.6
+
+  p
+    font-size 14px;
+    color rgba(0, 0, 0, 0.54)
+
+  .item-link
+    color rgba(0, 0, 0, 0.36)
+    display block
+    width 100%
+    position absolute
+    left 0
+    bottom 0
+    text-align center
+    padding 20px 0
+    border-top 1px solid rgba(0, 0, 0, 0.05)
+
+    &:hover
+      color #000000
+
+.architecture-scenarios__img
+  height 170px
+  position relative
+  +breakpoint('desktop')
+    height 170px
+    //margin-bottom 30px
+    //margin-top 30px
+    
+  img
+    // max-height 100%
+    // max-width 60%
+    max-height 100%
+    width auto
+    position absolute
+    left 50%
+    top 50%
+    transform translate(-50%, -50%)
+    +breakpoint('desktop')
+      max-width 100%
+
+.architecture-scenarios__text
+  padding 0 8px
+  +breakpoint('desktop')
+    padding 0 30px
+
+    p span
+      display inline
+
+  span
+      display none
+
+.architecture-scenarios__link
+  color rgba(0, 0, 0, 0.36)
+  width 100%
+  position absolute
+  left 0
+  bottom 0
+  text-align center
+  padding 20px 0
+  border-top 1px solid rgba(0, 0, 0, 0.05)
