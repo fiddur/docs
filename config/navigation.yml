@@ -122,6 +122,10 @@ categories:
     name: "UI Components"
     links:
       -
+        name: "Lock vs. Custom UI"
+        description: "When to use Lock"
+        href: "/libraries/when-to-use-lock"
+      -
         name: "Lock for Web"
         description: "Auth UI for your web app"
         href: "/libraries/lock"
