@@ -16,6 +16,9 @@ categories:
         name: "Creating your first Application"
         href: "https://auth0.com/video-tutorials/creating-your-first-app/register-an-application"
       -
+        name: "Architecture Scenarios"
+        href: "/architecture-scenarios"
+      -
         name: "Getting Started with Lock"
         href: "https://auth0.com/video-tutorials/getting-started-with-lock/implementing-lock"
       -
