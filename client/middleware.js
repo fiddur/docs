@@ -1,6 +1,7 @@
 import serialize from 'serialize-javascript';
 import { navigateAction } from 'fluxible-router';
 import { loadSettingsAction, Constants } from 'auth0-tutorial-navigator';
+import { getCanonicalUrl } from './util/tutorials';
 import React from 'react';
 import ReactDOMServer from 'react-dom/server';
 import app from './app';
@@ -8,6 +9,7 @@ import jade from 'jade';
 import path from 'path';
 import HtmlComponent from './components/Html';
 import ApplicationStore from './stores/ApplicationStore';
+import { TutorialStore } from 'auth0-tutorial-navigator';
 import { createElementWithContext } from 'fluxible-addons-react';
 import articleService from './services/articleService.server';
 import { getAssetBundleUrl } from '../lib/utils';
@@ -56,6 +58,17 @@ export default function middleware(req, res, next) {
     options.sections = { content: content };
     options.title = appStore.getPageTitle();
     options.description = appStore.getPageDescription();
+
+
+
+    var tutorialStore = componentContext.getStore(TutorialStore);
+    if (tutorialStore) {
+      var tutorialState = tutorialStore.getState();
+      var canonicalUrl = getCanonicalUrl(tutorialState.appType, tutorialState.tech1, tutorialState.tech2);
+      if (canonicalUrl) {
+        options.canonicalUrl = canonicalUrl;
+      }
+    }
 
     jade.renderFile(path.resolve(__dirname, '../views/homepage.jade'), options, function(err, html) {
       if (err) {

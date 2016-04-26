@@ -114,3 +114,11 @@ export function getQuickstartMetdata(quickstart, appType, tech1, tech2) {
     return resolve(meta);
   });
 }
+
+export function getCanonicalUrl(appType, tech1, tech2) {  
+  if (appType && tech1 && tech2) {
+    return `/docs/${getPlatformSlug(appType)}/${tech1}`;
+  } else if ((appType === 'webapp' || appType ==='backend') && tech1) {
+    return `/docs/${getPlatformSlug(appType)}/${tech1}`;
+  }
+}
