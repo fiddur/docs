@@ -4,46 +4,51 @@
   border: 1px solid rgb(231, 233, 237);
   border-radius: 3px;
   padding: 20px;
-  
+
+  +breakpoint("desktop")
+    line-height: 45px;
+
   .btn
     display: block;
-    
+
   .button-area
     padding: 0 20px;
-    
+
     +breakpoint("desktop")
-      float: left;
+      float: right;
       width: 40%;
-  
+
+      .btn
+        display: inline-block;
+        width: 100%;
+
   .info
     position: relative;
-    
+
     +breakpoint("desktop")
       float: left;
       width: 60%;
-  
-  i 
+
+  i
     display: block;
     font-size: 20px;
     opacity: 0.5;
     text-align: center;
-    
+
     +breakpoint("desktop")
-      position: absolute;
-      left: 20px;
-      top: 9px;
-    
-  p 
+      margin-left: 20px;
+      vertical-align: middle;
+      display inline-block
+      line-height 0
+
+  p
     margin: 0;
     margin-bottom: 15px;
     text-align: center;
-    
-    +breakpoint("desktop")
-      text-align: left;
-      padding-left: 60px;
-      position: relative;
-      top: 6px;
-    
-  
-    
 
+    +breakpoint("desktop")
+      margin-bottom 0
+      text-align: left;
+      padding-left: 20px;
+      display inline-block
+      vertical-align: middle;
