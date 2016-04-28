@@ -26,7 +26,7 @@ nconf.file('global', { file: config_file })
     'DOMAIN_URL_APP':    'localhost:8989',
     'DOMAIN_URL_SDK':    'login-dev.auth0.com:3000',
     'PACKAGER_URL':      'http://localhost:8792',
-    'DOMAIN_URL_DOCS':   'https://localhost:5050',
+    'DOMAIN_URL_DOCS':   'http://localhost:3000/docs',
     'DOMAIN_URL_API2_EXPLORER': 'login0.myauth0.com',
     'WIDGET_FALLBACK_CLIENTID': 'aCbTAJNi5HbsjPJtRpSP6BIoLPOrSj2C',
     'LOGIN_WIDGET_URL':  'https://cdn.auth0.com/js/lock-9.0.min.js',

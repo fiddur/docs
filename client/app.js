@@ -6,6 +6,8 @@ import NavigationStore from './stores/NavigationStore';
 import RouteStore from './stores/RouteStore';
 import UserStore from './stores/UserStore';
 import serviceProxyPlugin from 'fluxible-plugin-service-proxy';
+import devToolsPlugin from 'fluxible-plugin-devtools';
+import metricsPlugin from './plugins/metricsPlugin';
 
 
 // create new fluxible instance
@@ -15,6 +17,8 @@ var app = new Fluxible({
 
 // register plugins
 app.plug(serviceProxyPlugin());
+app.plug(metricsPlugin());
+app.plug(devToolsPlugin());
 
 // register stores
 app.registerStore(RouteStore);

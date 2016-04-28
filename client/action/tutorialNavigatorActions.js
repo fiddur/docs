@@ -7,6 +7,7 @@ export default {
     context.dispatch('LOAD_TUTORIAL_NAVIGATOR', {});
     return getQuickstartMetdata().then((metadata) => {
       context.dispatch('UPDATE_PAGE_METADATA', metadata);
+      context.trackPage();
     });
   },
 
@@ -17,6 +18,7 @@ export default {
         appType: appType
       });
       context.dispatch('UPDATE_PAGE_METADATA', metadata);
+      context.trackPage();
     });
   },
 
@@ -31,6 +33,7 @@ export default {
           tech1: tech1
         });
         context.dispatch('UPDATE_PAGE_METADATA', metadata);
+        context.trackPage();
       }),
       context.executeAction(loadArticleAction, {
         appType: appType,
@@ -50,6 +53,7 @@ export default {
         tech1: tech1
       });
       context.dispatch('UPDATE_PAGE_METADATA', metadata);
+      context.trackPage();
     });
   },
 
@@ -66,6 +70,7 @@ export default {
           tech2: tech2
         });
         context.dispatch('UPDATE_PAGE_METADATA', metadata);
+        context.trackPage();
       }),
       context.executeAction(loadArticleAction, {
         appType: appType,
