@@ -44,7 +44,7 @@ class Application extends React.Component {
   }
 }
 
-export default handleHistory(provideContext(connectToStores(
+Application = connectToStores(
   Application,
   [ApplicationStore],
   function (context, props) {
@@ -56,4 +56,13 @@ export default handleHistory(provideContext(connectToStores(
       pages: appStore.getPages()
     };
   }
-)));
+);
+
+Application = provideContext(Application, {
+  trackEvent: React.PropTypes.func.isRequired,
+  trackPage: React.PropTypes.func.isRequired
+});
+
+Application = handleHistory(Application);
+
+export default Application;

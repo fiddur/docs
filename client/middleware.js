@@ -23,7 +23,9 @@ export default function middleware(req, res, next) {
   // Register services
   app.getPlugin('ServiceProxyPlugin').registerService(Constants.ArticleServiceName, articleService(req, res));
 
-  let context = app.createContext();
+  let context = app.createContext({
+    debug: process.env.NODE_ENV !== 'production'
+  });
   var actionContext = context.getActionContext();
 
   actionContext.executeAction(navigateAction, {

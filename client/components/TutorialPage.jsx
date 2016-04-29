@@ -26,20 +26,14 @@ class TutorialPage extends React.Component {
     }
   }
   metrics() {
-    // auth0-metrics is safelly loaded in `<head>` block...
-    var metrics = window.metricsLib;
-    // ... but only when `env['SEGMENT_KEY']` is defined
-    if (!!metrics) {
-      return false;
-    }
-
+    var eventData = {
+      'clientID': window.widget.getClient()._clientID || '',
+      'tutorial-apptype': this.props.apptype || '',
+      'tutorial-platform': this.props.tech1 || '',
+      'tutorial-api': this.props.tech2 || ''
+    };
     $('#package .btn').off('click').on('click', function() {
-      metrics.track('download:tutorial-seed', {
-        'clientID': window.widget.getClient()._clientID || '',
-        'tutorial-apptype': this.props.apptype || '',
-        'tutorial-platform': this.props.tech1 || '',
-        'tutorial-api': this.props.tech2 || ''
-      });
+      context.getComponentContext().trackEvent('download:tutorial-seed', eventData);
     });
   }
   render() {
@@ -137,7 +131,8 @@ class TutorialPage extends React.Component {
 
 TutorialPage.contextTypes = {
   getStore: React.PropTypes.func,
-  executeAction: React.PropTypes.func
+  executeAction: React.PropTypes.func,
+  trackEvent: React.PropTypes.func.isRequired
 };
 
 TutorialPage = connectToStores(TutorialPage, [TutorialStore, UserStore], (context, props) => {
