@@ -98,8 +98,17 @@ server.use(bodyParser.urlencoded({ extended: false }));
 
 // security headers
 server.use(middleware.csp);
-server.use(middleware.frameOptions);
 server.use(middleware.cors);
+server.use(function(req, res, next) {
+  if (req.path.indexOf('/docs/lock-demos/') === 0) {
+    // Lock demos are used on manage.auth0.com and X-Frame-Options
+    // doesn't support multiple values so we allow all hosts for this path
+    next();
+  } else {
+    // For all other paths, we deny
+    helmet.frameguard({ action: 'sameorigin' })(req, res, next);
+  }
+});
 server.use(helmet.hsts( { maxAge: 31536000000 } ));
 server.use(helmet.xssFilter());
 server.use(helmet.noSniff());
