@@ -13,7 +13,7 @@ export default function(req, res) {
   return {
     loadArticle: function(payload) {
       return new Promise((resolve, reject) => {
-        var pathname = `/${getPlatformSlug(payload.appType)}/${payload.currentTech}`;
+        var pathname = `/${getPlatformSlug(payload.appType)}/${payload.platform}`;
         var doc = docsByUrl[pathname];
         if (!doc) {
           var error = new Error('No document found at ' + req2.url);
@@ -22,11 +22,7 @@ export default function(req, res) {
         }
 
         var locals = _.clone(res.locals);
-        locals.configuration[payload.appType] = payload.tech1
-        if(payload.tech2) {
-          locals.configuration.api = payload.tech2;
-        }
-
+        locals.configuration[payload.appType] = payload.platform;
         locals.configuration.internal = req.query.internal === 'true';
 
         // locals.configuration.frontend = req.query.frontend || null;

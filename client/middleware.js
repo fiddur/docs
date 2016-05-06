@@ -61,12 +61,10 @@ export default function middleware(req, res, next) {
     options.title = appStore.getPageTitle();
     options.description = appStore.getPageDescription();
 
-
-
     var tutorialStore = componentContext.getStore(TutorialStore);
     if (tutorialStore) {
       var tutorialState = tutorialStore.getState();
-      var canonicalUrl = getCanonicalUrl(tutorialState.appType, tutorialState.tech1, tutorialState.tech2);
+      var canonicalUrl = getCanonicalUrl(tutorialState.appType, tutorialState.platform);
       if (canonicalUrl) {
         options.canonicalUrl = canonicalUrl;
       }

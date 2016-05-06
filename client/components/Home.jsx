@@ -8,52 +8,37 @@ import TableOfContents from './TableOfContents';
 import ProductSection from './ProductSection';
 import ApiSection from './ApiSection';
 import InlineNav from './InlineNav';
+import TryBanner from './TryBanner';
 
-
+// TODO: This depends on a "carousel" ref that's set by the TutorialNavigator itself.
+// Can we move this into the component's codebase somehow?
+var initCarouselInBrowser = function() {
+  var $carousel = $(this.refs.carousel);
+  $carousel.owlCarousel({
+    margin: 20,
+    center: true,
+    dots: true,
+    navContainerClass: 'nav',
+    navClass: ['prev', 'next'],
+    baseClass: 'js-carousel',
+    itemClass: 'item',
+    dotsClass: 'dots',
+    dotClass: 'dot',
+    nav: false,
+    responsive: {
+      0:   {items: 1, stagePadding: 60},
+      380: {items: 2, stagePadding: 0},
+      570: {items: 3, stagePadding: 0},
+      768: {items: 4, stagePadding: 0},
+      992: {items: 5, stagePadding: 0, center: false, dots: false}
+    }
+  });
+};
 
 class Home extends React.Component {
+  
   render() {
-    var componentLoadedInBrowser = function(){
-      var $carousel = $(this.refs.carousel);
-      $carousel.owlCarousel({
-        margin: 20,
-        center: true,
-        dots: true,
-        navContainerClass: 'nav',
-        navClass: ['prev', 'next'],
-        baseClass: 'js-carousel',
-        itemClass: 'item',
-        dotsClass: 'dots',
-        dotClass: 'dot',
-        nav: false,
-        responsive: {
-          0: {
-            items: 1,
-            stagePadding: 60
-          },
-          380: {
-            items: 2,
-            stagePadding: 0
-          },
-          570: {
-            items: 3,
-            stagePadding: 0
-          },
-          768: {
-            items: 4,
-            stagePadding: 0
-          },
-          992: {
-            items: 5,
-            stagePadding: 0,
-            center: false,
-            dots: false
-          }
-        }
-      });
-    };
-
-
+    
     var homeNavCategories = [];
     var productCategory;
     var apiCategory;
@@ -79,22 +64,13 @@ class Home extends React.Component {
         break;
       }
     });
-
-    var tryBanner;
-    if (!this.props.isAuthenticated) {
-      tryBanner = (
-        <div id="try-banner">
-          <div className="try-banner try-banner-alt">
-            <span>{'Don\'t have an account yet?'}</span>
-            <a href="javascript:signup()" className="btn btn-success btn-lg">Try Auth0 for Free</a>
-          </div>
-        </div>
-      );
-    }
+    
+    let {isAuthenticated} = this.props;
+    let tryBanner = isAuthenticated ? null : <TryBanner/>;
 
     return (
       <div>
-        <TutorialNavigator {...this.props} customNavigationAction={quickstartNavigationAction} componentLoadedInBrowser={componentLoadedInBrowser} />
+        <TutorialNavigator {...this.props} customNavigationAction={quickstartNavigationAction} componentLoadedInBrowser={initCarouselInBrowser} />
         {tryBanner}
         <InlineNav categories={homeNavCategories} />
         <HomeSectionContainer {...productCategory}>
@@ -109,6 +85,11 @@ class Home extends React.Component {
       </div>
     );
   }
+  
+}
+
+Home.propTypes = {
+  isAuthenticated: React.PropTypes.bool
 }
 
 Home.contextTypes = {

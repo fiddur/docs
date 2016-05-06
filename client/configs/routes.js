@@ -14,32 +14,25 @@ export default {
     page: 'quickstart',
     handler: require('../components/Home'),
   },
-  apptype: {
-    path: '/docs/quickstart/:apptype',
+  appType: {
+    path: '/docs/quickstart/:appType',
     method: 'get',
-    page: 'apptype',
+    page: 'appType',
     handler: require('../components/Home'),
     action: tutorialNavigatorActions.appType
   },
-  backend: {
-    path: '/docs/quickstart/:apptype(backend|webapp)/:tech1',
+  platform: {
+    path: '/docs/quickstart/:appType/:platform',
     method: 'get',
-    page: 'singletech',
-    handler: require('../components/TutorialPage'),
-    action: tutorialNavigatorActions.backend
-  },
-  tech1: {
-    path: '/docs/quickstart/:apptype/:tech1',
-    method: 'get',
-    page: 'tech1',
+    page: 'platform',
     handler: require('../components/Home'),
-    action: tutorialNavigatorActions.tech1
+    action: tutorialNavigatorActions.platform
   },
-  tech2: {
-    path: '/docs/quickstart/:apptype/:tech1/:tech2',
+  article: {
+    path: '/docs/quickstart/:appType/:platform/:article',
     method: 'get',
-    page: 'tech2',
+    page: 'article',
     handler: require('../components/TutorialPage'),
-    action: tutorialNavigatorActions.tech2
+    action: tutorialNavigatorActions.article
   }
 };

@@ -4,33 +4,21 @@
 ##
 ## ------------------------------------------------------------
 
-apptypes:
-  - title: Native mobile app
-    name: native-mobile
-    description: An app that runs natively in devices
+appTypes:
+  - title: Native App
+    name: native
+    description: "Mobile or Desktop, apps that runs natively in a device"
     example: "eg: iOS SDK"
     budicon: 243
 
-  - title: Single page app
-    name: spa
-    description: A JavaScript front-end app that uses an API
+  - title: Web App
+    name: web
+    description: "A JavaScript front-end app that uses an API"
     example: "eg: AngularJS + NodeJS"
     budicon: 349
 
-  - title: Regular web app
-    name: webapp
-    description: Traditional web app (with refresh)
-    example: "eg: Java ASP.NET"
-    budicon: 378
-
-  - title: Hybrid mobile app
-    name: hybrid
-    description: A JS/HTML5 mobile app that runs in devices
-    example: "eg: PhoneGap Ionic"
-    budicon: 243
-
-  - title: Backend/API
-    name: backend
-    description: An API or service that does JWT validation
-    example: "eg: Custom API"
+  - title: Service
+    name: service
+    description: "Apps or Services running on your backend"
+    example: "eg: Bash, Daemons"
     budicon: 649
