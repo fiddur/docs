@@ -69,3 +69,7 @@ if (!nconf.get('AUTH0JS_URL')) {
 if (!nconf.get('AUTH0_DOMAIN') && nconf.get('AUTH0_TENANT') && nconf.get('DOMAIN_URL_SERVER')) {
   nconf.set('AUTH0_DOMAIN', nconf.get('DOMAIN_URL_SERVER').replace('{tenant}', nconf.get('AUTH0_TENANT')));
 }
+
+if (process.env.NODE_ENV !== 'test') {
+  nconf.set('db', undefined); // No DB for testing
+}
