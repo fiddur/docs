@@ -16,7 +16,7 @@
 
 #tutorial-navigator
   min-height: 525px;
-  background: #F3F3F3;
+  background: $bg-color-gray-light;
   position: relative;
 
   .question-text,
@@ -126,7 +126,7 @@
     opacity: 0.5;
 
   a
-    color: color_text_gray !important;
+    color: $color-text !important;
     font-weight: normal;
     display: inline-block;
 
@@ -134,7 +134,7 @@
     padding: 0 5px;
 
   .text
-    color: color_text_gray !important;
+    color: $color-text !important;
     border-radius: 20px;
 
     &:hover
@@ -165,7 +165,7 @@
       opacity: 0;
 
   .description.description
-    color: color_text_gray !important;
+    color: $color-text !important;
     line-height: normal;
     font-size: 1.4rem;
     margin-bottom: 10px;
@@ -203,7 +203,7 @@
 
   .symbol
     display: inline-block;
-    background: #F3F3F3;
+    background: $bg-color-gray-light;
     border-radius: 50%;
     height: 100px;
     width: 100px;
@@ -234,11 +234,11 @@
 .quickstart:hover
   +breakpoint("desktop")
     background: white;
-    color: color_text_gray !important;
+    color: $color-text !important;
     box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.1);
 
     .symbol
-      background: #F3F3F3;
+      background: $bg-color-gray-light;
 
     .cta
       opacity: 1;
@@ -261,7 +261,7 @@
   .center .quickstart
     cursor: pointer;
     background: white;
-    color: color_text_gray !important;
+    color: $color-text !important;
     pointer-events: auto;
     opacity: 1;
 
@@ -274,4 +274,4 @@
       opacity: 1;
 
     .symbol
-      background: #F3F3F3;
+      background: $bg-color-gray-light;
