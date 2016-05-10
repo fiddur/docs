@@ -9,7 +9,7 @@
     lock.emailcode({
       callbackURL: '<%= account.callback %>',
       authParams: {
-        scope: 'openid profile'
+        scope: 'openid email'  // Learn about scopes: https://auth0.com/docs/scopes 
       }
     });
   }
