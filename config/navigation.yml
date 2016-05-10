@@ -5,25 +5,25 @@
 ## ------------------------------------------------------------
 
 categories:
-  -
-    id: "start"
-    name: "Getting Started"
-    links:
-      -
-        name: "Introduction to Auth0"
-        href: "https://auth0.com/video-tutorials/main/intro"
-      -
-        name: "Creating your first Application"
-        href: "https://auth0.com/video-tutorials/creating-your-first-app/register-an-application"
-      -
-        name: "Architecture Scenarios"
-        href: "/architecture-scenarios"
-      -
-        name: "Getting Started with Lock"
-        href: "https://auth0.com/video-tutorials/getting-started-with-lock/implementing-lock"
-      -
-        name: "Using Rules"
-        href: "https://auth0.com/video-tutorials/advanced-usage-of-auth0/using-rules"
+  # -
+  #   id: "start"
+  #   name: "Getting Started"
+  #   links:
+  #     -
+  #       name: "Introduction to Auth0"
+  #       href: "https://auth0.com/video-tutorials/main/intro"
+  #     -
+  #       name: "Creating your first Application"
+  #       href: "https://auth0.com/video-tutorials/creating-your-first-app/register-an-application"
+  #     -
+  #       name: "Architecture Scenarios"
+  #       href: "/architecture-scenarios"
+  #     -
+  #       name: "Getting Started with Lock"
+  #       href: "https://auth0.com/video-tutorials/getting-started-with-lock/implementing-lock"
+  #     -
+  #       name: "Using Rules"
+  #       href: "https://auth0.com/video-tutorials/advanced-usage-of-auth0/using-rules"
   -
     id: "product"
     name: "Product"
