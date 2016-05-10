@@ -1,10 +1,9 @@
 REPORTER ?= list
-TEST_DB=mongodb://localhost:27017/auth0-docs-test
 TEST_NODE_ENV=test
 NODE_VERSION="4.2.3"
 
 test: node_modules
-	@db=$(TEST_DB) CONSOLE_LOG_LEVEL=20 PORT=5050 NODE_ENV=$(TEST_NODE_ENV) NODE_TLS_REJECT_UNAUTHORIZED=0 \
+	@CONSOLE_LOG_LEVEL=20 PORT=5050 NODE_ENV=$(TEST_NODE_ENV) NODE_TLS_REJECT_UNAUTHORIZED=0 \
 		./node_modules/.bin/mocha --reporter $(REPORTER)
 
 node_modules:
