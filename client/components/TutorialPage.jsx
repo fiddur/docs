@@ -105,10 +105,13 @@ class TutorialPage extends React.Component {
   
 }
 
-TutorialPage.contextTypes = {
+TutorialPage.propTypes = {
   appType: React.PropTypes.string,
   platform: React.PropTypes.string,
   article: React.PropTypes.string,
+};
+
+TutorialPage.contextTypes = {
   getStore: React.PropTypes.func,
   executeAction: React.PropTypes.func,
   trackEvent: React.PropTypes.func.isRequired

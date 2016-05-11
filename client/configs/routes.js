@@ -21,13 +21,6 @@ export default {
     handler: require('../components/Home'),
     action: tutorialNavigatorActions.appType
   },
-  platform: {
-    path: '/docs/quickstart/:appType/:platform',
-    method: 'get',
-    page: 'platform',
-    handler: require('../components/Home'),
-    action: tutorialNavigatorActions.platform
-  },
   article: {
     path: '/docs/quickstart/:appType/:platform/:article',
     method: 'get',

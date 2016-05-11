@@ -19,16 +19,6 @@ export default {
       context.trackPage();
     });
   },
-
-  platform: function(context, payload) {
-    let {appType, platform} = payload.params;
-    var quickstart = context.getStore(TutorialStore).getQuickstart();
-    return getQuickstartMetadata(quickstart, appType, platform).then((metadata) => {
-      context.dispatch('LOAD_TUTORIAL_NAVIGATOR', {appType, platform});
-      context.dispatch('UPDATE_PAGE_METADATA', metadata);
-      context.trackPage();
-    });
-  },
   
   article: function(context, payload) {
     let {appType, platform, article} = payload.params;
