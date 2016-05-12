@@ -14,7 +14,7 @@ import { createElementWithContext } from 'fluxible-addons-react';
 import articleService from './services/articleService.server';
 import { getAssetBundleUrl } from '../lib/utils';
 import loadUserAction from './action/loadUserAction';
-import quickstart from '../lib/quickstart';
+import quickstarts from '../lib/quickstart';
 
 const htmlComponent = React.createFactory(HtmlComponent);
 
@@ -31,7 +31,7 @@ export default function middleware(req, res, next) {
   actionContext.executeAction(navigateAction, {
     url: req.url
   }).then(actionContext.executeAction(loadSettingsAction, {
-    quickstart: quickstart,
+    quickstarts: quickstarts,
     navigation: res.locals.navigation
   })).then(() => {
     if (req.user) {

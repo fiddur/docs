@@ -7,7 +7,7 @@
 appTypes:
   - title: Native App
     name: native
-    description: "Mobile or Desktop, apps that runs natively in a device"
+    description: "Mobile or Desktop, apps that run natively in a device"
     example: "eg: iOS SDK"
     budicon: 243
     path: /articles/x-native-platforms

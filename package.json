@@ -67,7 +67,7 @@
     "start": "node start.js",
     "build": "webpack --config webpack.config.production.js --progress",
     "build-dev": "webpack --config webpack.config.js --progress",
-    "dev": "NODE_ENV=development PORT=3000 node webpack-dev-server.js & WEBPACK_PROXY_PORT=5050 DEBUG=docs:* NODE_ENV=development nodemon start.js -e js,jsx,jade,styl,md,html,yml | node_modules/.bin/bunyan",
+    "dev": "NODE_ENV=development PORT=3000 node webpack-dev-server.js & WEBPACK_PROXY_PORT=5050 DEBUG=docs:quickstarts NODE_ENV=development nodemon start.js -e js,jsx,jade,styl,md,html,yml | node_modules/.bin/bunyan",
     "shrinkwrap": "npm-shrinkwrap",
     "heroku-postbuild": "bash heroku.sh",
     "preinstall": "bash init.sh",

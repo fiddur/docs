@@ -22,9 +22,9 @@ export default {
   
   article: function(context, payload) {
     let {appType, platform, article} = payload.params;
-    var quickstart = context.getStore(TutorialStore).getQuickstart();
+    var quickstarts = context.getStore(TutorialStore).getQuickstarts();
     return Promise.all([
-      getQuickstartMetadata(quickstart, appType, platform).then((metadata) => {
+      getQuickstartMetadata(quickstarts, appType, platform).then((metadata) => {
         context.dispatch('LOAD_TUTORIAL_NAVIGATOR', {appType, platform, article});
         context.dispatch('UPDATE_PAGE_METADATA', metadata);
         context.trackPage();
