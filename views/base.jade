@@ -22,11 +22,13 @@ html(lang="en")
             p.src = '//rum-static.pingdom.net/prum.min.js';
             s.parentNode.insertBefore(p, s);
         })();
+        
+    link(href="//cdn.auth0.com/styleguide/latest/lib/logos/img/favicon.png", rel="shortcut icon")
+    link(href="//cdn.auth0.com/styleguide/4.6.1/index.min.css", rel="stylesheet")
 
     - if (canonicalUrl)
       link(href=canonicalUrl, rel="canonical")
-    link(href="//cdn.auth0.com/styleguide/latest/lib/logos/img/favicon.png", rel="shortcut icon")
-    link(href="//cdn.auth0.com/styleguide/3.1.6/index.min.css", rel="stylesheet")
+      
     - var commonStyleUrl = getAssetBundleUrl('commons', 'css');
     - if (commonStyleUrl)
       link(href=commonStyleUrl, rel="stylesheet")

@@ -2,7 +2,6 @@
 @import '../../node_modules/auth0-styleguide/lib/mixins'
 @import '../../node_modules/auth0-tutorial-navigator/css/tutorial-navigator'
 
-color_text_gray = rgba(0,0,0,.86);
 color_node_js = #a9d353;
 color_asp= #4ea5c7;
 color_aspnet_owin= #4e79c7;
@@ -38,8 +37,11 @@ color_win8_cs= #f00;
 @import 'homepage'
 @import 'api-info'
 
+html
+  text-rendering: auto;
+
 header.site-header.site-header
-  background-color: #F3F3F3;
+  background-color: $bg-color-gray-light;
   border-bottom: 1px solid rgba(0,0,0, 0.05);
 
   a.login
@@ -49,7 +51,7 @@ header.site-header.site-header
       background: rgba(0,0,0, 0.03);
 
 .panel-body
-    padding: 0 15px 15px 15px;
+    padding: 20px;
 
     li
       margin: 0;
@@ -58,7 +60,7 @@ header.site-header.site-header
   background: url("https://cdn.auth0.com/img/codepen-Black-Large.png") no-repeat scroll;
   color: #000000;
   cursor: pointer;
-  font-weight: bold;
+  font-weight: 500;
   height: 35px;
   width: 106px;
   background-size: cover;
@@ -79,6 +81,9 @@ h2,h3,h4,h5,h6
   &.anchor-heading
     position: relative;
     cursor: pointer;
+
+    &:first-child:hover .anchor
+      display: none;
 
     &:hover  .anchor
       visibility: visible;
@@ -115,7 +120,7 @@ body
   background: #5d676f;
   border-radius: 3px;
   margin-bottom: 40px;
-  font-weight: bold;
+  font-weight: 500;
   font-size: 12px;
   color: #fff;
   min-height: 44px;
@@ -124,7 +129,7 @@ body
     color: white;
     display: inline-block;
     vertical-align: middle;
-    font-weight: bold;
+    font-weight: 500;
     font-size: 12px;
     color: #fff;
     margin: 6px 15px;
@@ -263,7 +268,7 @@ body
 
   .btn-mid {
     font-size: 14px;
-    font-weight: bold;
+    font-weight: 500;
     font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
   }
 
@@ -271,7 +276,7 @@ body
     background: url("https://cdn.auth0.com/img/codepen-Black-Large.png") no-repeat scroll;
     color: #000000;
     cursor: pointer;
-    font-weight: bold;
+    font-weight: 500;
     height: 35px;
     width: 106px;
     background-size: cover;
@@ -376,7 +381,7 @@ body
         padding: 14px 20px;
         strong
           text-transform: uppercase
-          font-weight: bold;
+          font-weight: 500;
           font-size: 12px;
           margin-bottom: 6px;
           display: block
@@ -432,13 +437,12 @@ body
         &.selected
           a
             color: black !important;
-            // font-weight: bold;
 
 
 
     li.box-laptop:before
       text-transform: uppercase
-      font-weight: bold;
+      font-weight: 500;
       font-size: 12px;
       margin-bottom: 6px;
       display: block
@@ -553,7 +557,7 @@ body
 
         p
           color: white;
-          font-weight: bold;
+          font-weight: 500;
         a
           color: white;
           text-decoration: underline;
@@ -587,7 +591,7 @@ body
 
     span
       text-transform: uppercase
-      font-weight: bold
+      font-weight: 500
       display: block
       margin-top: 6px;
       font-size: 11px;
@@ -602,7 +606,7 @@ body
     border-top: 1px solid #eee;
     color: #666;
     a
-      font-weight: bold
+      font-weight: 500
 
   form#search
     .form-control
@@ -673,10 +677,11 @@ body
       transition transform .3s ease-in-out
     h2
       font-size 13px
-      font-weight 700
+      font-weight 500
       text-transform uppercase
-      color color_text_gray
+      color $color-text
       margin 0
+      line-height 1.5em
 
   .nav-content
     padding 0 20px
@@ -712,7 +717,7 @@ body
       width 10px
       height 1px
       display block
-      margin-top 10px
+      margin-top 8px
       &:before
         content ''
         background #A9B3BC
@@ -723,9 +728,9 @@ body
         transition transform .3s ease-out
     h2
       font-size 13px
-      font-weight 700
+      font-weight 500
       text-transform uppercase
-      color color_text_gray
+      color $color-text
       margin 0
     +breakpoint("tablet")
       display none
@@ -734,32 +739,19 @@ body
     +breakpoint("tablet")
       max-height 100%!important
 
-.try-banner
-  margin: 0;
-  padding: 60px 20px;
+.try-banner.try-banner-alt
+  padding: 60px 20px 40px;
+  background-color: darken($bg-color-gray-light, 2%)
 
   span
-    text-transform: uppercase;
-    font-size: 16px;
-    line-height: 30px;
-
-  .btn
-    position: relative;
-    top: 6px;
-
-  &.try-banner-alt
-    padding: 40px 20px;
-
-    span
-      text-transform: none;
+    font-size 16px
+    letter-spacing 0
+    text-transform: none;
 
 
 .docs-content
   clearfix()
-  color color_text_gray
-
-  a
-    color: #0A86B1;
+  color $color-text
 
   pre code a,
   pre code a span
@@ -787,12 +779,12 @@ body
 
   h1, h2:first-child
     font-size 40px
-    font-weight 300
+    font-weight 400
     color #333
 
   h2, h3, h4
     font-size 18px
-    font-weight 700
+    font-weight 500
     color #333
     line-height 1.3
 
@@ -805,7 +797,7 @@ body
     letter-spacing: 1px;
 
   p
-    color color_text_gray
+    color $color-text
 
   strong,
   p strong
@@ -870,7 +862,7 @@ body
       padding-top: 0;
 
 .related-howto
-  background-color #fafafa
+  background-color $bg-color-gray-light
   border-top 1px solid #EAEEF3
   border-bottom 1px solid #EAEEF3
   padding 20px 0
@@ -879,14 +871,14 @@ body
 
   h3
     font-size 13px
-    font-weight 700
+    font-weight 500
     text-transform uppercase
-    color color_text_gray
+    color $color-text
 
   p
     font-size 16px
     color #333
-    font-weight 700
+    font-weight 500
     margin-top 35px
 
   .articles-item
@@ -898,7 +890,7 @@ body
   margin-top: 40px;
 
   h4
-    font-weight: 700;
+    font-weight: 500;
     color: #333;
     line-height: 1.3;
     font-size: 16px;
@@ -910,7 +902,7 @@ body
     .choose
       a
         font-size 16px
-        color color_text_gray
+        color $color-text
 
       i
         font-size 18px
@@ -921,8 +913,10 @@ body
         border-radius 50%
         text-align center
         vertical-align middle
-        padding-top 5px
         margin-right 10px
+
+        &:before
+          line-height inherit
 
       &:nth-child(1)
         i
