@@ -8516,9 +8516,9 @@
       "resolved": "https://registry.npmjs.org/url-join/-/url-join-1.1.0.tgz"
     },
     "web-header": {
-      "version": "0.5.4",
-      "from": "web-header@git://github.com/auth0/web-header.git#fdec02de6ec6dddfbd6d32c8c4392c7054a83ce3",
-      "resolved": "git://github.com/auth0/web-header.git#fdec02de6ec6dddfbd6d32c8c4392c7054a83ce3"
+      "version": "0.5.7",
+      "from": "web-header@git://github.com/auth0/web-header.git#f37113684f05ff660eeeebe65b23f49e47ef7dca",
+      "resolved": "git://github.com/auth0/web-header.git#f37113684f05ff660eeeebe65b23f49e47ef7dca"
     },
     "whatwg-fetch": {
       "version": "0.11.0",
