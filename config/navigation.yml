@@ -279,6 +279,11 @@ categories:
         description: "Understanding an application in the context of Auth0."
         href: "/api-auth"
       -
+        name: "Auth0 Extensions"
+        icon: "icon-budicon-754"
+        description: "Extend and customize Auth0."
+        href: "/extensions"
+      -
         name: "Refresh Tokens"
         icon: "icon-budicon-754"
         href: "/refresh-token"
