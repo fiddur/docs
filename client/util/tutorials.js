@@ -33,20 +33,6 @@ export function getPlatformSlug(platformType) {
   return paths[platformType];
 }
 
-export function getPlatformCollection(quickstart, platformType) {
-  if (!platformType) {
-    return [];
-  }
-
-  var options = {
-    'native': quickstart.nativePlatforms,
-    'web': quickstart.webPlatforms,
-    'service': quickstart.servicePlatforms
-  };
-
-  return options[platformType];
-}
-
 export function getPlatformTitle(quickstart, appType, platformName) {
   var collection = getPlatformCollection(quickstart, appType);
   var result = _.find(collection, { name: platformName });

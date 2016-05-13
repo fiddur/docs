@@ -71,8 +71,8 @@ class TutorialPage extends React.Component {
   
   render() {
     
-    let {quickstart, appType, platform, article, isAuthenticated} = this.props;
-    let title = getPlatformTitle(quickstart, appType, platform);
+    let {quickstarts, appType, platform, article, isAuthenticated} = this.props;
+    let title = quickstarts[appType].platforms[platform].title;
     let tryBanner = isAuthenticated ? null : <TryBanner/>;
 
     return (
@@ -106,6 +106,7 @@ class TutorialPage extends React.Component {
 }
 
 TutorialPage.propTypes = {
+  quickstarts: React.PropTypes.object,
   appType: React.PropTypes.string,
   platform: React.PropTypes.string,
   article: React.PropTypes.string,
