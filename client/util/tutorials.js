@@ -33,13 +33,7 @@ export function getPlatformSlug(platformType) {
   return paths[platformType];
 }
 
-export function getPlatformTitle(quickstart, appType, platformName) {
-  var collection = getPlatformCollection(quickstart, appType);
-  var result = _.find(collection, { name: platformName });
-  return result && result.title;
-}
-
-export function getQuickstartMetadata(quickstart, appType, platform) {
+export function getQuickstartMetadata(quickstarts, appType, platform) {
   return new Promise((resolve, reject) => {
     if (appType && !getPlatformSlug(appType)) {
       var err = new Error('Invalid AppType.');
@@ -49,7 +43,7 @@ export function getQuickstartMetadata(quickstart, appType, platform) {
 
     var meta = {};
     if (appType && platform) {
-      let title = getPlatformTitle(quickstart, appType, platform);
+      let title = quickstarts[appType].platforms[platform].title;
       if (!title) {
         var err = new Error('Invalid platform.');
         err.statusCode = 404;

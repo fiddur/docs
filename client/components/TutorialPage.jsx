@@ -2,7 +2,7 @@ import React from 'react';
 import SearchBox from './SearchBox';
 import SideNavBar from './SideNavBar';
 import TryBanner from './TryBanner';
-import { TutorialStore, Breadcrumbs, Tutorial } from 'auth0-tutorial-navigator';
+import { TutorialStore, Breadcrumbs, Tutorial, TutorialTableOfContents } from 'auth0-tutorial-navigator';
 import { getPlatformName, getPlatformTitle } from '../util/tutorials';
 import { connectToStores, provideContext } from 'fluxible-addons-react';
 import { quickstartNavigationAction } from '../action/quickstartNavigationAction';
@@ -72,8 +72,21 @@ class TutorialPage extends React.Component {
   render() {
     
     let {quickstarts, appType, platform, article, isAuthenticated} = this.props;
-    let title = quickstarts[appType].platforms[platform].title;
     let tryBanner = isAuthenticated ? null : <TryBanner/>;
+    
+    let title = undefined;
+    let toc = undefined;
+    if (appType && platform) {
+      let meta = quickstarts[appType].platforms[platform];
+      title = meta.title;
+      if (meta.articles.length > 1) {
+        toc = <TutorialTableOfContents
+          appType={appType}
+          platform={meta}
+          selectedArticle={article}
+          customNavigationAction={quickstartNavigationAction} />;
+      }
+    }
 
     return (
       <div id="tutorial-template" className="docs-single animated fadeIn">
@@ -88,12 +101,12 @@ class TutorialPage extends React.Component {
         <div className="js-doc-template container">
           <div className="row">
             <div className="col-sm-3">
-              <SideNavBar />
+              {toc}
             </div>
             <div className="col-sm-9">
               <section className="docs-content">
                 <h1 className="tutorial-title">{title}</h1>
-                <Tutorial appType={appType} platform={platform} article={article} componentLoadedInBrowser={initTutorialInBrowser} />
+                <Tutorial quickstarts={quickstarts} appType={appType} platform={platform} article={article} componentLoadedInBrowser={initTutorialInBrowser} />
               </section>
               {tryBanner}
             </div>
