@@ -1,16 +1,19 @@
 import { navigateAction } from 'fluxible-router';
 
 export function quickstartNavigationAction(context, payload, done) {
+  
+  let {quickstartId, platformId, articleId} = payload;
   let tokens = ['/docs'];
   
-  if (payload.appType) {
+  if (quickstartId) {
     tokens.push('quickstart');
-    tokens.push(payload.appType);
+    tokens.push(quickstartId);
   }
   
-  if (payload.platform) tokens.push(payload.platform);
-  if (payload.article)  tokens.push(payload.article);
+  if (platformId) tokens.push(platformId);
+  if (articleId)  tokens.push(articleId);
   
   let url = tokens.join('/');
   return navigateAction(context, {url}, done);
+  
 }

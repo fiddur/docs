@@ -58,10 +58,11 @@ class TutorialPage extends React.Component {
   }
   
   metrics() {
-    var eventData = {
+    let {quickstart, platform} = this.props;
+    let eventData = {
       'clientID': window.widget.getClient()._clientID || '',
-      'tutorial-apptype': this.props.appType || '',
-      'tutorial-platform': this.props.platform || ''
+      'tutorial-apptype': quickstart ? quickstart.name : '',
+      'tutorial-platform': platform ? platform.name : ''
     };
     $('#package .btn').off('click').on('click', function() {
       context.getComponentContext().trackEvent('download:tutorial-seed', eventData);
@@ -70,21 +71,30 @@ class TutorialPage extends React.Component {
   
   render() {
     
-    let {quickstarts, appType, platform, article, isAuthenticated} = this.props;
+    let {quickstart, platform, article, isAuthenticated} = this.props;
     let tryBanner = isAuthenticated ? null : <TryBanner/>;
     
     let title = undefined;
+    let tutorial = undefined;
     let toc = undefined;
-    if (appType && platform) {
-      let meta = quickstarts[appType].platforms[platform];
-      title = meta.title;
-      if (meta.articles.length > 1) {
+    
+    if (platform) {
+      title = platform.title;
+      if (platform.articles.length > 1) {
         toc = <TutorialTableOfContents
-          appType={appType}
-          platform={meta}
-          selectedArticle={article}
+          quickstart={quickstart}
+          platform={platform}
+          currentArticle={article}
           customNavigationAction={quickstartNavigationAction} />;
       }
+    }
+    
+    if (article) {
+      tutorial = <Tutorial
+        quickstart={quickstart}
+        platform={platform}
+        article={article}
+        componentLoadedInBrowser={initTutorialInBrowser} />
     }
 
     return (
@@ -105,7 +115,7 @@ class TutorialPage extends React.Component {
             <div className="col-sm-9">
               <section className="docs-content">
                 <h1 className="tutorial-title">{title}</h1>
-                <Tutorial quickstarts={quickstarts} appType={appType} platform={platform} article={article} componentLoadedInBrowser={initTutorialInBrowser} />
+                {tutorial}
               </section>
               {tryBanner}
             </div>
@@ -118,10 +128,9 @@ class TutorialPage extends React.Component {
 }
 
 TutorialPage.propTypes = {
-  quickstarts: React.PropTypes.object,
-  appType: React.PropTypes.string,
-  platform: React.PropTypes.string,
-  article: React.PropTypes.string,
+  quickstart: React.PropTypes.object,
+  platform: React.PropTypes.object,
+  article: React.PropTypes.object,
 };
 
 TutorialPage.contextTypes = {
@@ -131,9 +140,14 @@ TutorialPage.contextTypes = {
 };
 
 TutorialPage = connectToStores(TutorialPage, [TutorialStore, UserStore], (context, props) => {
-  var state = context.getStore(TutorialStore).getState();
-  state.isAuthenticated = context.getStore(UserStore).isAuthenticated();
-  return state;
+  let tutorialStore = context.getStore(TutorialStore);
+  let userStore = context.getStore(UserStore);
+  return {
+    quickstart: tutorialStore.getCurrentQuickstart(),
+    platform: tutorialStore.getCurrentPlatform(),
+    article: tutorialStore.getCurrentArticle(),
+    isAuthenticated: userStore.isAuthenticated()
+  };
 });
 
 export default TutorialPage;

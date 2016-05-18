@@ -9,20 +9,14 @@ export default {
     action: tutorialNavigatorActions.home
   },
   quickstart: {
-    path: '/docs/quickstart',
+    path: '/docs/quickstart/:quickstartId',
     method: 'get',
     page: 'quickstart',
     handler: require('../components/Home'),
-  },
-  appType: {
-    path: '/docs/quickstart/:appType',
-    method: 'get',
-    page: 'appType',
-    handler: require('../components/Home'),
-    action: tutorialNavigatorActions.appType
+    action: tutorialNavigatorActions.quickstart
   },
   article: {
-    path: '/docs/quickstart/:appType/:platform/:article',
+    path: '/docs/quickstart/:quickstartId/:platformId/:articleId',
     method: 'get',
     page: 'article',
     handler: require('../components/TutorialPage'),

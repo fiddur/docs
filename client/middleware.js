@@ -63,7 +63,7 @@ export default function middleware(req, res, next) {
 
     var tutorialStore = componentContext.getStore(TutorialStore);
     if (tutorialStore) {
-      var canonicalUrl = getCanonicalUrl(tutorialStore.getState());
+      var canonicalUrl = getCanonicalUrl(tutorialStore.dehydrate());
       if (canonicalUrl) {
         options.canonicalUrl = canonicalUrl;
       }

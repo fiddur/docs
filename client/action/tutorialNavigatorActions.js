@@ -1,36 +1,36 @@
 import { TutorialStore, loadArticleAction } from 'auth0-tutorial-navigator';
-import { getQuickstartMetadata } from '../util/metadata';
+import { getPageMetadata } from '../util/metadata';
 
 export default {
 
   home: function(context) {
     context.dispatch('LOAD_TUTORIAL_NAVIGATOR', {});
-    return getQuickstartMetadata().then((metadata) => {
+    return getPageMetadata().then((metadata) => {
       context.dispatch('UPDATE_PAGE_METADATA', metadata);
       context.trackPage();
     });
   },
 
-  appType: function(context, payload) {
-    let {appType} = payload.params;
+  quickstart: function(context, payload) {
+    let {quickstartId} = payload.params;
     let quickstarts = context.getStore(TutorialStore).getQuickstarts();
-    return getQuickstartMetadata(quickstarts, appType).then((metadata) => {
-      context.dispatch('LOAD_TUTORIAL_NAVIGATOR', {appType});
+    return getPageMetadata(quickstarts, quickstartId).then((metadata) => {
+      context.dispatch('LOAD_TUTORIAL_NAVIGATOR', {quickstartId});
       context.dispatch('UPDATE_PAGE_METADATA', metadata);
       context.trackPage();
     });
   },
   
   article: function(context, payload) {
-    let {appType, platform, article} = payload.params;
+    let {quickstartId, platformId, articleId} = payload.params;
     let quickstarts = context.getStore(TutorialStore).getQuickstarts();
     return Promise.all([
-      getQuickstartMetadata(quickstarts, appType, platform).then((metadata) => {
-        context.dispatch('LOAD_TUTORIAL_NAVIGATOR', {appType, platform, article});
+      getPageMetadata(quickstarts, quickstartId, platformId, articleId).then((metadata) => {
+        context.dispatch('LOAD_TUTORIAL_NAVIGATOR', {quickstartId, platformId, articleId});
         context.dispatch('UPDATE_PAGE_METADATA', metadata);
         context.trackPage();
       }),
-      context.executeAction(loadArticleAction, {appType, platform, article})
+      context.executeAction(loadArticleAction, {quickstartId, platformId, articleId})
     ]);
   }
 
