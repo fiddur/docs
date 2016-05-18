@@ -107,7 +107,6 @@
     "stylus-loader": "^2.0.0",
     "url-loader": "^0.5.6",
     "webpack": "^1.13.0",
-    "webpack-dev-server": "^1.12.1",
-    "yaml-loader": "^0.1.0"
+    "webpack-dev-server": "^1.12.1"
   }
 }

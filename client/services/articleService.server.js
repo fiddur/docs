@@ -1,4 +1,3 @@
-import { getPlatformSlug } from '../util/tutorials';
 import setConfiguration from '../../lib/middleware/configuration';
 import async from 'async';
 import path from 'path';
@@ -11,9 +10,9 @@ var viewname = path.resolve(__dirname, '../../views/doc-embedded.jade');
 
 export default function(req, res) {
   return {
-    loadArticle: function(payload) {
+    loadArticle: function(quickstarts, payload) {
       return new Promise((resolve, reject) => {
-        var pathname = `/${getPlatformSlug(payload.appType)}/${payload.platform}`;
+        var pathname = `/${quickstarts[payload.appType].slug}/${payload.platform}`;
         var doc = docsByUrl[pathname];
         if (!doc) {
           var error = new Error('No document found at ' + req2.url);

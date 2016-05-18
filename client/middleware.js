@@ -1,7 +1,7 @@
 import serialize from 'serialize-javascript';
 import { navigateAction } from 'fluxible-router';
-import { loadSettingsAction, Constants } from 'auth0-tutorial-navigator';
-import { getCanonicalUrl } from './util/tutorials';
+import { loadSettingsAction, ServiceKeys } from 'auth0-tutorial-navigator';
+import { getCanonicalUrl } from './util/metadata';
 import React from 'react';
 import ReactDOMServer from 'react-dom/server';
 import app from './app';
@@ -21,7 +21,7 @@ const htmlComponent = React.createFactory(HtmlComponent);
 export default function middleware(req, res, next) {
 
   // Register services
-  app.getPlugin('ServiceProxyPlugin').registerService(Constants.ArticleServiceName, articleService(req, res));
+  app.getPlugin('ServiceProxyPlugin').registerService(ServiceKeys.ArticleService, articleService(req, res));
 
   let context = app.createContext({
     debug: process.env.NODE_ENV !== 'production'
@@ -63,8 +63,7 @@ export default function middleware(req, res, next) {
 
     var tutorialStore = componentContext.getStore(TutorialStore);
     if (tutorialStore) {
-      var tutorialState = tutorialStore.getState();
-      var canonicalUrl = getCanonicalUrl(tutorialState.appType, tutorialState.platform);
+      var canonicalUrl = getCanonicalUrl(tutorialStore.getState());
       if (canonicalUrl) {
         options.canonicalUrl = canonicalUrl;
       }

@@ -1,5 +1,5 @@
 import { TutorialStore, loadArticleAction } from 'auth0-tutorial-navigator';
-import { getQuickstartMetadata } from '../util/tutorials';
+import { getQuickstartMetadata } from '../util/metadata';
 
 export default {
 
@@ -13,7 +13,8 @@ export default {
 
   appType: function(context, payload) {
     let {appType} = payload.params;
-    return getQuickstartMetadata(null, appType).then((metadata) => {
+    let quickstarts = context.getStore(TutorialStore).getQuickstarts();
+    return getQuickstartMetadata(quickstarts, appType).then((metadata) => {
       context.dispatch('LOAD_TUTORIAL_NAVIGATOR', {appType});
       context.dispatch('UPDATE_PAGE_METADATA', metadata);
       context.trackPage();
@@ -22,7 +23,7 @@ export default {
   
   article: function(context, payload) {
     let {appType, platform, article} = payload.params;
-    var quickstarts = context.getStore(TutorialStore).getQuickstarts();
+    let quickstarts = context.getStore(TutorialStore).getQuickstarts();
     return Promise.all([
       getQuickstartMetadata(quickstarts, appType, platform).then((metadata) => {
         context.dispatch('LOAD_TUTORIAL_NAVIGATOR', {appType, platform, article});

@@ -3,7 +3,6 @@ import SearchBox from './SearchBox';
 import SideNavBar from './SideNavBar';
 import TryBanner from './TryBanner';
 import { TutorialStore, Breadcrumbs, Tutorial, TutorialTableOfContents } from 'auth0-tutorial-navigator';
-import { getPlatformName, getPlatformTitle } from '../util/tutorials';
 import { connectToStores, provideContext } from 'fluxible-addons-react';
 import { quickstartNavigationAction } from '../action/quickstartNavigationAction';
 import highlightCode from '../browser/highlightCode';
