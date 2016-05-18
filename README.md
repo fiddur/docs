@@ -1,7 +1,10 @@
-Node version: 4.2.x
+# Auth0 Docs
+
+Node version: 4.x
 NPM version: 2.7.x
 
 ## Contribution Checklist
+
 When you commit code to this repository, you should follow the following procedures.
 
 * The commit message should clear on what what is being fixed/added
@@ -27,7 +30,7 @@ When you commit code to this repository, you should follow the following procedu
 ### Usage without Vagrant
 
 ```
-nave use 4.3
+nave use 4.x
 npm i
 npm run dev
 ```
@@ -41,7 +44,7 @@ Open the site on `http://localhost:3000/docs` in your browser.
 Vagrant install production dependencies but not dev dependencies. Use this:
 
 ```
-nave use 4.3
+nave use 4.x
 npm i
 ```
 
@@ -51,6 +54,18 @@ Running and deubgging in vagrant
 sudo service auth0-docs start
 sudo xtail auth0-docs | bunyan
 ```
+
+### Updating the docs content
+
+If you have a docs folder in the `auth0-docs` directory already, you should delete that. Make sure you save any work.
+
+Then clone the docs repo in to the `auth0-docs` directory.
+
+```
+git clone https://github.com/auth0/docs.git
+```
+
+Now you can treat the `docs` folder as a regular repository. You can pull, branch, push, etc. as needed.
 
 ## Installing or Updating dependencies
 
