@@ -19,7 +19,7 @@ export default function(req, res) {
         
         var doc = docsByUrl[pathname];
         if (!doc) {
-          var error = new Error('No document found at ' + req2.url);
+          var error = new Error('No document found at ' + req.url);
           error.status = 404;
           return reject(error);
         }

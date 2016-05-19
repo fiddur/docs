@@ -79,7 +79,6 @@ class TutorialPage extends React.Component {
     let toc = undefined;
     
     if (platform) {
-      title = platform.title;
       if (platform.articles.length > 1) {
         toc = <TutorialTableOfContents
           quickstart={quickstart}
@@ -90,6 +89,7 @@ class TutorialPage extends React.Component {
     }
     
     if (article) {
+      title = <h1 className="tutorial-title">{article.number} {article.title}</h1>;
       tutorial = <Tutorial
         quickstart={quickstart}
         platform={platform}
@@ -111,10 +111,11 @@ class TutorialPage extends React.Component {
           <div className="row">
             <div className="col-sm-3">
               {toc}
+              <SideNavBar/>
             </div>
             <div className="col-sm-9">
               <section className="docs-content">
-                <h1 className="tutorial-title">{title}</h1>
+                {title}
                 {tutorial}
               </section>
               {tryBanner}
