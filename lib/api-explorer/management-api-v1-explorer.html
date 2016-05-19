@@ -1,0 +1,1645 @@
+<div id="sdk-api" class="api-explorer nocode">
+  <div id="content-header">
+    <h1>Management API v1 (deprecated)</h1>
+    <i class="loading-spin icon-spinner icon-spin icon-large"></i>
+  </div>
+  <div class="row-fluid">
+    <div class="span12 converted" id="sdk-api-content">
+      <blockquote class="warning">
+        <p><strong>WARNING:</strong> This version of the Management API has been deprecated.
+          <br> Please use the <a href="/docs/api/v2">new version</a> instead.</p>
+      </blockquote>
+      <div class="alert-info alert">
+
+        <strong>Heads up!</strong> Before you write a new client for the Auth0 API, check our <a href="https://github.com/auth0/">GitHub</a> to see if we already have something for your preferred language.
+
+      </div>
+
+      <h3 id="authentication"><a class="anchor" href="#authentication"><i class="icon-budicon-345"> </i></a>Authentication</h3>
+
+      <div class="accordion">
+
+        <!-- POST /oauth/token -->
+
+        <div class="markdown" data-path="/oauth/token" data-verb="POST" data-description="Obtain a token to call the API">
+          <div class="accordion-group">
+            <div class="accordion-heading  clearfix api-post">
+
+              <a class="accordion-toggle row" data-toggle="collapse" href="#post--oauth-token">
+                <div class="span8 col-sm-8 api-method"><span class="verb post">POST</span> /oauth/token</div>
+                <div class="span4 col-sm-4 api-description" style="text-align:right">Obtain a token to call the API</div>
+              </a>
+            </div>
+            <div class="accordion-body collapse" id="post--oauth-token">
+              <div class="accordion-inner markdown">
+                <p>Auth0 API requires an <code>access_token</code>. You can get one by authenticating with your <code>client_id</code> and <code>client_secret</code> (It will be valid for 24 hours). To obtain the global client ID and global client secret
+                  see the "Advanced" section under "Account Settings" in the Auth0 <a href="https://manage.auth0.com/#/account/advanced">dashboard</a>.</p>
+
+                <pre><code><span class="http-verb">POST</span> <span class="client_namespace"></span>oauth/token
+Content-Type: 'application/json'
+<form id="accesstoken-form">{
+"client_id":        "<span class="param client_client_id"></span>",
+"client_secret":    "<span class="param client_client_secret"></span>",
+"grant_type":       "<span class="param">client_credentials</span>"
+}
+</form></code></pre>
+
+                <p>Once authenticated, the <code>access_token</code> can be included in the request as part of the querystring (
+                  <code>?access_token=...</code>) or in an HTTP header (<code>Authorization: Bearer ...access_token...</code>).</p>
+
+                <p><span class="label label-info">Heads up!</span> access token last for 24hs, you better ask for a token everytime you make a request to the API or handle vigorously <code>401</code> responses.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+      <h3 id="users"><a class="anchor" href="#users"><i class="icon-budicon-345"> </i></a>Users</h3>
+
+      <div class="accordion">
+
+        <!-- GET /api/users -->
+        <div class="markdown" data-verb="GET" data-path="/api/users" data-description="Gets all users who have logged in">
+          <div class="accordion-group">
+            <div class="accordion-heading  clearfix api-get">
+
+              <a class="accordion-toggle row" data-toggle="collapse" href="#get--api-users">
+                <div class="span8 col-sm-8 api-method"><span class="verb get">GET</span> /api/users</div>
+                <div class="span4 col-sm-4 api-description" style="text-align:right">Gets all users who have logged in</div>
+              </a>
+            </div>
+            <div class="accordion-body collapse" id="get--api-users">
+              <div class="accordion-inner markdown">
+                <p>Gets all users who have logged in through any of your connections.</p>
+
+                <pre><code><span class="http-verb">GET</span> <span class="client_namespace"></span>api/users
+Authorization: Bearer <span class="tokenme param">{token}</span></code></pre>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- GET /api/users?search={criteria} -->
+        <div class="markdown" data-verb="GET" data-path="/api/users?search={criteria}" data-description="Search users">
+          <div class="accordion-group">
+            <div class="accordion-heading  clearfix api-get">
+
+              <a class="accordion-toggle row" data-toggle="collapse" href="#get--api-users-search--criteria-">
+                <div class="span8 col-sm-8 api-method"><span class="verb get">GET</span> /api/users?search={criteria}</div>
+                <div class="span4 col-sm-4 api-description" style="text-align:right">Search users</div>
+              </a>
+            </div>
+            <div class="accordion-body collapse" id="get--api-users-search--criteria-">
+              <div class="accordion-inner markdown">
+                <p>Performs a 'starts with' search by name or email. Or search by field, for example: email_verified:true; loginsCount:1; family_name:"johnson"</p>
+
+                <pre><code><span class="http-verb">GET</span> <span class="client_namespace"></span>api/users?search=<span class="tokenme param">{query}</span></code></pre>
+
+Authorization: Bearer <span class="tokenme param">{token}</span></code></pre>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- GET /api/users/{user_id} -->
+        <div class="markdown" data-verb="GET" data-path="/api/users/{user_id}" data-description="Gets an user by id">
+          <div class="accordion-group">
+            <div class="accordion-heading  clearfix api-get">
+
+              <a class="accordion-toggle row" data-toggle="collapse" href="#get--api-users--user_id-">
+                <div class="span8 col-sm-8 api-method"><span class="verb get">GET</span> /api/users/{user_id}</div>
+                <div class="span4 col-sm-4 api-description" style="text-align:right">Gets an user by id</div>
+              </a>
+            </div>
+            <div class="accordion-body collapse" id="get--api-users--user_id-">
+              <div class="accordion-inner markdown">
+                <p>Gets an user who have logged in through any of your connections that has a given id.</p>
+
+                <pre><code><span class="http-verb">GET</span> <span class="client_namespace"></span>api/users/<select id="user-by-id-users-selector" class="user-selector" disabled="disabled"></select>
+Authorization: Bearer <span class="tokenme param">{token}</span></code></pre>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- GET /api/users/{user_id}/devices -->
+        <div class="markdown" data-verb="GET" data-path="/api/users/{user_id}/devices" data-description="Gets all user's devices">
+          <div class="accordion-group">
+            <div class="accordion-heading  clearfix api-get">
+
+              <a class="accordion-toggle row" data-toggle="collapse" href="#get--api-users--user_id--devices">
+                <div class="span8 col-sm-8 api-method"><span class="verb get">GET</span> /api/users/{user_id}/devices</div>
+                <div class="span4 col-sm-4 api-description" style="text-align:right">Gets all user's devices</div>
+              </a>
+            </div>
+            <div class="accordion-body collapse" id="get--api-users--user_id--devices">
+              <div class="accordion-inner markdown">
+                <p>Gets all devices/refresh_tokens being used by the user.</p>
+
+                <pre><code><span class="http-verb">GET</span> <span class="client_namespace"></span>api/users/<select id="userdevices-by-id-users-selector" class="user-selector" disabled="disabled"></select>/devices
+Authorization: Bearer <span class="tokenme param">{token}</span></code></pre>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- GET /api/connections/{connection}/users -->
+        <div class="markdown" data-verb="GET" data-path="/api/connections/{connection}/users" data-description="Gets all users from an enterprise directory">
+          <div class="accordion-group">
+            <div class="accordion-heading  clearfix api-get">
+
+              <a class="accordion-toggle row" data-toggle="collapse" href="#get--api-connections--connection--users">
+                <div class="span8 col-sm-8 api-method"><span class="verb get">GET</span> /api/connections/{connection}/users</div>
+                <div class="span4 col-sm-4 api-description" style="text-align:right">Gets all users from an enterprise directory</div>
+              </a>
+            </div>
+            <div class="accordion-body collapse" id="get--api-connections--connection--users">
+              <div class="accordion-inner markdown">
+                <p><span class="label label-info">Head ups!</span> If the connection does not support querying for users (for instance ADFS, SAMLP), it will return the users who have logged in through that connection.</p>
+
+                <pre><span class="http-verb">GET</span> <span class="client_namespace"></span>api/connections/<select id="connection-users-selector" class="connection-selector" disabled="disabled"></select>/users?
+&amp;per_page=<span class="tokenme param">{count}</span></code></pre>
+
+Authorization: Bearer <span class="tokenme param">{token}</span></pre>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- GET /api/connections/{connection}/users?search={criteria} -->
+        <div class="markdown" data-verb="GET" data-path="/api/connections/{connection}/users?search={criteria}" data-description="Search users from an enterprise directories">
+          <div class="accordion-group">
+            <div class="accordion-heading  clearfix api-get">
+
+              <a class="accordion-toggle row" data-toggle="collapse" href="#get--api-connections--connection--users-search--criteria-">
+                <div class="span8 col-sm-8 api-method"><span class="verb get">GET</span> /api/connections/{connection}/users?search={criteria}</div>
+                <div class="span4 col-sm-4 api-description" style="text-align:right">Search users from an enterprise directories</div>
+              </a>
+            </div>
+            <div class="accordion-body collapse" id="get--api-connections--connection--users-search--criteria-">
+              <div class="accordion-inner markdown">
+                <p><strong>Search</strong> remarks: Depending on the connection's type the search will be done in different fields:
+                </p>
+
+                <ul>
+                  <li>Active Directory/LDAP: by default uses Ambigous name resolution (<a href="http://technet.microsoft.com/en-us/library/cc755809(v=ws.10).aspx">ANR</a>) which expands to givenName (first name), sn (surname, or last name), displayName, RDN,
+                    legacyExchangeDN, physicalDeliveryOfficeName (for example, Building A, Suite 1234), proxyAddresses (the collection of e-mail addresses over all e-mail address spaces that the Exchange server knows about).</li>
+                  <li>Database Connections (not custom): Name/Email case insensitive.</li>
+                  <li>Google Apps: Email/username case insensitive.</li>
+                  <li>WAAD/WAAD2: Name/Email case insensitive.</li>
+                  <li>Windows Azure Active Directory or Office365: name/email case insensitive</li>
+                </ul>
+
+                <p><span class="label label-info">Heads up!</span> If the connection does not support querying for users (for instance ADFS, SAMLP), it will return the users who have logged in through that connection.</p>
+
+                <pre><span class="http-verb">GET</span> <span class="client_namespace"></span>api/connections/<span class="param">{connection}</span>/users?search=<span class="param">{query}</span>&amp;per_page=<span class="param">{count}</span>
+
+Authorization: Bearer <span class="tokenme param">{token}</span></pre>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- GET /api/enterpriseconnections/users?search={criteria} -->
+        <div class="markdown" data-verb="GET" data-path="/api/enterpriseconnections/users?search={criteria}" data-description="Search users from all enterprise directories">
+          <div class="accordion-group">
+            <div class="accordion-heading  clearfix api-get">
+
+              <a class="accordion-toggle row" data-toggle="collapse" href="#get--api-enterpriseconnections-users-search--criteria-">
+                <div class="span8 col-sm-8 api-method"><span class="verb get">GET</span> /api/enterpriseconnections/users?search={criteria}</div>
+                <div class="span4 col-sm-4 api-description" style="text-align:right">Search users from all enterprise directories</div>
+              </a>
+            </div>
+            <div class="accordion-body collapse" id="get--api-enterpriseconnections-users-search--criteria-">
+              <div class="accordion-inner markdown">
+                <p>Search users from all enterprise directories based on the specified <code>criteria</code>. The parameter is mandatory.</p>
+
+                <p><strong>Search</strong> remarks: Depending on the connection's type the search will be done in different fields:
+                </p>
+
+                <ul>
+                  <li>Active Directory/LDAP: by default uses Ambigous name resolution (<a href="http://technet.microsoft.com/en-us/library/cc755809(v=ws.10).aspx">ANR</a>) which expands to givenName (first name), sn (surname, or last name), displayName, RDN,
+                    legacyExchangeDN, physicalDeliveryOfficeName (for example, Building A, Suite 1234), proxyAddresses (the collection of e-mail addresses over all e-mail address spaces that the Exchange server knows about).</li>
+                  <li>Database Connections (not custom): Name/Email case insensitive.</li>
+                  <li>Google Apps: Email/username case insensitive.</li>
+                  <li>WAAD/WAAD2: Name/Email case insensitive.</li>
+                  <li>Windows Azure Active Directory or Office365: name/email case insensitive</li>
+                </ul>
+
+                <p><span class="label label-info">Heads up!</span> If the connection does not support querying for users (for instance ADFS, SAMLP), it will return the users who have logged in through that connection.</p>
+
+                <pre><code><span class="http-verb">GET</span> <span class="client_namespace"></span>api/enterpriseconnections/users?search=<textarea id="enterprise-users-search-query" style="width:250px;height:20px;"></textarea>&amp;per_page=<input type="text" id="enterpriseconn-users-per-page" value="500">
+Authorization: Bearer <span class="tokenme param">{token}</span></code></pre>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- GET /api/socialconnections/users?search={criteria} -->
+        <div class="markdown" data-verb="GET" data-path="/api/socialconnections/users?search={criteria}" data-description="Gets all users who have logged in with social connections that match the search criteria">
+          <div class="accordion-group">
+            <div class="accordion-heading  clearfix api-get">
+
+              <a class="accordion-toggle row" data-toggle="collapse" href="#get--api-socialconnections-users-search--criteria-">
+                <div class="span8 col-sm-8 api-method"><span class="verb get">GET</span> /api/socialconnections/users?search={criteria}</div>
+                <div class="span4 col-sm-4 api-description" style="text-align:right">Gets all users who have logged in with social connections that match the search criteria</div>
+              </a>
+            </div>
+            <div class="accordion-body collapse" id="get--api-socialconnections-users-search--criteria-">
+              <div class="accordion-inner markdown">
+                <p>Gets all users who have logged in through social connections that match the specified search <code>criteria</code>.</p>
+
+                <p>Performs a 'starts with' search by name or email. Or searches by field, for example: email_verified:true; loginsCount:1; family_name:"johnson"</p>
+
+                <pre><code><span class="http-verb">GET</span> <span class="client_namespace"></span>api/socialconnections/users?search=<textarea id="socialconn-users-search-query" style="width:250px;height:20px;"></textarea>&amp;per_page=<input type="text" id="socialconn-users_per-page" value="500">
+Authorization: Bearer <span class="tokenme param">{token}</span>
+</code></pre>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- GET /api/clients/{client-id}/users -->
+        <div class="markdown" data-verb="GET" data-path="/api/clients/{client-id}/users" data-description="Gets all users from a specific client">
+          <div class="accordion-group">
+            <div class="accordion-heading  clearfix api-get">
+
+              <a class="accordion-toggle row" data-toggle="collapse" href="#get--api-clients--client-id--users">
+                <div class="span8 col-sm-8 api-method"><span class="verb get">GET</span> /api/clients/{client-id}/users</div>
+                <div class="span4 col-sm-4 api-description" style="text-align:right">Gets all users from a specific client</div>
+              </a>
+            </div>
+            <div class="accordion-body collapse" id="get--api-clients--client-id--users">
+              <div class="accordion-inner markdown">
+                <p>Gets all users who have logged in with a specific client</p>
+
+                <pre><code><span class="http-verb">GET</span> <span class="client_namespace"></span>api/clients/<span class="client_client_id"></span>/users
+Authorization: Bearer <span class="tokenme param">{token}</span>
+</code></pre>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- POST /api/users -->
+
+        <div class="markdown" data-verb="POST" data-path="/api/users" data-description="Creates a user">
+          <div class="accordion-group">
+            <div class="accordion-heading  clearfix api-post">
+
+              <a class="accordion-toggle row" data-toggle="collapse" href="#post--api-users">
+                <div class="span8 col-sm-8 api-method"><span class="verb post">POST</span> /api/users</div>
+                <div class="span4 col-sm-4 api-description" style="text-align:right">Creates a user</div>
+              </a>
+            </div>
+            <div class="accordion-body collapse" id="post--api-users">
+              <div class="accordion-inner markdown">
+                <p>Creates a user. The body of the request must include the <code>email</code>, the <code>password</code>, and the <code>connection</code> of the user. Also it can include the user's <code>email_verified</code> parameter and the <code>extra attributes</code>                  that you want to add.</p>
+
+                <p></p><pre>  <code><span class="http-verb">POST</span> <span class="client_namespace"></span>api/users/
+Authorization: Bearer <span class="tokenme param">{token}</span>
+Content-Type: 'application/json'
+<form id="user-form">
+{
+"email":          "<input type="email" placeholder="email" id="api-create-user-email">",
+"password":       "<input type="password" placeholder="password" id="api-create-user-password">",
+"connection":     "<select style="min-width:221px" id="api-create-user-connection-selector" disabled="disabled">
+</select>", // only database or passwordless connections
+"email_verified": <select style="margin-top:8px;" id="api-create-user-email-verified-selector" disabled="disabled"><option value="false">false</option><option value="true">true</option></select>, // if true, it won't send an email for confirmation
+<textarea id="sdk-create-jsoneditor" rows="3" style="margin-top:7px;width:75%;">"vip": true,
+"birthdate": "1980-12-23T03:00:00.000Z"</textarea>
+}
+</form>
+</code>
+</pre>
+                <p></p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- POST api/users/{user_id}/send_verification_email -->
+
+        <div class="markdown" data-verb="POST" data-path="/api/users/{user_id}/send_verification_email" data-description="Resends verification account email">
+          <div class="accordion-group">
+            <div class="accordion-heading  clearfix api-post">
+
+              <a class="accordion-toggle row" data-toggle="collapse" href="#post--api-users--user_id--send_verification_email">
+                <div class="span8 col-sm-8 api-method"><span class="verb post">POST</span> /api/users/{user_id}/send_verification_email</div>
+                <div class="span4 col-sm-4 api-description" style="text-align:right">Resends verification account email</div>
+              </a>
+            </div>
+            <div class="accordion-body collapse" id="post--api-users--user_id--send_verification_email">
+              <div class="accordion-inner markdown">
+                <p>Resends verification account email.</p>
+
+                <p></p><pre>  <code><span class="http-verb">POST</span> <span class="client_namespace"></span>api/users/<select id="user-id-selector-for-sendverificationemail" class="user-selector" disabled="disabled"></select>/<code>send_verification_email</code>
+Authorization: Bearer <span class="tokenme param">{token}</span></code></pre>
+                <p></p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- POST api/users/{user_id}/change_password_ticket -->
+
+        <div class="markdown" data-verb="POST" data-path="/api/users/{user_id}/change_password_ticket" data-description="Generates change password ticket">
+          <div class="accordion-group">
+            <div class="accordion-heading  clearfix api-post">
+
+              <a class="accordion-toggle row" data-toggle="collapse" href="#post--api-users--user_id--change_password_ticket">
+                <div class="span8 col-sm-8 api-method"><span class="verb post">POST</span> /api/users/{user_id}/change_password_ticket</div>
+                <div class="span4 col-sm-4 api-description" style="text-align:right">Generates change password ticket</div>
+              </a>
+            </div>
+            <div class="accordion-body collapse" id="post--api-users--user_id--change_password_ticket">
+              <div class="accordion-inner markdown">
+                <p>Generates change password ticket. The body of the request must include the <code>newPassword</code> of the user. Optionally, you can include the <code>resultUrl</code> (post verification url).</p>
+
+                <p></p><pre>  <code><span class="http-verb">POST</span> <span class="client_namespace"></span>api/users/<select id="user-id-selector-for-changepasswordticket" class="user-selector" disabled="disabled"></select>/<code>change_password_ticket</code>
+Authorization: Bearer <span class="tokenme param">{token}</span>
+Content-Type: 'application/json'
+<form id="user-changepasswordticket-form">
+{
+"newPassword":    "<input type="password" placeholder="new password" id="api-user-changepasswordticket-newPassword">",
+"resultUrl":      "<input type="text" placeholder="post verification url" id="api-user-changepasswordticket-resultUrl">" // optional
+}
+</form></code></pre>
+                <p></p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- POST api/users/{user_id}/verification_ticket -->
+
+        <div class="markdown" data-verb="POST" data-path="/api/users/{user_id}/verification_ticket" data-description="Generates verification account ticket">
+          <div class="accordion-group">
+            <div class="accordion-heading  clearfix api-post">
+
+              <a class="accordion-toggle row" data-toggle="collapse" href="#post--api-users--user_id--verification_ticket">
+                <div class="span8 col-sm-8 api-method"><span class="verb post">POST</span> /api/users/{user_id}/verification_ticket</div>
+                <div class="span4 col-sm-4 api-description" style="text-align:right">Generates verification account ticket</div>
+              </a>
+            </div>
+            <div class="accordion-body collapse" id="post--api-users--user_id--verification_ticket">
+              <div class="accordion-inner markdown">
+                <p>Generates verification account ticket. Optionally, you can include the <code>resultUrl</code> (post verification url) in the body of the request.</p>
+
+                <p></p><pre>  <code><span class="http-verb">POST</span> <span class="client_namespace"></span>api/users/<select id="user-id-selector-for-verificationticket" class="user-selector" disabled="disabled"></select>/<code>verification_ticket</code>
+Authorization: Bearer <span class="tokenme param">{token}</span>
+Content-Type: 'application/json'
+<form id="user-verificationticket-form">
+{
+"resultUrl":      "<input type="text" placeholder="post verification url" id="api-user-verificationticket-resultUrl">" // optional
+}
+</form></code></pre>
+                <p></p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- POST api/users/{user_id}/publickey -->
+
+        <div class="markdown" data-verb="POST" data-path="/api/users/{user_id}/publickey" data-description="Saves user public key for specified device">
+          <div class="accordion-group">
+            <div class="accordion-heading  clearfix api-post">
+
+              <a class="accordion-toggle row" data-toggle="collapse" href="#post--api-users--user_id--publickey">
+                <div class="span8 col-sm-8 api-method"><span class="verb post">POST</span> /api/users/{user_id}/publickey</div>
+                <div class="span4 col-sm-4 api-description" style="text-align:right">Saves user public key for specified device</div>
+              </a>
+            </div>
+            <div class="accordion-body collapse" id="post--api-users--user_id--publickey">
+              <div class="accordion-inner markdown">
+                <p>Saves user public key for specified device.</p>
+
+                <pre><code><span class="http-verb">POST</span> <span class="client_namespace"></span>api/users/<select id="user-id-selector-for-new_publickey" class="user-selector" disabled="disabled"></select>/publickey
+Authorization: Bearer <span class="tokenme param">{token}</span>
+Content-Type: 'application/json'
+<form id="user-new_publickey-form">{
+"device":     "<input type="text" id="api-user-new_publickey-device">",
+"public_key": "<textarea id="api-user-new_publickey-public_key" placeholder="base64 encoded public key" rows="3" style="width:75%;"></textarea>"
+}</form></code></pre>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- PUT /api/users/{user_id}/email -->
+        <div class="markdown" data-verb="PUT" data-path="/api/users/{user_id}/email" data-description="Updates user email">
+          <div class="accordion-group">
+            <div class="accordion-heading  clearfix api-put">
+
+              <a class="accordion-toggle row" data-toggle="collapse" href="#put--api-users--user_id--email">
+                <div class="span8 col-sm-8 api-method"><span class="verb put">PUT</span> /api/users/{user_id}/email</div>
+                <div class="span4 col-sm-4 api-description" style="text-align:right">Updates user email</div>
+              </a>
+            </div>
+            <div class="accordion-body collapse" id="put--api-users--user_id--email">
+              <div class="accordion-inner markdown">
+                <p>Update user email. The body of the request must include the new <code>email</code>.</p>
+
+                <pre><code><span class="http-verb">PUT</span> <span class="client_namespace"></span>api/users/<select id="update-user-id-selector-for-changeemail" class="user-selector" disabled="disabled"></select>/email
+Authorization: Bearer <span class="tokenme param">{token}</span>
+Content-Type: 'application/json'
+
+<form id="user-form" style="margin-bottom:-40px">
+{
+"email":   "<input type="email" placeholder="email" id="api-update-user-email">",
+"verify":  <select style="margin-top:8px;" id="api-update-user-email-verify-selector" disabled="disabled"><option value="true">true</option><option value="false">false</option></select> // if false, it won't send an email for verification
+}
+</form>
+
+</code></pre>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- PUT /api/users/{user_id}/metadata -->
+        <div class="markdown" data-verb="PUT" data-path="/api/users/{user_id}/metadata" data-description="Updates user metadata">
+          <div class="accordion-group">
+            <div class="accordion-heading  clearfix api-put">
+
+              <a class="accordion-toggle row" data-toggle="collapse" href="#put--api-users--user_id--metadata">
+                <div class="span8 col-sm-8 api-method"><span class="verb put">PUT</span> /api/users/{user_id}/metadata</div>
+                <div class="span4 col-sm-4 api-description" style="text-align:right">Updates user metadata</div>
+              </a>
+            </div>
+            <div class="accordion-body collapse" id="put--api-users--user_id--metadata">
+              <div class="accordion-inner markdown">
+                <p>Update user metadata. The body of the request must include a <code>json</code> object with metadata <code>attributes</code>.</p>
+
+                <pre><code><span class="http-verb">PUT</span> <span class="client_namespace"></span>api/users/<select id="user-id-selector" class="user-selector" disabled="disabled"></select>/metadata
+Authorization: Bearer <span class="tokenme param">{token}</span>
+Content-Type: 'application/json'
+{
+<textarea id="sdk-jsoneditor-user-metadata" rows="3" style="margin-top:7px;width:75%;">  "Policy": "1238907654",
+"Customer Id": "1234"
+</textarea>
+}
+</code>
+</pre>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- PUT /api/users/{user_id}/password -->
+        <div class="markdown" data-verb="PUT" data-path="/api/users/{user_id}/password" data-description="Updates user password">
+          <div class="accordion-group">
+            <div class="accordion-heading  clearfix api-put">
+
+              <a class="accordion-toggle row" data-toggle="collapse" href="#put--api-users--user_id--password">
+                <div class="span8 col-sm-8 api-method"><span class="verb put">PUT</span> /api/users/{user_id}/password</div>
+                <div class="span4 col-sm-4 api-description" style="text-align:right">Updates user password</div>
+              </a>
+            </div>
+            <div class="accordion-body collapse" id="put--api-users--user_id--password">
+              <div class="accordion-inner markdown">
+                <p>Update user password. The body of the request must include the new <code>password</code>.</p>
+
+                <pre><code><span class="http-verb">PUT</span> <span class="client_namespace"></span>api/users/<select id="update-user-id-selector" class="user-selector" disabled="disabled"></select>/password
+Authorization: Bearer <span class="tokenme param">{token}</span>
+Content-Type: 'application/json'
+
+<form id="user-form" style="margin-bottom:-40px">
+{
+"password":   "<input type="password" placeholder="password" id="api-update-user-password">",
+"verify":     <select style="margin-top:8px;" id="api-update-user-password-verify-selector" disabled="disabled"><option value="true">true</option><option value="false">false</option></select>, // if false, it won't send an email for confirmation
+}
+</form>
+
+</code></pre>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- PUT /api/users/{email}/password -->
+        <div class="markdown" data-verb="PUT" data-path="/api/users/{email}/password" data-description="Updates user password">
+          <div class="accordion-group">
+            <div class="accordion-heading  clearfix api-put">
+
+              <a class="accordion-toggle row" data-toggle="collapse" href="#put--api-users--email--password">
+                <div class="span8 col-sm-8 api-method"><span class="verb put">PUT</span> /api/users/{email}/password</div>
+                <div class="span4 col-sm-4 api-description" style="text-align:right">Updates user password</div>
+              </a>
+            </div>
+            <div class="accordion-body collapse" id="put--api-users--email--password">
+              <div class="accordion-inner markdown">
+                <p>Update user password. The body of the request must include the <code>email</code>, <code>connection</code> and the new <code>password</code>.</p>
+
+                <pre><code><span class="http-verb">PUT</span> <span class="client_namespace"></span>api/users/<select id="update-user-password-byemail-email-selector" class="user-email-selector" disabled="disabled"></select>/password
+Authorization: Bearer <span class="tokenme param">{token}</span>
+Content-Type: 'application/json'
+
+<form id="user-form" style="margin-bottom:-40px">
+{
+"email":      "<input type="email" placeholder="email" id="api-update-user-password-byemail-email" disabled="">",
+"password":   "<input type="password" placeholder="password" id="api-update-user-password-byemail-newpassword">",
+"connection": "<select style="min-width:221px" id="api-update-user-password-byemail-connection-selector" disabled="disabled">
+</select>", // only database connections
+"verify":     <select style="margin-top:8px;" id="api-update-user-password-byemail-verify-selector" disabled="disabled"><option value="true">true</option><option value="false">false</option></select>, // if false, it won't send an email for confirmation
+}
+</form>
+
+</code></pre>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- PATCH /api/users/{user_id}/metadata -->
+        <div class="markdown" data-verb="PATCH" data-path="/api/users/{user_id}/metadata" data-description="Patch user metadata">
+          <div class="accordion-group">
+            <div class="accordion-heading  clearfix api-patch">
+
+              <a class="accordion-toggle row" data-toggle="collapse" href="#patch--api-users--user_id--metadata">
+                <div class="span8 col-sm-8 api-method"><span class="verb patch">PATCH</span> /api/users/{user_id}/metadata</div>
+                <div class="span4 col-sm-4 api-description" style="text-align:right">Patch user metadata</div>
+              </a>
+            </div>
+            <div class="accordion-body collapse" id="patch--api-users--user_id--metadata">
+              <div class="accordion-inner markdown">
+                <p>Patch user metadata. The body of the request must include a <code>json</code> object with metadata <code>attributes</code>. It will not override metadata not specified attributes.</p>
+
+                <pre><code><span class="http-verb">PATCH</span> <span class="client_namespace"></span>api/users/<select id="user-patch-selector" class="user-selector" disabled="disabled"></select>/metadata
+Authorization: Bearer <span class="tokenme param">{token}</span>
+Content-Type: 'application/json'
+{
+<textarea id="sdk-patch-jsoneditor" rows="3" style="margin-top:7px;width:75%;">  "Policy": "1238907654",
+"Customer Id": "1234"
+</textarea>
+}
+</code>
+</pre>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- DELETE /api/users -->
+        <div class="markdown" data-verb="DELETE" data-path="/api/users" data-description="Deletes all users">
+          <div class="accordion-group">
+            <div class="accordion-heading  clearfix api-delete">
+
+              <a class="accordion-toggle row" data-toggle="collapse" href="#delete--api-users">
+                <div class="span8 col-sm-8 api-method"><span class="verb delete">DELETE</span> /api/users</div>
+                <div class="span4 col-sm-4 api-description" style="text-align:right">Deletes all users</div>
+              </a>
+            </div>
+            <div class="accordion-body collapse" id="delete--api-users">
+              <div class="accordion-inner markdown">
+                <p>Deletes all users (including users from non-custom Database connections).</p>
+
+                <pre><code><span class="http-verb">DELETE</span> <span class="client_namespace"></span>api/users
+Authorization: Bearer <span class="tokenme param">{token}</span>
+</code></pre>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- DELETE /api/users/{user_id} -->
+        <div class="markdown" data-verb="DELETE" data-path="/api/users/{user_id}" data-description="Deletes a user">
+          <div class="accordion-group">
+            <div class="accordion-heading  clearfix api-delete">
+
+              <a class="accordion-toggle row" data-toggle="collapse" href="#delete--api-users--user_id-">
+                <div class="span8 col-sm-8 api-method"><span class="verb delete">DELETE</span> /api/users/{user_id}</div>
+                <div class="span4 col-sm-4 api-description" style="text-align:right">Deletes a user</div>
+              </a>
+            </div>
+            <div class="accordion-body collapse" id="delete--api-users--user_id-">
+              <div class="accordion-inner markdown">
+                <p>Deletes a user identified by <code>user_id</code></p>
+
+                <pre><code><span class="http-verb">DELETE</span> <span class="client_namespace"></span>api/users/<select id="user-id-selector-for-delete" class="user-selector" disabled="disabled"></select>
+Authorization: Bearer <span class="tokenme param">{token}</span>
+</code></pre>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- DELETE /api/users/{user_id}/refresh_tokens/{refresh_token} -->
+        <div class="markdown" data-verb="DELETE" data-path="/api/users/{user_id}/refresh_tokens/{refresh_token}" data-description="Revokes a refresh token">
+          <div class="accordion-group">
+            <div class="accordion-heading  clearfix api-delete">
+
+              <a class="accordion-toggle row" data-toggle="collapse" href="#delete--api-users--user_id--refresh_tokens--refresh_token-">
+                <div class="span8 col-sm-8 api-method"><span class="verb delete">DELETE</span> /api/users/{user_id}/refresh_tokens/{refresh_token}</div>
+                <div class="span4 col-sm-4 api-description" style="text-align:right">Revokes a refresh token</div>
+              </a>
+            </div>
+            <div class="accordion-body collapse" id="delete--api-users--user_id--refresh_tokens--refresh_token-">
+              <div class="accordion-inner markdown">
+                <p>Revokes a user's refresh token</p>
+
+                <pre><code><span class="http-verb">DELETE</span> <span class="client_namespace"></span>api/users/<select id="user-id-selector-for-delete-refresh-token" class="user-selector" disabled="disabled"></select>/refresh_tokens/<input id="refreshtokendelete-token">
+Authorization: Bearer <span class="tokenme param">{token}</span>
+</code></pre>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- DELETE /api/users/{user_id}/publickey?device={device} -->
+        <div class="markdown" data-verb="DELETE" data-path="/api/users/{user_id}/publickey?device={device}" data-description="Revokes a public key">
+          <div class="accordion-group">
+            <div class="accordion-heading  clearfix api-delete">
+
+              <a class="accordion-toggle row" data-toggle="collapse" href="#delete--api-users--user_id--publickey-device--device-">
+                <div class="span8 col-sm-8 api-method"><span class="verb delete">DELETE</span> /api/users/{user_id}/publickey?device={device}</div>
+                <div class="span4 col-sm-4 api-description" style="text-align:right">Revokes a public key</div>
+              </a>
+            </div>
+            <div class="accordion-body collapse" id="delete--api-users--user_id--publickey-device--device-">
+              <div class="accordion-inner markdown">
+                <p>Revokes a user's public key for specified device</p>
+
+                <pre><code><span class="http-verb">DELETE</span> <span class="client_namespace"></span>api/users/<select id="user-id-selector-for-delete-public_key" class="user-selector" disabled="disabled"></select>/publickey?device=<input id="publickeydelete-device">
+Authorization: Bearer <span class="tokenme param">{token}</span>
+</code></pre>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+      <h3 id="connections"><a class="anchor" href="#connections"><i class="icon-budicon-345"> </i></a>Connections</h3>
+      <div class="accordion">
+
+        <!-- GET /api/connections -->
+        <div class="markdown" data-verb="GET" data-path="/api/connections" data-description="Gets all connections">
+          <div class="accordion-group">
+            <div class="accordion-heading  clearfix api-get">
+
+              <a class="accordion-toggle row" data-toggle="collapse" href="#get--api-connections">
+                <div class="span8 col-sm-8 api-method"><span class="verb get">GET</span> /api/connections</div>
+                <div class="span4 col-sm-4 api-description" style="text-align:right">Gets all connections</div>
+              </a>
+            </div>
+            <div class="accordion-body collapse" id="get--api-connections">
+              <div class="accordion-inner markdown">
+                <p>Gets a list of all the connections (enterprise and social) and all its <code>options</code></p>
+
+                <pre><code><span class="http-verb">GET</span> <span class="client_namespace"></span>api/connections
+Authorization: Bearer <span class="tokenme param">{token}</span>
+</code></pre>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- GET /api/connections/:name -->
+        <div class="markdown" data-verb="GET" data-path="/api/connections/{connection-name}" data-description="Gets one connection by name">
+          <div class="accordion-group">
+            <div class="accordion-heading  clearfix api-get">
+
+              <a class="accordion-toggle row" data-toggle="collapse" href="#get--api-connections--connection-name-">
+                <div class="span8 col-sm-8 api-method"><span class="verb get">GET</span> /api/connections/{connection-name}</div>
+                <div class="span4 col-sm-4 api-description" style="text-align:right">Gets one connection by name</div>
+              </a>
+            </div>
+            <div class="accordion-body collapse" id="get--api-connections--connection-name-">
+              <div class="accordion-inner markdown">
+                <p>Gets a connection by name (enterprise and social) and all its <code>options</code></p>
+
+                <pre><code><span class="http-verb">GET</span> <span class="client_namespace"></span>api/connections/<select id="connection-get-selector" class="connection-selector" disabled="disabled"></select>
+Authorization: Bearer <span class="tokenme param">{token}</span>
+</code></pre>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="markdown" data-verb="DELETE" data-path="/api/connections/{connection-name}" data-description="Removes a connection">
+          <div class="accordion-group">
+            <div class="accordion-heading  clearfix api-delete">
+
+              <a class="accordion-toggle row" data-toggle="collapse" href="#delete--api-connections--connection-name-">
+                <div class="span8 col-sm-8 api-method"><span class="verb delete">DELETE</span> /api/connections/{connection-name}</div>
+                <div class="span4 col-sm-4 api-description" style="text-align:right">Removes a connection</div>
+              </a>
+            </div>
+            <div class="accordion-body collapse" id="delete--api-connections--connection-name-">
+              <div class="accordion-inner markdown">
+                <p>Deletes a connection identified by <code>connectionName</code></p>
+
+                <pre><code><span class="http-verb">DELETE</span> <span class="client_namespace"></span>api/connections/<select id="connection-delete-selector" class="connection-selector" disabled="disabled"></select>
+Authorization: Bearer <span class="tokenme param">{token}</span>
+</code></pre>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- POST api/connections -->
+
+        <div class="markdown" data-verb="POST" data-path="/api/connections" data-description="Creates a connection">
+          <div class="accordion-group">
+            <div class="accordion-heading  clearfix api-post">
+
+              <a class="accordion-toggle row" data-toggle="collapse" href="#post--api-connections">
+                <div class="span8 col-sm-8 api-method"><span class="verb post">POST</span> /api/connections</div>
+                <div class="span4 col-sm-4 api-description" style="text-align:right">Creates a connection</div>
+              </a>
+            </div>
+            <div class="accordion-body collapse" id="post--api-connections">
+              <div class="accordion-inner markdown">
+                <p>Creates a connection. The body of the request must include the <code>name</code>, the authentication
+                  <code>strategy</code> to use, and an <code>options</code> object with the connection parameters.</p>
+
+                <pre><code><span class="http-verb">POST</span> <span class="client_namespace"></span>api/connections/
+Authorization: Bearer <span class="tokenme param">{token}</span>
+Content-Type: 'application/json'
+<form id="connection-form">
+{
+"name":     "<input type="text" class="input-xxlarge" placeholder="connection identifier (e.g.: customerconnection)" id="api-create-connection-name">"
+"strategy": "<select id="api-create-connection-strategy-selector" disabled="disabled">
+<option value="waad">waad</option>
+<option value="google-apps">google-apps</option>
+<option value="adfs">adfs</option>
+<option value="pingfederate">PingFederate</option>
+<option value="samlp">samlp</option>
+<option value="auth0">auth0</option>
+</select>",
+"options":   {<div class="create-connection-strategy-pane" id="create-connection-options-waad" style="display: block;">
+  "tenant_domain": <input type="text" data-field="tenant_domain" required="" name="waad-tenant_domain">
+  "domain_aliases": <input type="text" data-field="domain_aliases" name="waad-domain_aliases" placeholder="optional">
+</div><div class="create-connection-strategy-pane" id="create-connection-options-google-apps" style="display: none;">
+  "tenant_domain": <input type="text" data-field="tenant_domain" required="" name="tenant_domain">
+  "domain_aliases": <input type="text" data-field="domain_aliases" name="domain_aliases" placeholder="optional">
+</div>
+<div class="create-connection-strategy-pane" id="create-connection-options-adfs" style="display: none;">
+  "tenant_domain": <input type="text" data-field="tenant_domain" name="tenant_domain">,
+  "domain_aliases": <input type="text" data-field="domain_aliases" name="adfs-domain_aliases" placeholder="optional">,
+  "adfs_server":   <input type="text" data-field="adfs_server" required="" name="adfs_server">
+</div><div class="create-connection-strategy-pane" id="create-connection-options-pingfederate" style="display: none;">
+  "domain_aliases": <input type="text" data-field="domain_aliases" name="domain_aliases" placeholder="optional">,
+  "PingFederate Base URL": <input type="text" data-field="pingfederate-base-url" required="" name="pingfederate-base-url">,
+  "Signing Cert":   "<textarea id="signingCert" data-field="signingCert" style="width: 650px;height: 150px;" required="" placeholder="base64 encoded PEM or CER"></textarea>",
+</div><div class="create-connection-strategy-pane" id="create-connection-options-samlp" style="display: none;">
+  "signInEndpoint":   "<input type="text" data-field="signInEndpoint" required="" name="signInEndpoint">",
+  "signingCert":   "<textarea id="signingCert" data-field="signingCert" style="width: 650px;height: 150px;" required="" placeholder="base64 encoded PEM or CER"></textarea>",
+  "tenant_domain": "<input type="text" data-field="tenant_domain" placeholder="optional" name="tenant_domain">",
+  "domain_aliases": <input type="text" data-field="domain_aliases" name="domain_aliases" placeholder="optional">,
+  "signOutEndpoint":  "<input type="text" data-field="signOutEndpoint" placeholder="optional" name="signOutEndpoint">",
+  </div>
+}
+}
+</form>
+</code></pre>
+              </div>
+            </div>
+          </div>
+        </div>
+
+
+        <!-- PUT api/connections -->
+
+        <div class="markdown" data-verb="PUT" data-path="/api/connections/{connection-name}" data-description="Updates a connection">
+          <div class="accordion-group">
+            <div class="accordion-heading  clearfix api-put">
+
+              <a class="accordion-toggle row" data-toggle="collapse" href="#put--api-connections--connection-name-">
+                <div class="span8 col-sm-8 api-method"><span class="verb put">PUT</span> /api/connections/{connection-name}</div>
+                <div class="span4 col-sm-4 api-description" style="text-align:right">Updates a connection</div>
+              </a>
+            </div>
+            <div class="accordion-body collapse" id="put--api-connections--connection-name-">
+              <div class="accordion-inner markdown">
+                <p>Updates a connection. The body of the request must include the <code>options</code> object with the connection parameters and the <code>status</code>.</p>
+
+                <p>The request's body depends on the strategy that was used to create the connection. Select a strategy:
+                  <select id="api-update-connection-strategy-selector" disabled="disabled">
+                    <option value="waad">waad</option>
+                    <option value="google-apps">google-apps</option>
+                    <option value="adfs">adfs</option>
+                    <option value="pingfederate">PingFederate</option>
+                    <option value="samlp">samlp</option>
+                    <option value="auth0">auth0</option>
+                  </select>
+                </p>
+
+                <pre><code><span class="http-verb">PUT</span> <span class="client_namespace"></span>api/connections/<select class="connection-selector" id="api-update-connection-name" disabled="disabled"></select>
+Authorization: Bearer <span class="tokenme param">{token}</span>
+Content-Type: 'application/json'
+<form id="update-connection-form">
+{
+"options":   {<div class="update-connection-strategy-pane" id="update-connection-options-waad" style="display: block;">
+  "tenant_domain": <input type="text" data-field="tenant_domain" required="" name="waad-tenant_domain">
+</div><div class="update-connection-strategy-pane" id="update-connection-options-google-apps" style="display: none;">
+  "tenant_domain": <input type="text" data-field="tenant_domain" required="" name="tenant_domain">
+</div><div class="update-connection-strategy-pane" id="update-connection-options-adfs" style="display: none;">
+  "tenant_domain": <input type="text" data-field="tenant_domain" name="tenant_domain">,
+  "adfs_server":   <input type="text" data-field="adfs_server" required="" name="adfs_server">
+</div><div class="update-connection-strategy-pane" id="update-connection-options-pingfederate" style="display: none;">
+  "PingFederate Base URL": <input type="text" data-field="pingfederate-base-url" required="" name="pingfederate-base-url">,
+  "Signing Cert":   "<textarea id="signingCert" data-field="signingCert" style="width: 650px;height: 150px;" required="" placeholder="base64 encoded PEM or CER"></textarea>",
+</div><div class="update-connection-strategy-pane" id="update-connection-options-samlp" style="display: none;">
+  "signInEndpoint":   "<input type="text" data-field="signInEndpoint" required="" name="signInEndpoint">",
+  "signingCert":   "<textarea id="signingCert" data-field="signingCert" style="width: 650px;height: 150px;" required="" placeholder="base64 encoded PEM or CER"></textarea>",
+  "tenant_domain": "<input type="text" data-field="tenant_domain" placeholder="optional" name="tenant_domain">",
+  "signOutEndpoint":  "<input type="text" data-field="signOutEndpoint" placeholder="optional" name="signOutEndpoint">",
+  </div>
+}
+"status": <select id="update-connection-status-selector" disabled="disabled">
+  <option value="true">true</option>
+  <option value="false">false</option>
+  </select>
+}
+</form>
+</code></pre>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <h3 id="applications"><a class="anchor" href="#applications"><i class="icon-budicon-345"> </i></a>Applications / APIs (Clients)</h3>
+
+      <div class="accordion">
+
+        <!-- GET /api/clients -->
+        <div class="markdown" data-verb="GET" data-path="/api/clients" data-description="Gets all applications/APIs">
+          <div class="accordion-group">
+            <div class="accordion-heading  clearfix api-get">
+
+              <a class="accordion-toggle row" data-toggle="collapse" href="#get--api-clients">
+                <div class="span8 col-sm-8 api-method"><span class="verb get">GET</span> /api/clients</div>
+                <div class="span4 col-sm-4 api-description" style="text-align:right">Gets all applications/APIs</div>
+              </a>
+            </div>
+            <div class="accordion-body collapse" id="get--api-clients">
+              <div class="accordion-inner markdown">
+                <p>Gets a list of all the applications/APIs (aka clients) and all its <code>options</code></p>
+
+                <pre><code><span class="http-verb">GET</span> <span class="client_namespace"></span>api/clients
+Authorization: Bearer <span class="tokenme param">{token}</span>
+</code></pre>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- POST /api/clients -->
+        <div class="markdown" data-verb="POST" data-path="/api/clients" data-description="Creates a new applications/APIs">
+          <div class="accordion-group">
+            <div class="accordion-heading  clearfix api-post">
+
+              <a class="accordion-toggle row" data-toggle="collapse" href="#post--api-clients">
+                <div class="span8 col-sm-8 api-method"><span class="verb post">POST</span> /api/clients</div>
+                <div class="span4 col-sm-4 api-description" style="text-align:right">Creates a new applications/APIs</div>
+              </a>
+            </div>
+            <div class="accordion-body collapse" id="post--api-clients">
+              <div class="accordion-inner markdown">
+                <p>Create a client. The body of the request can include the <code>name</code> and <code>callbacks</code> parameters.</p>
+
+                <pre><code><span class="http-verb">POST</span> <span class="client_namespace"></span>api/clients/
+Authorization: Bearer <span class="tokenme param">{token}</span>
+Content-Type: 'application/json'
+<form id="create-client-form">
+{
+"name":      "<input type="text" id="api-create-client-name" class="client-name" required="">",
+"callbacks": "<textarea id="api-create-client-callbacks" class="client-callbacks" required=""></textarea>" // You can specify multiple valid URLs by comma-separating them.
+}
+</form>
+</code></pre>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- PUT /api/clients -->
+        <div class="markdown" data-verb="PUT" data-path="/api/clients/{client-id}" data-description="(DEPRECATED) Updates an applications/APIs">
+          <div class="accordion-group">
+            <div class="accordion-heading  clearfix api-put">
+
+              <a class="accordion-toggle row" data-toggle="collapse" href="#put--api-clients--client-id-">
+                <div class="span8 col-sm-8 api-method"><span class="verb put">PUT</span> /api/clients/{client-id}</div>
+                <div class="span4 col-sm-4 api-description" style="text-align:right">(DEPRECATED) Updates an applications/APIs</div>
+              </a>
+            </div>
+            <div class="accordion-body collapse" id="put--api-clients--client-id-">
+              <div class="accordion-inner markdown">
+                <p><span class="label label-important">DEPRECATED!</span> This endpoint has been deprecated in favor of PUT.
+                </p>
+
+                <p>Update a client. The body of the request can include the <code>name</code> and <code>callbacks</code> parameters. Does not overwrite the entire client, only the provided values.</p>
+
+                <pre><code><span class="http-verb">PUT</span> <span class="client_namespace"></span>api/clients/<span class="client_client_id"></span>/
+Authorization: Bearer <span class="tokenme param">{token}</span>
+Content-Type: 'application/json'
+<form id="update-client-form">
+{
+"name":      "<input type="text" id="api-update-client-name" class="update-client-name" required="">",
+"callbacks": "<textarea id="api-update-client-callbacks" class="update-client-callbacks" required=""></textarea>" // You can specify multiple valid URLs by comma-separating them.
+}
+</form>
+</code></pre>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- PATCH /api/clients -->
+        <div class="markdown" data-verb="PATCH" data-path="/api/clients/{client-id}" data-description="Updates an applications/APIs">
+          <div class="accordion-group">
+            <div class="accordion-heading  clearfix api-patch">
+
+              <a class="accordion-toggle row" data-toggle="collapse" href="#patch--api-clients--client-id-">
+                <div class="span8 col-sm-8 api-method"><span class="verb patch">PATCH</span> /api/clients/{client-id}</div>
+                <div class="span4 col-sm-4 api-description" style="text-align:right">Updates an applications/APIs</div>
+              </a>
+            </div>
+            <div class="accordion-body collapse" id="patch--api-clients--client-id-">
+              <div class="accordion-inner markdown">
+                <p>Update a client. The body of the request must include the <code>name</code> and <code>callbacks</code> parameters. Does not overwrite the entire client, only the provided values.</p>
+
+                <p>Additionally the <code>signingKey</code> can be overwritten using this method (not provided for trial for safety reasons). Possible formats are:</p>
+
+                <ul>
+                  <li>
+                    <code>
+"signingKey": {
+cert: "%CERT_STRING%"
+}
+// using a cert
+</code>
+                  </li>
+
+                  <li>
+                    <code>
+"signingKey": {
+key: "%KEY_STRING%"
+}
+// using a private key
+</code>
+                  </li>
+
+                  <li>
+                    <code>
+"signingKey": {
+pkcs7: "%PKCS7_STRING%"
+}
+// using a pkcs7
+</code>
+                  </li>
+                </ul>
+
+                <p><span class="label label-important">WARNING!</span> Changing the <code>signingKey</code> for the globalClient will change it for all clients.</p>
+
+                <pre><code><span class="http-verb">PATCH</span> <span class="client_namespace"></span>api/clients/<span class="client_client_id"></span>/
+Authorization: Bearer <span class="tokenme param">{token}</span>
+Content-Type: 'application/json'
+<form id="update-client-form">
+{
+"name":      "<input type="text" id="api-patch-client-name" class="update-client-name" required="">",
+"callbacks": "<textarea id="api-patch-client-callbacks" class="update-client-callbacks" required=""></textarea>" // You can specify multiple valid URLs by comma-separating them.
+}
+</form>
+</code></pre>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- rules -->
+      <h3 id="rules"><a class="anchor" href="#rules"><i class="icon-budicon-345"> </i></a>Rules</h3>
+
+      <div class="accordion">
+
+        <!-- GET /api/rules -->
+        <div class="markdown" data-verb="GET" data-path="/api/rules" data-description="Gets all rules">
+          <div class="accordion-group">
+            <div class="accordion-heading  clearfix api-get">
+
+              <a class="accordion-toggle row" data-toggle="collapse" href="#get--api-rules">
+                <div class="span8 col-sm-8 api-method"><span class="verb get">GET</span> /api/rules</div>
+                <div class="span4 col-sm-4 api-description" style="text-align:right">Gets all rules</div>
+              </a>
+            </div>
+            <div class="accordion-body collapse" id="get--api-rules">
+              <div class="accordion-inner markdown">
+                <p>Gets a list of all the rules</p>
+
+                <pre><code><span class="http-verb">GET</span> <span class="client_namespace"></span>api/rules
+Authorization: Bearer <span class="tokenme param">{token}</span>
+</code></pre>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- POST /api/rules -->
+        <div class="markdown" data-verb="POST" data-path="/api/rules" data-description="Creates a new applications/APIs">
+          <div class="accordion-group">
+            <div class="accordion-heading  clearfix api-post">
+
+              <a class="accordion-toggle row" data-toggle="collapse" href="#post--api-rules">
+                <div class="span8 col-sm-8 api-method"><span class="verb post">POST</span> /api/rules</div>
+                <div class="span4 col-sm-4 api-description" style="text-align:right">Creates a new applications/APIs</div>
+              </a>
+            </div>
+            <div class="accordion-body collapse" id="post--api-rules">
+              <div class="accordion-inner markdown">
+                <p>Create a rule. The body of the request must include the <code>name</code>, <code>status</code> and <code>script</code> parameters.</p>
+
+                <pre><code><span class="http-verb">POST</span> <span class="client_namespace"></span>api/rules/
+Authorization: Bearer <span class="tokenme param">{token}</span>
+Content-Type: 'application/json'
+<form id="create-rule-form">
+{
+"name":     "<input type="text" id="api-create-rule-name" required="">",
+"status":   "<select id="api-create-rule-status" disabled="disabled">,
+<option value="true">true</option>
+<option value="false">false</option>
+</select>",
+"script":   "<textarea id="api-create-rule-script" style="width: 650px;height: 150px;" required="">function (user, context, callback) { user.foo = 'bar'; callback(null, user, context);}</textarea>"
+             // new lines should be encoded as \n
+"order": <input type="text" id="api-create-rule-order" placeholder="optional">
+}
+</form>
+</code></pre>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- PUT /api/rules -->
+        <div class="markdown" data-verb="PUT" data-path="/api/rules/{rule-name}" data-description="Updates a rule">
+          <div class="accordion-group">
+            <div class="accordion-heading  clearfix api-put">
+
+              <a class="accordion-toggle row" data-toggle="collapse" href="#put--api-rules--rule-name-">
+                <div class="span8 col-sm-8 api-method"><span class="verb put">PUT</span> /api/rules/{rule-name}</div>
+                <div class="span4 col-sm-4 api-description" style="text-align:right">Updates a rule</div>
+              </a>
+            </div>
+            <div class="accordion-body collapse" id="put--api-rules--rule-name-">
+              <div class="accordion-inner markdown">
+                <p>Update a rule. The body of the request must include the <code>status</code> and <code>script</code> parameters.</p>
+
+                <pre><code><span class="http-verb">PUT</span> <span class="client_namespace"></span>api/rules/<select id="rules-put-selector" class="rule-selector" disabled="disabled"></select>/
+Authorization: Bearer <span class="tokenme param">{token}</span>
+Content-Type: 'application/json'
+<form id="update-rule-form">
+{
+"status":   "<select id="api-update-rule-status" disabled="disabled">,
+<option value="true">true</option>
+<option value="false">false</option>
+</select>",
+"script":   "<textarea id="api-update-rule-script" style="width: 650px;height: 150px;" required="">function (user, context, callback) { user.foo = 'bar'; callback(null, user, context);}</textarea>"
+"order": <input type="text" id="api-update-rule-order" placeholder="optional">
+             // new lines should be encoded as \n
+}
+</form>
+</code></pre>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- DELETE /api/rules -->
+
+        <div class="markdown" data-verb="DELETE" data-path="/api/rules/{rule-name}" data-description="Deletes a rules">
+          <div class="accordion-group">
+            <div class="accordion-heading  clearfix api-delete">
+
+              <a class="accordion-toggle row" data-toggle="collapse" href="#delete--api-rules--rule-name-">
+                <div class="span8 col-sm-8 api-method"><span class="verb delete">DELETE</span> /api/rules/{rule-name}</div>
+                <div class="span4 col-sm-4 api-description" style="text-align:right">Deletes a rules</div>
+              </a>
+            </div>
+            <div class="accordion-body collapse" id="delete--api-rules--rule-name-">
+              <div class="accordion-inner markdown">
+                <p>Deletes a rule identified by <code>rule-name</code> (url-encoded)</p>
+
+                <pre><code><span class="http-verb">DELETE</span> <span class="client_namespace"></span>api/rules/<select id="rule-delete-selector" class="rule-selector" disabled="disabled"></select>
+Authorization: Bearer <span class="tokenme param">{token}</span>
+</code></pre>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+      <h3 id="emails"><a class="anchor" href="#emails"><i class="icon-budicon-345"> </i></a>Email Templates</h3>
+
+      <div class="accordion">
+        <!-- GET /api/emails/:name -->
+        <div class="markdown" data-verb="GET" data-path="/api/emails/{email-template-name}" data-description="Gets an email template by name">
+          <div class="accordion-group">
+            <div class="accordion-heading  clearfix api-get">
+
+              <a class="accordion-toggle row" data-toggle="collapse" href="#get--api-emails--email-template-name-">
+                <div class="span8 col-sm-8 api-method"><span class="verb get">GET</span> /api/emails/{email-template-name}</div>
+                <div class="span4 col-sm-4 api-description" style="text-align:right">Gets an email template by name</div>
+              </a>
+            </div>
+            <div class="accordion-body collapse" id="get--api-emails--email-template-name-">
+              <div class="accordion-inner markdown">
+                <p>Gets an email template by name</p>
+
+                <pre><code><span class="http-verb">GET</span> <span class="client_namespace"></span>api/emails/<select id="emails-get-selector" class="emails-selector" disabled="disabled">
+<option value="verify_email">verify_email</option>
+<option value="welcome_email">welcome_email</option>
+<option value="reset_email">reset_email</option>
+<option value="blocked_account">blocked_account</option>
+</select>
+Authorization: Bearer <span class="tokenme param">{token}</span>
+</code></pre>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- POST api/emails -->
+
+        <div class="markdown" data-verb="POST" data-path="/api/emails" data-description="Creates an email template">
+          <div class="accordion-group">
+            <div class="accordion-heading  clearfix api-post">
+
+              <a class="accordion-toggle row" data-toggle="collapse" href="#post--api-emails">
+                <div class="span8 col-sm-8 api-method"><span class="verb post">POST</span> /api/emails</div>
+                <div class="span4 col-sm-4 api-description" style="text-align:right">Creates an email template</div>
+              </a>
+            </div>
+            <div class="accordion-body collapse" id="post--api-emails">
+              <div class="accordion-inner markdown">
+                <p>Creates an email template. The body of the request must include the <code>template</code> name and the
+                  <code>tenant</code>.</p>
+
+                <pre><code><span class="http-verb">POST</span> <span class="client_namespace"></span>api/emails/
+Authorization: Bearer <span class="tokenme param">{token}</span>
+Content-Type: 'application/json'
+<form id="create-email-form">
+{
+"template": "<select id="emails-create-selector" class="emails-selector" disabled="disabled">
+  <option value="verify_email">verify_email</option>
+  <option value="welcome_email">welcome_email</option>
+  <option value="reset_email">reset_email</option>
+  <option value="blocked_account">blocked_account</option>
+</select>",
+"disabled": <select id="emails-create-disabled-selector" disabled="disabled">
+  <option value="false">false</option>
+  <option value="true">true</option>
+</select>,
+"from": "<input id="emails-create-from" type="text" data-field="from" required="" name="from">",
+"subject": "<input id="emails-create-subject" type="text" data-field="subject" required="" name="subject">",
+"body": "<textarea id="emails-create-body" data-field="body" style="width: 650px;height: 150px;" required="" placeholder="Email body"></textarea>",
+"urlLifetimeInSeconds": <input type="text" id="emails-create-urlLifetimeInSeconds" data-field="urlLifetimeInSeconds" required="" name="urlLifetimeInSeconds">,
+"resultUrl": "<input type="text" id="emails-create-resultUrl" data-field="resultUrl" required="" name="resultUrl">"
+"syntax": "<select id="emails-create-syntax-selector" class="emails-selector" disabled="disabled">
+  <option value="md_with_macros">md_with_macros</option>
+  <option value="liquid">liquid</option>
+</select>"
+}
+</form>
+</code></pre>
+              </div>
+            </div>
+          </div>
+        </div>
+
+
+        <!-- PUT api/emails -->
+
+        <div class="markdown" data-verb="PUT" data-path="/api/emails/{email-template-name}" data-description="Updates an email template">
+          <div class="accordion-group">
+            <div class="accordion-heading  clearfix api-put">
+
+              <a class="accordion-toggle row" data-toggle="collapse" href="#put--api-emails--email-template-name-">
+                <div class="span8 col-sm-8 api-method"><span class="verb put">PUT</span> /api/emails/{email-template-name}</div>
+                <div class="span4 col-sm-4 api-description" style="text-align:right">Updates an email template</div>
+              </a>
+            </div>
+            <div class="accordion-body in collapse" id="put--api-emails--email-template-name-">
+              <div class="accordion-inner markdown">
+                <p>Updates an email template.</p>
+
+                <pre><code><span class="http-verb">PUT</span> <span class="client_namespace"></span>api/emails/<select id="emails-update-selector" class="emails-selector" disabled="disabled">
+<option value="verify_email">verify_email</option>
+<option value="welcome_email">welcome_email</option>
+<option value="reset_email">reset_email</option>
+<option value="blocked_account">blocked_account</option>
+</select>
+
+Authorization: Bearer <span class="tokenme param">{token}</span>
+Content-Type: 'application/json'
+<form id="update-email-form">
+{
+"disabled": <select id="emails-update-disabled-selector" disabled="disabled">
+  <option value="false">false</option>
+  <option value="true">true</option>
+</select>,
+"from": "<input id="emails-update-from" type="text" data-field="from" required="" name="from">",
+"subject": "<input id="emails-update-subject" type="text" data-field="subject" required="" name="subject">",
+"body": "<textarea id="emails-update-body" data-field="body" style="width: 650px;height: 150px;" required="" placeholder="Email body"></textarea>",
+"urlLifetimeInSeconds": <input type="text" id="emails-update-urlLifetimeInSeconds" data-field="urlLifetimeInSeconds" required="" name="urlLifetimeInSeconds">,
+"resultUrl": "<input type="text" id="emails-update-resultUrl" data-field="resultUrl" required="" name="resultUrl">"
+"syntax": "<select id="emails-update-syntax-selector" class="emails-selector" disabled="disabled">
+  <option value="md_with_macros">md_with_macros</option>
+  <option value="liquid">liquid</option>
+</select>"
+}
+</form>
+</code></pre>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <h3 id="logs"><a class="anchor" href="#logs"><i class="icon-budicon-345"> </i></a>Logs</h3>
+
+      <div class="accordion">
+
+        <!-- GET /api/logs/:id -->
+        <div class="markdown" data-verb="GET" data-path="/api/logs/{_id}" data-description="Gets a log entry">
+          <div class="accordion-group">
+            <div class="accordion-heading  clearfix api-get">
+
+              <a class="accordion-toggle row" data-toggle="collapse" href="#get--api-logs--_id-">
+                <div class="span8 col-sm-8 api-method"><span class="verb get">GET</span> /api/logs/{_id}</div>
+                <div class="span4 col-sm-4 api-description" style="text-align:right">Gets a log entry</div>
+              </a>
+            </div>
+            <div class="accordion-body collapse in" id="get--api-logs--_id-" style="height: 185px;">
+              <div class="accordion-inner markdown">
+                <p>Retrieves the data related to the log entry identified by <code>_id</code>.</p>
+
+                <p></p><pre><code><span class="http-verb">GET</span> <span class="client_namespace"></span>api/logs/<select id="log-get-id-selector" class="logs-selector" disabled="disabled"></select>
+Authorization: Bearer <span class="tokenme param">{token}</span></code></pre>
+                <p></p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- GET /api/users/:user_id/logs -->
+        <div class="markdown" data-verb="GET" data-path="/api/users/{user_id}/logs?page={number}&amp;per_page={items}" data-description="Gets the logs for a particular user">
+          <div class="accordion-group">
+            <div class="accordion-heading  clearfix api-get">
+
+              <a class="accordion-toggle row" data-toggle="collapse" href="#get--api-users--user_id--logs-page--number--per_page--items-">
+                <div class="span8 col-sm-8 api-method"><span class="verb get">GET</span> /api/users/{user_id}/logs?page={number}&amp;per_page={items}</div>
+                <div class="span4 col-sm-4 api-description" style="text-align:right">Gets the logs for a particular user</div>
+              </a>
+            </div>
+            <div class="accordion-body collapse" id="get--api-users--user_id--logs-page--number--per_page--items-">
+              <div class="accordion-inner markdown">
+                <p>Retrieves the log entries related to the user identified by <code>user_id</code>. Log entries are split into pages of a particular size to avoid returning all data at once:</p>
+
+                <ul>
+                  <li><code>page</code>: The page number. Zero based.</li>
+                  <li><code>items</code>: The amount of entries per page.</li>
+                </ul>
+
+                <pre><code><span class="http-verb">GET</span> <span class="client_namespace"></span>api/users/<select id="logs-by-user-id-selector" class="user-selector" disabled="disabled"></select>/logs?page=<select id="logs-by-user-id-page-selector" class="logs-page-selector" disabled="disabled"><option value="0">0</option><option value="1">1</option><option value="2">2</option><option value="3">3</option><option value="4">4</option></select>&amp;per_page=<select id="logs-by-user-id-items-selector" class="logs-per-page-selector" disabled="disabled"><option value="1">1</option><option value="2">2</option><option value="3">3</option><option value="4">4</option><option value="5">5</option><option value="6">6</option><option value="7">7</option><option value="8">8</option><option value="9">9</option><option value="10">10</option><option value="11">11</option><option value="12">12</option><option value="13">13</option><option value="14">14</option><option value="15">15</option><option value="16">16</option><option value="17">17</option><option value="18">18</option><option value="19">19</option><option value="20">20</option></select>
+Authorization: Bearer <span class="tokenme param">{token}</span></code></pre>
+
+                <p></p>
+                <h4>Response fields</h4> The following is a description of the values returned by the request:
+                <p></p>
+
+                <ul>
+                  <li><code>start</code>: The absolute number (considering all log entries) of the first entry in the page.</li>
+                  <li><code>length</code>: The amount of entries in the page (can only be different than <code>limit</code> in the last page).</li>
+                  <li><code>total</code>: The amount of entries in the page.</li>
+                  <li><code>limit</code>: The maximum amount of items in a page.</li>
+                  <li><code>logs</code>: A collection of log entries.
+                    <ul>
+                      <li><code>date</code>: The moment when the event occured.</li>
+                      <li><code>connection</code>: The connection related to the event.</li>
+                      <li><code>client_id</code>: The id of the client related to the event.</li>
+                      <li><code>client_name</code>: The name of the client related to the event.</li>
+                      <li><code>ip</code>: The IP address from where the request that caused the log entry originated.</li>
+                      <li><code>user_id</code>: The user id releated to the event.</li>
+                      <li><code>user_name</code>: The user name releated to the event.</li>
+                      <li><code>description</code>: The event's description.</li>
+                      <li><code>user_agent</code>: The user agent that was used to cause the creation of the log entry.</li>
+                      <li><code>type</code>: An abbreviation of the event type. Refer to the event acronym mappings below for the mapping between abbreviations and their meaning.</li>
+                      <li><code>details</code>: Additional (and very useful) details about the event. They don't have a specific schema as they vary based on event type.</li>
+                    </ul>
+                  </li>
+                </ul>
+
+                <h5>Event acronym mappings</h5>
+
+                <p>The following is the meaning of the event acronyms:</p>
+
+                <ul>
+                  <li><code>s</code>:Success Login</li>
+                  <li><code>f</code>:Failed Login</li>
+                  <li><code>fu</code>:Failed Login (invalid email/username)</li>
+                  <li><code>fp</code>:Failed Login (wrong password)</li>
+                  <li><code>fc</code>:Failed by Connector</li>
+                  <li><code>fco</code>:Failed by CORS</li>
+                  <li><code>con</code>:Connector Online</li>
+                  <li><code>coff</code>:Connector Offline</li>
+                  <li><code>ss</code>:Success Signup</li>
+                  <li><code>fs</code>:Failed Signup</li>
+                  <li><code>sv</code>:Success Verification Email</li>
+                  <li><code>fv</code>:Failed Verification Email</li>
+                  <li><code>scp</code>:Success Change Password</li>
+                  <li><code>fcp</code>:Failed Change Password</li>
+                  <li><code>sce</code>:Success Change Email</li>
+                  <li><code>fce</code>:Failed Change Email</li>
+                  <li><code>svr</code>:Success Verification Email Request</li>
+                  <li><code>fvr</code>:Failed Verification Email Request</li>
+                  <li><code>scpr</code>:Success Change Password Request</li>
+                  <li><code>fcpr</code>:Failed Change Password Request</li>
+                  <li><code>fn</code>:Failed Sending Notification</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- GET /api/logs -->
+        <div class="markdown" data-verb="GET" data-path="/api/logs?page={number}&amp;per_page={items}&amp;sort={field}:{-1|1}&amp;fields={fields}&amp;exclude_fields{true|false}" data-description="Gets log entries">
+          <div class="accordion-group">
+            <div class="accordion-heading  clearfix api-get">
+
+              <a class="accordion-toggle row" data-toggle="collapse" href="#get--api-logs-page--number--per_page--items--sort--field----1-1--fields--fields--exclude_fields-true-false-">
+                <div class="span8 col-sm-8 api-method"><span class="verb get">GET</span> /api/logs?page={number}&amp;per_page={items}&amp;sort={field}:{-1|1}&amp;fields={fields}&amp;exclude_fields{true|false}</div>
+                <div class="span4 col-sm-4 api-description" style="text-align:right">Gets log entries</div>
+              </a>
+            </div>
+            <div class="accordion-body collapse" id="get--api-logs-page--number--per_page--items--sort--field----1-1--fields--fields--exclude_fields-true-false-">
+              <div class="accordion-inner markdown">
+                <p>Retrieves data about log entries based on the specified parameters. Log entries are split into pages of a particular size to avoid returning all data at once:</p>
+
+                <ul>
+
+                  <li><code>page</code>: The page number. Zero based.</li>
+                  <li><code>items</code>: The amount of entries per page.</li>
+                  <li><code>field</code>: The field to use for sorting. <code>1</code> == ascending and <code>-1</code> == descending.
+                  </li>
+                  <li><code>fields</code>: Can be used to either include or exclude the specified fields by providing a comma (,) separated list of fields, for example <code>at,c,cn,un</code>. If no list is provided all fields are included in the response.</li>
+                  <li><code>exclude_fields</code>: To exclude the fields <code>exclude_fields=true</code> must be used (if not specified it defaults to false).</li>
+                </ul>
+
+                <p>Possible values for <code>field</code> are:</p>
+
+                <ul>
+                  <li><code>date</code>: The moment when the event occured.</li>
+                  <li><code>connection</code>: The connection related to the event.</li>
+                  <li><code>client_name</code>: The name of the client related to the event.</li>
+                  <li><code>user_name</code>: The user name releated to the event.</li>
+                </ul>
+
+                <pre><code><span class="http-verb">GET</span> <span class="client_namespace"></span>api/logs?page=<select id="logs-get-page-selector" class="logs-page-selector" disabled="disabled"><option value="0">0</option><option value="1">1</option><option value="2">2</option><option value="3">3</option><option value="4">4</option></select>&amp;per_page=<select id="logs-get-items-selector" class="logs-per-page-selector" disabled="disabled"><option value="1">1</option><option value="2">2</option><option value="3">3</option><option value="4">4</option><option value="5">5</option><option value="6">6</option><option value="7">7</option><option value="8">8</option><option value="9">9</option><option value="10">10</option><option value="11">11</option><option value="12">12</option><option value="13">13</option><option value="14">14</option><option value="15">15</option><option value="16">16</option><option value="17">17</option><option value="18">18</option><option value="19">19</option><option value="20">20</option></select>&amp;sort=<select id="logs-get-field-selector" disabled="disabled"><option value="date">date</option><option value="connection">connection</option><option value="client_name">client_name</option><option value="user_name">user_name</option></select>:<select id="logs-get-sort-direction-selector" disabled="disabled"><option value="1">1</option><option value="-1">-1</option></select>&amp;fields=<textarea id="logs-get-fields" style="width:150px;height:20px;">date,connection,client_name,user_name</textarea>&amp;exclude_fields=<select id="logs-get-exclude-fields-selector" disabled="disabled"><option value="false">false</option><option value="true">true</option></select>
+Authorization: Bearer <span class="tokenme param">{token}</span>
+</code></pre>
+
+                <p></p>
+                <h4>Response fields</h4> The following is a description of the values returned by the request:
+                <p></p>
+
+                <ul>
+                  <li><code>start</code>: The absolute number (considering all log entries) of the first entry in the page.</li>
+                  <li><code>length</code>: The amount of entries in the page (can only be different than <code>limit</code> in the last page).</li>
+                  <li><code>total</code>: The amount of entries in the page.</li>
+                  <li><code>limit</code>: The maximum amount of items in a page.</li>
+                  <li><code>logs</code>: A collection of log entries.
+                    <ul>
+                      <li><code>date</code>: The moment when the event occured.</li>
+                      <li><code>connection</code>: The connection related to the event.</li>
+                      <li><code>client_id</code>: The id of the client related to the event.</li>
+                      <li><code>client_name</code>: The name of the client related to the event.</li>
+                      <li><code>ip</code>: The IP address from where the request that caused the log entry originated.</li>
+                      <li><code>user_id</code>: The user id releated to the event.</li>
+                      <li><code>user_name</code>: The user name releated to the event.</li>
+                      <li><code>description</code>: The event's description.</li>
+                      <li><code>user_agent</code>: The user agent that was used to cause the creation of the log entry.</li>
+                      <li><code>type</code>: An abbreviation of the event type. Refer to the event acronym mappings below for the mapping between abbreviations and their meaning.</li>
+                      <li><code>details</code>: Additional (and very useful) details about the event. They don't have a specific schema as they vary based on event type.</li>
+                    </ul>
+                  </li>
+                </ul>
+
+                <h5>Event acronym mappings</h5>
+
+                <p>The following is the meaning of the event acronyms:</p>
+
+                <ul>
+                  <li><code>s</code>:Success Login</li>
+                  <li><code>f</code>:Failed Login</li>
+                  <li><code>fu</code>:Failed Login (invalid email/username)</li>
+                  <li><code>fp</code>:Failed Login (wrong password)</li>
+                  <li><code>fc</code>:Failed by Connector</li>
+                  <li><code>fco</code>:Failed by CORS</li>
+                  <li><code>con</code>:Connector Online</li>
+                  <li><code>coff</code>:Connector Offline</li>
+                  <li><code>ss</code>:Success Signup</li>
+                  <li><code>fs</code>:Failed Signup</li>
+                  <li><code>sv</code>:Success Verification Email</li>
+                  <li><code>fv</code>:Failed Verification Email</li>
+                  <li><code>scp</code>:Success Change Password</li>
+                  <li><code>fcp</code>:Failed Change Password</li>
+                  <li><code>sce</code>:Success Change Email</li>
+                  <li><code>fce</code>:Failed Change Email</li>
+                  <li><code>svr</code>:Success Verification Email Request</li>
+                  <li><code>fvr</code>:Failed Verification Email Request</li>
+                  <li><code>scpr</code>:Success Change Password Request</li>
+                  <li><code>fcpr</code>:Failed Change Password Request</li>
+                  <li><code>fn</code>:Failed Sending Notification</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="markdown" data-verb="GET" data-path="/api/logs?search={criteria}" data-description="Gets log entries">
+          <div class="accordion-group">
+            <div class="accordion-heading  clearfix api-get">
+
+              <a class="accordion-toggle row" data-toggle="collapse" href="#get--api-logs-search--criteria-">
+                <div class="span8 col-sm-8 api-method"><span class="verb get">GET</span> /api/logs?search={criteria}</div>
+                <div class="span4 col-sm-4 api-description" style="text-align:right">Gets log entries</div>
+              </a>
+            </div>
+            <div class="accordion-body collapse" id="get--api-logs-search--criteria-">
+              <div class="accordion-inner markdown">
+                <p>Retrieves logs that match the specified search <code>criteria</code>. This parameter can be combined with all the others in the <code>/api/logs</code> endpoint but is specified separately for clarity.</p>
+
+                <p>If no fields are provided a case insensitive 'starts with' search is performed on all of the following fields:
+                </p>
+
+                <ul>
+                  <li><code>client_name</code></li>
+                  <li><code>connection</code></li>
+                  <li><code>user_name</code></li>
+                </ul>
+
+                <p>Otherwise, you can specify multiple fields and specify the search using the <code>%field%:%search%</code>, for example: <code>application:node user:"John@contoso.com"</code>.</p>
+
+                <p>Values specified without quotes are matched using a case insensitive 'starts with' search. If quotes are used a case insensitve exact search is used. If multiple fields are used, the AND operator is used to join the clauses.</p>
+
+                <h5>Available Fields</h5>
+
+                <ul>
+                  <li><code>application</code>: Maps to the <code>client_name</code> field.</li>
+                  <li><code>connection</code>: Maps to the <code>connection</code> field.</li>
+                  <li><code>user</code>: Maps to the <code>user_name</code> field.</li>
+                </ul>
+
+                <pre><code><span class="http-verb">GET</span> <span class="client_namespace"></span>api/logs?search=<textarea id="logs-search-query" style="width:450px;height:20px;">application:node user:"John@contoso.com"</textarea>
+Authorization: Bearer <span class="tokenme param">{token}</span>
+</code></pre>
+
+                <p></p>
+                <h4>Response fields</h4> The following is a description of the values returned by the request:
+                <p></p>
+
+                <ul>
+                  <li><code>start</code>: The absolute number (considering all log entries) of the first entry in the page.</li>
+                  <li><code>length</code>: The amount of entries in the page (can only be different than <code>limit</code> in the last page).</li>
+                  <li><code>total</code>: The amount of entries in the page.</li>
+                  <li><code>limit</code>: The maximum amount of items in a page.</li>
+                  <li><code>logs</code>: A collection of log entries.
+                    <ul>
+                      <li><code>date</code>: The moment when the event occured.</li>
+                      <li><code>connection</code>: The connection related to the event.</li>
+                      <li><code>client_id</code>: The id of the client related to the event.</li>
+                      <li><code>client_name</code>: The name of the client related to the event.</li>
+                      <li><code>ip</code>: The IP address from where the request that caused the log entry originated.</li>
+                      <li><code>user_id</code>: The user id releated to the event.</li>
+                      <li><code>user_name</code>: The user name releated to the event.</li>
+                      <li><code>description</code>: The event's description.</li>
+                      <li><code>user_agent</code>: The user agent that was used to cause the creation of the log entry.</li>
+                      <li><code>type</code>: An abbreviation of the event type. Refer to the event acronym mappings below for the mapping between abbreviations and their meaning.</li>
+                      <li><code>details</code>: Additional (and very useful) details about the event. They don't have a specific schema as they vary based on event type.</li>
+                    </ul>
+                  </li>
+                </ul>
+
+                <h5>Event acronym mappings</h5>
+
+                <p>The following is the meaning of the event acronyms:</p>
+
+                <ul>
+                  <li><code>s</code>:Success Login</li>
+                  <li><code>f</code>:Failed Login</li>
+                  <li><code>fu</code>:Failed Login (invalid email/username)</li>
+                  <li><code>fp</code>:Failed Login (wrong password)</li>
+                  <li><code>fc</code>:Failed by Connector</li>
+                  <li><code>fco</code>:Failed by CORS</li>
+                  <li><code>con</code>:Connector Online</li>
+                  <li><code>coff</code>:Connector Offline</li>
+                  <li><code>ss</code>:Success Signup</li>
+                  <li><code>fs</code>:Failed Signup</li>
+                  <li><code>sv</code>:Success Verification Email</li>
+                  <li><code>fv</code>:Failed Verification Email</li>
+                  <li><code>scp</code>:Success Change Password</li>
+                  <li><code>fcp</code>:Failed Change Password</li>
+                  <li><code>sce</code>:Success Change Email</li>
+                  <li><code>fce</code>:Failed Change Email</li>
+                  <li><code>svr</code>:Success Verification Email Request</li>
+                  <li><code>fvr</code>:Failed Verification Email Request</li>
+                  <li><code>scpr</code>:Success Change Password Request</li>
+                  <li><code>fcpr</code>:Failed Change Password Request</li>
+                  <li><code>fn</code>:Failed Sending Notification</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+
+
+        <div class="markdown" data-verb="GET" data-path="/api/logs?from={checkpointId}&amp;take={count}" data-description="Gets log entries from a checkpoint">
+          <div class="accordion-group">
+            <div class="accordion-heading  clearfix api-get">
+
+              <a class="accordion-toggle row" data-toggle="collapse" href="#get--api-logs-from--checkpointId--take--count-">
+                <div class="span8 col-sm-8 api-method"><span class="verb get">GET</span> /api/logs?from={checkpointId}&amp;take={count}</div>
+                <div class="span4 col-sm-4 api-description" style="text-align:right">Gets log entries from a checkpoint</div>
+              </a>
+            </div>
+            <div class="accordion-body collapse" id="get--api-logs-from--checkpointId--take--count-">
+              <div class="accordion-inner markdown">
+                <p>Retrieves <code>count</code> log entries that were logged after <code>checkpointId</code>.</p>
+
+                <ul>
+                  <li>If <code>checkpointId</code> is not provided it will start retrieving from the first log entry.</li>
+                  <li>If <code>count</code> is not provided the default value is 200 (also the max value).</li>
+                </ul>
+
+                <pre><code><span class="http-verb">GET</span> <span class="client_namespace"></span>api/logs?from=<input type="text" id="logs-checkpoint-from">&amp;take=<select id="logs-checkpoint-take-selector" disabled="disabled"><option value="10">10</option><option value="20">20</option><option value="50">50</option><option value="100">100</option><option value="150">150</option><option value="200">200</option></select>
+Authorization: Bearer <span class="tokenme param">{token}</span>
+</code></pre>
+
+                <p></p>
+                <h4>Response fields</h4> The following is a description of the values returned by the request:
+                <p></p>
+
+                <ul>
+                  <li><code>start</code>: The absolute number (considering all log entries) of the first entry in the page.</li>
+                  <li><code>length</code>: The amount of entries in the page (can only be different than <code>limit</code> in the last page).</li>
+                  <li><code>total</code>: The amount of entries in the page.</li>
+                  <li><code>limit</code>: The maximum amount of items in a page.</li>
+                  <li><code>logs</code>: A collection of log entries.
+                    <ul>
+                      <li><code>date</code>: The moment when the event occured.</li>
+                      <li><code>connection</code>: The connection related to the event.</li>
+                      <li><code>client_id</code>: The id of the client related to the event.</li>
+                      <li><code>client_name</code>: The name of the client related to the event.</li>
+                      <li><code>ip</code>: The IP address from where the request that caused the log entry originated.</li>
+                      <li><code>user_id</code>: The user id releated to the event.</li>
+                      <li><code>user_name</code>: The user name releated to the event.</li>
+                      <li><code>description</code>: The event's description.</li>
+                      <li><code>user_agent</code>: The user agent that was used to cause the creation of the log entry.</li>
+                      <li><code>type</code>: An abbreviation of the event type. Refer to the event acronym mappings below for the mapping between abbreviations and their meaning.</li>
+                      <li><code>details</code>: Additional (and very useful) details about the event. They don't have a specific schema as they vary based on event type.</li>
+                    </ul>
+                  </li>
+                </ul>
+
+                <h5>Event acronym mappings</h5>
+
+                <p>The following is the meaning of the event acronyms:</p>
+
+                <ul>
+                  <li><code>s</code>:Success Login</li>
+                  <li><code>f</code>:Failed Login</li>
+                  <li><code>fu</code>:Failed Login (invalid email/username)</li>
+                  <li><code>fp</code>:Failed Login (wrong password)</li>
+                  <li><code>fc</code>:Failed by Connector</li>
+                  <li><code>fco</code>:Failed by CORS</li>
+                  <li><code>con</code>:Connector Online</li>
+                  <li><code>coff</code>:Connector Offline</li>
+                  <li><code>ss</code>:Success Signup</li>
+                  <li><code>fs</code>:Failed Signup</li>
+                  <li><code>sv</code>:Success Verification Email</li>
+                  <li><code>fv</code>:Failed Verification Email</li>
+                  <li><code>scp</code>:Success Change Password</li>
+                  <li><code>fcp</code>:Failed Change Password</li>
+                  <li><code>sce</code>:Success Change Email</li>
+                  <li><code>fce</code>:Failed Change Email</li>
+                  <li><code>svr</code>:Success Verification Email Request</li>
+                  <li><code>fvr</code>:Failed Verification Email Request</li>
+                  <li><code>scpr</code>:Success Change Password Request</li>
+                  <li><code>fcpr</code>:Failed Change Password Request</li>
+                  <li><code>fn</code>:Failed Sending Notification</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+  </div>
+</div>
