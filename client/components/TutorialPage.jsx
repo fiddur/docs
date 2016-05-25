@@ -1,6 +1,5 @@
 import React from 'react';
 import SearchBox from './SearchBox';
-import SideNavBar from './SideNavBar';
 import TryBanner from './TryBanner';
 import { TutorialStore, Breadcrumbs, Tutorial, TutorialTableOfContents } from 'auth0-tutorial-navigator';
 import { connectToStores, provideContext } from 'fluxible-addons-react';
@@ -69,34 +68,46 @@ class TutorialPage extends React.Component {
     });
   }
   
+  renderTitle() {
+    let {platform, article} = this.props;
+    if (platform && article) {
+      if (platform.articles.length == 1) {
+        return platform.title;
+      }
+      else {
+        return platform.title + " " + article.title;
+      }
+    }
+  }
+  
   render() {
     
     let {quickstart, platform, article, isAuthenticated} = this.props;
     let tryBanner = isAuthenticated ? null : <TryBanner/>;
     
-    let title = undefined;
     let tutorial = undefined;
-    let toc = undefined;
+    let sidebar = undefined;
+    let columnWidth = 12;
     
-    if (platform) {
-      if (platform.articles.length > 1) {
-        toc = <TutorialTableOfContents
+    if (platform && platform.articles.length > 1) {
+      columnWidth = 9
+      sidebar = <div className="col-sm-3">
+        <TutorialTableOfContents
           quickstart={quickstart}
           platform={platform}
           currentArticle={article}
-          customNavigationAction={quickstartNavigationAction} />;
-      }
+          customNavigationAction={quickstartNavigationAction} />
+      </div>;
     }
-    
+
     if (article) {
-      title = <h1 className="tutorial-title">{article.number} {article.title}</h1>;
       tutorial = <Tutorial
         quickstart={quickstart}
         platform={platform}
         article={article}
         componentLoadedInBrowser={initTutorialInBrowser} />
     }
-
+      
     return (
       <div id="tutorial-template" className="docs-single animated fadeIn">
         <div className="navigation-bar">
@@ -109,13 +120,10 @@ class TutorialPage extends React.Component {
         </div>
         <div className="js-doc-template container">
           <div className="row">
-            <div className="col-sm-3">
-              {toc}
-              <SideNavBar/>
-            </div>
-            <div className="col-sm-9">
+            {sidebar}
+            <div className={"col-sm-" + columnWidth}>
               <section className="docs-content">
-                {title}
+                <h1 className="tutorial-title">{this.renderTitle()}</h1>
                 {tutorial}
               </section>
               {tryBanner}
