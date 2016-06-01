@@ -86,11 +86,11 @@ categories:
       auth-endpoints:
         name: "Authentication API"
         description: "Perform enterprise authentication or OpenID operations using these APIs."
-        href: "/auth-api/"
+        href: "/api/authentication"
       explorer:
         name: "Management API"
         description: "Perform administrative tasks such as creating accounts or changing settings with the Management API."
-        href: "/api/v2/"
+        href: "/api/management/v2"
       announcements:
         name: "Releases & Updates"
         links:
