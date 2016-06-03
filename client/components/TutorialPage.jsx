@@ -110,18 +110,13 @@ class TutorialPage extends React.Component {
       
     return (
       <div id="tutorial-template" className="docs-single animated fadeIn">
-        <div className="navigation-bar">
-          <div className="wrapper">
-            <div className="container">
-              <Breadcrumbs {...this.props} customNavigationAction={quickstartNavigationAction} />
-              <SearchBox />
-            </div>
-          </div>
-        </div>
         <div className="js-doc-template container">
           <div className="row">
             {sidebar}
             <div className={"col-sm-" + columnWidth}>
+              <div className="navigation">
+                <Breadcrumbs {...this.props} customNavigationAction={quickstartNavigationAction} />
+              </div>
               <section className="docs-content">
                 <h1 className="tutorial-title">{this.renderTitle()}</h1>
                 {tutorial}

@@ -629,50 +629,23 @@ body
     .btn.btn-default:hover, a.btn.btn-default:hover
       background: #fff;
 
-// Start body.docs-single
-.docs-single
-  .breadcrumbs
-    border none
-    float left
-    padding-left 0
-    margin-left 0
-    box-shadow none
-    display none
-    +breakpoint("tablet")
-      display block
-
-  .navigation-bar form
-    width 100%
-    float right
-    +breakpoint("tablet")
-      width 35%
-
 .tutorial-toc
   margin-top 20px
   padding 0
-  +breakpoint("tablet")
-    margin-top 60px
   ul, li
     margin 0
     padding 0
-  .tutorial-toc-header
-    font-size 21px
-    margin-bottom 20px
-    border-bottom 1px solid color_text_light
-    color color_text_light
   .tutorial-toc-article
     cursor pointer
     list-style none
-    margin-bottom 15px
-    font-size 15px
+    margin-bottom 14px
+    font-size 14px
     color color_text_light
     &:hover
       color color_text_gray
     &.selected
       color color_text_gray
       font-weight 700
-    .tutorial-toc-article-number
-      padding-right: 6px
 
 .sidebar-menu
   border 1px solid #EAEEF3
@@ -807,11 +780,12 @@ body
 
   img
     max-width 100%
-
+  
   h1, h2:first-child
     font-size 40px
     font-weight 400
     color #333
+    margin: 0 0 1.8rem 0
 
   h2, h3, h4
     font-size 18px
