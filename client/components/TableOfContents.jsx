@@ -38,7 +38,7 @@ var TableOfContents = ({categories}) => {
       <div className="container">
         <div className="row">
           <div className="col-md-4">
-            {/*{linkGroup('start')}*/}
+            {linkGroup('start')}
             {/*{linkGroup('platform')}*/}
             {linkGroup('web-framework')}
           </div>

@@ -5,35 +5,24 @@
 ## ------------------------------------------------------------
 
 categories:
-  # -
-  #   id: "start"
-  #   name: "Getting Started"
-  #   links:
-  #     -
-  #       name: "Introduction to Auth0"
-  #       href: "https://auth0.com/video-tutorials/main/intro"
-  #     -
-  #       name: "Creating your first Application"
-  #       href: "https://auth0.com/video-tutorials/creating-your-first-app/register-an-application"
-  #     -
-  #       name: "Architecture Scenarios"
-  #       href: "/architecture-scenarios"
-  #     -
-  #       name: "Getting Started with Lock"
-  #       href: "https://auth0.com/video-tutorials/getting-started-with-lock/implementing-lock"
-  #     -
-  #       name: "Using Rules"
-  #       href: "https://auth0.com/video-tutorials/advanced-usage-of-auth0/using-rules"
+  -
+    id: "start"
+    name: "Getting Started"
+    links:
+      -
+        name: "Overview"
+        href: "/overview"
+      -
+        name: "Developer Videos"
+        href: "/videos"
+      -
+        name: "Architecture Scenarios"
+        href: "/architecture-scenarios"
   -
     id: "product"
     name: "Product"
     description: "Learn how to use the key features of Auth0"
     links:
-      -
-        name: "Overview"
-        icon: "icon-budicon-121"
-        description: "What is Auth0 and how can it help you build applications."
-        href: "/overview"
       -
         name: "Applications"
         icon: "icon-budicon-349"
@@ -74,6 +63,11 @@ categories:
         icon: "icon-budicon-359"
         description: "Deploy Auth0 to your own cloud or datacenter."
         href: "/appliance"
+      -
+        name: "AD Connector"
+        icon: "icon-budicon-606"
+        description: "Integrates with Active Directory/LDAP on your network."
+        href: "/connector"
   -
     id: "api"
     name: "API"
