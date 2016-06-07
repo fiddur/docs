@@ -56,7 +56,9 @@ export default function highlightCode() {
 
     if(!$snippet.hasClass('hljs')) {
       hljs.highlightBlock(block);
-      hljs.lineNumbersBlock(block);
+      if (!$snippet.hasClass('no-lines')) {
+        hljs.lineNumbersBlock(block);
+      }
       $snippet.addClass('hljs');
     }
   });

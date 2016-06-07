@@ -16,6 +16,7 @@
     "body-parser": "^1.15.0",
     "bunyan": "^1.5.1",
     "cb": "^0.1.0",
+    "clipboard": "^1.5.10",
     "cookie-parser": "^1.4.1",
     "debug": "^2.2.0",
     "ejs": "^2.4.1",

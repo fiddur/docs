@@ -2,7 +2,7 @@
   "name": "auth0-docs",
   "version": "2.0.0",
   "npm-shrinkwrap-version": "5.4.1",
-  "node-version": "v4.4.3",
+  "node-version": "v4.4.4",
   "dependencies": {
     "async": {
       "version": "0.2.10",
@@ -22643,6 +22643,42 @@
     "cb": {
       "version": "0.1.0",
       "resolved": "https://registry.npmjs.org/cb/-/cb-0.1.0.tgz"
+    },
+    "clipboard": {
+      "version": "1.5.10",
+      "resolved": "https://registry.npmjs.org/clipboard/-/clipboard-1.5.10.tgz",
+      "dependencies": {
+        "good-listener": {
+          "version": "1.1.7",
+          "resolved": "https://registry.npmjs.org/good-listener/-/good-listener-1.1.7.tgz",
+          "dependencies": {
+            "delegate": {
+              "version": "3.0.1",
+              "resolved": "https://registry.npmjs.org/delegate/-/delegate-3.0.1.tgz",
+              "dependencies": {
+                "closest": {
+                  "version": "0.0.1",
+                  "resolved": "https://registry.npmjs.org/closest/-/closest-0.0.1.tgz",
+                  "dependencies": {
+                    "matches-selector": {
+                      "version": "0.0.1",
+                      "resolved": "https://registry.npmjs.org/matches-selector/-/matches-selector-0.0.1.tgz"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "select": {
+          "version": "1.0.6",
+          "resolved": "https://registry.npmjs.org/select/-/select-1.0.6.tgz"
+        },
+        "tiny-emitter": {
+          "version": "1.0.2",
+          "resolved": "https://registry.npmjs.org/tiny-emitter/-/tiny-emitter-1.0.2.tgz"
+        }
+      }
     },
     "cookie-parser": {
       "version": "1.4.1",
