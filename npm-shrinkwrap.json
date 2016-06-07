@@ -2,7 +2,7 @@
   "name": "auth0-docs",
   "version": "2.0.0",
   "npm-shrinkwrap-version": "5.4.1",
-  "node-version": "v4.4.4",
+  "node-version": "v4.4.2",
   "dependencies": {
     "async": {
       "version": "0.2.10",
@@ -21866,14 +21866,12 @@
       }
     },
     "auth0-tutorial-navigator": {
-      "version": "1.0.2",
-      "from": "auth0-tutorial-navigator@git://github.com/auth0/tutorial-navigator.git#737d68a90084e0c2df5cc2b8bedc5f7c14d242d0",
-      "resolved": "git://github.com/auth0/tutorial-navigator.git#737d68a90084e0c2df5cc2b8bedc5f7c14d242d0",
+      "version": "3.0.1",
+      "resolved": "git://github.com/auth0/tutorial-navigator.git#02d73ec99713e79219a01591ac0e9f8a93135762",
       "dependencies": {
         "auth0-styleguide": {
-          "version": "2.1.2",
-          "from": "auth0-styleguide@git://github.com/auth0/styleguide.git#017be9b56136a64c7fd7bea5b861dd41808a5dce",
-          "resolved": "git://github.com/auth0/styleguide.git#017be9b56136a64c7fd7bea5b861dd41808a5dce"
+          "version": "2.2.7",
+          "resolved": "git://github.com/auth0/styleguide.git#75412486e066f082a0873687cf29d6dc51b3bf33"
         },
         "flux": {
           "version": "2.1.1",
@@ -21896,8 +21894,8 @@
                       "resolved": "https://registry.npmjs.org/isomorphic-fetch/-/isomorphic-fetch-2.2.1.tgz",
                       "dependencies": {
                         "node-fetch": {
-                          "version": "1.5.1",
-                          "resolved": "https://registry.npmjs.org/node-fetch/-/node-fetch-1.5.1.tgz",
+                          "version": "1.5.3",
+                          "resolved": "https://registry.npmjs.org/node-fetch/-/node-fetch-1.5.3.tgz",
                           "dependencies": {
                             "encoding": {
                               "version": "0.1.12",
@@ -21918,8 +21916,8 @@
                       }
                     },
                     "loose-envify": {
-                      "version": "1.1.0",
-                      "resolved": "https://registry.npmjs.org/loose-envify/-/loose-envify-1.1.0.tgz",
+                      "version": "1.2.0",
+                      "resolved": "https://registry.npmjs.org/loose-envify/-/loose-envify-1.2.0.tgz",
                       "dependencies": {
                         "js-tokens": {
                           "version": "1.0.3",
@@ -21932,8 +21930,8 @@
                       "resolved": "https://registry.npmjs.org/promise/-/promise-7.1.1.tgz",
                       "dependencies": {
                         "asap": {
-                          "version": "2.0.3",
-                          "resolved": "https://registry.npmjs.org/asap/-/asap-2.0.3.tgz"
+                          "version": "2.0.4",
+                          "resolved": "https://registry.npmjs.org/asap/-/asap-2.0.4.tgz"
                         }
                       }
                     },
@@ -21958,8 +21956,8 @@
                   "resolved": "https://registry.npmjs.org/promise/-/promise-7.1.1.tgz",
                   "dependencies": {
                     "asap": {
-                      "version": "2.0.3",
-                      "resolved": "https://registry.npmjs.org/asap/-/asap-2.0.3.tgz"
+                      "version": "2.0.4",
+                      "resolved": "https://registry.npmjs.org/asap/-/asap-2.0.4.tgz"
                     }
                   }
                 },
