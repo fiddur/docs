@@ -1,7 +1,7 @@
 import serialize from 'serialize-javascript';
 import { navigateAction } from 'fluxible-router';
-import { loadSettingsAction, Constants } from 'auth0-tutorial-navigator';
-import { getCanonicalUrl } from './util/tutorials';
+import { loadSettingsAction, ServiceKeys } from 'auth0-tutorial-navigator';
+import { getCanonicalUrl } from './util/metadata';
 import React from 'react';
 import ReactDOMServer from 'react-dom/server';
 import app from './app';
@@ -14,14 +14,14 @@ import { createElementWithContext } from 'fluxible-addons-react';
 import articleService from './services/articleService.server';
 import { getAssetBundleUrl } from '../lib/utils';
 import loadUserAction from './action/loadUserAction';
-import quickstart from '../lib/quickstart';
+import quickstarts from '../lib/quickstart';
 
 const htmlComponent = React.createFactory(HtmlComponent);
 
 export default function middleware(req, res, next) {
 
   // Register services
-  app.getPlugin('ServiceProxyPlugin').registerService(Constants.ArticleServiceName, articleService(req, res));
+  app.getPlugin('ServiceProxyPlugin').registerService(ServiceKeys.ArticleService, articleService(req, res));
 
   let context = app.createContext({
     debug: process.env.NODE_ENV !== 'production'
@@ -31,7 +31,7 @@ export default function middleware(req, res, next) {
   actionContext.executeAction(navigateAction, {
     url: req.url
   }).then(actionContext.executeAction(loadSettingsAction, {
-    quickstart: quickstart,
+    quickstarts: quickstarts,
     navigation: res.locals.navigation
   })).then(() => {
     if (req.user) {
@@ -61,12 +61,9 @@ export default function middleware(req, res, next) {
     options.title = appStore.getPageTitle();
     options.description = appStore.getPageDescription();
 
-
-
     var tutorialStore = componentContext.getStore(TutorialStore);
     if (tutorialStore) {
-      var tutorialState = tutorialStore.getState();
-      var canonicalUrl = getCanonicalUrl(tutorialState.appType, tutorialState.tech1, tutorialState.tech2);
+      var canonicalUrl = getCanonicalUrl(tutorialStore.dehydrate());
       if (canonicalUrl) {
         options.canonicalUrl = canonicalUrl;
       }

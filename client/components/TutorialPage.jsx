@@ -1,21 +1,51 @@
 import React from 'react';
 import SearchBox from './SearchBox';
-import SideNavBar from './SideNavBar';
-import { TutorialStore, Breadcrumbs, Tutorial } from 'auth0-tutorial-navigator';
-import { getPlatformName, getTechTitle } from '../util/tutorials';
+import TryBanner from './TryBanner';
+import { TutorialStore, Breadcrumbs, Tutorial, TutorialTableOfContents } from 'auth0-tutorial-navigator';
 import { connectToStores, provideContext } from 'fluxible-addons-react';
 import { quickstartNavigationAction } from '../action/quickstartNavigationAction';
 import highlightCode from '../browser/highlightCode';
 import setAnchorLinks from '../browser/anchorLinks';
 import UserStore from '../stores/UserStore';
 
+// TODO: Uses ref from within tutorial navigator, can we move this?
+var initTutorialInBrowser = function() {
+  highlightCode();
+  setAnchorLinks();
+
+  // Execute any scripts that came with the article
+  if (this.refs.article && this.refs.article.innerHTML) {
+    var dom = $(this.refs.article.innerHTML);
+    dom.filter('script').each(function(){
+      $.globalEval(this.text || this.textContent || this.innerHTML || '');
+    });
+  }
+
+  var removeHeader = () => {
+    var article = this.refs.article;
+    if (article) {
+      var child = article.firstChild;
+      if (child.nodeName === 'H1' || child.nodeName === 'H2') {
+        child.classList.add('hide');
+      } else if (child.nodeName === 'P' && child.textContent === '') {
+        article.removeChild(child);
+        removeHeader();
+      }
+    }
+  };
+  removeHeader();
+};
+
 class TutorialPage extends React.Component {
+  
   componentDidMount () {
     this.initClient();
   }
+  
   componentDidUpdate() {
     this.initClient();
   }
+  
   initClient() {
     if (typeof document !== 'undefined') {
       $('body').on('click', '.nav-tabs a', function(e) {
@@ -25,109 +55,87 @@ class TutorialPage extends React.Component {
       this.metrics();
     }
   }
+  
   metrics() {
-    var eventData = {
+    let {quickstart, platform} = this.props;
+    let eventData = {
       'clientID': window.widget.getClient()._clientID || '',
-      'tutorial-apptype': this.props.apptype || '',
-      'tutorial-platform': this.props.tech1 || '',
-      'tutorial-api': this.props.tech2 || ''
+      'tutorial-apptype': quickstart ? quickstart.name : '',
+      'tutorial-platform': platform ? platform.name : ''
     };
     $('#package .btn').off('click').on('click', function() {
       context.getComponentContext().trackEvent('download:tutorial-seed', eventData);
     });
   }
-  render() {
-    var title1 = getTechTitle(this.props.quickstart, this.props.appType, this.props.tech1);
-    var title2 = '';
-    var pageTitle = title1;
-    var hasTutorial2 = this.props.tech2 && this.props.tech2 !== 'no-api';
-    var tutorial2Tab;
-    var componentLoadedInBrowser = function(){
-      highlightCode();
-      setAnchorLinks();
-
-      // Execute any scripts that came with the article
-      if (this.refs.article && this.refs.article.innerHTML) {
-        var dom = $(this.refs.article.innerHTML);
-        dom.filter('script').each(function(){
-          $.globalEval(this.text || this.textContent || this.innerHTML || '');
-        });
+  
+  renderTitle() {
+    let {platform, article} = this.props;
+    if (platform && article) {
+      if (platform.articles.length == 1) {
+        return platform.title;
       }
-
-      var removeHeader = () => {
-        var article = this.refs.article;
-        if (article) {
-          var child = article.firstChild;
-          if (child.nodeName === 'H1' || child.nodeName === 'H2') {
-            child.classList.add('hide');
-          } else if (child.nodeName === 'P' && child.textContent === '') {
-            article.removeChild(child);
-            removeHeader();
-          }
-        }
-      };
-      removeHeader();
-    };
-
-    if (hasTutorial2) {
-      title2 = getTechTitle(this.props.quickstart, 'backend', this.props.tech2);
-      pageTitle += ' + ' + title2;
-      tutorial2Tab = (
-        <Tutorial tabName="tutorial-2" appType="backend" tech={this.props.tech2} componentLoadedInBrowser={componentLoadedInBrowser} />
-      );
+      else {
+        return platform.title + " " + article.title;
+      }
+    }
+  }
+  
+  render() {
+    
+    let {quickstart, platform, article, isAuthenticated} = this.props;
+    let tryBanner = isAuthenticated ? null : <TryBanner/>;
+    
+    let tutorial = undefined;
+    let sidebar = undefined;
+    let columnWidth = 12;
+    
+    if (platform && platform.articles.length > 1) {
+      columnWidth = 9
+      sidebar = <div className="col-sm-3">
+        <TutorialTableOfContents
+          quickstart={quickstart}
+          platform={platform}
+          currentArticle={article}
+          customNavigationAction={quickstartNavigationAction} />
+      </div>;
     }
 
-    var tryBanner;
-    if (!this.props.isAuthenticated) {
-      tryBanner = (
-        <div id="try-banner">
-          <div className="try-banner">
-            <span>Try Auth0 for FREE</span>
-            <a href="javascript:signup()" className="btn btn-success btn-lg">Create free Account</a>
-          </div>
-        </div>
-      );
+    if (article) {
+      tutorial = <Tutorial
+        quickstart={quickstart}
+        platform={platform}
+        article={article}
+        componentLoadedInBrowser={initTutorialInBrowser} />
     }
-
-
+      
     return (
       <div id="tutorial-template" className="docs-single animated fadeIn">
-        <div className="navigation-bar">
-          <div className="wrapper">
-            <div className="container">
-              <Breadcrumbs {...this.props}  customNavigationAction={quickstartNavigationAction} />
-              <SearchBox />
-            </div>
-          </div>
-        </div>
         <div className="js-doc-template container">
           <div className="row">
-            <div className="col-sm-3">
-              <SideNavBar />
-            </div>
-            <div className="col-sm-9">
+            {sidebar}
+            <div className={"col-sm-" + columnWidth}>
+              <div className="navigation">
+                <Breadcrumbs {...this.props} customNavigationAction={quickstartNavigationAction} />
+              </div>
               <section className="docs-content">
-                <h1 className="tutorial-title">{pageTitle}</h1>
-                <ul className={'nav nav-tabs' + (hasTutorial2 ? '' : ' hide')}>
-                  <li className="active"><a href="#tutorial-1" data-toggle="tab">{title1}</a></li>
-                  <li><a href="#tutorial-2" data-toggle="tab">{title2}</a></li>
-                </ul>
-                <div className="tab-content">
-                  <Tutorial tabName="tutorial-1"
-                    default={true}
-                    componentLoadedInBrowser={componentLoadedInBrowser}
-                    appType={this.props.appType}
-                    tech={this.props.tech1} />
-                  {tutorial2Tab}
-                </div>
+                <h1 className="tutorial-title">{this.renderTitle()}</h1>
+                {tutorial}
               </section>
               {tryBanner}
             </div>
           </div>
         </div>
-      </div>);
+      </div>
+    );
   }
+  
 }
+
+TutorialPage.propTypes = {
+  quickstart: React.PropTypes.object,
+  platform: React.PropTypes.object,
+  article: React.PropTypes.object,
+};
 
 TutorialPage.contextTypes = {
   getStore: React.PropTypes.func,
@@ -136,9 +144,14 @@ TutorialPage.contextTypes = {
 };
 
 TutorialPage = connectToStores(TutorialPage, [TutorialStore, UserStore], (context, props) => {
-  var state = context.getStore(TutorialStore).getState();
-  state.isAuthenticated = context.getStore(UserStore).isAuthenticated();
-  return state;
+  let tutorialStore = context.getStore(TutorialStore);
+  let userStore = context.getStore(UserStore);
+  return {
+    quickstart: tutorialStore.getCurrentQuickstart(),
+    platform: tutorialStore.getCurrentPlatform(),
+    article: tutorialStore.getCurrentArticle(),
+    isAuthenticated: userStore.isAuthenticated()
+  };
 });
 
 export default TutorialPage;

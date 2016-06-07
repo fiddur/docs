@@ -7,8 +7,16 @@ var precss = require('precss');
 require('./config');
 
 var webpackConfig = {
+  displayErrorDetails: true,
   resolve: {
-    extensions: ['', '.js', '.jsx']
+    alias: {
+      react: path.resolve('./node_modules/react'),
+    },
+    extensions: ['', '.js', '.jsx'],
+    fallback: path.join(__dirname, "node_modules")
+  },
+  resolveLoader: {
+    fallback: path.join(__dirname, "node_modules")
   },
   entry: {
     client: [
