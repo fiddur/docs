@@ -21866,8 +21866,8 @@
       }
     },
     "auth0-tutorial-navigator": {
-      "version": "3.0.1",
-      "resolved": "git://github.com/auth0/tutorial-navigator.git#02d73ec99713e79219a01591ac0e9f8a93135762",
+      "version": "3.1.0",
+      "resolved": "git://github.com/auth0/tutorial-navigator.git#addf3478d3f8fbf809e38198ef4771b4730c8bec",
       "dependencies": {
         "auth0-styleguide": {
           "version": "2.2.7",
