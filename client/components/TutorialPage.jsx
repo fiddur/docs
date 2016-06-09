@@ -87,10 +87,10 @@ class TutorialPage extends React.Component {
     
     let tutorial = undefined;
     let sidebar = undefined;
-    let columnWidth = 12;
+    let gridClasses = "col-sm-10 col-sm-offset-1";
     
     if (platform && platform.articles.length > 1) {
-      columnWidth = 9
+      gridClasses = "col-sm-9";
       sidebar = <div className="col-sm-3">
         <TutorialTableOfContents
           quickstart={quickstart}
@@ -113,7 +113,7 @@ class TutorialPage extends React.Component {
         <div className="js-doc-template container">
           <div className="row">
             {sidebar}
-            <div className={"col-sm-" + columnWidth}>
+            <div className={gridClasses}>
               <div className="navigation">
                 <Breadcrumbs {...this.props} customNavigationAction={quickstartNavigationAction} />
               </div>
