@@ -28,7 +28,8 @@ var initCarouselInBrowser = function() {
     responsive: {
       0:   {items: 1, stagePadding: 60},
       380: {items: 2, stagePadding: 0},
-      570: {items: 3, stagePadding: 0, autoWidth: true, center: false}
+      570: {items: 3, stagePadding: 0, autoWidth: true, center: false},
+      768: {items: 4, stagePadding: 0, autoWidth: true, center: false},
     }
   });
 };
