@@ -67,6 +67,26 @@ git clone https://github.com/auth0/docs.git
 
 Now you can treat the `docs` folder as a regular repository. You can pull, branch, push, etc. as needed.
 
+### Killing the server process
+
+Sometimes it may happen that the Node server is not stopped propertly preventing the website from working correctly. The typical symptom you will see when this happens is that the content being served is not correct. For example, you may make changes to Markdown files and those changes will not be reflected in the browser.
+
+In this instance it will be necessarry to kill the process of the Node server. 
+
+First determine the PID of the process running on port 5050 (which will be the Node server) by running the `lsof` command:
+
+``` bash
+lsof -i :5050`
+```
+
+Now you can use the value in the **PID** column to kill that process, by running the command `kill <PID>`, e.g.
+
+``` bash
+kill 1234
+```
+
+Once this is done you can run the server again using `npm run dev`
+
 ## Installing or Updating dependencies
 
 **Do not update npm-shrinkwrap.json by hand**
