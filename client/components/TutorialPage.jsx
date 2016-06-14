@@ -7,6 +7,7 @@ import { quickstartNavigationAction } from '../action/quickstartNavigationAction
 import highlightCode from '../browser/highlightCode';
 import setAnchorLinks from '../browser/anchorLinks';
 import UserStore from '../stores/UserStore';
+import SideNavBar from './SideNavBar';
 
 // TODO: Uses ref from within tutorial navigator, can we move this?
 var initTutorialInBrowser = function() {
@@ -37,15 +38,15 @@ var initTutorialInBrowser = function() {
 };
 
 class TutorialPage extends React.Component {
-  
+
   componentDidMount () {
     this.initClient();
   }
-  
+
   componentDidUpdate() {
     this.initClient();
   }
-  
+
   initClient() {
     if (typeof document !== 'undefined') {
       $('body').on('click', '.nav-tabs a', function(e) {
@@ -55,7 +56,7 @@ class TutorialPage extends React.Component {
       this.metrics();
     }
   }
-  
+
   metrics() {
     let {quickstart, platform} = this.props;
     let eventData = {
@@ -67,7 +68,7 @@ class TutorialPage extends React.Component {
       context.getComponentContext().trackEvent('download:tutorial-seed', eventData);
     });
   }
-  
+
   renderTitle() {
     let {platform, article} = this.props;
     if (platform && article) {
@@ -75,28 +76,31 @@ class TutorialPage extends React.Component {
         return platform.title;
       }
       else {
-        return platform.title + " " + article.title;
+        return platform.title + ' ' + article.title;
       }
     }
   }
-  
+
   render() {
-    
+
     let {quickstart, platform, article, isAuthenticated} = this.props;
     let tryBanner = isAuthenticated ? null : <TryBanner/>;
-    
+
     let tutorial = undefined;
     let sidebar = undefined;
-    let gridClasses = "col-sm-10 col-sm-offset-1";
-    
+
     if (platform && platform.articles.length > 1) {
-      gridClasses = "col-sm-9";
       sidebar = <div className="col-sm-3">
         <TutorialTableOfContents
           quickstart={quickstart}
           platform={platform}
           currentArticle={article}
           customNavigationAction={quickstartNavigationAction} />
+      </div>;
+    } else {
+      var sidebarStyle = { marginTop: '-45px' };
+      sidebar = <div className="col-sm-3" style={sidebarStyle}>
+        <SideNavBar />
       </div>;
     }
 
@@ -107,13 +111,13 @@ class TutorialPage extends React.Component {
         article={article}
         componentLoadedInBrowser={initTutorialInBrowser} />
     }
-      
+
     return (
       <div id="tutorial-template" className="docs-single animated fadeIn">
         <div className="js-doc-template container">
           <div className="row">
             {sidebar}
-            <div className={gridClasses}>
+            <div className="col-sm-9">
               <div className="navigation">
                 <Breadcrumbs {...this.props} customNavigationAction={quickstartNavigationAction} />
               </div>
@@ -128,7 +132,7 @@ class TutorialPage extends React.Component {
       </div>
     );
   }
-  
+
 }
 
 TutorialPage.propTypes = {

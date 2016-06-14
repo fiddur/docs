@@ -3,7 +3,7 @@ import strings from '../../lib/strings';
 
 export function getPageMetadata(quickstarts, quickstartId, platformId, articleId) {
   return new Promise((resolve, reject) => {
-    
+
     if (quickstartId && !quickstarts[quickstartId]) {
       var err = new Error('Invalid AppType.');
       err.statusCode = 404;
@@ -29,17 +29,18 @@ export function getPageMetadata(quickstarts, quickstartId, platformId, articleId
     else {
       meta.pageTitle = strings.SITE_TITLE;
     }
-    
+
     return resolve(meta);
-    
+
   });
 }
 
 export function getCanonicalUrl(state) {
-  let {quickstarts, quickstartId, platformId, articleId} = state;
+  console.log(state);
+  let {quickstarts, currentQuickstartId, currentPlatformId, currentArticleId} = state;
   let tokens = ['/docs'];
-  if (quickstartId) tokens.push(quickstarts[quickstartId].slug);
-  if (platformId)   tokens.push(platformId);
-  if (articleId)    tokens.push(articleId);
+  if (currentQuickstartId) tokens.push(quickstarts[currentQuickstartId].slug);
+  if (currentPlatformId)   tokens.push(currentPlatformId);
+  if (currentArticleId)    tokens.push(currentArticleId);
   return tokens.join('/');
 }

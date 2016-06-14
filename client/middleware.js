@@ -14,7 +14,7 @@ import { createElementWithContext } from 'fluxible-addons-react';
 import articleService from './services/articleService.server';
 import { getAssetBundleUrl } from '../lib/utils';
 import loadUserAction from './action/loadUserAction';
-import quickstarts from '../lib/quickstart';
+import quickstarts from '../lib/collections/quickstarts';
 
 const htmlComponent = React.createFactory(HtmlComponent);
 
