@@ -53,12 +53,3 @@ export function getPageMetadata(quickstarts, quickstartId, platformId, articleId
 
   });
 }
-
-export function getCanonicalUrl(state) {
-  let {quickstarts, currentQuickstartId, currentPlatformId, currentArticleId} = state;
-  let tokens = ['/docs'];
-  if (currentQuickstartId) tokens.push(quickstarts[currentQuickstartId].slug);
-  if (currentPlatformId)   tokens.push(currentPlatformId);
-  if (currentArticleId)    tokens.push(currentArticleId);
-  return tokens.join('/');
-}
