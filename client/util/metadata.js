@@ -1,5 +1,8 @@
 import _ from 'lodash';
 import strings from '../../lib/strings';
+import debug from 'debug';
+
+const debugClient = debug('docs:docs');
 
 export function getPageMetadata(quickstarts, quickstartId, platformId, articleId) {
   return new Promise((resolve, reject) => {
@@ -12,14 +15,30 @@ export function getPageMetadata(quickstarts, quickstartId, platformId, articleId
 
     var meta = {};
     if (quickstartId && platformId) {
-      let title = quickstarts[quickstartId].platforms[platformId].title;
-      if (!title) {
-        var err = new Error('Invalid platform.');
-        err.statusCode = 404;
+      let platformTitle = quickstarts[quickstartId].platforms[platformId].title;
+      if (!platformTitle) {
+        var err = new Error('Invalid platform: title is required on the index.yml config.');
+        err.statusCode = 500;
         return reject(err);
       }
-      meta.pageTitle = `${title} Quickstarts`;
-      meta.pageDescription = `Learn how to quickly add authentication to your ${title} app. Authenticate with any social or enterprise identity provider.`;
+      let defaultDescription = `Learn how to quickly add authentication to your ${platformTitle} app. Authenticate with any social or enterprise identity provider.`;
+      if (articleId) {
+        let article = _.find(quickstarts[quickstartId].platforms[platformId].articles, { name: articleId });
+        let { title, description } = article;
+        if (!title) {
+          var err = new Error('Invalid article: title and description are required attributes.');
+          err.statusCode = 500;
+          return reject(err);
+        }
+        if (!description) {
+          debugClient(`WARNING: No description on ${platformTitle}: ${title}.`);
+        }
+        meta.pageTitle = `Auth0 ${platformTitle} SDK Tutorial: ${title}`;
+        meta.pageDescription = description || defaultDescription;
+      } else {
+        meta.pageTitle = `${platformTitle} Quickstarts`;
+        meta.pageDescription = defaultDescription;
+      }
     }
     else if (quickstartId) {
       let title = quickstarts[quickstartId].title
@@ -36,7 +55,6 @@ export function getPageMetadata(quickstarts, quickstartId, platformId, articleId
 }
 
 export function getCanonicalUrl(state) {
-  console.log(state);
   let {quickstarts, currentQuickstartId, currentPlatformId, currentArticleId} = state;
   let tokens = ['/docs'];
   if (currentQuickstartId) tokens.push(quickstarts[currentQuickstartId].slug);
