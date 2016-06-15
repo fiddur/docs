@@ -15,6 +15,13 @@ export default {
     handler: require('../components/Home'),
     action: tutorialNavigatorActions.quickstart
   },
+  platform: {
+    path: '/docs/quickstart/:quickstartId/:platformId',
+    method: 'get',
+    page: 'article',
+    handler: require('../components/TutorialPage'),
+    action: tutorialNavigatorActions.article
+  },
   article: {
     path: '/docs/quickstart/:quickstartId/:platformId/:articleId',
     method: 'get',
