@@ -11,7 +11,7 @@ export function quickstartNavigationAction(context, payload, done) {
   }
 
   if (platformId) tokens.push(platformId);
-  //if (articleId)  tokens.push(articleId);
+  if (articleId)  tokens.push(articleId);
 
   let url = tokens.join('/');
   return navigateAction(context, {url}, done);

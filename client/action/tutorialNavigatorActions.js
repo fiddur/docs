@@ -20,7 +20,20 @@ export default {
       context.trackPage();
     });
   },
-  
+
+  platform: function(context, payload) {
+    let {quickstartId, platformId} = payload.params;
+    let quickstarts = context.getStore(TutorialStore).getQuickstarts();
+    return Promise.all([
+      getPageMetadata(quickstarts, quickstartId, platformId).then((metadata) => {
+        context.dispatch('LOAD_TUTORIAL_NAVIGATOR', {quickstartId, platformId});
+        context.dispatch('UPDATE_PAGE_METADATA', metadata);
+        context.trackPage();
+      }),
+      context.executeAction(loadArticleAction, {quickstartId, platformId})
+    ]);
+  },
+
   article: function(context, payload) {
     let {quickstartId, platformId, articleId} = payload.params;
     let quickstarts = context.getStore(TutorialStore).getQuickstarts();

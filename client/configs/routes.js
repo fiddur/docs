@@ -20,7 +20,7 @@ export default {
     method: 'get',
     page: 'article',
     handler: require('../components/TutorialPage'),
-    action: tutorialNavigatorActions.article
+    action: tutorialNavigatorActions.platform
   },
   article: {
     path: '/docs/quickstart/:quickstartId/:platformId/:articleId',
