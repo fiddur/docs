@@ -191,7 +191,7 @@ categories:
       -
         name: "Java"
         slug: "java"
-        href: "https://github.com/auth0/auth0-servlet"
+        href: "/java-overview"
       -
         name: ".NET"
         slug: "net"
