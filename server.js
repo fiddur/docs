@@ -134,6 +134,7 @@ server.use(middleware.overrideIfClientInQs);
 server.use(middleware.overrideIfClientInQsForPublicAllowedUrls);
 server.use(middleware.urlVariables);
 server.use(middleware.fetchABExperiments);
+server.use(middleware.noRenderQuickstarts);
 
 // React sidebar
 server.use(require('./client/sidebar'));

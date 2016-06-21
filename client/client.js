@@ -6,7 +6,7 @@ import ReactDOM from 'react-dom';
 import debug from 'debug';
 import { createElementWithContext } from 'fluxible-addons-react';
 import app from './app';
-import { Constants, articleService } from 'auth0-tutorial-navigator';
+import { ArticleService, ServiceKeys } from 'auth0-tutorial-navigator';
 
 require('./styles/docs.styl');
 
@@ -21,7 +21,7 @@ window.fluxibleDebug = debug;
 
 
 // Register services
-app.getPlugin('ServiceProxyPlugin').registerService(Constants.ArticleServiceName, articleService);
+app.getPlugin('ServiceProxyPlugin').registerService(ServiceKeys.ArticleService, ArticleService);
 
 debugClient('rehydrating app');
 

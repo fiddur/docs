@@ -4,33 +4,35 @@
 ##
 ## ------------------------------------------------------------
 
-apptypes:
-  - title: Native mobile app
-    name: native-mobile
-    description: An app that runs natively in devices
-    example: "eg: iOS SDK"
+appTypes:
+  - title: Mobile App
+    name: native
+    description: "Mobile, desktop, and hybrid apps"
+    example: "eg: iOS, Android"
+    question: "Select a native SDK"
     budicon: 243
+    slug: native-platforms
 
-  - title: Single page app
+  - title: Single Page App
     name: spa
-    description: A JavaScript front-end app that uses an API
-    example: "eg: AngularJS + NodeJS"
+    description: "A JavaScript front-end app that uses an API"
+    example: "eg: AngularJS, React"
+    question: "What technology are you using for your web app?"
     budicon: 349
+    slug: client-platforms
 
-  - title: Regular web app
+  - title: Web App
     name: webapp
-    description: Traditional web app (with refresh)
-    example: "eg: Java ASP.NET"
-    budicon: 378
-
-  - title: Hybrid mobile app
-    name: hybrid
-    description: A JS/HTML5 mobile app that runs in devices
-    example: "eg: PhoneGap Ionic"
-    budicon: 243
+    description: "Traditional server rendered web app"
+    example: "eg: Express.js, ASP.NET"
+    question: "What technology are you using for your web app?"
+    budicon: 349
+    slug: server-platforms
 
   - title: Backend/API
     name: backend
-    description: An API or service that does JWT validation
-    example: "eg: Custom API"
+    description: "An API or service that does JWT validation"
+    example: "eg: Hapi.js API, ASP.NET API"
+    question: "Select an API or backend platform"
     budicon: 649
+    slug: server-apis

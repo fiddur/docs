@@ -1,95 +1,50 @@
 import { TutorialStore, loadArticleAction } from 'auth0-tutorial-navigator';
-import { getQuickstartMetdata } from '../util/tutorials';
+import { getPageMetadata } from '../util/metadata';
 
 export default {
 
   home: function(context) {
     context.dispatch('LOAD_TUTORIAL_NAVIGATOR', {});
-    return getQuickstartMetdata().then((metadata) => {
+    return getPageMetadata().then((metadata) => {
       context.dispatch('UPDATE_PAGE_METADATA', metadata);
       context.trackPage();
     });
   },
 
-  appType: function(context, payload) {
-    var appType = payload.params.apptype;
-    return getQuickstartMetdata(null, appType).then((metadata) => {
-      context.dispatch('LOAD_TUTORIAL_NAVIGATOR', {
-        appType: appType
-      });
+  quickstart: function(context, payload) {
+    let {quickstartId} = payload.params;
+    let quickstarts = context.getStore(TutorialStore).getQuickstarts();
+    return getPageMetadata(quickstarts, quickstartId).then((metadata) => {
+      context.dispatch('LOAD_TUTORIAL_NAVIGATOR', {quickstartId});
       context.dispatch('UPDATE_PAGE_METADATA', metadata);
       context.trackPage();
     });
   },
 
-  backend: function(context, payload) {
-    var appType = payload.params.apptype;
-    var tech1 = payload.params.tech1;
-    var quickstart = context.getStore(TutorialStore).getQuickstart();
+  platform: function(context, payload) {
+    let {quickstartId, platformId} = payload.params;
+    let quickstarts = context.getStore(TutorialStore).getQuickstarts();
     return Promise.all([
-      getQuickstartMetdata(quickstart, appType, tech1).then((metadata) => {
-        context.dispatch('LOAD_TUTORIAL_NAVIGATOR', {
-          appType: appType,
-          tech1: tech1
-        });
+      getPageMetadata(quickstarts, quickstartId, platformId).then((metadata) => {
+        context.dispatch('LOAD_TUTORIAL_NAVIGATOR', {quickstartId, platformId});
         context.dispatch('UPDATE_PAGE_METADATA', metadata);
         context.trackPage();
       }),
-      context.executeAction(loadArticleAction, {
-        appType: appType,
-        tech1: tech1,
-        currentTech: tech1
-      })
+      context.executeAction(loadArticleAction, {quickstartId, platformId})
     ]);
   },
 
-  tech1: function(context, payload) {
-    var appType = payload.params.apptype;
-    var tech1 = payload.params.tech1;
-    var quickstart = context.getStore(TutorialStore).getQuickstart();
-    return getQuickstartMetdata(quickstart, appType, tech1).then((metadata) => {
-      context.dispatch('LOAD_TUTORIAL_NAVIGATOR', {
-        appType: appType,
-        tech1: tech1
-      });
-      context.dispatch('UPDATE_PAGE_METADATA', metadata);
-      context.trackPage();
-    });
-  },
-
-  tech2: function(context, payload) {
-    var appType = payload.params.apptype;
-    var tech1 = payload.params.tech1;
-    var tech2 = payload.params.tech2;
-    var quickstart = context.getStore(TutorialStore).getQuickstart();
-    var actions = [
-      getQuickstartMetdata(quickstart, appType, tech1, tech2).then((metadata) => {
-        context.dispatch('LOAD_TUTORIAL_NAVIGATOR', {
-          appType: appType,
-          tech1: tech1,
-          tech2: tech2
-        });
+  article: function(context, payload) {
+    let {quickstartId, platformId, articleId} = payload.params;
+    let quickstarts = context.getStore(TutorialStore).getQuickstarts();
+    return Promise.all([
+      getPageMetadata(quickstarts, quickstartId, platformId, articleId).then((metadata) => {
+        context.dispatch('LOAD_TUTORIAL_NAVIGATOR', {quickstartId, platformId, articleId});
         context.dispatch('UPDATE_PAGE_METADATA', metadata);
         context.trackPage();
       }),
-      context.executeAction(loadArticleAction, {
-        appType: appType,
-        tech1: tech1,
-        tech2: tech2,
-        currentTech: tech1
-      })
-    ];
-    if (tech2 !== 'no-api') {
-      actions.push(
-        context.executeAction(loadArticleAction, {
-          appType: 'backend',
-          tech1: tech1,
-          tech2: tech2,
-          currentTech: tech2
-        })
-      );
-    }
-    return Promise.all(actions);
+      context.executeAction(loadArticleAction, {quickstartId, platformId, articleId})
+    ]);
   }
 
 };
