@@ -41,7 +41,7 @@ var loadDocPages = function(cb) {
   var bar = getProgressBar(docUrls.length, '    Preloading HTML pages');
   var q = async.queue(function (url, done) {
 
-    var pageUrl = baseUrl + url;
+    var pageUrl = baseUrl + url + '?e=1';
     request(pageUrl, function (error, response, body) {
       if (error || response.statusCode !== 200) {
         throw error || new Error('Error loading "' + pageUrl + '". Status code: ' + response.statusCode);
