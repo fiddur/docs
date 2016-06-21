@@ -29,7 +29,7 @@ appTypes:
     budicon: 349
     slug: server-platforms
 
-  - title: Backend Service
+  - title: Backend/API
     name: backend
     description: "An API or service that does JWT validation"
     example: "eg: Hapi.js API, ASP.NET API"
