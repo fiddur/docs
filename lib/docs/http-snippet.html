@@ -1,19 +1,30 @@
 <pre style="display: none;"></pre>
-<div>
-  <!-- Nav tabs -->
-  <ul class="nav nav-tabs" role="tablist">
-    <% _.forEach(snippets, function(snippet) { %>
-      <li role="presentation" class="<%= snippet.key === 'shell' ? 'active' : '' %>"><a href="#<%- snippet.key %>" aria-controls="profile" role="tab" data-toggle="tab"><%= snippet.title %></a></li>
-    <% }); %>
-  </ul>
+<div class="code-picker">
+  <div class="languages-bar">
+    <ul>
+      <% _.forEach(snippets, function(snippet, i) { %>
+        <% if (i === 6) { %>
+          <li class="dropdown"><a href="#" data-toggle="dropdown" class="more-dots">...</a>
+            <ul class="dropdown-menu">
+        <% } %>
+        <li class="<%= snippet.key === 'shell' ? 'active' : '' %>"><a href="#<%- snippet.key %>" role="tab" data-toggle="tab"><%= snippet.title %></a></li>
+        <% if (i === snippets.length - 1 && i > 6) { %>
+            </ul>
+        </li>
+        <% } %>
+      <% }); %>
+      <!-- <li class="pull-right">
+        <div class="btn btn-sm btn-transparent btn-copy"><span class="btn-icon icon-budicon-450"></span>Copy</div>
+      </li> -->
+    </ul>
+  </div>
 
   <!-- Tab panes -->
   <div class="tab-content">
     <% _.forEach(snippets, function(snippet) { %>
       <div role="tabpanel" class="tab-pane <%= snippet.key === 'shell' ? 'active' : '' %>" id="<%- snippet.key %>">
-        <pre><code class="<%- snippet.css %>"><%= snippet.code %></code></pre>
+        <pre><code class="<%- snippet.css %> no-lines"><%= snippet.code %></code></pre>
       </div>
     <% }); %>
   </div>
-
 </div>
