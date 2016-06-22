@@ -33,16 +33,16 @@ export function getPageMetadata(quickstarts, quickstartId, platformId, articleId
         if (!description) {
           debugClient(`WARNING: No description on ${platformTitle}: ${title}.`);
         }
-        meta.pageTitle = `Auth0 ${platformTitle} SDK Tutorial: ${title}`;
+        meta.pageTitle = `Auth0 ${platformTitle} SDK Quickstarts: ${title}`;
         meta.pageDescription = description || defaultDescription;
       } else {
-        meta.pageTitle = `${platformTitle} Quickstarts`;
+        meta.pageTitle = `Auth0 ${platformTitle} SDK Quickstarts`;
         meta.pageDescription = defaultDescription;
       }
     }
     else if (quickstartId) {
       let title = quickstarts[quickstartId].title
-      meta.pageTitle = `${title} Quickstarts`;
+      meta.pageTitle = `Auth0 ${title} Quickstarts`;
       meta.pageDescription = `Browse ${title.toLowerCase()} quickstarts to learn how to quickly add authentication to your app.`;
     }
     else {
