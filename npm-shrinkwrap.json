@@ -2,7 +2,7 @@
   "name": "auth0-docs",
   "version": "2.0.0",
   "npm-shrinkwrap-version": "5.4.1",
-  "node-version": "v4.4.4",
+  "node-version": "v4.4.2",
   "dependencies": {
     "async": {
       "version": "0.2.10",
@@ -21868,10 +21868,12 @@
     },
     "auth0-tutorial-navigator": {
       "version": "3.2.0",
+      "from": "auth0-tutorial-navigator@git://github.com/auth0/tutorial-navigator.git#af90c24b9ec7f95e73a92f89e573109082c606de",
       "resolved": "git://github.com/auth0/tutorial-navigator.git#af90c24b9ec7f95e73a92f89e573109082c606de",
       "dependencies": {
         "auth0-styleguide": {
           "version": "2.2.7",
+          "from": "auth0-styleguide@git://github.com/auth0/styleguide.git#75412486e066f082a0873687cf29d6dc51b3bf33",
           "resolved": "git://github.com/auth0/styleguide.git#75412486e066f082a0873687cf29d6dc51b3bf33"
         },
         "flux": {
@@ -24165,6 +24167,16 @@
         "pause": {
           "version": "0.0.1",
           "resolved": "https://registry.npmjs.org/pause/-/pause-0.0.1.tgz"
+        }
+      }
+    },
+    "path-to-regexp": {
+      "version": "1.5.3",
+      "resolved": "https://registry.npmjs.org/path-to-regexp/-/path-to-regexp-1.5.3.tgz",
+      "dependencies": {
+        "isarray": {
+          "version": "0.0.1",
+          "resolved": "https://registry.npmjs.org/isarray/-/isarray-0.0.1.tgz"
         }
       }
     },

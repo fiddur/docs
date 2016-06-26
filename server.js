@@ -134,7 +134,7 @@ server.use(middleware.overrideIfClientInQs);
 server.use(middleware.overrideIfClientInQsForPublicAllowedUrls);
 server.use(middleware.urlVariables);
 server.use(middleware.fetchABExperiments);
-server.use(middleware.noRenderQuickstarts);
+server.use(middleware.redirectQuickstarts);
 
 // React sidebar
 server.use(require('./client/sidebar'));
@@ -146,10 +146,11 @@ server.use('/docs', require('./lib/sdk-snippets/lock/demos-routes'));
 server.use('/docs', require('./lib/sdk-snippets/lock/snippets-routes'));
 server.use('/docs', require('./lib/packager'));
 server.use('/docs', require('./lib/feedback'));
-server.use('/docs', require('./lib/redirects'));
 server.use('/docs', require('./lib/sitemap'));
 server.use('/docs', require('./lib/search'));
 server.use('/docs', require('./lib/updates'));
+server.use('/docs', require('./lib/redirects'));
+
 
 server.get('/docs/switch', function (req, res) {
   req.session.current_tenant = {
@@ -177,13 +178,26 @@ server.use(function(req, res, next) {
 });
 
 // error handlers
+function renderError(req, res, err) {
+  res.status(err.status || 500);
+  if (res.locals.json) {
+    res.json(err);
+  } else if (res.locals.jsonp) {
+    res.jsonp(err);
+  } else if (res.locals.embedded) {
+    res.render('error-embedded', err);
+  } else if (res.locals.framed) {
+    res.render('error-framed', err);
+  } else {
+    res.render('error', err);
+  }
+}
 
 // development error handler
 // will print stacktrace
 if (server.get('env') === 'development') {
   server.use(function(err, req, res, next) {
-    res.status(err.status || 500);
-    res.render('error', {
+    renderError(req ,res, {
       message: err.message,
       error: err
     });
@@ -200,8 +214,7 @@ server.use(function(err, req, res, next) {
   } else {
     winston.error('Error loading route: ' + req.url, { err: err });
   }
-  res.status(err.status || 500);
-  res.render('error', {
+  renderError(req, res, {
     message: msg,
     error: {}
   });
