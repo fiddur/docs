@@ -27,9 +27,13 @@ When you commit code to this repository, you should follow the following procedu
 
 ## Development
 
-### Usage without Vagrant
+### Setup and Usage without Vagrant
+To run the docs site locally you will need to clone the auth0-docs server and the docs repo. You can make changes to the docs content inside the docs folder. You can branch/commit as normal from the docs folder. 
 
 ```
+git clone https://github.com/auth0/auth0-docs
+cd auth0-docs
+git clone https://github.com/auth0/docs
 nave use 4.x
 npm i
 npm run dev
@@ -71,7 +75,7 @@ Now you can treat the `docs` folder as a regular repository. You can pull, branc
 
 Sometimes it may happen that the Node server is not stopped propertly preventing the website from working correctly. The typical symptom you will see when this happens is that the content being served is not correct. For example, you may make changes to Markdown files and those changes will not be reflected in the browser.
 
-In this instance it will be necessarry to kill the process of the Node server. 
+In this instance it will be necessarry to kill the process of the Node server.
 
 First determine the PID of the process running on port 5050 (which will be the Node server) by running the `lsof` command:
 
