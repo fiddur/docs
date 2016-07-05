@@ -198,6 +198,7 @@ function renderError(req, res, err) {
 if (server.get('env') === 'development') {
   server.use(function(err, req, res, next) {
     renderError(req ,res, {
+      status: err.status,
       message: err.message,
       error: err
     });
@@ -215,6 +216,7 @@ server.use(function(err, req, res, next) {
     winston.error('Error loading route: ' + req.url, { err: err });
   }
   renderError(req, res, {
+    status: err.status,
     message: msg,
     error: {}
   });
