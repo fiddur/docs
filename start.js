@@ -44,7 +44,24 @@ var application = {
     server.listen(port, callback);
   },
   stop: function (callback) {
-    server.destroy(callback);
+    var timedout = false;
+
+    var timeout = setTimeout(function () {
+      timedout = true;
+      callback();
+    }, 5000);
+
+    try {
+      server.close(function () {
+        if (timedout) return;
+        clearTimeout(timeout);
+        callback();
+      });
+    } catch (err) {
+      console.log(err);
+      clearTimeout(timeout);
+      callback();
+    }
   }
 };
 
@@ -55,9 +72,15 @@ if (module.parent) {
     console.log('Server listening on http://localhost:' + port);
   });
 
+  process.on('SIGINT', function () {
+    application.stop(function () {
+      process.exit();
+    });
+  });
+
   process.on('SIGTERM', function () {
     application.stop(function () {
-      process.exit(0);
+      process.exit();
     });
   });
 }
