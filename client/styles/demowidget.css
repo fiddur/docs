@@ -96,7 +96,7 @@
 .popup .panel .iconList p {
   display: block !important;
   margin: 1em 0;
-  font-size 14px;
+  font-size: 13px;
   color: rgb(109, 109, 109);
   text-shadow: 0 1px 0 white;
 }
