@@ -5,8 +5,18 @@ import ApplicationStore from '../stores/ApplicationStore';
 import { connectToStores, provideContext } from 'fluxible-addons-react';
 import { handleHistory } from 'fluxible-router';
 import ErrorPage from './ErrorPage';
+import analytics from '../scripts/analytics';
+import pingdom from '../scripts/pingdom';
+import locksso from '../scripts/locksso';
 
 class Application extends React.Component {
+
+  componentDidMount() {
+    let {env} = this.props;
+    pingdom(env['PINGDOM_ID']);
+    analytics(env['SEGMENT_KEY'], env['DWH_ENDPOINT']);
+    locksso(env['AUTH0_CLIENT_ID'], env['AUTH0_DOMAIN']);
+  }
 
   render() {
     // Temporary fix for: https://github.com/yahoo/fluxible-router/issues/108
@@ -50,6 +60,7 @@ Application = connectToStores(
   function (context, props) {
     var appStore = context.getStore(ApplicationStore);
     return {
+      env: appStore.getEnvironmentVars(),
       currentPageName: appStore.getCurrentPageName(),
       pageTitle: appStore.getPageTitle(),
       pageDescription: appStore.getPageDescription(),

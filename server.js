@@ -136,12 +136,8 @@ server.use(middleware.urlVariables);
 server.use(middleware.fetchABExperiments);
 server.use(middleware.redirectQuickstarts);
 
-// React sidebar
-server.use(require('./client/sidebar'));
-
 // Routes
 server.use('/docs', require('./lib/api-explorer'));
-server.use('/docs', require('./lib/docs'));
 server.use('/docs', require('./lib/sdk-snippets/lock/demos-routes'));
 server.use('/docs', require('./lib/sdk-snippets/lock/snippets-routes'));
 server.use('/docs', require('./lib/packager'));
@@ -150,7 +146,7 @@ server.use('/docs', require('./lib/sitemap'));
 server.use('/docs', require('./lib/search'));
 server.use('/docs', require('./lib/updates'));
 server.use('/docs', require('./lib/redirects'));
-
+server.use('/docs', require('./lib/handler'));
 
 server.get('/docs/switch', function (req, res) {
   req.session.current_tenant = {
@@ -160,10 +156,8 @@ server.get('/docs/switch', function (req, res) {
   res.redirect('/docs');
 });
 
-server.use('/docs/meta', require('./lib/api'));
 
-// React client middleware -> homepage, quickstart, etc.
-server.use(require('./client/middleware'));
+server.use('/docs/meta', require('./lib/api'));
 
 // This is just for localhost
 server.get('/', function(req, res) {

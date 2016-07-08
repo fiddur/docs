@@ -6,6 +6,9 @@ import { docsByUrl, docUrls } from '../../lib/docs/builder';
 import processSections from '../../lib/docs/renderer';
 import _ from 'lodash';
 
+// TODO: Can we merge the DocumentService and the ArticleService?
+// This one uses Jade but it doesn't actually do anything, since the embedded template is basically a no-op
+
 var viewname = path.resolve(__dirname, '../../views/doc-embedded.jade');
 
 export default function(req, res) {

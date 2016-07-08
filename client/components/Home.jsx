@@ -1,13 +1,9 @@
 import React from 'react';
-import { TutorialNavigator } from 'auth0-tutorial-navigator';
+import {connectToStores} from 'fluxible-addons-react';
+import {TutorialNavigator} from 'auth0-tutorial-navigator';
+import {quickstartNavigationAction} from '../action/quickstartNavigationAction';
 import NavigationStore from '../stores/NavigationStore';
-import { connectToStores } from 'fluxible-addons-react';
-import { quickstartNavigationAction } from '../action/quickstartNavigationAction';
-import HomeSectionContainer from './HomeSectionContainer';
-import TableOfContents from './TableOfContents';
-import ProductSection from './ProductSection';
-import ApiSection from './ApiSection';
-import InlineNav from './InlineNav';
+import CategoryCard from './CategoryCard';
 import TryBanner from './TryBanner';
 
 // TODO: This depends on a "carousel" ref that's set by the TutorialNavigator itself.
@@ -38,49 +34,21 @@ class Home extends React.Component {
   
   render() {
     
-    var homeNavCategories = [];
-    var productCategory;
-    var apiCategory;
-    var tocCategory = {
-      id: 'toc',
-      name: 'Guides & SDKs',
-      description: 'References and documentation'
-    };
-    var tocCategories = [];
-    homeNavCategories[2] = tocCategory;
-    this.props.categories.map(category => {
-      switch (category.id) {
-      case 'product':
-        productCategory = category;
-        homeNavCategories[0] = category;
-        break;
-      case 'api':
-        apiCategory = category;
-        homeNavCategories[1] = category;
-        break;
-      default:
-        tocCategories.push(category);
-        break;
-      }
-    });
-    
-    let {isAuthenticated} = this.props;
+    let {categories, isAuthenticated} = this.props;
     let tryBanner = isAuthenticated ? null : <TryBanner/>;
+
+    let cards = categories.map(category => (
+      <CategoryCard key={category.id} category={category} />
+    ));
 
     return (
       <div>
         <TutorialNavigator {...this.props} customNavigationAction={quickstartNavigationAction} componentLoadedInBrowser={initCarouselInBrowser} />
         {tryBanner}
-        <InlineNav categories={homeNavCategories} />
-        <HomeSectionContainer {...productCategory}>
-          <ProductSection category={productCategory} />
-        </HomeSectionContainer>
-        <HomeSectionContainer {...apiCategory}>
-          <ApiSection category={apiCategory} />
-        </HomeSectionContainer>
-        <HomeSectionContainer {...tocCategory}>
-          <TableOfContents categories={tocCategories} />
-        </HomeSectionContainer>
+        <div className="category-cards container center-block">
+          <h1>Curated content to fully understand our platform</h1>
+          {cards}
+        </div>
       </div>
     );
   }
