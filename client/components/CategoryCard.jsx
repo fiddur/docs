@@ -33,8 +33,9 @@ class CategoryCard extends React.Component {
           <a className="category-card-more-link" href={category.href}>More</a>
         </div>
       </div>
-    </div>
-  );
+    );
+    
+  }
 
 };
 
