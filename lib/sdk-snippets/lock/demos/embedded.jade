@@ -1,21 +1,32 @@
 html
   head
     link(rel="stylesheet" href="//cdn.auth0.com/styleguide/latest/index.min.css")
+    style.
+      /* NOTE: this is rendered in a small frame and a media query for mobile
+       * devices kicks in causing the widget to occupy the whole screen (with
+       * a 100% height).
+       */
+      body #root .auth0-lock.auth0-lock {
+        height: auto;
+      }
+
   body
-    #root(style='width: 300px; margin: 40px auto; padding: 10px; border-style: dashed; border-width: 1px;')
+    #root(style='width: 320px; margin: 40px auto; padding: 10px; border-style: dashed; border-width: 1px; box-sizing: border-box;')
       | embeded area
-    script(src=widget_url)
+    //- TODO: update LOGIN_WIDGET_URL env var?
+    //- script(src=widget_url)
+    script(src="https://cdn.auth0.com/js/lock/10.0.0-rc.2/lock.min.js")
     script.
       if (window.Auth0Lock) {
         var lock = new Auth0Lock('!{clientID}', '!{namespace}', {
-          assetsUrl:    '!{auth0_sdk_assets}'
-        });
-
-        lock.show({
           container: 'root',
-          callbackURL:  '!{callback || 'http://YOUR_APP/callback'}',
-          responsetType: '!{callbackOnHash ? "token" : "code"}'
+          assetsUrl:    '!{auth0_sdk_assets}',
+          auth: {
+            redirectUrl:  '!{callback || 'http://YOUR_APP/callback'}',
+            responseType: '!{callbackOnHash ? "token" : "code"}'
+          }
         });
+        lock.show();
       } else {
         document.getElementById('root').innerHTML = 'Cannot load the widget at the moment, try again later.';
       }
