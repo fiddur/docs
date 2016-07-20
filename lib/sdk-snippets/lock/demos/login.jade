@@ -7,9 +7,7 @@ html
         .col-xs-4.col-xs-offset-4.text-center
           button.btn.btn-xs.btn-success(onclick='lock.show()') Login
 
-    //- TODO: update LOGIN_WIDGET_URL env var?
-    //- script(src=widget_url)
-    script(src="https://cdn.auth0.com/js/lock/10.0.0-rc.2/lock.min.js")
+    script(src=widget_url)
     script.
       // define lock
       var lock = new Auth0Lock('!{clientID}', '!{namespace}', {

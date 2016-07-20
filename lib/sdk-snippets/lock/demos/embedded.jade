@@ -13,9 +13,7 @@ html
   body
     #root(style='width: 320px; margin: 40px auto; padding: 10px; border-style: dashed; border-width: 1px; box-sizing: border-box;')
       | embeded area
-    //- TODO: update LOGIN_WIDGET_URL env var?
-    //- script(src=widget_url)
-    script(src="https://cdn.auth0.com/js/lock/10.0.0-rc.2/lock.min.js")
+    script(src=widget_url)
     script.
       if (window.Auth0Lock) {
         var lock = new Auth0Lock('!{clientID}', '!{namespace}', {
