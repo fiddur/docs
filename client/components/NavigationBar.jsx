@@ -4,21 +4,38 @@ import {NavLink} from 'fluxible-router';
 import {connectToStores} from 'fluxible-addons-react';
 import SearchBox from './SearchBox';
 
+// TODO: Move this to a YAML file if necessary
+let Sections = [
+  {id: 'overview',    href: '/', text: 'Overview'},
+  {id: 'sdks',        href: '/', text: 'SDKs'},
+  {id: 'quickstarts', href: '/', text: 'QuickStarts'},
+  {id: 'apis',        href: '/', text: 'APIs'},
+  {id: 'appliance',   href: '/', text: 'Appliance'}
+];
+
+let NavigationTab = (section, currentSectionId) => {
+  let {id, href, text} = section;
+  let classes = ['nav-tab'];
+  if (currentSectionId == id) classes.push('active');
+  return (
+    <li key={id} className={classes.join(' ')}>
+      <NavLink href={href}>{text}</NavLink>
+    </li>
+  );
+};
+
 class NavigationBar extends React.Component {
 
   render() {
 
-    // TODO: Determine active section based on document that's displayed?
+    let tabs = Sections.map(section => NavigationTab(section, this.props.currentSection));
+    console.log(this.props);
 
     return (
       <div className="navigation-bar">
         <div className="container">
           <ul className="nav nav-tabs section-tabs">
-            <li className="active"><NavLink href="#">Overview</NavLink></li>
-            <li><NavLink href="/">SDKs</NavLink></li>
-            <li><NavLink href="/">QuickStarts</NavLink></li>
-            <li><NavLink href="/">APIs</NavLink></li>
-            <li><NavLink href="/">Appliance</NavLink></li>
+            {tabs}
           </ul>
           <SearchBox />
         </div>
@@ -33,9 +50,8 @@ NavigationBar.contextTypes = {
 };
 
 NavigationBar = connectToStores(NavigationBar, [NavigationStore], (context, props) => {
-  let store = context.getStore(NavigationStore);
   return {
-    categories: store.getCategories()
+    currentSection: context.getStore(NavigationStore).getCurrentSection()
   };
 });
 

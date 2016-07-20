@@ -1,10 +1,10 @@
-let DocumentService = {};
+let ContentService = {};
 
-DocumentService.loadDocument = (id) => {
+ContentService.load = (url) => {
 
-  let url = id + "?e=1";
+  let requestUrl = url + "?e=1";
 
-  return fetch(url, {credentials: 'include'})
+  return fetch(requestUrl, {credentials: 'include'})
   .then(response => {
     if (response.status >= 200 && response.status < 400) {
       return response;
@@ -22,4 +22,4 @@ DocumentService.loadDocument = (id) => {
 
 }
 
-export default DocumentService;
+export default ContentService;

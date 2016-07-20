@@ -58,6 +58,7 @@ class TutorialPage extends React.Component {
 
   metrics() {
     let {quickstart, platform} = this.props;
+    if (!window.widget) return;
     let eventData = {
       'clientID': window.widget.getClient()._clientID || '',
       'tutorial-apptype': quickstart ? quickstart.name : '',

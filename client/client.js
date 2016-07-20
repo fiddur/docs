@@ -7,7 +7,7 @@ import d from 'debug';
 import { createElementWithContext } from 'fluxible-addons-react';
 import app from './app';
 import { ArticleService, ServiceKeys } from 'auth0-tutorial-navigator';
-import DocumentService from './services/DocumentService.client';
+import ContentService from './services/ContentService.client';
 
 require('./styles/docs.styl');
 
@@ -23,7 +23,7 @@ window.fluxibleDebug = debug;
 // Register services
 let plugin = app.getPlugin('ServiceProxyPlugin');
 plugin.registerService(ServiceKeys.ArticleService, ArticleService);
-plugin.registerService('DocumentService', DocumentService);
+plugin.registerService('ContentService', ContentService);
 
 debug('rehydrating app');
 

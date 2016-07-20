@@ -7,6 +7,7 @@ export default {
     context.dispatch('LOAD_TUTORIAL_NAVIGATOR', {});
     return getPageMetadata().then((metadata) => {
       context.dispatch('UPDATE_PAGE_METADATA', metadata);
+      context.dispatch('SECTION_SELECTED', {section: null});
       context.trackPage();
     });
   },
@@ -17,6 +18,7 @@ export default {
     return getPageMetadata(quickstarts, quickstartId).then((metadata) => {
       context.dispatch('LOAD_TUTORIAL_NAVIGATOR', {quickstartId});
       context.dispatch('UPDATE_PAGE_METADATA', metadata);
+      context.dispatch('SECTION_SELECTED', {section: 'quickstarts'});
       context.trackPage();
     });
   },
@@ -28,6 +30,7 @@ export default {
       getPageMetadata(quickstarts, quickstartId, platformId).then((metadata) => {
         context.dispatch('LOAD_TUTORIAL_NAVIGATOR', {quickstartId, platformId});
         context.dispatch('UPDATE_PAGE_METADATA', metadata);
+        context.dispatch('SECTION_SELECTED', {section: 'quickstarts'});
         context.trackPage();
       }),
       context.executeAction(loadArticleAction, {quickstartId, platformId})
@@ -41,6 +44,7 @@ export default {
       getPageMetadata(quickstarts, quickstartId, platformId, articleId).then((metadata) => {
         context.dispatch('LOAD_TUTORIAL_NAVIGATOR', {quickstartId, platformId, articleId});
         context.dispatch('UPDATE_PAGE_METADATA', metadata);
+        context.dispatch('SECTION_SELECTED', {section: 'quickstarts'});
         context.trackPage();
       }),
       context.executeAction(loadArticleAction, {quickstartId, platformId, articleId})

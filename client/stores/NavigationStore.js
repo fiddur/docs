@@ -6,13 +6,7 @@ class NavigationStore extends BaseStore {
   constructor(dispatcher) {
     super(dispatcher);
     this.navigation = null;
-    this.currentCategory = null;
-  }
-
-  handleNavigationLoaded(payload) {
-    this.navigation = payload.navigation;
-    this.currentCategory = payload.currentCategory;
-    this.emitChange();
+    this.currentSection = null;
   }
 
   getCategories() {
@@ -24,27 +18,39 @@ class NavigationStore extends BaseStore {
     }
   }
 
-  getCurrentCategory() {
-    return this.currentCategory;
+  getCurrentSection() {
+    return this.currentSection;
+  }
+
+  handleNavigationLoaded(payload) {
+    this.navigation = payload.navigation;
+    this.currentSection = payload.currentSection;
+    this.emitChange();
+  }
+
+  handleSectionSelected(payload) {
+    this.currentSection = payload.section;
+    this.emitChange();
   }
 
   dehydrate() {
     return {
       navigation: this.navigation,
-      currentCategory: this.currentCategory
+      currentSection: this.currentSection
     };
   }
 
   rehydrate(state) {
     this.navigation = state.navigation;
-    this.currentCategory = state.currentCategory;
+    this.currentSection = state.currentSection;
   }
   
 }
 
 NavigationStore.storeName = 'NavigationStore';
 NavigationStore.handlers = {
-  'NAVIGATION_LOADED': 'handleNavigationLoaded'
+  'NAVIGATION_LOADED': 'handleNavigationLoaded',
+  'SECTION_SELECTED': 'handleSectionSelected'
 };
 
 export default NavigationStore;

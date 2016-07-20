@@ -1,5 +1,5 @@
 import tutorialNavigatorActions from '../action/tutorialNavigatorActions';
-import loadDocument from '../action/loadDocument';
+import loadContent from '../action/loadContent';
 
 export default {
 
@@ -35,7 +35,8 @@ export default {
     path: '/docs/*',
     method: 'get',
     handler: require('../components/ArticlePage'),
-    action: loadDocument
+    action: loadContent,
+    section: 'overview'
   }
   
 };

@@ -18,6 +18,13 @@ class Application extends React.Component {
     locksso(env['AUTH0_CLIENT_ID'], env['AUTH0_DOMAIN']);
   }
 
+  componentDidUpdate(prevProps, prevState) {
+    const newProps = this.props;
+    if (newProps.pageTitle !== prevProps.pageTitle) {
+      document.title = newProps.pageTitle;
+    }
+  }
+
   render() {
     // Temporary fix for: https://github.com/yahoo/fluxible-router/issues/108
     if (!this.props.currentRoute && typeof document !== 'undefined') {
@@ -46,12 +53,6 @@ class Application extends React.Component {
     );
   }
 
-  componentDidUpdate(prevProps, prevState) {
-    const newProps = this.props;
-    if (newProps.pageTitle !== prevProps.pageTitle) {
-      document.title = newProps.pageTitle;
-    }
-  }
 }
 
 Application = connectToStores(

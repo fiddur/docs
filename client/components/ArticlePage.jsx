@@ -1,6 +1,6 @@
 import React from 'react';
 import { connectToStores } from 'fluxible-addons-react';
-import DocumentStore from '../stores/DocumentStore';
+import ContentStore from '../stores/ContentStore';
 import NavigationBar from './NavigationBar';
 import Sidebar from './Sidebar';
 
@@ -26,9 +26,9 @@ class ArticlePage extends React.Component {
 
 }
 
-ArticlePage = connectToStores(ArticlePage, [DocumentStore], (context, props) => {
+ArticlePage = connectToStores(ArticlePage, [ContentStore], (context, props) => {
   return {
-    html: context.getStore(DocumentStore).getCurrentDocumentHtml()
+    html: context.getStore(ContentStore).getCurrentContentHtml()
   };
 });
 
