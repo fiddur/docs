@@ -5,23 +5,19 @@ html
     .container
       .row
         .col-xs-4.col-xs-offset-4.text-center
-          button.btn.btn-xs.btn-success(onclick='show()') Login
+          button.btn.btn-xs.btn-success(onclick='lock.show()') Login
 
     script(src=widget_url)
     script.
       // define lock
       var lock = new Auth0Lock('!{clientID}', '!{namespace}', {
-        assetsUrl: '!{auth0_sdk_assets}'
+        assetsUrl: '!{auth0_sdk_assets}',
+        auth: {
+          redirectUrl:  '!{callback || 'http://YOUR_APP/callback'}',
+          responseType: '!{callbackOnHash ? "token" : "code"}'
+        },
+        autofocus: false
       });
 
-      // define show function to invoke lock.show
-      function show() {
-        lock.show({
-          callbackURL:  '!{callback || 'http://YOUR_APP/callback'}',
-          responsetType: '!{callbackOnHash ? "token" : "code"}',
-          focusInput: false
-        });
-      }
-
       // invoke at load
-      show();
+      lock.show();

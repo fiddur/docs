@@ -29,7 +29,10 @@ nconf.file('global', { file: config_file })
     'DOMAIN_URL_DOCS':   'http://localhost:3000/docs',
     'DOMAIN_URL_API2_EXPLORER': 'login0.myauth0.com',
     'WIDGET_FALLBACK_CLIENTID': 'aCbTAJNi5HbsjPJtRpSP6BIoLPOrSj2C',
+    // Handles login at auth0.com
     'LOGIN_WIDGET_URL':  'https://cdn.auth0.com/js/lock-9.0.min.js',
+    // Used in previews
+    'LOCK_URL': 'https://cdn.auth0.com/js/lock/10.0/lock.min.js',
     'LOCK_PASSWORDLESS_URL':  'https://cdn.auth0.com/js/lock-passwordless-1.0.min.js',
     'AUTH0JS_URL':       'https://cdn.auth0.com/w2/auth0-6.8.min.js',
     'AUTH0_ANGULAR_URL': 'http://cdn.auth0.com/w2/auth0-angular-1.1.js',
