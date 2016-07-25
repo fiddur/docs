@@ -19,16 +19,13 @@ block body
     .navigation-bar
       .wrapper
         .container
-          .breadcrumbs(itemscope, itemtype='http://schema.org/BreadcrumbList')
-            div(itemprop='itemListElement', itemscope, itemtype='http://schema.org/ListItem')
-              a(href="/docs", itemprop='item')
-                span.text(itemprop='name') Documentation
-                meta(itemprop='position', content='1')/
-            i.icon-budicon-461
-            div(itemprop='itemListElement', itemscope, itemtype='http://schema.org/ListItem')
-              a(itemprop='item')
-                span.text(itemprop='name')= title
-                meta(itemprop='position', content='2')/
+          .breadcrumbs
+            a(href="/docs")
+              span.text Documentation
+            a
+              i.icon-budicon-461
+              span.text= title
+
 
           form#search(role="search", action="/docs/search", autocomplete="off")
             .form-group.search-control
