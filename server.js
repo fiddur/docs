@@ -171,6 +171,8 @@ server.use(function(req, res, next) {
   next(err);
 });
 
+// TODO: Remove jade templates from error responses
+
 // error handlers
 function renderError(req, res, err) {
   res.status(err.status || 500);

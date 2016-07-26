@@ -1,7 +1,7 @@
 import React from 'react';
 import NavigationBar from './NavigationBar';
 import TryBanner from './TryBanner';
-import { TutorialStore, Breadcrumbs, Tutorial, TutorialTableOfContents } from 'auth0-tutorial-navigator';
+import { TutorialStore, Breadcrumbs, Tutorial, TutorialTableOfContents, TutorialPrevNext } from 'auth0-tutorial-navigator';
 import { connectToStores, provideContext } from 'fluxible-addons-react';
 import { quickstartNavigationAction } from '../action/quickstartNavigationAction';
 import highlightCode from '../browser/highlightCode';
@@ -88,6 +88,7 @@ class TutorialPage extends React.Component {
 
     let tutorial = undefined;
     let sidebar = undefined;
+    let prevNext = undefined;
 
     if (platform && platform.articles.length > 1) {
       sidebar = <div className="col-sm-3">
@@ -105,6 +106,11 @@ class TutorialPage extends React.Component {
         platform={platform}
         article={article}
         componentLoadedInBrowser={initTutorialInBrowser} />
+      prevNext = <TutorialPrevNext
+        quickstart={quickstart}
+        platform={platform}
+        currentArticle={article}
+        customNavigationAction={quickstartNavigationAction} />
     }
 
     return (
@@ -120,6 +126,7 @@ class TutorialPage extends React.Component {
               <section className="docs-content">
                 <h1 className="tutorial-title">{this.renderTitle()}</h1>
                 {tutorial}
+                {prevNext}
               </section>
               {tryBanner}
             </div>
