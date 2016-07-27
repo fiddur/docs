@@ -6,11 +6,11 @@ import SearchBox from './SearchBox';
 
 // TODO: Move this to a YAML file if necessary
 let Sections = [
-  {id: 'overview',    href: '/', text: 'Overview'},
-  {id: 'sdks',        href: '/', text: 'SDKs'},
-  {id: 'quickstarts', href: '/', text: 'QuickStarts'},
-  {id: 'apis',        href: '/', text: 'APIs'},
-  {id: 'appliance',   href: '/', text: 'Appliance'}
+  {id: 'articles',    href: '/docs/overview',   text: 'Articles'},
+  {id: 'sdks',        href: '/docs/sdks',       text: 'SDKs'},
+  {id: 'quickstarts', href: '/docs/quickstart', text: 'QuickStarts'},
+  {id: 'apis',        href: '/docs/api/info',   text: 'APIs'},
+  {id: 'appliance',   href: '/docs/appliance',  text: 'Appliance'}
 ];
 
 let NavigationTab = (section, currentSectionId) => {
@@ -29,7 +29,6 @@ class NavigationBar extends React.Component {
   render() {
 
     let tabs = Sections.map(section => NavigationTab(section, this.props.currentSection));
-    console.log(this.props);
 
     return (
       <div className="navigation-bar">

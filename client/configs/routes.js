@@ -31,12 +31,44 @@ export default {
     action: tutorialNavigatorActions.article
   },
 
-  document: {
+  sdks: {
+    path: '/docs/sdks',
+    method: 'get',
+    handler: require('../components/ArticlePage'),
+    action: loadContent,
+    section: 'sdks'
+  },
+
+  quickstarts: {
+    path: '/docs/quickstart',
+    method: 'get',
+    handler: require('../components/ArticlePage'),
+    action: loadContent,
+    section: 'quickstarts'
+  },
+
+  apis: {
+    path: '/docs/api/info',
+    method: 'get',
+    handler: require('../components/ArticlePage'),
+    action: loadContent,
+    section: 'apis'
+  },
+
+  appliance: {
+    path: '/docs/appliance',
+    method: 'get',
+    handler: require('../components/ArticlePage'),
+    action: loadContent,
+    section: 'appliance'
+  },
+
+  article: {
     path: '/docs/*',
     method: 'get',
     handler: require('../components/ArticlePage'),
     action: loadContent,
-    section: 'overview'
+    section: 'articles'
   }
   
 };

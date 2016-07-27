@@ -5,7 +5,7 @@ categories:
     icon: "icon-budicon-499"
     color: "orange"
     description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit."
-    href: "/getting-started"
+    href: "/overview"
     children:
 
       - name: "Applications"
@@ -49,7 +49,7 @@ categories:
     icon: "icon-budicon-546"
     color: "blue"
     description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit."
-    href: "/apis"
+    href: "/api/info"
     children:
 
       - name: "Article 1"
