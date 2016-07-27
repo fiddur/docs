@@ -19,6 +19,16 @@ html(lang="en")
             p.src = '//rum-static.pingdom.net/prum.min.js';
             s.parentNode.insertBefore(p, s);
         })();
+
+    - if (env.MOUSEFLOW_ID)
+      script.
+        var _mfq = _mfq || [];
+        (function() {
+            var mf = document.createElement("script");
+            mf.type = 'text/javascript'; mf.async = true;
+            mf.src = '//cdn.mouseflow.com/projects/#{env.MOUSEFLOW_ID}.js';
+            document.getElementsByTagName("head")[0].appendChild(mf);
+        })();
         
     link(href="//cdn.auth0.com/styleguide/latest/lib/logos/img/favicon.png", rel="shortcut icon")
     link(href="//cdn.auth0.com/styleguide/4.6.5/index.min.css", rel="stylesheet")
