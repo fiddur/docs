@@ -73,7 +73,7 @@ Now you can treat the `docs` folder as a regular repository. You can pull, branc
 
 ### Killing the server process
 
-Sometimes it may happen that the Node server is not stopped propertly preventing the website from working correctly. The typical symptom you will see when this happens is that the content being served is not correct. For example, you may make changes to Markdown files and those changes will not be reflected in the browser.
+Sometimes it may happen that the Node server is not stopped properly preventing the website from working correctly. The typical symptom you will see when this happens is that the content being served is not correct. For example, you may make changes to Markdown files and those changes will not be reflected in the browser.
 
 In this instance it will be necessarry to kill the process of the Node server.
 
