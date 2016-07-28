@@ -1,3 +1,13 @@
+- if (env['MOUSEFLOW_ID'])
+  //- mouseflow
+  script.
+    window.initMouseflow = function initMouseflow() {
+      window._mfq = window._mfq || [];
+      if (window.metricsLib && window.metricsLib.dwh) {
+        window._mfq.push(['setVariable', 'ANON_ID', window.metricsLib.dwh.anonymousId()]);        
+      }
+    };
+
 - if (env['SEGMENT_KEY'])
   script(src='//cdn.auth0.com/js/m/metrics-1.min.js')
   script.
@@ -30,6 +40,7 @@
       metricsLib.load = function(segmentKey, dwhEndpoint){
         if(null != window.Auth0Metrics){
           metricsLib = window.metricsLib = new Auth0Metrics(segmentKey, dwhEndpoint, 'docs');
+          metricsLib.ready(window.initMouseflow);
         }else{
           var script = document.createElement('script');
           script.type = 'text/javascript';
