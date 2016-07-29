@@ -35,11 +35,14 @@ class Sidebar extends React.Component {
 
   render() {
 
-    let {categories, currentDocumentId, maxDepth} = this.props;
+    let {category, currentDocumentId, maxDepth} = this.props;
 
-    let children = categories.map(category => (
-      <SidebarItem key={category.href} item={category} currentDepth={0} maxDepth={maxDepth} />
-    ));
+    let children = undefined;
+    if (category && category.children) {
+      children = category.children.map(category => (
+        <SidebarItem key={category.href} item={category} currentDepth={0} maxDepth={maxDepth} />
+      ));
+    }
 
     return (
       <div className="sidebar">
@@ -63,7 +66,7 @@ Sidebar.contextTypes = {
 
 Sidebar = connectToStores(Sidebar, [NavigationStore], (context, props) => {
   return {
-    categories: context.getStore(NavigationStore).getCategories()
+    category: context.getStore(NavigationStore).getCurrentCategory()
   };
 });
 

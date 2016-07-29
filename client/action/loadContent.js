@@ -1,9 +1,9 @@
 export default function loadContent(context, route, done) {
 
-  let {section, url} = route;
+  let {category, url} = route;
 
   context.dispatch('CONTENT_SELECTED', {url});
-  context.dispatch('SECTION_SELECTED', {section});
+  context.dispatch('CATEGORY_SELECTED', {category});
 
   return context.getService('ContentService')
   .load(url)

@@ -1,113 +1,80 @@
-categories:
+- id: "articles"
+  name: "Articles"
+  href: "/overview"
+  children:
 
-  - id: "getting-started"
-    name: "Getting Started"
-    icon: "icon-budicon-499"
-    color: "orange"
-    description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit."
-    href: "/overview"
-    children:
+    - name: "Applications"
+      href: "/applications"
+      icon: "icon-budicon-499"
+      children:
 
-      - name: "Applications"
-        href: "/applications"
-        children:
+        - name: "Overview"
+          href: "/applications/overview"
 
-          - name: "Overview"
-            href: "/applications/overview"
+        - name: "Advanced Configuration"
+          href: "/applications/advanced-configuration"
 
-          - name: "Advanced Configuration"
-            href: "/applications/advanced-configuration"
+        - name: "Addons"
+          href: "/applications/addons" 
 
-          - name: "Addons"
-            href: "/applications/addons" 
+    - name: "Multifactor Authentication"
+      href: "/mfa"
+    
+    - name: "Single Sign-On"
+      href: "/sso/single-sign-on"
 
-      - name: "Multifactor Authentication"
-        href: "/mfa"
-      
-      - name: "Single Sign-On"
-        href: "/sso/single-sign-on"
-  
-  - id: "sdks"
-    name: "SDKs"
-    icon: "icon-budicon-342"
-    color: "green"
-    description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit."
-    href: "/sdks"
-    children:
+- id: "sdks"
+  name: "SDKs"
+  href: "/sdks"
+  children:
 
-      - name: "Article 1"
-        href: "/example/article1"
+    - name: "Article 1"
+      href: "/example/article1"
 
-      - name: "Article 2"
-        href: "/example/article2"
-      
-      - name: "Article 3"
-        href: "/example/article3"
-  
-  - id: "apis"
-    name: "APIs"
-    icon: "icon-budicon-546"
-    color: "blue"
-    description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit."
-    href: "/api/info"
-    children:
+    - name: "Article 2"
+      href: "/example/article2"
+    
+    - name: "Article 3"
+      href: "/example/article3"
 
-      - name: "Article 1"
-        href: "/example/article1"
+- id: "apis"
+  name: "APIs"
+  href: "/api/info"
+  children:
 
-      - name: "Article 2"
-        href: "/example/article2"
-      
-      - name: "Article 3"
-        href: "/example/article3"
-  
-  - id: "appliance"
-    name: "Appliance"
-    icon: "icon-budicon-359"
-    color: "pink"
-    description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit."
-    href: "/appliance"
-    children:
+    - name: "Article 1"
+      href: "/example/article1"
 
-      - name: "Article 1"
-        href: "/example/article1"
+    - name: "Article 2"
+      href: "/example/article2"
+    
+    - name: "Article 3"
+      href: "/example/article3"
 
-      - name: "Article 2"
-        href: "/example/article2"
-      
-      - name: "Article 3"
-        href: "/example/article3"
-  
-  - id: "identity-glossary"
-    name: "Identity Glossary"
-    icon: "icon-budicon-715"
-    color: "oil"
-    description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit."
-    href: "/identity"
-    children:
+- id: "quickstarts"
+  name: "QuickStarts"
+  href: "/quickstarts"
+  children:
 
-      - name: "Article 1"
-        href: "/example/article1"
+    - name: "Article 1"
+      href: "/example/article1"
 
-      - name: "Article 2"
-        href: "/example/article2"
-      
-      - name: "Article 3"
-        href: "/example/article3"
+    - name: "Article 2"
+      href: "/example/article2"
+    
+    - name: "Article 3"
+      href: "/example/article3"
 
-  - id: "integrations"
-    name: "Auth0 & Friends"
-    icon: "icon-budicon-292"
-    color: "blue-light"
-    description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit."
-    href: "/integrations"
-    children:
+- id: "appliance"
+  name: "Appliance"
+  href: "/appliance"
+  children:
 
-      - name: "Article 1"
-        href: "/example/article1"
+    - name: "Article 1"
+      href: "/example/article1"
 
-      - name: "Article 2"
-        href: "/example/article2"
-      
-      - name: "Article 3"
-        href: "/example/article3"
+    - name: "Article 2"
+      href: "/example/article2"
+    
+    - name: "Article 3"
+      href: "/example/article3"

@@ -14,7 +14,7 @@ class CategoryCard extends React.Component {
 
     let {category, articleCount} = this.props;
 
-    let articles = _.take(category.children, articleCount);
+    let articles = _.take(category.articles, articleCount);
     let links = articles.map(article => (
       <ArticleLink key={article.href} article={article} />
     ));
@@ -24,13 +24,13 @@ class CategoryCard extends React.Component {
         <div className="category-card">
           <div className="category-card-header">
             <i className={category.icon + ' ' + category.color} />
-            <a className="category-card-name" href={category.href}>{category.name}</a>
+            <NavLink className="category-card-name" href={category.href}>{category.name}</NavLink>
           </div>
           <div className="category-card-description">{category.description}</div>
           <ul className="category-card-links">
             {links}
           </ul>
-          <a className="category-card-more-link" href={category.href}>More</a>
+          <NavLink className="category-card-more-link" href={category.href}>More</NavLink>
         </div>
       </div>
     );

@@ -1,5 +1,6 @@
 import tutorialNavigatorActions from '../action/tutorialNavigatorActions';
 import loadContent from '../action/loadContent';
+import selectCategory from '../action/selectCategory';
 
 export default {
 
@@ -10,7 +11,15 @@ export default {
     action: tutorialNavigatorActions.home
   },
 
-  quickstart: {
+  quickstarts: {
+    path: '/docs/quickstarts',
+    method: 'get',
+    handler: require('../components/QuickstartsPage'),
+    action: selectCategory,
+    category: 'quickstarts'
+  },
+
+  quickstartAppType: {
     path: '/docs/quickstart/:quickstartId',
     method: 'get',
     handler: require('../components/Home'),
@@ -31,28 +40,20 @@ export default {
     action: tutorialNavigatorActions.article
   },
 
-  sdks: {
-    path: '/docs/sdks',
-    method: 'get',
-    handler: require('../components/ArticlePage'),
-    action: loadContent,
-    section: 'sdks'
-  },
-
-  quickstarts: {
-    path: '/docs/quickstart',
-    method: 'get',
-    handler: require('../components/ArticlePage'),
-    action: loadContent,
-    section: 'quickstarts'
-  },
-
   apis: {
     path: '/docs/api/info',
     method: 'get',
     handler: require('../components/ArticlePage'),
     action: loadContent,
-    section: 'apis'
+    category: 'apis'
+  },
+
+  sdks: {
+    path: '/docs/sdks',
+    method: 'get',
+    handler: require('../components/SdksPage'),
+    action: selectCategory,
+    category: 'sdks'
   },
 
   appliance: {
@@ -60,7 +61,7 @@ export default {
     method: 'get',
     handler: require('../components/ArticlePage'),
     action: loadContent,
-    section: 'appliance'
+    category: 'appliance'
   },
 
   article: {
@@ -68,7 +69,7 @@ export default {
     method: 'get',
     handler: require('../components/ArticlePage'),
     action: loadContent,
-    section: 'articles'
+    category: 'articles'
   }
   
 };

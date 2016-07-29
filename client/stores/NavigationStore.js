@@ -6,7 +6,7 @@ class NavigationStore extends BaseStore {
   constructor(dispatcher) {
     super(dispatcher);
     this.navigation = null;
-    this.currentSection = null;
+    this.currentCategory = null;
   }
 
   getCategories() {
@@ -18,31 +18,53 @@ class NavigationStore extends BaseStore {
     }
   }
 
-  getCurrentSection() {
-    return this.currentSection;
+  getCards() {
+    if (this.navigation) {
+      return this.navigation.cards;
+    }
+    else {
+      return [];
+    }
+  }
+
+  getPlatforms() {
+    if (this.navigation) {
+      return this.navigation.platforms;
+    }
+    else {
+      return [];
+    }
+  }
+
+  getCurrentCategory() {
+    if (this.navigation && this.currentCategory) {
+      return _.find(this.navigation.categories, c => c.id == this.currentCategory);
+    }
+    else {
+      return undefined;
+    }
   }
 
   handleNavigationLoaded(payload) {
     this.navigation = payload.navigation;
-    this.currentSection = payload.currentSection;
     this.emitChange();
   }
 
-  handleSectionSelected(payload) {
-    this.currentSection = payload.section;
+  handleCategorySelected(payload) {
+    this.currentCategory = payload.category;
     this.emitChange();
   }
 
   dehydrate() {
     return {
       navigation: this.navigation,
-      currentSection: this.currentSection
+      currentCategory: this.currentCategory
     };
   }
 
   rehydrate(state) {
     this.navigation = state.navigation;
-    this.currentSection = state.currentSection;
+    this.currentCategory = state.currentCategory;
   }
   
 }
@@ -50,7 +72,7 @@ class NavigationStore extends BaseStore {
 NavigationStore.storeName = 'NavigationStore';
 NavigationStore.handlers = {
   'NAVIGATION_LOADED': 'handleNavigationLoaded',
-  'SECTION_SELECTED': 'handleSectionSelected'
+  'CATEGORY_SELECTED': 'handleCategorySelected'
 };
 
 export default NavigationStore;

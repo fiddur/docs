@@ -4,22 +4,13 @@ import {NavLink} from 'fluxible-router';
 import {connectToStores} from 'fluxible-addons-react';
 import SearchBox from './SearchBox';
 
-// TODO: Move this to a YAML file if necessary
-let Sections = [
-  {id: 'articles',    href: '/docs/overview',   text: 'Articles'},
-  {id: 'sdks',        href: '/docs/sdks',       text: 'SDKs'},
-  {id: 'quickstarts', href: '/docs/quickstart', text: 'QuickStarts'},
-  {id: 'apis',        href: '/docs/api/info',   text: 'APIs'},
-  {id: 'appliance',   href: '/docs/appliance',  text: 'Appliance'}
-];
-
-let NavigationTab = (section, currentSectionId) => {
-  let {id, href, text} = section;
+let NavigationTab = (category, currentCategory) => {
+  let {id, href, name} = category;
   let classes = ['nav-tab'];
-  if (currentSectionId == id) classes.push('active');
+  if (currentCategory && currentCategory.id == id) classes.push('active');
   return (
     <li key={id} className={classes.join(' ')}>
-      <NavLink href={href}>{text}</NavLink>
+      <NavLink href={href}>{name}</NavLink>
     </li>
   );
 };
@@ -28,7 +19,12 @@ class NavigationBar extends React.Component {
 
   render() {
 
-    let tabs = Sections.map(section => NavigationTab(section, this.props.currentSection));
+    let {categories, currentCategory} = this.props;
+
+    let tabs = undefined;
+    if (categories) {
+      tabs = categories.map(category => NavigationTab(category, currentCategory));
+    }
 
     return (
       <div className="navigation-bar">
@@ -49,8 +45,10 @@ NavigationBar.contextTypes = {
 };
 
 NavigationBar = connectToStores(NavigationBar, [NavigationStore], (context, props) => {
+  let store = context.getStore(NavigationStore);
   return {
-    currentSection: context.getStore(NavigationStore).getCurrentSection()
+    categories: store.getCategories(),
+    currentCategory: store.getCurrentCategory()
   };
 });
 
