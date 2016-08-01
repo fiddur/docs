@@ -70,6 +70,14 @@ export default {
     handler: require('../components/ArticlePage'),
     action: loadContent,
     category: 'articles'
+  },
+
+  error: {
+    path: '/error',
+    method: 'get',
+    handler: require('../components/ErrorPage'),
+    action: selectCategory,
+    category: 'articles'
   }
   
 };

@@ -7,13 +7,13 @@ export default function(req, res) {
 
   let ContentService = {};
 
-  ContentService.load = (id) => {
+  ContentService.load = (id, ignoreMissing) => {
     return new Promise((resolve, reject) => {
 
       let {pathname} = url.parse(req.url);
       let doc = docsByUrl[pathname];
 
-      if (!doc) {
+      if (!doc && !ignoreMissing) {
         var error = new Error('No content found at ' + req.url);
         error.status = 404;
         return reject(error);

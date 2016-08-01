@@ -1,12 +1,12 @@
 export default function loadContent(context, route, done) {
 
-  let {category, url} = route;
+  let {category, url, ignoreMissing} = route;
 
   context.dispatch('CONTENT_SELECTED', {url});
   context.dispatch('CATEGORY_SELECTED', {category});
 
   return context.getService('ContentService')
-  .load(url)
+  .load(url, ignoreMissing)
   .then(html => {
     context.dispatch('CONTENT_LOAD_SUCCESS', {url, html});
     if (done) done();

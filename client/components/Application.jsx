@@ -31,7 +31,8 @@ class Application extends React.Component {
       document.location = document.location;
     }
 
-    var Handler = this.props.currentRoute.handler;
+    var Handler = undefined;
+    if (this.props.currentRoute) Handler = this.props.currentRoute.handler;
 
     if (Handler) {
       if (this.props.currentNavigateError) {
