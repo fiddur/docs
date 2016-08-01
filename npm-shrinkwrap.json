@@ -2,7 +2,7 @@
   "name": "auth0-docs",
   "version": "2.0.0",
   "npm-shrinkwrap-version": "5.4.1",
-  "node-version": "v4.4.2",
+  "node-version": "v4.4.3",
   "dependencies": {
     "async": {
       "version": "0.2.10",
@@ -21867,13 +21867,11 @@
       }
     },
     "auth0-tutorial-navigator": {
-      "version": "3.2.0",
-      "from": "auth0-tutorial-navigator@git://github.com/auth0/tutorial-navigator.git#af90c24b9ec7f95e73a92f89e573109082c606de",
-      "resolved": "git://github.com/auth0/tutorial-navigator.git#af90c24b9ec7f95e73a92f89e573109082c606de",
+      "version": "3.3.0",
+      "resolved": "git://github.com/auth0/tutorial-navigator.git#ecd6d48e1ae48abf8c15dd916a51eb838038ec2f",
       "dependencies": {
         "auth0-styleguide": {
           "version": "2.2.7",
-          "from": "auth0-styleguide@git://github.com/auth0/styleguide.git#75412486e066f082a0873687cf29d6dc51b3bf33",
           "resolved": "git://github.com/auth0/styleguide.git#75412486e066f082a0873687cf29d6dc51b3bf33"
         },
         "flux": {
@@ -21889,8 +21887,8 @@
                   "resolved": "https://registry.npmjs.org/fbjs/-/fbjs-0.7.2.tgz",
                   "dependencies": {
                     "core-js": {
-                      "version": "1.2.6",
-                      "resolved": "https://registry.npmjs.org/core-js/-/core-js-1.2.6.tgz"
+                      "version": "1.2.7",
+                      "resolved": "https://registry.npmjs.org/core-js/-/core-js-1.2.7.tgz"
                     },
                     "isomorphic-fetch": {
                       "version": "2.2.1",
@@ -21951,8 +21949,8 @@
               "resolved": "https://registry.npmjs.org/fbjs/-/fbjs-0.1.0-alpha.7.tgz",
               "dependencies": {
                 "core-js": {
-                  "version": "1.2.6",
-                  "resolved": "https://registry.npmjs.org/core-js/-/core-js-1.2.6.tgz"
+                  "version": "1.2.7",
+                  "resolved": "https://registry.npmjs.org/core-js/-/core-js-1.2.7.tgz"
                 },
                 "promise": {
                   "version": "7.1.1",
@@ -24733,10 +24731,6 @@
               "resolved": "https://registry.npmjs.org/mime-db/-/mime-db-1.22.0.tgz"
             }
           }
-        },
-        "node-uuid": {
-          "version": "1.4.7",
-          "resolved": "https://registry.npmjs.org/node-uuid/-/node-uuid-1.4.7.tgz"
         },
         "oauth-sign": {
           "version": "0.8.1",
