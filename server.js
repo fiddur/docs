@@ -38,7 +38,6 @@ passport.deserializeUser(function(id, done) {
   });
 });
 
-server.set('views', path.join(__dirname, 'views'));
 server.set('view engine', 'jade');
 server.enable('trust proxy');
 
@@ -174,54 +173,5 @@ server.use(function(req, res, next) {
 });
 
 server.use(handlers.error);
-
-/*
-// TODO: Remove jade templates from error responses
-
-// error handlers
-function renderError(req, res, err) {
-  res.status(err.status || 500);
-  if (res.locals.json) {
-    res.json(err);
-  } else if (res.locals.jsonp) {
-    res.jsonp(err);
-  } else if (res.locals.embedded) {
-    res.render('error-embedded', err);
-  } else if (res.locals.framed) {
-    res.render('error-framed', err);
-  } else {
-    res.render('error', err);
-  }
-}
-
-// development error handler
-// will print stacktrace
-if (server.get('env') === 'development') {
-  server.use(function(err, req, res, next) {
-    renderError(req ,res, {
-      status: err.status,
-      message: err.message,
-      error: err
-    });
-  });
-}
-
-// production error handler
-// no stacktraces leaked to user
-server.use(function(err, req, res, next) {
-  var msg = strings.ERROR_PROCESSING_REQUEST;
-  if (err.status === 404) {
-    msg = strings.PAGE_NOT_FOUND;
-    winston.warn('Page not found: ' + req.url, { err: err });
-  } else {
-    winston.error('Error loading route: ' + req.url, { err: err });
-  }
-  renderError(req, res, {
-    status: err.status,
-    message: msg,
-    error: {}
-  });
-});
-*/
 
 export default server;
