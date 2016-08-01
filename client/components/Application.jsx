@@ -35,7 +35,10 @@ class Application extends React.Component {
     if (this.props.currentRoute) Handler = this.props.currentRoute.handler;
 
     if (Handler) {
-      if (this.props.currentNavigateError) {
+      if (this.props.error) {
+        Handler = <ErrorPage error={this.props.error} />;
+      }
+      else if (this.props.currentNavigateError) {
         var status = this.props.currentNavigateError.message === 'Not Found' ? 404 : 500;
         Handler = <ErrorPage status={status} />;
       }
@@ -44,7 +47,7 @@ class Application extends React.Component {
       }
     }
     else {
-      Handler = <ErrorPage status={404}  />;
+      Handler = <ErrorPage status={404} />;
     }
 
     return (
@@ -66,7 +69,8 @@ Application = connectToStores(
       currentPageName: appStore.getCurrentPageName(),
       pageTitle: appStore.getPageTitle(),
       pageDescription: appStore.getPageDescription(),
-      pages: appStore.getPages()
+      pages: appStore.getPages(),
+      error: props.error
     };
   }
 );

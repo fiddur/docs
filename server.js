@@ -10,7 +10,6 @@ import session from 'express-session';
 import nconf from 'nconf';
 import path from 'path';
 import winston from 'winston';
-import strings from './lib/strings';
 import handlers from './lib/handlers';
 import helmet from 'helmet';
 

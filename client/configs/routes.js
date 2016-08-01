@@ -75,9 +75,7 @@ export default {
   error: {
     path: '/error',
     method: 'get',
-    handler: require('../components/ErrorPage'),
-    action: selectCategory,
-    category: 'articles'
+    handler: require('../components/ErrorPage')
   }
   
 };

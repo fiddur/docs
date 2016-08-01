@@ -28,7 +28,7 @@ plugin.registerService('ContentService', ContentService);
 debug('rehydrating app');
 
 // pass in the dehydrated server state from server.js
-app.rehydrate(dehydratedState, (err, context) => {
+app.rehydrate(dehydratedState, (err, context, props) => {
 
   if (err) {
     throw err;
@@ -36,7 +36,7 @@ app.rehydrate(dehydratedState, (err, context) => {
 
   window.context = context;
 
-  const element = createElementWithContext(context, {message: "i am on the client"});
+  const element = createElementWithContext(context);
   const mountPoint = document.getElementById('app');
 
   debug('React Rendering');
