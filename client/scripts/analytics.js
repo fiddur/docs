@@ -1,6 +1,22 @@
-export default function analytics(segmentKey, dwhEndpoint) {
-  if (!segmentKey) return;
+function initMouseflow(mouseflowId) {
+  if (!mouseflowId) return;
+  var _mfq = _mfq || [];
+  (function() {
+    var mf = document.createElement("script");
+    mf.type = 'text/javascript'; mf.async = true;
+    mf.src = `//cdn.mouseflow.com/projects/#{mouseflowId}.js`;
+    document.getElementsByTagName("head")[0].appendChild(mf);
+  })();
+  window.initMouseflow = function initMouseflow() {
+    window._mfq = window._mfq || [];
+    if (window.metricsLib && window.metricsLib.dwh) {
+      window._mfq.push(['setVariable', 'ANON_ID', window.metricsLib.dwh.anonymousId()]);        
+    }
+  };
+}
 
+function initSegment(segmentKey, dwhEndpoint) {
+  if (!segmentKey) return;
   var metricsLib = window.metricsLib = window.metricsLib || [];
   // A list of the methods in metrics.js to stub.
   metricsLib.methods = [
@@ -29,6 +45,7 @@ export default function analytics(segmentKey, dwhEndpoint) {
   metricsLib.load = function(segmentKey, dwhEndpoint){
     if(null != window.Auth0Metrics){
       metricsLib = window.metricsLib = new Auth0Metrics(segmentKey, dwhEndpoint, 'docs');
+      metricsLib.ready(window.initMouseflow);
     }else{
       var script = document.createElement('script');
       script.type = 'text/javascript';
@@ -55,4 +72,9 @@ export default function analytics(segmentKey, dwhEndpoint) {
   else {
     console.error("DWH_ENDPOINT must be defined for tracking to work.")
   }
+}
+
+export default function analytics(mouseflowId, segmentKey, dwhEndpoint) {
+  initMouseflow(mouseflowId);
+  initSegment(segmentKey, dwhEndpoint);
 };

@@ -29,7 +29,7 @@ nconf.file('global', { file: config_file })
     'DOMAIN_URL_DOCS':   'http://localhost:3000/docs',
     'DOMAIN_URL_API2_EXPLORER': 'login0.myauth0.com',
     'WIDGET_FALLBACK_CLIENTID': 'aCbTAJNi5HbsjPJtRpSP6BIoLPOrSj2C',
-    'LOGIN_WIDGET_URL':  'https://cdn.auth0.com/js/lock-9.0.min.js',
+    'LOGIN_WIDGET_URL':  'https://cdn.auth0.com/js/lock/10.0/lock.min.js',
     'LOCK_PASSWORDLESS_URL':  'https://cdn.auth0.com/js/lock-passwordless-1.0.min.js',
     'AUTH0JS_URL':       'https://cdn.auth0.com/w2/auth0-6.8.min.js',
     'AUTH0_ANGULAR_URL': 'http://cdn.auth0.com/w2/auth0-angular-1.1.js',
@@ -51,7 +51,8 @@ nconf.file('global', { file: config_file })
     'LOG_TO_WEB_LEVEL':     'error',
     'SEARCH_ENGINE_ID': '010795999221123445302:urkvlewda8q', // Google Site Search ID
     'PINGDOM_ID': process.env.NODE_ENV === 'production' ? '565cb401abe53d7b2cda7732' : false,
-    'SENTRY_DSN': process.env.NODE_ENV === 'production' ? 'https://29ef6b5c3bbd4b9ba9f5710014e20c03@app.getsentry.com/57750' : false
+    'SENTRY_DSN': process.env.NODE_ENV === 'production' ? 'https://29ef6b5c3bbd4b9ba9f5710014e20c03@app.getsentry.com/57750' : false,
+    'MOUSEFLOW_ID': process.env.NODE_ENV === 'production' ? '1f318101-e4cd-4d84-b95e-6a0e6771798d' : false
   });
 
 if (nconf.get('COOKIE_NAME') !== 'auth0l') {

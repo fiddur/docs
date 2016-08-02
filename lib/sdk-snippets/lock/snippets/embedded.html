@@ -1,29 +1,29 @@
-<div id="root" style="width: 280px; margin: 40px auto; padding: 10px; border-style: dashed; border-width: 1px;">
+<div id="root" style="width: 320px; margin: 40px auto; padding: 10px; border-style: dashed; border-width: 1px; box-sizing: border-box;">
     embeded area
 </div>
 <script src="<%= widget_url %>"></script>
 <script>
-  <% if (!assetsUrl) { %>
-  var lock = new Auth0Lock('<%= account.clientId %>', '<%= account.namespace %>');
-  <% } else { %>
-  var lock = new Auth0Lock('<%= account.clientId %>', '<%= account.namespace %>', {
-    assetsUrl: '<%= assetsUrl %>'
-  });
-  <% } %>
-  <% if (callbackOnHash) { %>
-  var result = lock.parseHash(location.hash);
-  if (result) {
-    lock.getProfile(result.id_token, function (err, profile) {
-      // store result.id_token and profile in local storage or cookie
-    });
-  }
-  <% } %>
-  lock.show({
-      container: 'root'
-    , callbackURL: '<%= account.callback %>'
-    , responseType: '<%= callbackOnHash ? "token" : "code" %>'<% if (!callbackOnHash) { %>
-    , authParams: {
-      scope: 'openid email'  // Learn about scopes: https://auth0.com/docs/scopes 
-    }<% } %>
-  });
+   var lock = new Auth0Lock('<%= account.clientId %>', '<%= account.namespace %>', {
+     container: 'root',
+   <%_ if (assetsUrl) { _%>
+     assetsUrl: '<%= assetsUrl %>',
+   <%_ } _%>
+     auth: {
+       redirectUrl: '<%= account.callback %>',
+       responseType: <%- callbackOnHash ? "'token'" : "'code'," %>
+     <%_ if (!callbackOnHash) { _%>
+       params: {
+         scope: 'openid email' // Learn about scopes: https://auth0.com/docs/scopes
+       }
+     <%_ } _%>
+     }
+   });
+ <%_ if (callbackOnHash) { _%>
+
+   lock.on('authenticated', function(authResult) {
+     lock.getProfile(authResult.idToken, function (error, profile) {
+       // store authResult.idToken and profile in local storage or cookie
+     });
+   });
+<%_ } _%>
 </script>

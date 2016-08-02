@@ -75,7 +75,7 @@ class Layout extends React.Component {
           <script src="//cdn.auth0.com/styleguide/vendor/bootstrap-3.2.0.min.js"></script>
           <script src={getAssetBundleUrl('commons')}></script>
           <script src={getAssetBundleUrl('browser')}></script>
-          <script src={this.props.env['LOGIN_WIDGET_URL_NOSCHEME']}></script>
+          <script src="https://cdn.auth0.com/js/lock-9.2.min.js"></script>
 
         </head>
         <body>

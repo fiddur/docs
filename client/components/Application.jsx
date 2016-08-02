@@ -14,7 +14,7 @@ class Application extends React.Component {
   componentDidMount() {
     let {env} = this.props;
     pingdom(env['PINGDOM_ID']);
-    analytics(env['SEGMENT_KEY'], env['DWH_ENDPOINT']);
+    analytics(env['MOUSEFLOW_ID'], env['SEGMENT_KEY'], env['DWH_ENDPOINT']);
     locksso(env['AUTH0_CLIENT_ID'], env['AUTH0_DOMAIN']);
   }
 
