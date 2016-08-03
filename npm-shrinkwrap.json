@@ -2,7 +2,7 @@
   "name": "auth0-docs",
   "version": "2.0.0",
   "npm-shrinkwrap-version": "5.4.1",
-  "node-version": "v4.4.3",
+  "node-version": "v4.3.2",
   "dependencies": {
     "async": {
       "version": "0.2.10",
@@ -180,8 +180,8 @@
       "resolved": "git://github.com/auth0/styleguide.git#257e73d46ed0242aa6c53099a622eb212ef36f91"
     },
     "auth0-tutorial-navigator": {
-      "version": "3.3.0",
-      "resolved": "git://github.com/auth0/tutorial-navigator.git#ecd6d48e1ae48abf8c15dd916a51eb838038ec2f",
+      "version": "3.3.2",
+      "resolved": "git://github.com/auth0/tutorial-navigator.git#31997d3da0455d3575466251ba156de1578c572e",
       "dependencies": {
         "auth0-styleguide": {
           "version": "2.2.7",
@@ -208,8 +208,8 @@
                       "resolved": "https://registry.npmjs.org/isomorphic-fetch/-/isomorphic-fetch-2.2.1.tgz",
                       "dependencies": {
                         "node-fetch": {
-                          "version": "1.5.3",
-                          "resolved": "https://registry.npmjs.org/node-fetch/-/node-fetch-1.5.3.tgz",
+                          "version": "1.6.0",
+                          "resolved": "https://registry.npmjs.org/node-fetch/-/node-fetch-1.6.0.tgz",
                           "dependencies": {
                             "encoding": {
                               "version": "0.1.12",
