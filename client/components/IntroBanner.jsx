@@ -1,5 +1,6 @@
 import React from 'react';
 import ReactCSSTransitionGroup from 'react/lib/ReactCSSTransitionGroup';
+import { provideContext } from 'fluxible-addons-react';
 
 const LOCAL_STORAGE_KEY = 'intro-dismissed';
 
@@ -16,6 +17,14 @@ class IntroBanner extends React.Component {
   }
 
   handleCloseClick() {
+    this.context.trackEvent('click:quickstart-cta', {
+      path: window.location.pathname,
+      url: window.location.toString(),
+      title: document.title,
+      referrer: document.referrer,
+      category: 'Intro',
+      label: 'docs'
+    });
     window.localStorage.setItem(LOCAL_STORAGE_KEY, true);
     this.setState({dismissed: true});
   }
@@ -48,5 +57,9 @@ class IntroBanner extends React.Component {
   }
 
 }
+
+IntroBanner.contextTypes = {
+  trackEvent: React.PropTypes.func.isRequired,
+};
 
 export default IntroBanner;
