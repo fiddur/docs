@@ -1,6 +1,7 @@
 import React from 'react';
 import SearchBox from './SearchBox';
 import TryBanner from './TryBanner';
+import IntroBanner from './IntroBanner';
 import { TutorialStore, Breadcrumbs, Tutorial, TutorialTableOfContents, TutorialPrevNext } from 'auth0-tutorial-navigator';
 import { connectToStores, provideContext } from 'fluxible-addons-react';
 import { quickstartNavigationAction } from '../action/quickstartNavigationAction';
@@ -128,6 +129,7 @@ class TutorialPage extends React.Component {
                 <Breadcrumbs {...this.props} customNavigationAction={quickstartNavigationAction} />
               </div>
               <section className="docs-content">
+                <IntroBanner />
                 <h1 className="tutorial-title">{this.renderTitle()}</h1>
                 {tutorial}
                 {prevNext}
