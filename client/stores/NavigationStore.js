@@ -6,12 +6,34 @@ class NavigationStore extends BaseStore {
   constructor(dispatcher) {
     super(dispatcher);
     this.navigation = null;
-    this.currentCategory = null;
+    this.currentSection = null;
   }
 
-  getCategories() {
+  getSections() {
     if (this.navigation) {
-      return this.navigation.categories;
+      return this.navigation.sections;
+    }
+    else {
+      return [];
+    }
+  }
+
+  getCurrentSection() {
+    return this.currentSection;
+  }
+
+  getSectionForArticle(url) {
+    if (this.navigation) {
+      return this.navigation.sectionsByArticle[url];
+    }
+    else {
+      return undefined;
+    }
+  }
+
+  getCurrentSidebarArticles() {
+    if (this.navigation && this.currentSection) {
+      return this.navigation.sidebar[this.currentSection];
     }
     else {
       return [];
@@ -36,35 +58,26 @@ class NavigationStore extends BaseStore {
     }
   }
 
-  getCurrentCategory() {
-    if (this.navigation && this.currentCategory) {
-      return _.find(this.navigation.categories, c => c.id == this.currentCategory);
-    }
-    else {
-      return undefined;
-    }
-  }
-
   handleNavigationLoaded(payload) {
     this.navigation = payload.navigation;
     this.emitChange();
   }
 
-  handleCategorySelected(payload) {
-    this.currentCategory = payload.category;
+  handleSectionSelected(payload) {
+    this.currentSection = payload.section;
     this.emitChange();
   }
 
   dehydrate() {
     return {
       navigation: this.navigation,
-      currentCategory: this.currentCategory
+      currentSection: this.currentSection
     };
   }
 
   rehydrate(state) {
     this.navigation = state.navigation;
-    this.currentCategory = state.currentCategory;
+    this.currentSection = state.currentSection;
   }
   
 }
@@ -72,7 +85,7 @@ class NavigationStore extends BaseStore {
 NavigationStore.storeName = 'NavigationStore';
 NavigationStore.handlers = {
   'NAVIGATION_LOADED': 'handleNavigationLoaded',
-  'CATEGORY_SELECTED': 'handleCategorySelected'
+  'SECTION_SELECTED': 'handleSectionSelected'
 };
 
 export default NavigationStore;

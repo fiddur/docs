@@ -1,0 +1,41 @@
+articles:
+
+  - title: "Applications"
+    url: "/applications"
+    icon: "icon-budicon-499"
+
+  - title: "Multifactor Authentication"
+    url: "/multifactor-authentication"
+    children:
+      
+      - title: "Google Auth"
+        url: "/multifactor-authentication/google-auth/google-landing"
+        children:
+
+          - title: "Admin Guide"
+            url: "/multifactor-authentication/google-auth/admin-guide"
+
+          - title: "Dev Guide"
+            url: "/multifactor-authentication/google-auth/dev-guide"
+
+          - title: "User Guide"
+            url: "/multifactor-authentication/google-auth/user-guide"
+  
+  - title: "Single Sign-On"
+    url: "/sso"
+
+apis:
+
+  - title: "Overview"
+    url: "/api/info"
+
+  - title: "Postman"
+    url: "/api/postman"
+
+appliance:
+
+  - title: "Overview"
+    url: "/appliance"
+  
+  - title: "Monitoring"
+    url: /monitoring"

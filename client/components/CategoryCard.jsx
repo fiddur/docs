@@ -4,7 +4,7 @@ import {NavLink} from 'fluxible-router';
 
 let ArticleLink = ({article}) => (
   <li className="category-card-link">
-    <NavLink href={article.href}>{article.name}</NavLink>
+    <NavLink href={article.url}>{article.title}</NavLink>
   </li>
 );
 
@@ -16,7 +16,7 @@ class CategoryCard extends React.Component {
 
     let articles = _.take(category.articles, articleCount);
     let links = articles.map(article => (
-      <ArticleLink key={article.href} article={article} />
+      <ArticleLink key={article.url} article={article} />
     ));
 
     return (
@@ -24,13 +24,13 @@ class CategoryCard extends React.Component {
         <div className="category-card">
           <div className="category-card-header">
             <i className={category.icon + ' ' + category.color} />
-            <NavLink className="category-card-name" href={category.href}>{category.name}</NavLink>
+            <NavLink className="category-card-name" href={category.url}>{category.title}</NavLink>
           </div>
           <div className="category-card-description">{category.description}</div>
           <ul className="category-card-links">
             {links}
           </ul>
-          <NavLink className="category-card-more-link" href={category.href}>More</NavLink>
+          <NavLink className="category-card-more-link" href={category.url}>More</NavLink>
         </div>
       </div>
     );

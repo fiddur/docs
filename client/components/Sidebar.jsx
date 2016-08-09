@@ -3,27 +3,27 @@ import NavigationStore from '../stores/NavigationStore';
 import {NavLink} from 'fluxible-router';
 import {connectToStores} from 'fluxible-addons-react';
 
-let SidebarItem = ({item, currentDepth, maxDepth}) => {
+let SidebarItem = ({article, currentDepth, maxDepth}) => {
 
   let children = undefined;
-  if (item.children && currentDepth < maxDepth) {
+  if (article.children && currentDepth < maxDepth) {
     let newDepth = currentDepth + 1;
-    let items = item.children.map(child => (
-      <SidebarItem key={child.href} item={child} currentDepth={newDepth} maxDepth={maxDepth} />
+    let items = article.children.map(child => (
+      <SidebarItem key={child.url} article={child} currentDepth={newDepth} maxDepth={maxDepth} />
     ));
     children = <ul className={"sidebar-item-list sidebar-item-list-depth" + newDepth}>{items}</ul>;
   }
 
   let icon = undefined;
-  if (item.icon) {
-    icon = <i className={"sidebar-item-icon " + item.icon} />;
+  if (article.icon) {
+    icon = <i className={"sidebar-item-icon " + article.icon} />;
   }
 
   return (
     <li className={'sidebar-item sidebar-item-depth' + currentDepth}>
-      <NavLink href={item.href}>
+      <NavLink href={article.url}>
         {icon}
-        <span className="sidebar-item-name">{item.name}</span>
+        <span className="sidebar-item-name">{article.title}</span>
       </NavLink>
       {children}
     </li>
@@ -35,19 +35,19 @@ class Sidebar extends React.Component {
 
   render() {
 
-    let {category, currentDocumentId, maxDepth} = this.props;
+    let {articles, maxDepth} = this.props;
 
-    let children = undefined;
-    if (category && category.children) {
-      children = category.children.map(category => (
-        <SidebarItem key={category.href} item={category} currentDepth={0} maxDepth={maxDepth} />
+    let items = undefined;
+    if (articles) {
+      items = articles.map(article => (
+        <SidebarItem key={article.url} article={article} currentDepth={0} maxDepth={maxDepth} />
       ));
     }
 
     return (
       <div className="sidebar">
         <ul className="sidebar-item-list sidebar-item-list-depth0">
-          {children}
+          {items}
         </ul>
       </div>
     );
@@ -66,7 +66,7 @@ Sidebar.contextTypes = {
 
 Sidebar = connectToStores(Sidebar, [NavigationStore], (context, props) => {
   return {
-    category: context.getStore(NavigationStore).getCurrentCategory()
+    articles: context.getStore(NavigationStore).getCurrentSidebarArticles()
   };
 });
 

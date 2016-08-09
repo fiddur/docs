@@ -1,6 +1,6 @@
 import tutorialNavigatorActions from '../action/tutorialNavigatorActions';
 import loadContent from '../action/loadContent';
-import selectCategory from '../action/selectCategory';
+import selectSection from '../action/selectSection';
 
 export default {
 
@@ -15,8 +15,7 @@ export default {
     path: '/docs/quickstarts',
     method: 'get',
     handler: require('../components/QuickstartsPage'),
-    action: selectCategory,
-    category: 'quickstarts'
+    action: selectSection
   },
 
   quickstartAppType: {
@@ -44,40 +43,35 @@ export default {
     path: '/docs/api/info',
     method: 'get',
     handler: require('../components/ArticlePage'),
-    action: loadContent,
-    category: 'apis'
+    action: loadContent
   },
 
   sdks: {
     path: '/docs/sdks',
     method: 'get',
     handler: require('../components/SdksPage'),
-    action: selectCategory,
-    category: 'sdks'
+    action: selectSection
   },
 
   appliance: {
     path: '/docs/appliance',
     method: 'get',
     handler: require('../components/ArticlePage'),
-    action: loadContent,
-    category: 'appliance'
+    action: loadContent
   },
 
   article: {
     path: '/docs/*',
     method: 'get',
     handler: require('../components/ArticlePage'),
-    action: loadContent,
-    category: 'articles'
+    action: loadContent
   },
 
   error: {
     path: '/error',
     method: 'get',
     handler: require('../components/ErrorPage'),
-    action: selectCategory,
-    default: 'articles'
+    action: selectSection
   }
   
 };
