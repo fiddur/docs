@@ -70,3 +70,9 @@ if (!nconf.get('AUTH0JS_URL')) {
 if (!nconf.get('AUTH0_DOMAIN') && nconf.get('AUTH0_TENANT') && nconf.get('DOMAIN_URL_SERVER')) {
   nconf.set('AUTH0_DOMAIN', nconf.get('DOMAIN_URL_SERVER').replace('{tenant}', nconf.get('AUTH0_TENANT')));
 }
+
+if (nconf.get('HEROKU_APP_NAME')) {
+  // App is running in heroku, set some configs
+  nconf.set('DOMAIN_URL_DOCS', 'https://' + nconf.get('HEROKU_APP_NAME') + '.herokuapp.com/docs');
+  nconf.set('DOMAIN_URL_APP', 'https://manage.auth0.com');
+}
