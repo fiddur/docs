@@ -90,6 +90,7 @@ class TutorialPage extends React.Component {
     let tutorial = undefined;
     let sidebar = undefined;
     let prevNext = undefined;
+    let classes = ['col-sm-9'];
 
     if (platform && platform.articles.length > 1) {
       sidebar = <div className="col-sm-3">
@@ -99,6 +100,9 @@ class TutorialPage extends React.Component {
           currentArticle={article}
           customNavigationAction={quickstartNavigationAction} />
       </div>;
+    }
+    else {
+      classes.push('col-centered');
     }
 
     if (article) {
@@ -120,7 +124,7 @@ class TutorialPage extends React.Component {
         <div className="js-doc-template container">
           <div className="row">
             {sidebar}
-            <div className="col-sm-9">
+            <div className={classes.join(' ')}>
               <div className="navigation">
                 <Breadcrumbs {...this.props} customNavigationAction={quickstartNavigationAction} />
               </div>
