@@ -15,7 +15,7 @@ export default {
     path: '/docs/quickstarts',
     method: 'get',
     handler: require('../components/QuickstartsPage'),
-    action: selectSection
+    action: tutorialNavigatorActions.quickstartList
   },
 
   quickstartAppType: {

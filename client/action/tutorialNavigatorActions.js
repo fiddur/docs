@@ -15,6 +15,17 @@ export default {
     ]);
   },
 
+  quickstartList: function(context) {
+    context.dispatch('LOAD_TUTORIAL_NAVIGATOR', {});
+    return Promise.all([
+      getPageMetadata().then(metadata => {
+        context.dispatch('UPDATE_PAGE_METADATA', metadata);
+        context.trackPage();
+      }),
+      context.executeAction(selectSection, {section: 'quickstarts'})
+    ]);
+  },
+
   quickstart: function(context, payload) {
     let {quickstartId} = payload.params;
     let quickstarts = context.getStore(TutorialStore).getQuickstarts();
