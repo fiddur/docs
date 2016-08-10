@@ -24,6 +24,25 @@ class ArticlePage extends React.Component {
   */
 
   render() {
+
+    let {html} = this.props;
+
+    let content = undefined;
+    if (!html) {
+      content = (
+        <section className="docs-content">
+          <div className='auth0-spinner'>
+            <div className='spinner'></div>
+          </div>
+        </section>
+      );
+    }
+    else {
+      content = (
+        <section className="docs-content" dangerouslySetInnerHTML={{__html: html}} />
+      );
+    }
+
     return (
       <div className="document">
         <NavigationBar />
@@ -32,8 +51,8 @@ class ArticlePage extends React.Component {
             <div className="col-sm-3">
               <Sidebar maxDepth={2} />
             </div>
-            <div className="col-sm-9">
-              <section ref="content" className="docs-content" dangerouslySetInnerHTML={{__html: this.props.html}} />
+            <div ref="content" className="col-sm-9">
+              {content}
             </div>
           </div>
         </div>
