@@ -22,12 +22,10 @@ class SdksPage extends React.Component {
       <div className="document">
         <NavigationBar />
         <div className="container">
-          <div className="col-sm-12">
-            <ul className="sdk-platform-list circle-list">
-              <h1>Select a platform</h1>
-              {items}
-            </ul>
-          </div>
+          <ul className="sdk-platform-list circle-list">
+            <h1>Select a platform</h1>
+            {items}
+          </ul>
         </div>
       </div>
     );
