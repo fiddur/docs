@@ -1,10 +1,14 @@
+import {parse, format} from 'url';
+
 let ContentService = {};
 
 ContentService.load = (url) => {
 
-  let requestUrl = url + "?e=1";
+  let requestUrl = parse(url);
+  if (!requestUrl.query) requestUrl.query = {};
+  requestUrl.query.e = 1;
 
-  return fetch(requestUrl, {credentials: 'include'})
+  return fetch(format(requestUrl), {credentials: 'include'})
   .then(response => {
     if (response.status >= 200 && response.status < 400) {
       return response;

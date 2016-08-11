@@ -1,6 +1,12 @@
 import { BaseStore } from 'fluxible/addons';
 import _ from 'lodash';
 
+export const ContentState = {
+  LOADING: 'LOADING',
+  LOADED: 'LOADED',
+  ERROR: 'ERROR'
+};
+
 class ContentStore extends BaseStore {
   
   constructor(dispatcher) {
@@ -9,16 +15,26 @@ class ContentStore extends BaseStore {
     this.content = {};
   }
 
+  getContent(url) {
+    return this.content[url] || undefined;
+  }
+
   getCurrentContentUrl() {
     return this.currentContentUrl;
   }
   
   getCurrentContentHtml() {
-    if (this.currentContentUrl) {
-      return this.content[this.currentContentUrl];
+    if (!this.currentContentUrl) {
+      return undefined;
     }
     else {
-      return undefined;
+      let content = this.content[this.currentContentUrl];
+      if (content) {
+        return content.html || undefined;
+      }
+      else {
+        return undefined;
+      }
     }
   }
 
@@ -26,15 +42,27 @@ class ContentStore extends BaseStore {
     this.currentContentUrl = payload.url;
     this.emitChange();
   }
+
+  handleContentLoading(payload) {
+    let {url} = payload;
+    this.content[url] = {state: ContentState.LOADING};
+    this.emitChange();
+  }
   
   handleContentLoaded(payload) {
     let {url, html} = payload;
-    this.content[url] = html;
+    let content = this.content[url];
+    content.state = ContentState.LOADED;
+    content.html = html;
     this.emitChange();
   }
   
   handleContentLoadFailure(payload) {
-    // TODO: Handle the error
+    let {url, err} = payload;
+    let content = this.content[url];
+    content.state = ContentState.ERROR;
+    content.error = err;
+    this.emitChange();
   }
   
   dehydrate() {
@@ -54,6 +82,7 @@ class ContentStore extends BaseStore {
 ContentStore.storeName = 'ContentStore';
 ContentStore.handlers = {
   'CONTENT_SELECTED':     'handleContentSelected',
+  'CONTENT_LOADING':      'handleContentLoading',
   'CONTENT_LOAD_SUCCESS': 'handleContentLoaded',
   'CONTENT_LOAD_FAILURE': 'handleContentLoadFailure'
 };

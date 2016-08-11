@@ -7,8 +7,16 @@ import Sidebar from './Sidebar';
 
 class ArticlePage extends React.Component {
 
-  /*
   componentDidMount() {
+    this.captureClicks();
+  }
+
+  componentDidUpdate() {
+    this.captureClicks();
+    this.scrollToAnchor();
+  }
+
+  captureClicks() {
     $('a', this.refs.content).click(evt => {
       let {href} = evt.currentTarget;
       let location = window.location;
@@ -16,12 +24,18 @@ class ArticlePage extends React.Component {
       if (href.indexOf(origin) == 0) {
         evt.preventDefault();
         let url = href.substring(origin.length) || '/'
-        context.executeAction(navigateAction, {url});
+        context.executeAction(navigateAction, {url, preserveScrollPosition: false});
         return false;
       }
     });
   }
-  */
+
+  scrollToAnchor() {
+    if (location.hash) {
+      let anchor = document.getElementById(location.hash.substr(1));
+      if (anchor) anchor.scrollIntoView();
+    }
+  }
 
   render() {
 
