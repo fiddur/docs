@@ -7,6 +7,10 @@ import Sidebar from './Sidebar';
 
 class ArticlePage extends React.Component {
 
+  /*
+  TODO: This code is used to enable partial refreshing between articles, but it's
+  currently disabled because it doesn't support redirects.
+
   componentDidMount() {
     this.captureClicks();
   }
@@ -36,6 +40,7 @@ class ArticlePage extends React.Component {
       if (anchor) anchor.scrollIntoView();
     }
   }
+  */
 
   render() {
 

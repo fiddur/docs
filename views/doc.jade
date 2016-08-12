@@ -1,0 +1,7 @@
+extends standard
+
+block content
+  != sections.content
+  
+  - if (editUrl)
+    a.fixit(href="#{editUrl}", target="_blank") Suggestions? Typos? Edit this document on GitHub
