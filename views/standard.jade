@@ -35,9 +35,10 @@ block body
     //- Start content
     .js-doc-template.container
       .row
-        //.col-sm-3!= locals.sidebar
+        .col-sm-3
+          block sidebar
 
-        .col-sm-9.col-centered
+        .col-sm-9
           section.docs-content
             block content
             

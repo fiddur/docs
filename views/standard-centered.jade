@@ -34,11 +34,13 @@ block body
 
     //- Start content
     .js-doc-template.container
-      section.docs-content
-        block content
-        
-      - if (!locals.user)
-        #try-banner
-          include ../node_modules/auth0-styleguide/lib/try-banner/demo.jade
+      .row
+        .col-sm-9.col-centered
+          section.docs-content
+            block content
+            
+          - if (!locals.user)
+            #try-banner
+              include ../node_modules/auth0-styleguide/lib/try-banner/demo.jade
           
     include ../node_modules/auth0-styleguide/lib/footer/demo.jade
