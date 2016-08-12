@@ -37,7 +37,7 @@ articles:
     children:
 
       - title: "Google Auth"
-        url: "/multifactor-authentication/google-auth/google-landing"
+        url: "/multifactor-authentication/google-authenticator"
         children:
 
           - title: "Admin Guide"

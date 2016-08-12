@@ -7,7 +7,8 @@ export default function selectSection(context, payload, done) {
 
   if (!section && url) {
     let {pathname} = parse(url);
-    section = context.getStore(NavigationStore).getMetadata(pathname).section;
+    let metadata = context.getStore(NavigationStore).getMetadata(pathname);
+    section = metadata ? metadata.section : 'articles';
   }
 
   context.dispatch('SECTION_SELECTED', {section});

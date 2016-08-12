@@ -40,14 +40,15 @@ class Application extends React.Component {
       }
       else if (this.props.currentNavigateError) {
         var status = this.props.currentNavigateError.message === 'Not Found' ? 404 : 500;
-        Handler = <ErrorPage status={status} />;
+        Handler = <ErrorPage error={this.props.currentNavigateError} />;
       }
       else {
         Handler = <Handler />;
       }
     }
     else {
-      Handler = <ErrorPage status={404} />;
+      let error = {message: 'Not Found', status: 404};
+      Handler = <ErrorPage error={error} />;
     }
 
     return (

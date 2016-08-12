@@ -11,10 +11,12 @@ export default function loadContent(context, route, done) {
   context.dispatch('CONTENT_SELECTED', {url});
 
   let metadata = context.getStore(NavigationStore).getMetadata(url);
-  context.dispatch('UPDATE_PAGE_METADATA', {
-    pageTitle: metadata.title,
-    pageDescription: metadata.description
-  });
+  if (metadata) {
+    context.dispatch('UPDATE_PAGE_METADATA', {
+      pageTitle: metadata.title,
+      pageDescription: metadata.description
+    });
+  }
 
   let success = (html) => {
     context.executeAction(selectSection, {url});

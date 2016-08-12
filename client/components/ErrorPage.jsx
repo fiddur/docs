@@ -19,7 +19,8 @@ class ErrorPage extends React.Component {
             <div className="col-sm-9">
               <section className="docs-content">
                 <h1>{error.title}</h1>
-                <h2>{error.status}</h2>
+                <h2>Error {error.statusCode}</h2>
+                <p>{error.message}</p>
                 <pre>{error.stack}</pre>
               </section>
             </div>
