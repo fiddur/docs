@@ -22,9 +22,9 @@ class NavigationStore extends BaseStore {
     return this.currentSection;
   }
 
-  getSectionForArticle(url) {
+  getMetadata(url) {
     if (this.navigation) {
-      return this.navigation.sectionsByArticle[url];
+      return this.navigation.metadata[url];
     }
     else {
       return undefined;

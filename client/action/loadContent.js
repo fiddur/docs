@@ -1,6 +1,7 @@
 import {parse} from 'url';
 import selectSection from './selectSection';
 import ContentStore, {ContentState} from '../stores/ContentStore';
+import NavigationStore from '../stores/NavigationStore';
 
 export default function loadContent(context, route, done) {
 
@@ -8,6 +9,12 @@ export default function loadContent(context, route, done) {
   let url = parse(route.url).pathname;
 
   context.dispatch('CONTENT_SELECTED', {url});
+
+  let metadata = context.getStore(NavigationStore).getMetadata(url);
+  context.dispatch('UPDATE_PAGE_METADATA', {
+    pageTitle: metadata.title,
+    pageDescription: metadata.description
+  });
 
   let success = (html) => {
     context.executeAction(selectSection, {url});

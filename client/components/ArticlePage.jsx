@@ -99,9 +99,13 @@ class ArticlePage extends React.Component {
 }
 
 ArticlePage = connectToStores(ArticlePage, [ContentStore], (context, props) => {
+  let appStore = context.getStore(ApplicationStore);
+  let contentStore = context.getStore(ContentStore);
   return {
-    env: context.getStore(ApplicationStore).getEnvironmentVars(),
-    html: context.getStore(ContentStore).getCurrentContentHtml()
+    env: appStore.getEnvironmentVars(),
+    title: appStore.getPageTitle(),
+    description: appStore.getPageDescription(),
+    html: contentStore.getCurrentContentHtml()
   };
 });
 

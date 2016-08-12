@@ -66,10 +66,7 @@ Application = connectToStores(
     var appStore = context.getStore(ApplicationStore);
     return {
       env: appStore.getEnvironmentVars(),
-      currentPageName: appStore.getCurrentPageName(),
       pageTitle: appStore.getPageTitle(),
-      pageDescription: appStore.getPageDescription(),
-      pages: appStore.getPages(),
       error: props.error
     };
   }

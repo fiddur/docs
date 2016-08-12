@@ -4,8 +4,8 @@ import { getAssetBundleUrl } from '../../lib/utils';
 class Layout extends React.Component {
 
   title() {
-    if (this.props.title) {
-      return this.props.title;
+    if (this.props.pageTitle) {
+      return this.props.pageTitle;
     }
     else if (this.props.site && this.props.site.title) {
       return this.props.site.title;
@@ -16,7 +16,7 @@ class Layout extends React.Component {
   }
 
   description() {
-    return this.props.description || 'Get started using Auth0. Implement authentication for any kind of application in minutes.';
+    return this.props.pageDescription || 'Get started using Auth0. Implement authentication for any kind of application in minutes.';
   }
 
   canonicalUrl() {
