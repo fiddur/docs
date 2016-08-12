@@ -40,6 +40,15 @@ class Layout extends React.Component {
 
   render() {
 
+    let header, footer = undefined;
+    if (this.props.env['RENDER_MODE'] == 'framed') {
+      footer = <footer><span>Powered by <a href="//auth0.com">Auth0</a></span></footer>;
+    }
+    else {
+      header = <header className="site-header" dangerouslySetInnerHTML={{__html: this.props.header}}></header>;
+      footer = <div id="footer" dangerouslySetInnerHTML={{__html: this.props.footer}}></div>;
+    }
+
     return (
       <html>
         <head>
@@ -80,9 +89,9 @@ class Layout extends React.Component {
         </head>
         <body>
           <div className={this.props.className}>
-            <header className="site-header" dangerouslySetInnerHTML={{__html: this.props.header}}></header>
+            {header}
             <div id="app" dangerouslySetInnerHTML={{__html: this.props.markup}}></div>
-            <div id="footer" dangerouslySetInnerHTML={{__html: this.props.footer}}></div>
+            {footer}
           </div>
           <script dangerouslySetInnerHTML={{__html: this.props.state}}></script>
           <script src={getAssetBundleUrl('client')}></script>

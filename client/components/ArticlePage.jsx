@@ -1,6 +1,7 @@
 import React from 'react';
 import { navigateAction } from 'fluxible-router';
 import { connectToStores } from 'fluxible-addons-react';
+import ApplicationStore from '../stores/ApplicationStore';
 import ContentStore from '../stores/ContentStore';
 import NavigationBar from './NavigationBar';
 import Sidebar from './Sidebar';
@@ -42,13 +43,10 @@ class ArticlePage extends React.Component {
   }
   */
 
-  render() {
-
+  renderContent() {
     let {html} = this.props;
-
-    let content = undefined;
     if (!html) {
-      content = (
+      return (
         <section className="docs-content">
           <div className='auth0-spinner'>
             <div className='spinner'></div>
@@ -57,11 +55,21 @@ class ArticlePage extends React.Component {
       );
     }
     else {
-      content = (
+      return (
         <section className="docs-content" dangerouslySetInnerHTML={{__html: html}} />
       );
     }
+  }
 
+  renderFramed() {
+    return (
+      <div ref="content">
+        {this.renderContent()}
+      </div>
+    );
+  }
+
+  renderFull() {
     return (
       <div className="document">
         <NavigationBar />
@@ -71,7 +79,7 @@ class ArticlePage extends React.Component {
               <Sidebar maxDepth={2} />
             </div>
             <div ref="content" className="col-sm-9">
-              {content}
+              {this.renderContent()}
             </div>
           </div>
         </div>
@@ -79,10 +87,20 @@ class ArticlePage extends React.Component {
     );
   }
 
+  render() {
+    if (this.props.env['RENDER_MODE'] == 'framed') {
+      return this.renderFramed();
+    }
+    else {
+      return this.renderFull();
+    }
+  }
+
 }
 
 ArticlePage = connectToStores(ArticlePage, [ContentStore], (context, props) => {
   return {
+    env: context.getStore(ApplicationStore).getEnvironmentVars(),
     html: context.getStore(ContentStore).getCurrentContentHtml()
   };
 });
