@@ -5,17 +5,17 @@ import ApplicationStore from '../stores/ApplicationStore';
 import { connectToStores, provideContext } from 'fluxible-addons-react';
 import { handleHistory } from 'fluxible-router';
 import ErrorPage from './ErrorPage';
-import analytics from '../scripts/analytics';
-import pingdom from '../scripts/pingdom';
-import locksso from '../scripts/locksso';
+import analytics from '../browser/analytics';
+import pingdom from '../browser/pingdom';
+import locksso from '../browser/locksso';
+import highlightCode from '../browser/highlightCode';
+import feedbackSender from '../browser/feedbackSender';
+import anchorLinks from '../browser/anchorLinks';
 
 class Application extends React.Component {
 
   componentDidMount() {
-    let {env} = this.props;
-    pingdom(env['PINGDOM_ID']);
-    analytics(env['MOUSEFLOW_ID'], env['SEGMENT_KEY'], env['DWH_ENDPOINT']);
-    locksso(env['AUTH0_CLIENT_ID'], env['AUTH0_DOMAIN']);
+    this.initClientScripts();
   }
 
   componentDidUpdate(prevProps, prevState) {
@@ -23,6 +23,17 @@ class Application extends React.Component {
     if (newProps.pageTitle !== prevProps.pageTitle) {
       document.title = newProps.pageTitle;
     }
+    this.initClientScripts();
+  }
+
+  initClientScripts() {
+    let {env} = this.props;
+    pingdom(env['PINGDOM_ID']);
+    analytics(env['MOUSEFLOW_ID'], env['SEGMENT_KEY'], env['DWH_ENDPOINT']);
+    locksso(env['AUTH0_CLIENT_ID'], env['AUTH0_DOMAIN']);
+    highlightCode();
+    feedbackSender();
+    anchorLinks();
   }
 
   render() {
