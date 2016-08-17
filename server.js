@@ -174,4 +174,18 @@ server.use(function(req, res, next) {
 
 server.use(handlers.error);
 
+server.use(function(err, req, res, next) {
+  // This is the worst-case scenario. If we've gotten here, the error page itself
+  // encountered an error during rendering. If we're in production, just write
+  // out a simple message; otherwise, dump the stack trace.
+  if (process.env.NODE_ENV === 'production') {
+    res.type('html');
+    res.write(strings.ERROR_PROCESSING_REQUEST);
+    res.end();
+  }
+  else {
+    next(err);
+  }
+});
+
 export default server;
