@@ -8,18 +8,20 @@ import Sidebar from './Sidebar';
 
 class ArticlePage extends React.Component {
 
-  /*
-  TODO: This code is used to enable partial refreshing between articles, but it's
-  currently disabled because it doesn't support redirects.
-
   componentDidMount() {
-    this.captureClicks();
+    this.executeEmbeddedScripts();
+    //this.captureClicks();
   }
 
   componentDidUpdate() {
-    this.captureClicks();
-    this.scrollToAnchor();
+    this.executeEmbeddedScripts();
+    //this.captureClicks();
+    //this.scrollToAnchor();
   }
+
+  /*
+  TODO: This code is used to enable partial refreshing between articles, but it's
+  currently disabled because it doesn't support redirects.
 
   captureClicks() {
     $('a', this.refs.content).click(evt => {
@@ -42,6 +44,20 @@ class ArticlePage extends React.Component {
     }
   }
   */
+
+  executeEmbeddedScripts() {
+    $('script', this.refs.content).each((idx, item) => {
+      if (item.src) {
+        item.remove();
+        let el = document.createElement('script')
+        el.src = item.src;
+        document.body.appendChild(el);
+      }
+      else {
+        $.globalEval(this.text || this.textContent || this.innerHTML || '');
+      }
+    });
+  }
 
   renderContent() {
     let {html} = this.props;
