@@ -50,7 +50,8 @@ export default {
     path: '/docs/sdks',
     method: 'get',
     handler: require('../components/SdksPage'),
-    action: selectSection
+    action: selectSection,
+    section: 'sdks'
   },
 
   appliance: {
