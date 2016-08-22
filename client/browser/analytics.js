@@ -15,7 +15,7 @@ function initMouseflow(mouseflowId) {
   };
 }
 
-function initSegment(segmentKey, dwhEndpoint) {
+function initSegment(mouseflowId, segmentKey, dwhEndpoint) {
   if (!segmentKey) return;
   var metricsLib = window.metricsLib = window.metricsLib || [];
   // A list of the methods in metrics.js to stub.
@@ -30,8 +30,8 @@ function initSegment(segmentKey, dwhEndpoint) {
     'ready',
     'traits'
   ];
-  metricsLib.factory = function(method){
-    return function(){
+  metricsLib.factory = function(method) {
+    return function() {
       var args = Array.prototype.slice.call(arguments);
       args.unshift(method);
       metricsLib.push(args);
@@ -42,21 +42,24 @@ function initSegment(segmentKey, dwhEndpoint) {
     var key = metricsLib.methods[i];
     metricsLib[key] = metricsLib.factory(key);
   }
-  metricsLib.load = function(segmentKey, dwhEndpoint){
-    if(null != window.Auth0Metrics){
+  metricsLib.load = function(segmentKey, dwhEndpoint) {
+    if (null != window.Auth0Metrics) {
       metricsLib = window.metricsLib = new Auth0Metrics(segmentKey, dwhEndpoint, 'docs');
-      metricsLib.ready(window.initMouseflow);
-    }else{
+      if (mouseflowId) {
+        metricsLib.ready(window.initMouseflow);
+      }
+    }
+    else {
       var script = document.createElement('script');
       script.type = 'text/javascript';
       script.async = true;
       script.src = ('https:' === document.location.protocol
         ? 'https://' : 'http://')
         + 'cdn.auth0.com/js/m/metrics-1.min.js';
-      script.onerror = function(){
+      script.onerror = function() {
         console.error("No metrics");
       }
-      script.onload = function(){
+      script.onload = function() {
         // Grab analytics and make it private
         metricsLib = window.metricsLib = new Auth0Metrics(segmentKey, dwhEndpoint, 'docs');
       }
@@ -76,5 +79,5 @@ function initSegment(segmentKey, dwhEndpoint) {
 
 export default function analytics(mouseflowId, segmentKey, dwhEndpoint) {
   initMouseflow(mouseflowId);
-  initSegment(segmentKey, dwhEndpoint);
+  initSegment(mouseflowId, segmentKey, dwhEndpoint);
 };

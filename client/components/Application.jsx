@@ -16,6 +16,7 @@ class Application extends React.Component {
 
   componentDidMount() {
     this.initClientScripts();
+    this.startWatchingTenantCookie();
   }
 
   componentDidUpdate(prevProps, prevState) {
@@ -34,6 +35,32 @@ class Application extends React.Component {
     highlightCode();
     feedbackSender();
     anchorLinks();
+  }
+
+  startWatchingTenantCookie() {
+    let {env, user} = this.props;
+    
+    if (!user || !user.tenant) return;
+
+    let getCookie = function(name) {
+      let match = document.cookie.match(RegExp('(?:^|;\\s*)' + name + '=([^;]*)'));
+      return match ? match[1] : null;
+    };
+
+    let setCookie = function(name, value, days) {
+      let date = new Date();
+      date.setTime(date.getTime() + (days * 24 * 60 * 60 * 1000));
+      document.cookie = `${name}=${value}; expires=${date.toGMTString()}; path=/; domain=${env['COOKIE_SCOPE']}`;
+    };
+
+    setCookie(env['CURRENT_TENANT_COOKIE'], user.tenant, 7);
+
+    setInterval(function() {
+      let currentTenant = getCookie(env['CURRENT_TENANT_COOKIE']);
+      if (currentTenant && currentTenant !== user.tenant) {
+        window.location.reload(true);
+      }
+    }, 3000);
   }
 
   render() {
@@ -78,6 +105,7 @@ Application = connectToStores(
     var appStore = context.getStore(ApplicationStore);
     return {
       env: appStore.getEnvironmentVars(),
+      user: appStore.getUser(),
       pageTitle: appStore.getPageTitle(),
       error: props.error
     };

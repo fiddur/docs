@@ -38,6 +38,19 @@ class Layout extends React.Component {
     }
   }
 
+  // This code initializes Raven for Sentry. It needs to be executed immediately after the Raven
+  // library is loaded, so we have to hack it a bit.
+  sentry() {
+    let dsn = this.props.env['SENTRY_DSN'];
+    if (dsn) {
+      let initCode = `Raven.config('${dsn}').install()`;
+      return <script dangerouslySetInnerHTML={{__html: initCode}}></script>;
+    }
+    else {
+      return undefined;
+    }
+  }
+
   render() {
 
     let header, footer = undefined;
@@ -81,6 +94,8 @@ class Layout extends React.Component {
           {this.cssAssetBundle()}
 
           <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+          <script src="https://cdn.ravenjs.com/3.5.1/raven.min.js"></script>
+          {this.sentry()}
           <script src="//cdn.auth0.com/styleguide/vendor/bootstrap-3.2.0.min.js"></script>
           <script src={getAssetBundleUrl('commons')}></script>
           <script src={getAssetBundleUrl('browser')}></script>

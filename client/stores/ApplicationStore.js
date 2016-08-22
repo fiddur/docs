@@ -6,6 +6,7 @@ class ApplicationStore extends BaseStore {
   constructor(dispatcher) {
     super(dispatcher);
     this.env = null;
+    this.user = null;
     this.currentPageName = null;
     this.currentPage = null;
     this.pages = routesConfig;
@@ -15,6 +16,7 @@ class ApplicationStore extends BaseStore {
 
   handleEnvironmentLoaded(payload) {
     this.env = payload.env;
+    this.user = payload.user;
     this.emitChange();
   }
 
@@ -26,6 +28,10 @@ class ApplicationStore extends BaseStore {
 
   getEnvironmentVars() {
     return this.env;
+  }
+
+  getUser() {
+    return this.user;
   }
 
   getCurrentPageName() {
@@ -47,6 +53,7 @@ class ApplicationStore extends BaseStore {
   dehydrate() {
     return {
       env: this.env,
+      user: this.user,
       currentPageName: this.currentPageName,
       currentPage: this.currentPage,
       pages: this.pages,
@@ -57,6 +64,7 @@ class ApplicationStore extends BaseStore {
 
   rehydrate(state) {
     this.env = state.env;
+    this.user = state.user;
     this.currentPageName = state.currentPageName;
     this.currentPage = state.currentPage;
     this.pages = state.pages;
