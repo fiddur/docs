@@ -1,4 +1,4 @@
-var widget = window.widget = new Auth0Lock(window.env.AUTH0_CLIENT_ID, window.env.DOMAIN_URL_APP + '/callback');
+var widget = window.widget = new Auth0Lock(window.env.AUTH0_CLIENT_ID, window.env.AUTH0_DOMAIN);
 function getBasicInfo () {
   return {
     path: window.location.pathname,
@@ -10,7 +10,7 @@ function getBasicInfo () {
   }
 }
 var options = {
-  callbackURL: window.env.AUTH0_CALLBACK_URL,
+  callbackURL: window.env.DOMAIN_URL_APP + '/callback',
   dict: {
     signup: {
       footerText: 'By signing up, you agree to our <a href="/terms" target="_new">terms of service</a> and <a href="/privacy" target="_new">privacy policy</a>'
