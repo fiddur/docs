@@ -1,3 +1,9 @@
+## ------------------------------------------------------------
+## Top Nav Configuration
+## This document contains configuration for the top nav sections
+##
+## ------------------------------------------------------------
+
 - id: "articles"
   title: "Articles"
   url: "/overview"

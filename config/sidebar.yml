@@ -1,3 +1,9 @@
+## ------------------------------------------------------------
+## Sidebar Nav Configuration
+## This document contains configuration for the sidebar
+##
+## ------------------------------------------------------------
+
 articles:
 
   - title: Getting Started
@@ -30,24 +36,51 @@ articles:
   - title: "User Profile"
     url: "/user-profile"
     icon: "icon-budicon-289"
+    children:
+
+      - title: "Metadata"
+        url: "/metadata"
 
   - title: "Multifactor Authentication"
     url: "/multifactor-authentication"
     icon: "icon-budicon-243"
     children:
 
-      - title: "Google Auth"
+      - title: "Auth0 Gardian"
+        url: "/multifactor-authentication/guardian"
+        # children:
+        #
+        #   - title: "Admin Guide"
+        #     url: "/multifactor-authentication/guardian/admin-guide"
+        #
+        #   - title: "Dev Guide"
+        #     url: "/multifactor-authentication/guardian/dev-guide"
+        #
+        #   - title: "User Guide"
+        #     url: "/multifactor-authentication/guardian/user-guide"
+
+      - title: "SMS"
+        url: "/multifactor-authentication#mfa-with-sms"
+
+      - title: "Google Authenticator"
         url: "/multifactor-authentication/google-authenticator"
-        children:
 
-          - title: "Admin Guide"
-            url: "/multifactor-authentication/google-auth/admin-guide"
+      - title: "Duo Security"
+        url: "/multifactor-authentication/duo"
 
-          - title: "Dev Guide"
-            url: "/multifactor-authentication/google-auth/dev-guide"
+      - title: "Custom MFA"
+        url: "/multifactor-authentication#mfa-using-a-custom-provider"
 
-          - title: "User Guide"
-            url: "/multifactor-authentication/google-auth/user-guide"
+        # children:
+        #
+        #   - title: "Admin Guide"
+        #     url: "/multifactor-authentication/google-auth/admin-guide"
+        #
+        #   - title: "Dev Guide"
+        #     url: "/multifactor-authentication/google-auth/dev-guide"
+        #
+        #   - title: "User Guide"
+        #     url: "/multifactor-authentication/google-auth/user-guide"
 
   - title: "Passwordless Authentication"
     url: "/connections/passwordless"
@@ -56,6 +89,37 @@ articles:
   - title: "AD Connector"
     url: "/connector"
     icon: "icon-budicon-606"
+
+  - title: "UI Libraries"
+    url: "#ui-libraries"
+    icon: "icon-budicon-399"
+    children:
+
+      - title: "Lock vs. Custom UI"
+        url: "/libraries/when-to-use-lock"
+
+      - title: "Lock for Web"
+        url: "/libraries/lock"
+
+      - title: "Lock for iOS"
+        url: "/libraries/lock-ios"
+
+      - title: "Lock for Android"
+        url: "/libraries/lock-android"
+
+  - title: "Plugins"
+    url: "#plugins"
+    icon: "icon-budicon-423"
+    children:
+
+      - title: "Wordpress"
+        url: "/cms#wordpress-plugin"
+
+      - title: "Joomla"
+        url: "/cms#joomla-extension"
+
+      - title: "SharePoint"
+        url: "https://github.com/auth0/auth0-sharepoint"
 
 apis:
 

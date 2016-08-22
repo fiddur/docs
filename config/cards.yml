@@ -1,101 +1,160 @@
+## ------------------------------------------------------------
+## Home Page Cards Configuration
+## This document contains configuration for the cards on the docs home
+##
+## ------------------------------------------------------------
+
 - id: "getting-started"
   title: "Getting Started"
   icon: "icon-budicon-499"
   color: "orange"
-  description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit."
+  description: "Learn the basics of using Auth0."
   url: "/overview"
   articles:
 
-    - title: "Applications"
-      url: "/applications"
+    - title: "Overview"
+      url: "/overview"
 
-    - title: "Multifactor Authentication"
-      url: "/mfa"
-    
-    - title: "Single Sign-On"
-      url: "/sso/single-sign-on"
+    - title: Developer Videos
+      url: /videos
 
-- id: "sdks"
-  title: "SDKs"
+    - title: Architecture Scenarios
+      url: /architecture-scenarios
+
+- id: "ui-components"
+  title: "UI Components"
   icon: "icon-budicon-342"
-  color: "green"
-  description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit."
-  url: "/sdks"
+  color: "blue-light"
+  description: "Integrate Auth0 login and signup UI into your app."
+  url: "/libraries/when-to-use-lock"
   articles:
 
-    - title: "Article 1"
-      url: "/example/article1"
+    - title: "Lock for Web"
+      url: "/libraries/lock"
 
-    - title: "Article 2"
-      url: "/example/article2"
-    
-    - title: "Article 3"
-      url: "/example/article3"
+    - title: "Lock for iOS"
+      url: "/libraries/lock-ios"
 
-- id: "apis"
-  title: "APIs"
-  icon: "icon-budicon-546"
-  color: "blue"
-  description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit."
-  url: "/api/info"
-  articles:
-
-    - title: "Article 1"
-      url: "/example/article1"
-
-    - title: "Article 2"
-      url: "/example/article2"
-    
-    - title: "Article 3"
-      url: "/example/article3"
-
-- id: "appliance"
-  title: "Appliance"
-  icon: "icon-budicon-359"
-  color: "pink"
-  description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit."
-  url: "/appliance"
-  articles:
-
-    - title: "Article 1"
-      url: "/example/article1"
-
-    - title: "Article 2"
-      url: "/example/article2"
-    
-    - title: "Article 3"
-      url: "/example/article3"
+    - title: "Lock for Android"
+      url: "/libraries/lock-android"
 
 - id: "identity-glossary"
   title: "Identity Glossary"
   icon: "icon-budicon-715"
   color: "oil"
-  description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit."
+  description: "Learn the protocols and terminologies for identity."
   url: "/identity"
   articles:
 
-    - title: "Article 1"
-      url: "/example/article1"
+    - title: "Protocols"
+      url: "/protocols"
 
-    - title: "Article 2"
-      url: "/example/article2"
-    
-    - title: "Article 3"
-      url: "/example/article3"
+    - title: "Tokens"
+      url: "/tokens"
 
-- id: "integrations"
-  title: "Auth0 & Friends"
-  icon: "icon-budicon-292"
-  color: "blue-light"
-  description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit."
-  url: "/integrations"
+    - title: "JWT"
+      url: "/jwt"
+
+
+- id: "guides"
+  title: "Guides"
+  icon: "icon-budicon-399"
+  color: "green"
+  description: "Guidance and tutorials about common solutions."
+  url: "/guides"
   articles:
 
-    - title: "Article 1"
-      url: "/example/article1"
+    - title: "API Auth"
+      url: "/api-auth"
 
-    - title: "Article 2"
-      url: "/example/article2"
-    
-    - title: "Article 3"
-      url: "/example/article3"
+    - title: "Refresh Tokens"
+      url: "/refresh-token"
+
+    - title: "Importing and Migrating"
+      url: "/connections/database/migrating"
+
+- id: "apis"
+  title: "APIs"
+  icon: "icon-budicon-546"
+  color: "blue"
+  description: "Working directly with Auth0 APIs"
+  url: "/api/info"
+  articles:
+
+    - title: "API Overview"
+      url: "/api/info"
+
+    - title: "Authentication API"
+      url: "/api/authentication"
+
+    - title: "Management API"
+      url: "/api/management/v2"
+
+- id: "appliance"
+  title: "Appliance"
+  icon: "icon-budicon-359"
+  color: "pink"
+  description: "Deploying and managing a private instance of Auth0."
+  url: "/appliance"
+  articles:
+
+    - title: "Appliance Planning"
+      url: "/appliance/appliance-overview"
+
+    - title: Administrator's Manual
+      url: /appliance/admin
+
+    - title: Onboarding Process
+      url: /onboarding/appliance-sprint
+
+- id: "extensibility"
+  title: "Extensibility"
+  icon: "icon-budicon-173"
+  color: "red"
+  description: "Adding to and customizing Auth0's standard feature set."
+  url: "/extensibility"
+  articles:
+
+    - title: "Rules"
+      url: "/rules"
+
+    - title: "Estensions"
+      url: "/extensions"
+
+    - title: "Webtasks"
+      url: "https://webtask.io/docs/101"
+
+
+- id: "identity-providers"
+  title: "Identity Providers"
+  icon: "icon-budicon-297"
+  color: "yellow"
+  description: "Integrating Auth0 with identity providers."
+  url: "/identityproviders"
+  articles:
+
+    - title: "Database Connections"
+      url: "/connections/database"
+
+    - title: "Social Connections"
+      url: "/identityproviders#social"
+
+    - title: "Passwordless"
+      url: "/connections/passwordless"
+
+- id: "enterprise-identity"
+  title: "Enterprise Identity"
+  icon: "icon-budicon-606"
+  color: "oil"
+  description: "Integrating and integrating enterprise identity solutions."
+  url: "/identityproviders#enterprise"
+  articles:
+
+    - title: "Active Directory"
+      url: "/connections/enterprise/active-directory"
+
+    - title: "Active Directory Connector"
+      url: "/connections/passwordless"
+
+    - title: "SAML"
+      url: "/saml-configuration"
