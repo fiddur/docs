@@ -11,6 +11,7 @@ import nconf from 'nconf';
 import path from 'path';
 import winston from 'winston';
 import handlers from './lib/handlers';
+import strings from './lib/strings';
 import helmet from 'helmet';
 
 var server = express();

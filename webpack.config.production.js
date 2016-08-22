@@ -4,6 +4,7 @@ var Clean = require('clean-webpack-plugin');
 var ExtractTextPlugin = require('extract-text-webpack-plugin');
 var autoprefixer = require('autoprefixer');
 var precss = require('precss');
+var nconf = require('nconf');
 
 require('./config');
 

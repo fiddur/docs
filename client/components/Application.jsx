@@ -5,9 +5,6 @@ import ApplicationStore from '../stores/ApplicationStore';
 import { connectToStores, provideContext } from 'fluxible-addons-react';
 import { handleHistory } from 'fluxible-router';
 import ErrorPage from './ErrorPage';
-import analytics from '../browser/analytics';
-import pingdom from '../browser/pingdom';
-import locksso from '../browser/locksso';
 import highlightCode from '../browser/highlightCode';
 import feedbackSender from '../browser/feedbackSender';
 import anchorLinks from '../browser/anchorLinks';
@@ -16,7 +13,7 @@ class Application extends React.Component {
 
   componentDidMount() {
     this.initClientScripts();
-    this.startWatchingTenantCookie();
+    //this.startWatchingTenantCookie();
   }
 
   componentDidUpdate(prevProps, prevState) {
@@ -28,10 +25,6 @@ class Application extends React.Component {
   }
 
   initClientScripts() {
-    let {env} = this.props;
-    pingdom(env['PINGDOM_ID']);
-    analytics(env['MOUSEFLOW_ID'], env['SEGMENT_KEY'], env['DWH_ENDPOINT']);
-    locksso(env['AUTH0_CLIENT_ID'], env['AUTH0_DOMAIN']);
     highlightCode();
     feedbackSender();
     anchorLinks();
@@ -39,7 +32,7 @@ class Application extends React.Component {
 
   startWatchingTenantCookie() {
     let {env, user} = this.props;
-    
+
     if (!user || !user.tenant) return;
 
     let getCookie = function(name) {
