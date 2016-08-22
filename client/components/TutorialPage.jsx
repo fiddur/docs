@@ -1,5 +1,5 @@
 import React from 'react';
-import SearchBox from './SearchBox';
+import NavigationBar from './NavigationBar';
 import TryBanner from './TryBanner';
 import IntroBanner from './IntroBanner';
 import { TutorialStore, Breadcrumbs, Tutorial, TutorialTableOfContents, TutorialPrevNext } from 'auth0-tutorial-navigator';
@@ -8,7 +8,6 @@ import { quickstartNavigationAction } from '../action/quickstartNavigationAction
 import highlightCode from '../browser/highlightCode';
 import setAnchorLinks from '../browser/anchorLinks';
 import UserStore from '../stores/UserStore';
-import SideNavBar from './SideNavBar';
 
 // TODO: Uses ref from within tutorial navigator, can we move this?
 var initTutorialInBrowser = function() {
@@ -60,6 +59,7 @@ class TutorialPage extends React.Component {
 
   metrics() {
     let {quickstart, platform} = this.props;
+    if (!window.widget) return;
     let eventData = {
       'clientID': window.widget.getClient()._clientID || '',
       'tutorial-apptype': quickstart ? quickstart.name : '',
@@ -90,6 +90,7 @@ class TutorialPage extends React.Component {
     let tutorial = undefined;
     let sidebar = undefined;
     let prevNext = undefined;
+    let classes = ['col-sm-9'];
 
     if (platform && platform.articles.length > 1) {
       sidebar = <div className="col-sm-3">
@@ -99,11 +100,9 @@ class TutorialPage extends React.Component {
           currentArticle={article}
           customNavigationAction={quickstartNavigationAction} />
       </div>;
-    } else {
-      var sidebarStyle = { marginTop: '-45px' };
-      sidebar = <div className="col-sm-3" style={sidebarStyle}>
-        <SideNavBar />
-      </div>;
+    }
+    else {
+      classes.push('col-centered');
     }
 
     if (article) {
@@ -121,10 +120,11 @@ class TutorialPage extends React.Component {
 
     return (
       <div id="tutorial-template" className="docs-single animated fadeIn">
+        <NavigationBar />
         <div className="js-doc-template container">
           <div className="row">
             {sidebar}
-            <div className="col-sm-9">
+            <div className={classes.join(' ')}>
               <div className="navigation">
                 <Breadcrumbs {...this.props} customNavigationAction={quickstartNavigationAction} />
               </div>

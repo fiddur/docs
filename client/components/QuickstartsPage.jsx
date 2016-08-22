@@ -1,10 +1,7 @@
 import React from 'react';
-import {connectToStores} from 'fluxible-addons-react';
 import {TutorialNavigator} from 'auth0-tutorial-navigator';
 import {quickstartNavigationAction} from '../action/quickstartNavigationAction';
-import NavigationStore from '../stores/NavigationStore';
-import CategoryCard from './CategoryCard';
-import TryBanner from './TryBanner';
+import NavigationBar from './NavigationBar';
 
 // TODO: This depends on a "carousel" ref that's set by the TutorialNavigator itself.
 // Can we move this into the component's codebase somehow?
@@ -30,41 +27,17 @@ var initCarouselInBrowser = function() {
   });
 };
 
-class Home extends React.Component {
+class QuickstartsPage extends React.Component {
   
   render() {
-    
-    let {cardDefinitions, isAuthenticated} = this.props;
-    let tryBanner = isAuthenticated ? null : <TryBanner/>;
-
-    let cards = cardDefinitions.map(category => (
-      <CategoryCard key={category.id} category={category} />
-    ));
-
     return (
-      <div>
+      <div className="document">
+        <NavigationBar />
         <TutorialNavigator {...this.props} customNavigationAction={quickstartNavigationAction} componentLoadedInBrowser={initCarouselInBrowser} />
-        {tryBanner}
-        <div className="category-cards container center-block">
-          <h1>Curated content to fully understand our platform</h1>
-          {cards}
-        </div>
       </div>
     );
   }
   
 }
 
-Home.propTypes = {
-  isAuthenticated: React.PropTypes.bool
-}
-
-Home.contextTypes = {
-  getStore: React.PropTypes.func
-};
-
-Home = connectToStores(Home, [NavigationStore], (context, props) => ({
-  cardDefinitions: context.getStore(NavigationStore).getCards()
-}));
-
-export default Home;
+export default QuickstartsPage;

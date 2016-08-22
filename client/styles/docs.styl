@@ -36,6 +36,9 @@ color_win8_cs= #f00;
 @import 'inc/architecture-scenarios'
 @import 'inc/architecture-scenarios-cards'
 @import 'inc/api-explorer-v1'
+@import 'inc/category-card'
+@import 'inc/category-tabs'
+@import 'inc/sidebar'
 @import 'inc/intro-banner'
 
 // Views
@@ -744,6 +747,7 @@ body
 .docs-content
   clearfix()
   color $color-text
+  min-height 200px
 
   pre code a,
   pre code a span
@@ -949,6 +953,10 @@ body
 
 .update-space
   margin-bottom: 10px;
+
+.col-centered
+  float: none
+  margin: 0 auto
 
 @import 'inc/devcenter'
 @import 'inc/boxed'

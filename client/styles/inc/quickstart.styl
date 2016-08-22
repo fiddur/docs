@@ -74,35 +74,34 @@
     margin: 0 15px;
     padding: 6px 15px;
 
+.circle-list
+  padding: 0;
+  padding-top: 10px;
+  padding-bottom: 30px;
+  list-style: none;
+  text-align: center;
+  margin: 0 auto;
 
-  .circle-list
-    padding: 0;
-    padding-top: 10px;
-    padding-bottom: 30px;
-    list-style: none;
-    text-align: center;
-    margin: 0 auto;
+  +breakpoint("tablet")
+    max-width: 800px;
 
-    +breakpoint("tablet")
-      max-width: 800px;
+  +breakpoint("desktop")
+    max-width: none;
 
-    +breakpoint("desktop")
-      max-width: none;
+  li
+    display: inline-block;
+    vertical-align: top;
+    margin: 10px 15px;
+    cursor: pointer;
 
-    li
-      display: inline-block;
-      vertical-align: top;
-      margin: 10px 15px;
-      cursor: pointer;
+    +breakpoint("mobile-landscape")
+      margin: 10px 30px;
 
-      +breakpoint("mobile-landscape")
-        margin: 10px 30px;
+.circle-logo
+  font-size: 12px;
 
-  .circle-logo
-    font-size: 12px;
-
-    +breakpoint("tablet")
-      font-size: 13px;
+  +breakpoint("tablet")
+    font-size: 13px;
 
 .breadcrumbs
   font-size: 12px;
