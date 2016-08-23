@@ -147,9 +147,7 @@ server.use('/docs', require('./lib/search'));
 server.use('/docs', require('./lib/updates'));
 server.use('/docs', require('./lib/redirects'));
 
-// The master handler that will initialize the React app to display whatever
-// content we want to return.
-server.use('/docs', handlers.content);
+
 
 server.get('/docs/switch', function (req, res) {
   req.session.current_tenant = {
@@ -160,6 +158,10 @@ server.get('/docs/switch', function (req, res) {
 });
 
 server.use('/docs/meta', require('./lib/api'));
+
+// The master handler that will initialize the React app to display whatever
+// content we want to return.
+server.use('/docs', handlers.content);
 
 // This is just for localhost
 server.get('/', function(req, res) {
