@@ -1,7 +1,7 @@
 import * as React from 'react'
 import NavigationStore from '../stores/NavigationStore';
-import {NavLink} from 'fluxible-router';
 import {connectToStores} from 'fluxible-addons-react';
+import ArticleLink from './ArticleLink';
 
 let SidebarItem = ({article, currentDepth, maxDepth}) => {
 
@@ -21,10 +21,10 @@ let SidebarItem = ({article, currentDepth, maxDepth}) => {
 
   return (
     <li className={'sidebar-item sidebar-item-depth' + currentDepth}>
-      <NavLink href={article.url}>
+      <ArticleLink article={article}>
         {icon}
         <span className="sidebar-item-name">{article.title}</span>
-      </NavLink>
+      </ArticleLink>
       {children}
     </li>
   );

@@ -86,9 +86,11 @@
 
     - title: "Authentication API"
       url: "/api/authentication"
+      forceFullReload: true
 
     - title: "Management API"
       url: "/api/management/v2"
+      forceFullReload: true
 
 - id: "appliance"
   title: "Appliance"

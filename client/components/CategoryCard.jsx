@@ -1,12 +1,7 @@
 import React from 'react';
 import _ from 'lodash';
 import {NavLink} from 'fluxible-router';
-
-let ArticleLink = ({article}) => (
-  <li className="category-card-link">
-    <NavLink href={article.url}>{article.title}</NavLink>
-  </li>
-);
+import ArticleLink from './ArticleLink';
 
 class CategoryCard extends React.Component {
 
@@ -16,7 +11,9 @@ class CategoryCard extends React.Component {
 
     let articles = _.take(category.articles, articleCount);
     let links = articles.map(article => (
-      <ArticleLink key={article.url} article={article} />
+      <li key={article.url} className="category-card-link">
+        <ArticleLink article={article}>{article.title}</ArticleLink>
+      </li>
     ));
 
     return (

@@ -46,7 +46,7 @@ articles:
     icon: "icon-budicon-243"
     children:
 
-      - title: "Auth0 Gardian"
+      - title: "Auth0 Guardian"
         url: "/multifactor-authentication/guardian"
         # children:
         #
@@ -131,16 +131,21 @@ apis:
 
   - title: Authentication API
     url: "/api/authentication"
+    forceFullReload: true
 
   - title: Management API
     url: "/api/management/v2/"
+    forceFullReload: true
     children:
       - title: API Tokens
         url: /api/management/v2/tokens
+        forceFullReload: true
       - title: Query String Syntax
         url: /api/management/v2/query-string-syntax
+        forceFullReload: true
       - title: User Search
         url: /api/management/v2/user-search
+        forceFullReload: true
 
 
 
