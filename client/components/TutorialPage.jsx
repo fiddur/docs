@@ -21,20 +21,6 @@ var initTutorialInBrowser = function() {
       $.globalEval(this.text || this.textContent || this.innerHTML || '');
     });
   }
-
-  var removeHeader = () => {
-    var article = this.refs.article;
-    if (article) {
-      var child = article.firstChild;
-      if (child.nodeName === 'H1' || child.nodeName === 'H2') {
-        child.classList.add('hide');
-      } else if (child.nodeName === 'P' && child.textContent === '') {
-        article.removeChild(child);
-        removeHeader();
-      }
-    }
-  };
-  removeHeader();
 };
 
 class TutorialPage extends React.Component {
@@ -49,10 +35,6 @@ class TutorialPage extends React.Component {
 
   initClient() {
     if (typeof document !== 'undefined') {
-      $('body').on('click', '.nav-tabs a', function(e) {
-        e.preventDefault();
-        $(this).tab('show');
-      });
       this.metrics();
     }
   }
