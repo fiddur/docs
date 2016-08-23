@@ -17,20 +17,23 @@ block body
       }
 
     .navigation-bar
-      .wrapper
-        .container
-          .breadcrumbs
-            a(href="/docs")
-              span.text Documentation
-            a
-              i.icon-budicon-461
-              span.text= title
+      .container
+        ul.nav.nav-tabs.section-tabs
+          li.nav-tab
+            a(href='/docs/overview') Articles
+          li.nav-tab
+            a(href='/docs/sdks') SDKs
+          li.nav-tab.active
+            a(href='/docs/api/info') APIs
+          li.nav-tab
+            a(href='/docs/quickstarts') QuickStarts
+          li.nav-tab
+            a(href='/docs/appliance') Appliance
+        form#search(role='search', action='/docs/search', autocomplete='off')
+          .form-group.search-control
+            i.icon-budicon-489
+            input#search-input.search-input.form-control(type='text', placeholder='Search for docs', name='q')
 
-
-          form#search(role="search", action="/docs/search", autocomplete="off")
-            .form-group.search-control
-              i.icon-budicon-489
-              input.search-input.form-control(type="text", placeholder="Search for docs", name="q", value=query)
 
     //- Start content
     .js-doc-template.container
