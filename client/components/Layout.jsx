@@ -48,11 +48,11 @@ class Layout extends React.Component {
 
     let header, footer = undefined;
     if (this.props.env['RENDER_MODE'] == 'framed') {
-      footer = <footer><span>Powered by <a href="//auth0.com">Auth0</a></span></footer>;
+      footer = <footer data-swiftype-index='false'><span>Powered by <a href="//auth0.com">Auth0</a></span></footer>;
     }
     else {
-      header = <header className="site-header" dangerouslySetInnerHTML={{__html: this.props.header}}></header>;
-      footer = <div id="footer" dangerouslySetInnerHTML={{__html: this.props.footer}}></div>;
+      header = <header className="site-header" data-swiftype-index='false' dangerouslySetInnerHTML={{__html: this.props.header}}></header>;
+      footer = <div id="footer" data-swiftype-index='false' dangerouslySetInnerHTML={{__html: this.props.footer}}></div>;
     }
 
     return (

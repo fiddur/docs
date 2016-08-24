@@ -6,6 +6,7 @@ import { TutorialStore, ArticleStore } from 'auth0-tutorial-navigator';
 import NavigationStore from './stores/NavigationStore';
 import RouteStore from './stores/RouteStore';
 import UserStore from './stores/UserStore';
+import SearchStore from './stores/SearchStore';
 import serviceProxyPlugin from 'fluxible-plugin-service-proxy';
 import devToolsPlugin from 'fluxible-plugin-devtools';
 import metricsPlugin from './plugins/metricsPlugin';
@@ -28,5 +29,6 @@ app.registerStore(TutorialStore);
 app.registerStore(ArticleStore);
 app.registerStore(NavigationStore);
 app.registerStore(UserStore);
+app.registerStore(SearchStore);
 
 module.exports = app;
