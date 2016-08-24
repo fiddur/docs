@@ -1,48 +1,52 @@
 .navigation-bar
-  min-height: 66px;
+  background: $bg-color-gray-light
+  padding-top: 20px
 
   &.is-fixed
     .wrapper
       +breakpoint("desktop")
-        position: fixed;
-        top: 0;
-        left: 0;
+        position: fixed
+        top: 0
+        left: 0
 
   .wrapper
-    border-bottom: 1px solid #EAEEF3;
-    background: white;
-    width: 100%;
-    z-index: 800;
+    border-bottom: 1px solid #EAEEF3
+    background: white
+    width: 100%
+    z-index: 800
 
   form
-    padding: 15px 0;
-    width: 35%;
-    float: right;
+    padding: 22px 0 0
+    width: 30%
+    float: right
 
-  .list-inline
-    margin: 0;
-    font-size: 15px;
+  .section-tabs
+    margin: 0
+    font-size: 15px
+    float: left
+    border-bottom: 0px
 
     a
-      color: rgba($color-text, 0.8);
-      height: 35px;
-      line-height: 35px;
+      color: rgba($color-text, 0.8)
+      height: 35px
+      line-height: 35px
 
       &:hover
-        opacity: 0.7;
+        opacity: 0.7
 
     li
-      margin: 0;
-      padding: 0;
-      padding: 15px 0;
+      margin: 0
+      padding: 15px 10px
+      border-bottom: 2px solid transparent
 
-      &.is-active
-        color: #333;
-        font-weight: 500;
-        box-shadow: 0 1px 0 0 #333;
+      &.active
+        color: #333
+        font-weight: 500
+        border-bottom-color: #333
 
         a
-          color: #333;
+          color: #333
+          border-bottom: 0px !important
 
       & + li
-        margin-left: 50px;
+        margin-left: 50px

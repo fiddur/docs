@@ -1,0 +1,29 @@
+.sidebar
+  padding-top: 30px
+
+  .sidebar-item
+    list-style-type: none
+    font-size: 14px
+    padding: 6px 0
+
+    .sidebar-item-icon
+      margin-right: 12px
+    
+    .sidebar-item-name
+      white-space: nowrap
+    
+    a
+      &:link, &:visited
+        color: color_text_light
+      &:hover, &:active
+        color: color_text_gray
+      &.active
+        color: color_text_gray
+        font-weight: 500
+
+  .sidebar-item-list
+    padding: 6px 0 0 26px
+    &:first-child { padding-top: 0px }
+  
+  .sidebar-item-list-depth0
+    padding-left: 0px

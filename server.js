@@ -10,6 +10,7 @@ import session from 'express-session';
 import nconf from 'nconf';
 import path from 'path';
 import winston from 'winston';
+import handlers from './lib/handlers';
 import strings from './lib/strings';
 import helmet from 'helmet';
 
@@ -38,7 +39,6 @@ passport.deserializeUser(function(id, done) {
   });
 });
 
-server.set('views', path.join(__dirname, 'views'));
 server.set('view engine', 'jade');
 server.enable('trust proxy');
 
@@ -136,12 +136,8 @@ server.use(middleware.urlVariables);
 server.use(middleware.fetchABExperiments);
 server.use(middleware.redirectQuickstarts);
 
-// React sidebar
-server.use(require('./client/sidebar'));
-
 // Routes
 server.use('/docs', require('./lib/api-explorer'));
-server.use('/docs', require('./lib/docs'));
 server.use('/docs', require('./lib/sdk-snippets/lock/demos-routes'));
 server.use('/docs', require('./lib/sdk-snippets/lock/snippets-routes'));
 server.use('/docs', require('./lib/packager'));
@@ -150,6 +146,7 @@ server.use('/docs', require('./lib/sitemap'));
 server.use('/docs', require('./lib/search'));
 server.use('/docs', require('./lib/updates'));
 server.use('/docs', require('./lib/redirects'));
+
 
 
 server.get('/docs/switch', function (req, res) {
@@ -162,8 +159,9 @@ server.get('/docs/switch', function (req, res) {
 
 server.use('/docs/meta', require('./lib/api'));
 
-// React client middleware -> homepage, quickstart, etc.
-server.use(require('./client/middleware'));
+// The master handler that will initialize the React app to display whatever
+// content we want to return.
+server.use('/docs', handlers.content);
 
 // This is just for localhost
 server.get('/', function(req, res) {
@@ -177,49 +175,20 @@ server.use(function(req, res, next) {
   next(err);
 });
 
-// error handlers
-function renderError(req, res, err) {
-  res.status(err.status || 500);
-  if (res.locals.json) {
-    res.json(err);
-  } else if (res.locals.jsonp) {
-    res.jsonp(err);
-  } else if (res.locals.embedded) {
-    res.render('error-embedded', err);
-  } else if (res.locals.framed) {
-    res.render('error-framed', err);
-  } else {
-    res.render('error', err);
-  }
-}
+server.use(handlers.error);
 
-// development error handler
-// will print stacktrace
-if (server.get('env') === 'development') {
-  server.use(function(err, req, res, next) {
-    renderError(req ,res, {
-      status: err.status,
-      message: err.message,
-      error: err
-    });
-  });
-}
-
-// production error handler
-// no stacktraces leaked to user
 server.use(function(err, req, res, next) {
-  var msg = strings.ERROR_PROCESSING_REQUEST;
-  if (err.status === 404) {
-    msg = strings.PAGE_NOT_FOUND;
-    winston.warn('Page not found: ' + req.url, { err: err });
-  } else {
-    winston.error('Error loading route: ' + req.url, { err: err });
+  // This is the worst-case scenario. If we've gotten here, the error page itself
+  // encountered an error during rendering. If we're in production, just write
+  // out a simple message; otherwise, dump the stack trace.
+  if (process.env.NODE_ENV === 'production') {
+    res.type('html');
+    res.write(strings.ERROR_PROCESSING_REQUEST);
+    res.end();
   }
-  renderError(req, res, {
-    status: err.status,
-    message: msg,
-    error: {}
-  });
+  else {
+    next(err);
+  }
 });
 
 export default server;

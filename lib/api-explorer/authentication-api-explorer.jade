@@ -1,5 +1,31 @@
 extends ../../views/standard
 
+block sidebar
+  .sidebar
+    ul.sidebar-item-list.sidebar-item-list-depth0
+      li.sidebar-item.sidebar-item-depth0
+        a(href='/docs/api/info')
+          span.sidebar-item-name Overview
+      li.sidebar-item.sidebar-item-depth0
+        a(href='/docs/api/postman')
+          span.sidebar-item-name Testing with Postman
+      li.sidebar-item.sidebar-item-depth0
+        a.active(href='/docs/api/authentication')
+          span.sidebar-item-name Authentication API
+      li.sidebar-item.sidebar-item-depth0
+        a(href='/docs/api/management/v2/')
+          span.sidebar-item-name Management API
+        ul.sidebar-item-list.sidebar-item-list-depth1
+          li.sidebar-item.sidebar-item-depth1
+            a(href='/docs/api/management/v2/tokens')
+              span.sidebar-item-name API Tokens
+          li.sidebar-item.sidebar-item-depth1
+            a(href='/docs/api/management/v2/query-string-syntax')
+              span.sidebar-item-name Query String Syntax
+          li.sidebar-item.sidebar-item-depth1
+            a(href='/docs/api/management/v2/user-search')
+              span.sidebar-item-name User Search
+
 block content
   div#api-explorer
 

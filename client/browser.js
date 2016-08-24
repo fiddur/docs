@@ -4,4 +4,6 @@
 
 require('babel-polyfill');
 require('./vendor/owl.carousel.js');
-require('./vendor/jquery.waypoints.js');
+require('./browser/locksso');
+require('./browser/analytics');
+require('./browser/sentry');

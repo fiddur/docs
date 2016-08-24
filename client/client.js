@@ -3,14 +3,15 @@
 require('babel-polyfill');
 import React from 'react';
 import ReactDOM from 'react-dom';
-import debug from 'debug';
+import d from 'debug';
 import { createElementWithContext } from 'fluxible-addons-react';
 import app from './app';
 import { ArticleService, ServiceKeys } from 'auth0-tutorial-navigator';
+import ContentService from './services/ContentService.client';
 
 require('./styles/docs.styl');
 
-const debugClient = debug('docs:react');
+const debug = d('docs:react');
 const dehydratedState = window.App; // Sent from the server
 
 window.React = React; // For chrome dev tool support
@@ -19,24 +20,28 @@ window.React = React; // For chrome dev tool support
 // https://github.com/visionmedia/debug#browser-support
 window.fluxibleDebug = debug;
 
-
 // Register services
-app.getPlugin('ServiceProxyPlugin').registerService(ServiceKeys.ArticleService, ArticleService);
+let plugin = app.getPlugin('ServiceProxyPlugin');
+plugin.registerService(ServiceKeys.ArticleService, ArticleService);
+plugin.registerService('ContentService', ContentService);
 
-debugClient('rehydrating app');
+debug('rehydrating app');
 
 // pass in the dehydrated server state from server.js
-app.rehydrate(dehydratedState, (err, context) => {
+app.rehydrate(dehydratedState, (err, context, props) => {
+
   if (err) {
     throw err;
   }
-  window.context = context;
-  const mountNode = document.getElementById('app');
 
-  debugClient('React Rendering');
-  ReactDOM.render(
-    createElementWithContext(context),
-    mountNode,
-    () => debugClient('React Rendered')
-  );
+  window.context = context;
+
+  const element = createElementWithContext(context);
+  const mountPoint = document.getElementById('app');
+
+  debug('React Rendering');
+  ReactDOM.render(element, mountPoint, () => {
+    debug('React Rendered')
+  });
+
 });

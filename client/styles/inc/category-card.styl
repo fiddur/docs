@@ -1,0 +1,64 @@
+.category-cards
+  h1
+    text-align: center
+    font-size: 28px
+    margin: 60px 0
+    color: color_text_gray
+
+.category-card-container
+  padding: 0 20px 40px 20px
+
+  .category-card
+    padding: 14px 40px
+    background: #fff
+    box-shadow: 0 0 3px rgba(0, 0, 0, 0.2)
+
+    &:hover
+      background: #f5f7f9
+
+    .category-card-header
+      text-align: center
+      i
+        font-size: 18px
+        &.red { color: #eb5424 }
+        &.blue-light { color: #44c7f4 }
+        &.blue { color: #16214d }
+        &.yellow { color: #eaca2c }
+        &.orange { color: #ff9a57 }
+        &.oil { color: #5c666f }
+        &.green { color: #01b48f }
+        &.gray { color: #d0d2d3 }
+        &.pink { color: #c879b2 }
+      a
+        display: block
+        line-height: 44px
+        font-size: 20px
+        color: color_text_gray
+    
+    .category-card-description
+      margin: 8px 0
+      text-align: center
+      font-size: 14px
+      line-height: 18px
+      color: color_text_light
+      min-height: 36px
+
+    .category-card-links
+      margin: 0
+      padding: 0
+
+    .category-card-link
+      list-style-type: none
+      padding: 10px 0
+      border-bottom: 1px solid #ccc
+      &:last-child
+        border-bottom: none
+      a
+        display: block
+        color: color_text_gray
+        font-weight: 500
+
+    .category-card-more-link
+      color: color_text_gray
+      display: block
+      text-align: right
