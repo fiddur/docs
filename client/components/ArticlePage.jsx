@@ -72,7 +72,7 @@ class ArticlePage extends React.Component {
     }
     else {
       return (
-        <section className="docs-content" dangerouslySetInnerHTML={{__html: html}} />
+        <section className="docs-content" data-swiftype-name="body" data-swiftype-type="text" dangerouslySetInnerHTML={{__html: html}} />
       );
     }
   }
