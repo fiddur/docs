@@ -5,22 +5,30 @@ var fs = require('fs');
 var _ = require('lodash');
 var assert = require('assert');
 
-var navigation = yaml.safeLoad(fs.readFileSync('./config/navigation.yml'));
-
 describe('Configuration', function() {
-  describe('Navigation.yml', function() {
-    it('Has valid attributes for How To', function() {
-      var category = _.find(navigation.categories, { id: 'how-to'});
-      assert.notEqual(category.name.length, 0, 'Invalid category name.');
-      assert.notEqual(category.description.length, 0, 'Invalid category description');
-      assert.ok(category.links.length > 5, 'Not enough how-tos specified.');
-      for (var i = 0; i < category.links.length; i++) {
-        var link = category.links[i];
-        assert.notEqual(link.name.length, 0, 'Invalid link name.');
-        assert.notEqual(link.icon.length, 0, 'Invalid link icon.');
-        assert.notEqual(link.href.length, 0, 'Invalid link href.');
-        assert.notEqual(link.description.length, 0, 'Invalid link description.');
-      }
+
+  describe('app-types.yml', function() {
+    it('is valid yml', function() {
+      var sidebar = yaml.safeLoad(fs.readFileSync('./config/app-types.yml'));
+      assert.ok(sidebar)
+    });
+  });
+  describe('cards.yml', function() {
+    it('is valid yml', function() {
+      var sidebar = yaml.safeLoad(fs.readFileSync('./config/cards.yml'));
+      assert.ok(sidebar)
+    });
+  });
+  describe('sections.yml', function() {
+    it('is valid yml', function() {
+      var sidebar = yaml.safeLoad(fs.readFileSync('./config/sections.yml'));
+      assert.ok(sidebar)
+    });
+  });
+  describe('sidebar.yml', function() {
+    it('is valid yml', function() {
+      var sidebar = yaml.safeLoad(fs.readFileSync('./config/sidebar.yml'));
+      assert.ok(sidebar)
     });
   });
 });
