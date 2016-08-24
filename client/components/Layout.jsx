@@ -82,6 +82,10 @@ class Layout extends React.Component {
           <meta property='og:description' content={this.description()}/>
           <meta property='og:type' content='website'/>
 
+          {/* Swiftype */}
+          <meta className="swiftype" name="title" data-type="string" content={this.title()} />
+          <meta className='swiftype' name='type' data-type='enum' content='article' />
+
           <link rel="shortcut icon" href="//cdn.auth0.com/styleguide/latest/lib/logos/img/favicon.png"/>
           <link rel="stylesheet" href="//cdn.auth0.com/styleguide/4.6.5/index.min.css"/>
           {this.cssAssetBundle()}
