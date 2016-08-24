@@ -8,6 +8,7 @@ import { createElementWithContext } from 'fluxible-addons-react';
 import app from './app';
 import { ArticleService, ServiceKeys } from 'auth0-tutorial-navigator';
 import ContentService from './services/ContentService.client';
+import renderHeader from './browser/header';
 
 require('./styles/docs.styl');
 
@@ -45,3 +46,6 @@ app.rehydrate(dehydratedState, (err, context, props) => {
   });
 
 });
+
+// Render Auth0 Web Header, when DOM is ready (needs #header element)
+renderHeader();
