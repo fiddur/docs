@@ -143,7 +143,7 @@ server.use('/docs', require('./lib/sdk-snippets/lock/snippets-routes'));
 server.use('/docs', require('./lib/packager'));
 server.use('/docs', require('./lib/feedback'));
 server.use('/docs', require('./lib/sitemap'));
-server.use('/docs', require('./lib/search'));
+//server.use('/docs', require('./lib/search'));
 server.use('/docs', require('./lib/updates'));
 server.use('/docs', require('./lib/redirects'));
 

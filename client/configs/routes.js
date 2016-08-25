@@ -39,6 +39,12 @@ export default {
     action: tutorialNavigatorActions.article
   },
 
+  search: {
+    path: '/docs/search',
+    'method': 'get',
+    'handler': require('../components/SearchPage')
+  },
+
   apis: {
     path: '/docs/api/info',
     method: 'get',
@@ -74,5 +80,5 @@ export default {
     handler: require('../components/ErrorPage'),
     action: selectSection
   }
-  
+
 };
