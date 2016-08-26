@@ -52,7 +52,8 @@ nconf.file('global', { file: config_file })
     'SEARCH_ENGINE_ID': '010795999221123445302:urkvlewda8q', // Google Site Search ID
     'PINGDOM_ID': process.env.NODE_ENV === 'production' ? '565cb401abe53d7b2cda7732' : false,
     'SENTRY_DSN': process.env.NODE_ENV === 'production' ? 'https://29ef6b5c3bbd4b9ba9f5710014e20c03@app.getsentry.com/57750' : false,
-    'MOUSEFLOW_ID': process.env.NODE_ENV === 'production' ? '1f318101-e4cd-4d84-b95e-6a0e6771798d' : false
+    'MOUSEFLOW_ID': process.env.NODE_ENV === 'production' ? '1f318101-e4cd-4d84-b95e-6a0e6771798d' : false,
+    'SWIFTYPE_KEY': process.env.NODE_ENV === 'production' ? 'cjknCGvb5_9Ryzo5pxm3' : false,
   });
 
 if (nconf.get('COOKIE_NAME') !== 'auth0l') {
