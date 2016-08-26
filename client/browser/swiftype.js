@@ -4,5 +4,5 @@ if (window.env.SWIFTYPE_KEY) {
   e=d.getElementsByTagName(t)[0];s.async=1;s.src=u;e.parentNode.insertBefore(s,e);
   })(window,document,'script','//s.swiftypecdn.com/install/v2/st.js','_st');
 
-  _st('conversion', sindow.env.SWIFTYPE_KEY);
+  _st('conversion', window.env.SWIFTYPE_KEY);
 }
