@@ -33,7 +33,7 @@ class NavigationBar extends React.Component {
           <ul className="nav nav-tabs section-tabs">
             {tabs}
           </ul>
-          <SearchBox />
+          <SearchBox className="navigation-bar-search" />
         </div>
       </div>
     );

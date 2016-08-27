@@ -41,23 +41,17 @@ class SearchPage extends React.Component {
 
   componentDidMount() {
     if (typeof document !== 'undefined') {
-      let query = getCurrentSearchQuery();
+      let {query} = this.props;
       if (query) {
         this.context.executeAction(performSearchAction, {query});
       }
     }
   }
 
-  renderResultContent() {
-    let {result} = this.props;
+  renderResultContent(result) {
 
     if (!result) {
-      return (
-        <div>
-          <p>Please enter a query to search our documentation.</p>
-          <SearchBox />
-        </div>
-      )
+      return <p>Please enter a query to search our documentation.</p>;
     }
 
     switch (result.state) {
@@ -67,15 +61,11 @@ class SearchPage extends React.Component {
 
       case SearchResultState.LOADED:
         if (result.response.record_count == 0) {
-          return (
-            <div>
-              <p>No results found. Would you like to try another search term?</p>
-              <SearchBox />
-            </div>
-          );
+          return <p>No results found. Would you like to try another search term?</p>;
         }
         else {
-          return <div>{result.response.records.page.map(SearchResult)}</div>;
+          // TODO: Show result count, pagination, etc.
+          return result.response.records.page.map(SearchResult);
         }
 
       case SearchResultState.ERROR:
@@ -88,17 +78,23 @@ class SearchPage extends React.Component {
   }
 
   render() {
+
+    let {query, result} = this.props;
+    let title = result ? 'Search Results' : 'Search';
+
     return (
       <div className="document">
         <NavigationBar />
         <div className="container">
-          <h1>Search Results</h1>
+          <h1>{title}</h1>
+          <SearchBox text={query} />
           <div className="search-results">
-            {this.renderResultContent()}
+            {this.renderResultContent(result)}
           </div>
         </div>
       </div>
     );
+
   }
 
 }
@@ -112,7 +108,7 @@ SearchPage = connectToStores(SearchPage, [SearchStore], (context, props) => {
   let store = context.getStore(SearchStore);
   let query = getCurrentSearchQuery();
   let result = query ? store.getResult(query) : undefined;
-  return {result};
+  return {query, result};
 });
 
 export default SearchPage;

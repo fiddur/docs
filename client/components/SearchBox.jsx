@@ -6,7 +6,18 @@ class SearchBox extends React.Component {
 
   constructor(props) {
     super(props);
-    this.state = {text: ''};
+    this.state = {text: props.text, focused: false};
+  }
+
+  componentWillReceiveProps(newProps) {
+    if (newProps.text && this.state.text !== newProps.text) {
+      this.setState({text: newProps.text});
+    }
+  }
+
+  handleFocusChanged(focused) {
+    this.setState({focused});
+    if (focused) this.refs.input.select();
   }
 
   handleTextChange(evt) {
@@ -15,29 +26,35 @@ class SearchBox extends React.Component {
 
   handleSubmit(evt) {
     evt.preventDefault();
+    this.refs.input.blur();
     let query = this.state.text;
-    this.setState({text: ''}, () => {
-      this.context.executeAction(performSearchAction, {query});
-      this.context.executeAction(navigateAction, {url: '/docs/search?q=' + query});
-    });
+    this.context.executeAction(performSearchAction, {query});
+    this.context.executeAction(navigateAction, {url: '/docs/search?q=' + query});
   }
 
   render() {
 
-    let {placeholder} = this.props;
-    let {text} = this.state;
+    let {placeholder, className} = this.props;
+    let {text, focused} = this.state;
+
+    let classes = ['form-group', 'search-control'];
+    if (focused) classes.push('focused');
+    if (className) classes.push(className);
 
     return (
       <form id="search" role="search" autoComplete="off" onSubmit={this.handleSubmit.bind(this)}>
-        <div className="form-group search-control">
+        <div className={classes.join(' ')}>
           <i className="icon-budicon-489" />
           <input
             id="search-input"
+            ref="input"
             className="search-input form-control"
             type="text"
             placeholder={placeholder}
             text={text}
-            onChange={this.handleTextChange.bind(this)} />
+            onChange={this.handleTextChange.bind(this)}
+            onFocus={this.handleFocusChanged.bind(this, true)}
+            onBlur={this.handleFocusChanged.bind(this, false)} />
         </div>
       </form>
     );
@@ -51,7 +68,8 @@ SearchBox.contextTypes = {
 };
 
 SearchBox.defaultProps = {
-  placeholder: "Search for docs"
+  placeholder: "Search for docs",
+  text: ""
 };
 
 export default SearchBox;
