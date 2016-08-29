@@ -23,7 +23,7 @@ if (!nconf.get('DISABLE_CONTENT_TESTS')) {
       console.log('');
       message = '        running test';
     }
-    return new ProgressBar(message + ' [:bar] :percent', {
+    return new ProgressBar(message + ' [:bar] :current/:total (:percent)', {
       complete: '=',
       incomplete: ' ',
       width: 20,
