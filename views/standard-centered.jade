@@ -5,16 +5,7 @@ block head
 
 block body
   .docs-single
-    header.site-header!= webheader
-    script.
-      if (null != window.widget) {
-        window.widget.getClient().getSSOData(false, function (err, data) {
-          if (!data || !data.sso) return;
-          $('header.site-header .login')
-            .attr('href', "#{locals.uiURL}")
-            .html('Open Dashboard');
-        });
-      }
+    header#header!= webheader
 
     .navigation-bar
       .container
