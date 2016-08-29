@@ -175,6 +175,23 @@
         }
       }
     },
+    "auth0-contact-form": {
+      "version": "1.0.3",
+      "from": "auth0-contact-form@latest",
+      "resolved": "https://registry.npmjs.org/auth0-contact-form/-/auth0-contact-form-1.0.3.tgz",
+      "dependencies": {
+        "bootstrap": {
+          "version": "3.3.7",
+          "from": "bootstrap@>=3.3.6 <4.0.0",
+          "resolved": "https://registry.npmjs.org/bootstrap/-/bootstrap-3.3.7.tgz"
+        },
+        "lodash": {
+          "version": "4.15.0",
+          "from": "lodash@>=4.13.1 <5.0.0",
+          "resolved": "https://registry.npmjs.org/lodash/-/lodash-4.15.0.tgz"
+        }
+      }
+    },
     "auth0-styleguide": {
       "version": "4.8.6",
       "resolved": "git://github.com/auth0/styleguide.git#257e73d46ed0242aa6c53099a622eb212ef36f91"
@@ -302,6 +319,16 @@
               }
             }
           }
+        }
+      }
+    },
+    "auth0-web-header": {
+      "version": "1.2.0",
+      "resolved": "https://registry.npmjs.org/auth0-web-header/-/auth0-web-header-1.2.0.tgz",
+      "dependencies": {
+        "classnames": {
+          "version": "2.2.5",
+          "resolved": "https://registry.npmjs.org/classnames/-/classnames-2.2.5.tgz"
         }
       }
     },
@@ -3092,11 +3119,6 @@
     "url-join": {
       "version": "1.1.0",
       "resolved": "https://registry.npmjs.org/url-join/-/url-join-1.1.0.tgz"
-    },
-    "web-header": {
-      "version": "0.5.7",
-      "from": "web-header@git://github.com/auth0/web-header.git#f37113684f05ff660eeeebe65b23f49e47ef7dca",
-      "resolved": "git://github.com/auth0/web-header.git#f37113684f05ff660eeeebe65b23f49e47ef7dca"
     },
     "whatwg-fetch": {
       "version": "0.11.0",

@@ -6,21 +6,11 @@ block head
 block body
   // Add this css so site header doesn't transform when API explorer loads
   style.
-    .site-header .container {
+    #header .container {
       max-width: none!important;
       width: 100%;
     }
-    
-  header.site-header!= webheader
-  script.
-    if (null != window.widget) {
-      window.widget.getClient().getSSOData(false, function (err, data) {
-        if (!data || !data.sso) return;
-        $('header.site-header .login')
-          .attr('href', "#{locals.uiURL}")
-          .html('Open Dashboard');
-      });
-    }
+  header#header!= webheader
 
   section.content
     block content
