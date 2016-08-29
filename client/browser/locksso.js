@@ -16,7 +16,10 @@ var options = {
       footerText: 'By signing up, you agree to our <a href="/terms" target="_new">terms of service</a> and <a href="/privacy" target="_new">privacy policy</a>'
     }
   },
-  icon: '//cdn.auth0.com/styleguide/latest/lib/logos/img/badge.png'
+  icon: '//cdn.auth0.com/styleguide/latest/lib/logos/img/badge.png',
+  rememberLastLogin: true,
+  integratedWindowsLogin: false,
+  socialBigButtons: true
 };
 
 widget.on('signup ready', function() {
