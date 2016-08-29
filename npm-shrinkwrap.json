@@ -3120,11 +3120,6 @@
       "version": "1.1.0",
       "resolved": "https://registry.npmjs.org/url-join/-/url-join-1.1.0.tgz"
     },
-    "web-header": {
-      "version": "0.5.7",
-      "from": "web-header@git://github.com/auth0/web-header.git#f37113684f05ff660eeeebe65b23f49e47ef7dca",
-      "resolved": "git://github.com/auth0/web-header.git#f37113684f05ff660eeeebe65b23f49e47ef7dca"
-    },
     "whatwg-fetch": {
       "version": "0.11.0",
       "resolved": "https://registry.npmjs.org/whatwg-fetch/-/whatwg-fetch-0.11.0.tgz"

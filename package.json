@@ -60,7 +60,6 @@
     "server-destroy": "^1.0.1",
     "sitemap": "^1.6.0",
     "url-join": "^1.1.0",
-    "web-header": "auth0/web-header#0.5.7",
     "whatwg-fetch": "^0.11.0",
     "winston": "^1.0.1",
     "winston-email": "0.0.10",
