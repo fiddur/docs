@@ -1,34 +1,61 @@
 import { BaseStore } from 'fluxible/addons';
 
+export const SearchResultState = {
+  LOADING: 'LOADING',
+  LOADED: 'LOADED',
+  ERROR: 'ERROR'
+};
+
 class SearchStore extends BaseStore {
+
   constructor(dispatcher) {
     super(dispatcher);
-    this.results = [];
+    this.results = {};
   }
-  handleResultsLoaded(payload) {
-    this.results = payload;
+
+  handleResultLoading(payload) {
+    this.results[payload.query] = {
+      query: payload.query,
+      state: SearchResultState.LOADING
+    };
     this.emitChange();
   }
-  handleResultsFailed(payload) {
 
+  handleResultLoaded(payload) {
+    let result = this.results[payload.query];
+    result.state = SearchResultState.LOADED;
+    result.response = payload.response;
+    this.emitChange();
   }
-  getResults() {
-    return this.results;
+
+  handleResultLoadFailed(payload) {
+    let result = this.results[payload.query];
+    result.state = SearchResultState.ERROR;
+    result.error = payload.err;
+    this.emitChange();
   }
+
+  getResult(query) {
+    return this.results[query];
+  }
+
   dehydrate() {
     return {
-      user: this.results,
+      results: this.results
     };
   }
+
   rehydrate(state) {
     this.results = state.results;
   }
+
 }
 
 SearchStore.storeName = 'SearchStore';
 SearchStore.handlers = {
-  'SEARCH_RESULTS_LOAD_SUCCESS': 'handleResultsLoaded',
-  'SEARCH_RESULTS_LOAD_FAILURE': 'handleResultsFailed'
+  'SEARCH_RESULT_LOADING': 'handleResultLoading',
+  'SEARCH_RESULT_LOAD_SUCCESS': 'handleResultLoaded',
+  'SEARCH_RESULT_LOAD_FAILURE': 'handleResultLoadFailed'
 };
 
 export default SearchStore;

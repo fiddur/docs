@@ -41,8 +41,8 @@ export default {
 
   search: {
     path: '/docs/search',
-    'method': 'get',
-    'handler': require('../components/SearchPage')
+    method: 'get',
+    handler: require('../components/SearchPage')
   },
 
   apis: {

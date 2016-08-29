@@ -2,20 +2,30 @@
   position: relative
   margin: 0
 
-  i
-    position: absolute
-    top: 50%
-    transform: translateY(-50%)
-    left: 10px
-    opacity: .5
-    line-height 0
-
   .form-control
-    border: 0
-    background: rgba(black, 0.05)
-    width: 100%
+    padding: 8px 16px
     -webkit-box-shadow: none
     -moz-box-shadow: none
     box-shadow: none
     height: 35px
-    padding-left: 32px
+    text-indent: 26px
+    transition: all 0.5 ease
+
+    &:focus
+      text-indent: 0
+      transition: all 0.5s ease
+
+  i
+    position: absolute
+    top: 6px
+    left: 16px
+    opacity: .5
+  
+  &.focused i
+    display: none
+
+  &.navigation-bar-search
+    .form-control
+      border: 0
+      background: rgba(black, 0.05)
+      
