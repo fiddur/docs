@@ -85,6 +85,7 @@ class Layout extends React.Component {
           {/* Swiftype */}
           <meta className="swiftype" name="title" data-type="string" content={this.title()} />
           <meta className='swiftype' name='type' data-type='enum' content='article' />
+          <meta className='swiftype' name='popularity' data-type='integer' content='2' />
 
           <link rel="shortcut icon" href="//cdn.auth0.com/styleguide/latest/lib/logos/img/favicon.png"/>
           <link rel="stylesheet" href="//cdn.auth0.com/styleguide/4.6.5/index.min.css"/>
