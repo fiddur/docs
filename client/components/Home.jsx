@@ -5,6 +5,7 @@ import {quickstartNavigationAction} from '../action/quickstartNavigationAction';
 import NavigationStore from '../stores/NavigationStore';
 import CategoryCard from './CategoryCard';
 import TryBanner from './TryBanner';
+import SearchBox from './SearchBox';
 
 // TODO: This depends on a "carousel" ref that's set by the TutorialNavigator itself.
 // Can we move this into the component's codebase somehow?
@@ -47,6 +48,7 @@ class Home extends React.Component {
         {tryBanner}
         <div className="category-cards container center-block">
           <h1>Curated content to fully understand our platform</h1>
+          <SearchBox />
           {cards}
         </div>
       </div>
