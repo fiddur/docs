@@ -2,7 +2,7 @@
   "name": "auth0-docs",
   "version": "2.0.0",
   "npm-shrinkwrap-version": "5.4.1",
-  "node-version": "v4.3.2",
+  "node-version": "v4.4.3",
   "dependencies": {
     "async": {
       "version": "0.2.10",
@@ -177,28 +177,26 @@
     },
     "auth0-contact-form": {
       "version": "1.0.3",
-      "from": "auth0-contact-form@latest",
       "resolved": "https://registry.npmjs.org/auth0-contact-form/-/auth0-contact-form-1.0.3.tgz",
       "dependencies": {
         "bootstrap": {
           "version": "3.3.7",
-          "from": "bootstrap@>=3.3.6 <4.0.0",
           "resolved": "https://registry.npmjs.org/bootstrap/-/bootstrap-3.3.7.tgz"
         },
         "lodash": {
           "version": "4.15.0",
-          "from": "lodash@>=4.13.1 <5.0.0",
           "resolved": "https://registry.npmjs.org/lodash/-/lodash-4.15.0.tgz"
         }
       }
     },
     "auth0-styleguide": {
       "version": "4.8.6",
+      "from": "auth0-styleguide@git://github.com/auth0/styleguide.git#257e73d46ed0242aa6c53099a622eb212ef36f91",
       "resolved": "git://github.com/auth0/styleguide.git#257e73d46ed0242aa6c53099a622eb212ef36f91"
     },
     "auth0-tutorial-navigator": {
-      "version": "3.3.2",
-      "resolved": "git://github.com/auth0/tutorial-navigator.git#31997d3da0455d3575466251ba156de1578c572e",
+      "version": "3.5.0",
+      "resolved": "git://github.com/auth0/tutorial-navigator.git#1af1f4f9e57accb75707a6bc7229a518b2bfbe9a",
       "dependencies": {
         "auth0-styleguide": {
           "version": "2.2.7",
@@ -1957,6 +1955,10 @@
           }
         }
       }
+    },
+    "jquery": {
+      "version": "3.1.0",
+      "resolved": "https://registry.npmjs.org/jquery/-/jquery-3.1.0.tgz"
     },
     "js-yaml": {
       "version": "3.6.0",
