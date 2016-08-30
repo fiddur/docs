@@ -122,3 +122,24 @@ make test-shrinkwrap-status
 ```
 make test-sec-deps
 ```
+
+## Authentication Api Explorer integration
+In production the api explorer is loaded from Auth0 CDN and developed in a different public 
+repository: https://github.com/auth0/api-explorer/
+
+During development and/or reviews it is useful to see it fully integrated with docs.
+
+To do that you can checkout this branch: 
+https://github.com/ziluvatar/auth0-docs/tree/custom-api-explorer (you might need to rebase from docs origin)
+
+Or apply these changes in `authentication-api-explorer.jade` and `server.js`: 
+https://github.com/ziluvatar/auth0-docs/commit/da926144261827baf2cec32d2f6991530c0c461f
+
+Now you need to generate the api-explorer distribution files by using `grunt build`, after that you 
+need to copy&paste `dist/api-explorer.js` and `dist/api-explorer.css` from your api-explorer folder 
+to `public/api-explorer` folder here in auth0-docs.
+
+If you are using vagrant you can restart auth0-docs service.
+
+If you want to see these changes in heroku just create a PR to let github deploy on it. **Remember not to merge it, this is only for review purposes**.
+
