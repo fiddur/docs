@@ -321,8 +321,8 @@
       }
     },
     "auth0-web-header": {
-      "version": "1.2.0",
-      "resolved": "https://registry.npmjs.org/auth0-web-header/-/auth0-web-header-1.2.0.tgz",
+      "version": "1.2.2",
+      "resolved": "https://registry.npmjs.org/auth0-web-header/-/auth0-web-header-1.2.2.tgz",
       "dependencies": {
         "classnames": {
           "version": "2.2.5",
