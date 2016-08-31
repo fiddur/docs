@@ -6,11 +6,13 @@ import { TutorialStore, Breadcrumbs, Tutorial, TutorialTableOfContents, Tutorial
 import { connectToStores, provideContext } from 'fluxible-addons-react';
 import { quickstartNavigationAction } from '../action/quickstartNavigationAction';
 import highlightCode from '../browser/highlightCode';
+import setAnchorLinks from '../browser/anchorLinks';
 import UserStore from '../stores/UserStore';
 
 // TODO: Uses ref from within tutorial navigator, can we move this?
 var initTutorialInBrowser = function() {
   highlightCode();
+  setAnchorLinks();
 
   // Execute any scripts that came with the article
   if (this.refs.article && this.refs.article.innerHTML) {
