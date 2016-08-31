@@ -5,18 +5,27 @@ import ApplicationStore from '../stores/ApplicationStore';
 import ContentStore from '../stores/ContentStore';
 import NavigationBar from './NavigationBar';
 import Sidebar from './Sidebar';
+import setAnchorLinks from '../browser/anchorLinks';
 
 class ArticlePage extends React.Component {
 
   componentDidMount() {
     this.executeEmbeddedScripts();
     //this.captureClicks();
+    this.initClient();
   }
 
   componentDidUpdate() {
     this.executeEmbeddedScripts();
     //this.captureClicks();
     //this.scrollToAnchor();
+    this.initClient();
+  }
+
+  initClient() {
+    if (typeof document !== 'undefined') {
+      setAnchorLinks();
+    }
   }
 
   /*
