@@ -8,7 +8,7 @@ articles:
 
   - title: Getting Started
     url: "#"
-    icon: "icon-budicon-466"
+    icon: "icon-budicon-500"
     children:
       - title: Overview
         url: /overview
