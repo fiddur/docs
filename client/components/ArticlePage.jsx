@@ -96,15 +96,17 @@ class ArticlePage extends React.Component {
 
   renderFull() {
     return (
-      <div className="document">
-        <NavigationBar />
-        <div className="js-doc-template container">
-          <div className="row">
-            <div className="col-sm-3">
-              <Sidebar maxDepth={2} />
-            </div>
-            <div ref="content" className="col-sm-9">
-              {this.renderContent()}
+      <div className="docs-article">
+        <div className="document">
+          <NavigationBar />
+          <div className="js-doc-template container">
+            <div className="row">
+              <div className="col-sm-3">
+                <Sidebar maxDepth={2} />
+              </div>
+              <div ref="content" className="col-sm-9">
+                {this.renderContent()}
+              </div>
             </div>
           </div>
         </div>

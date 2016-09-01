@@ -80,14 +80,12 @@ class Application extends React.Component {
       let error = {message: 'Not Found', status: 404};
       Handler = <ErrorPage error={error} />;
     }
+
     const isFramedMode = this.props.env['RENDER_MODE'] === 'framed';
 
     return (
       <div>
-        {isFramedMode
-          ? null
-          : <Header />
-        }
+        {isFramedMode ? null : <Header/>}
         <div>
           {Handler}
         </div>

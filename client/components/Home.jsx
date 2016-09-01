@@ -32,9 +32,9 @@ var initCarouselInBrowser = function() {
 };
 
 class Home extends React.Component {
-  
+
   render() {
-    
+
     let {cardDefinitions, isAuthenticated} = this.props;
     let tryBanner = isAuthenticated ? null : <TryBanner/>;
 
@@ -43,7 +43,12 @@ class Home extends React.Component {
     ));
 
     return (
-      <div>
+      <div className="docs-home">
+        <div className="docs-header">
+          <div className="container">
+            <h1>Documentation</h1>
+          </div>
+        </div>
         <TutorialNavigator {...this.props} customNavigationAction={quickstartNavigationAction} componentLoadedInBrowser={initCarouselInBrowser} />
         {tryBanner}
         <div className="category-cards container center-block">
@@ -54,7 +59,7 @@ class Home extends React.Component {
       </div>
     );
   }
-  
+
 }
 
 Home.propTypes = {

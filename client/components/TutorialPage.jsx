@@ -101,22 +101,24 @@ class TutorialPage extends React.Component {
     }
 
     return (
-      <div id="tutorial-template" className="docs-single animated fadeIn">
-        <NavigationBar />
-        <div className="js-doc-template container">
-          <div className="row">
-            {sidebar}
-            <div className={classes.join(' ')}>
-              <div className="navigation">
-                <Breadcrumbs {...this.props} customNavigationAction={quickstartNavigationAction} />
+      <div className="docs-quickstart">
+        <div id="tutorial-template" className="docs-single animated fadeIn">
+          <NavigationBar />
+          <div className="js-doc-template container">
+            <div className="row">
+              {sidebar}
+              <div className={classes.join(' ')}>
+                <div className="navigation">
+                  <Breadcrumbs {...this.props} customNavigationAction={quickstartNavigationAction} />
+                </div>
+                <section className="docs-content" data-swiftype-index='true'>
+                  <IntroBanner />
+                  <h1 className="tutorial-title">{this.renderTitle()}</h1>
+                  <div data-swiftype-name="body" data-swiftype-type="text">{tutorial}</div>
+                  <div data-swiftype-index='false'>{prevNext}</div>
+                </section>
+                {tryBanner}
               </div>
-              <section className="docs-content" data-swiftype-index='true'>
-                <IntroBanner />
-                <h1 className="tutorial-title">{this.renderTitle()}</h1>
-                <div data-swiftype-name="body" data-swiftype-type="text">{tutorial}</div>
-                <div data-swiftype-index='false'>{prevNext}</div>
-              </section>
-              {tryBanner}
             </div>
           </div>
         </div>

@@ -28,16 +28,16 @@ var initCarouselInBrowser = function() {
 };
 
 class QuickstartsPage extends React.Component {
-  
+
   render() {
     return (
-      <div className="document">
+      <div className="document docs-quickstart-selector">
         <NavigationBar />
         <TutorialNavigator {...this.props} customNavigationAction={quickstartNavigationAction} componentLoadedInBrowser={initCarouselInBrowser} />
       </div>
     );
   }
-  
+
 }
 
 export default QuickstartsPage;
