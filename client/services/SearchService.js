@@ -4,9 +4,22 @@ const engineKey = 's-M2Jb8-xTC1XeyCpWZ1';
 
 SearchService.search = (query) => {
 
-  let requestUrl = `https://api.swiftype.com/api/v1/public/engines/search?q=${query}&engine_key=${engineKey}`;
+  let requestUrl = `https://api.swiftype.com/api/v1/public/engines/search?engine_key=${engineKey}`;
 
-  return fetch(requestUrl)
+  var body = {
+    'q': query,
+    'facets':{
+      'type':['article']
+    }
+  }
+
+  return fetch(requestUrl, {
+    method: 'POST',
+    headers: new Headers({
+      'Content-Type': 'application/json'
+    }),
+    body: JSON.stringify(body)
+  })
   .then(response => {
     if (response.status >= 200 && response.status < 400) {
       return response;
