@@ -8,10 +8,12 @@ SearchService.search = (query) => {
 
   var body = {
     'q': query,
-    'facets':{
-      'type':['article']
+    'filters':{
+      'page': {
+        'type':['article']
+      }
     }
-  }
+  };
 
   return fetch(requestUrl, {
     method: 'POST',
