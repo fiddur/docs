@@ -6,6 +6,7 @@ import NavigationStore from '../stores/NavigationStore';
 import CategoryCard from './CategoryCard';
 import TryBanner from './TryBanner';
 import SearchBox from './SearchBox';
+import DocsHeader from './DocsHeader';
 
 // TODO: This depends on a "carousel" ref that's set by the TutorialNavigator itself.
 // Can we move this into the component's codebase somehow?
@@ -43,7 +44,8 @@ class Home extends React.Component {
     ));
 
     return (
-      <div>
+      <div className="docs-home">
+        <DocsHeader />
         <TutorialNavigator {...this.props} customNavigationAction={quickstartNavigationAction} componentLoadedInBrowser={initCarouselInBrowser} />
         {tryBanner}
         <div className="category-cards container center-block">

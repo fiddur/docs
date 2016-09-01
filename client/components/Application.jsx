@@ -8,6 +8,7 @@ import ErrorPage from './ErrorPage';
 import highlightCode from '../browser/highlightCode';
 import feedbackSender from '../browser/feedbackSender';
 import Header from './Header';
+import DocsHeader from './DocsHeader';
 
 class Application extends React.Component {
 
@@ -80,14 +81,12 @@ class Application extends React.Component {
       let error = {message: 'Not Found', status: 404};
       Handler = <ErrorPage error={error} />;
     }
+
     const isFramedMode = this.props.env['RENDER_MODE'] === 'framed';
 
     return (
       <div>
-        {isFramedMode
-          ? null
-          : <Header />
-        }
+        {isFramedMode ? null : <Header/>}
         <div>
           {Handler}
         </div>

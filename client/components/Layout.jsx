@@ -96,7 +96,7 @@ class Layout extends React.Component {
           <script src={getAssetBundleUrl('browser')}></script>
         </head>
         <body>
-          <div className={this.props.className}>
+          <div className="docs-single">
             <div id="app" dangerouslySetInnerHTML={{__html: this.props.markup}}></div>
             {footer}
           </div>
