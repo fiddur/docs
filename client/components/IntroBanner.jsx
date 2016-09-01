@@ -34,7 +34,7 @@ class IntroBanner extends React.Component {
     let content = undefined;
     if (!this.state.dismissed) {
       content = (
-        <div className='intro-banner'>
+        <div className='intro-banner' data-swiftype-index='false'>
           <i className="intro-banner-close icon-budicon-471" onClick={this.handleCloseClick.bind(this)} />
           <div className="intro-banner-image"></div>
           <div className="intro-banner-text">
