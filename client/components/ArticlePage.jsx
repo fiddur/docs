@@ -5,7 +5,6 @@ import ApplicationStore from '../stores/ApplicationStore';
 import ContentStore from '../stores/ContentStore';
 import NavigationBar from './NavigationBar';
 import Sidebar from './Sidebar';
-import DocsHeader from './DocsHeader';
 import setAnchorLinks from '../browser/anchorLinks';
 
 class ArticlePage extends React.Component {
@@ -98,7 +97,6 @@ class ArticlePage extends React.Component {
   renderFull() {
     return (
       <div className="docs-article">
-        <DocsHeader />
         <div className="document">
           <NavigationBar />
           <div className="js-doc-template container">

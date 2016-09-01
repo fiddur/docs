@@ -2,7 +2,7 @@
   "name": "auth0-docs",
   "version": "2.0.0",
   "npm-shrinkwrap-version": "6.0.1",
-  "node-version": "v4.4.2",
+  "node-version": "v4.4.3",
   "dependencies": {
     "async": {
       "version": "0.2.10",
@@ -195,13 +195,11 @@
       "resolved": "git://github.com/auth0/styleguide.git#257e73d46ed0242aa6c53099a622eb212ef36f91"
     },
     "auth0-tutorial-navigator": {
-      "version": "3.5.0",
-      "from": "auth0-tutorial-navigator@git://github.com/auth0/tutorial-navigator.git#1af1f4f9e57accb75707a6bc7229a518b2bfbe9a",
-      "resolved": "git://github.com/auth0/tutorial-navigator.git#1af1f4f9e57accb75707a6bc7229a518b2bfbe9a",
+      "version": "3.5.1",
+      "resolved": "git://github.com/auth0/tutorial-navigator.git#b76d390b36769a18f3dc55a782059677f82099ad",
       "dependencies": {
         "auth0-styleguide": {
           "version": "2.2.7",
-          "from": "auth0-styleguide@git://github.com/auth0/styleguide.git#75412486e066f082a0873687cf29d6dc51b3bf33",
           "resolved": "git://github.com/auth0/styleguide.git#75412486e066f082a0873687cf29d6dc51b3bf33"
         },
         "flux": {
@@ -1549,8 +1547,8 @@
       }
     },
     "highlight.js": {
-      "version": "9.3.0",
-      "resolved": "https://registry.npmjs.org/highlight.js/-/highlight.js-9.3.0.tgz"
+      "version": "9.6.0",
+      "resolved": "https://registry.npmjs.org/highlight.js/-/highlight.js-9.6.0.tgz"
     },
     "httpsnippet": {
       "version": "1.16.5",
@@ -2241,8 +2239,8 @@
       }
     },
     "markdown-it": {
-      "version": "6.0.1",
-      "resolved": "https://registry.npmjs.org/markdown-it/-/markdown-it-6.0.1.tgz",
+      "version": "7.0.1",
+      "resolved": "https://registry.npmjs.org/markdown-it/-/markdown-it-7.0.1.tgz",
       "dependencies": {
         "argparse": {
           "version": "1.0.7",
@@ -2259,16 +2257,16 @@
           "resolved": "https://registry.npmjs.org/entities/-/entities-1.1.1.tgz"
         },
         "linkify-it": {
-          "version": "1.2.0",
-          "resolved": "https://registry.npmjs.org/linkify-it/-/linkify-it-1.2.0.tgz"
+          "version": "2.0.0",
+          "resolved": "https://registry.npmjs.org/linkify-it/-/linkify-it-2.0.0.tgz"
         },
         "mdurl": {
           "version": "1.0.1",
           "resolved": "https://registry.npmjs.org/mdurl/-/mdurl-1.0.1.tgz"
         },
         "uc.micro": {
-          "version": "1.0.0",
-          "resolved": "https://registry.npmjs.org/uc.micro/-/uc.micro-1.0.0.tgz"
+          "version": "1.0.2",
+          "resolved": "https://registry.npmjs.org/uc.micro/-/uc.micro-1.0.2.tgz"
         }
       }
     },

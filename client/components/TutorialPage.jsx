@@ -2,7 +2,6 @@ import React from 'react';
 import NavigationBar from './NavigationBar';
 import TryBanner from './TryBanner';
 import IntroBanner from './IntroBanner';
-import DocsHeader from './DocsHeader';
 import { TutorialStore, Breadcrumbs, Tutorial, TutorialTableOfContents, TutorialPrevNext } from 'auth0-tutorial-navigator';
 import { connectToStores, provideContext } from 'fluxible-addons-react';
 import { quickstartNavigationAction } from '../action/quickstartNavigationAction';
@@ -104,7 +103,6 @@ class TutorialPage extends React.Component {
     return (
       <div className="docs-quickstart">
         <div id="tutorial-template" className="docs-single animated fadeIn">
-          <DocsHeader />
           <NavigationBar />
           <div className="js-doc-template container">
             <div className="row">

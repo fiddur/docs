@@ -6,7 +6,6 @@ import NavigationStore from '../stores/NavigationStore';
 import CategoryCard from './CategoryCard';
 import TryBanner from './TryBanner';
 import SearchBox from './SearchBox';
-import DocsHeader from './DocsHeader';
 
 // TODO: This depends on a "carousel" ref that's set by the TutorialNavigator itself.
 // Can we move this into the component's codebase somehow?
@@ -33,9 +32,9 @@ var initCarouselInBrowser = function() {
 };
 
 class Home extends React.Component {
-  
+
   render() {
-    
+
     let {cardDefinitions, isAuthenticated} = this.props;
     let tryBanner = isAuthenticated ? null : <TryBanner/>;
 
@@ -45,7 +44,11 @@ class Home extends React.Component {
 
     return (
       <div className="docs-home">
-        <DocsHeader />
+        <div className="docs-header">
+          <div className="container">
+            <h1>Documentation</h1>
+          </div>
+        </div>
         <TutorialNavigator {...this.props} customNavigationAction={quickstartNavigationAction} componentLoadedInBrowser={initCarouselInBrowser} />
         {tryBanner}
         <div className="category-cards container center-block">
@@ -56,7 +59,7 @@ class Home extends React.Component {
       </div>
     );
   }
-  
+
 }
 
 Home.propTypes = {

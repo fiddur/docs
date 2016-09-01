@@ -1,7 +1,6 @@
 import React from 'react';
 import {TutorialNavigator} from 'auth0-tutorial-navigator';
 import {quickstartNavigationAction} from '../action/quickstartNavigationAction';
-import DocsHeader from './DocsHeader';
 import NavigationBar from './NavigationBar';
 
 // TODO: This depends on a "carousel" ref that's set by the TutorialNavigator itself.
@@ -29,17 +28,16 @@ var initCarouselInBrowser = function() {
 };
 
 class QuickstartsPage extends React.Component {
-  
+
   render() {
     return (
       <div className="document docs-quickstart-selector">
-        <DocsHeader />
         <NavigationBar />
         <TutorialNavigator {...this.props} customNavigationAction={quickstartNavigationAction} componentLoadedInBrowser={initCarouselInBrowser} />
       </div>
     );
   }
-  
+
 }
 
 export default QuickstartsPage;

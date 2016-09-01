@@ -8,7 +8,6 @@ import ErrorPage from './ErrorPage';
 import highlightCode from '../browser/highlightCode';
 import feedbackSender from '../browser/feedbackSender';
 import Header from './Header';
-import DocsHeader from './DocsHeader';
 
 class Application extends React.Component {
 
