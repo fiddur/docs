@@ -129,6 +129,7 @@ server.use(middleware.configuration);
 server.use(middleware.setUserIsOwner);
 server.use(middleware.defaultValues);
 server.use(middleware.embedded);
+server.use(middleware.amp);
 server.use(middleware.overrideIfAuthenticated);
 server.use(middleware.overrideIfClientInQs);
 server.use(middleware.overrideIfClientInQsForPublicAllowedUrls);
