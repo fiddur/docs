@@ -27,22 +27,5 @@ export default function(req, res) {
     });
   };
 
-  ContentService.getMeta = (id, ignoreMissing) => {
-    return new Promise((resolve, reject) => {
-
-      let {pathname} = url.parse(req.url);
-      let doc = docsByUrl[pathname];
-
-      if (!doc && !ignoreMissing) {
-        var error = new Error('No content found at ' + req.url);
-        error.status = 404;
-        return reject(error);
-      }
-
-      return resolve(doc.meta);
-
-    });
-  };
-
   return ContentService;
 }
