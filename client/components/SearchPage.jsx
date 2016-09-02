@@ -3,6 +3,7 @@ import url from 'url';
 import qs from 'querystring';
 import NavigationBar from './NavigationBar';
 import performSearchAction from '../action/performSearch';
+import searchClickthroughAction from '../action/searchClickthroughAction';
 import {connectToStores} from 'fluxible-addons-react';
 import {navigateAction} from 'fluxible-router';
 import SearchStore, {SearchResultState} from '../stores/SearchStore';
@@ -25,17 +26,34 @@ let SearchSpinner = () => (
   </div>
 );
 
-let SearchResult = (page, index) => (
-  <div className="st-result row" key={index}>
-    <div className="col-md-1 type-container">
-      <span className="type docs">doc</span>
-    </div>
-    <div className="col-md-11">
-      <h2 className="title"><a href={page.url} className="st-search-result-link">{page.title}</a></h2>
-      <p><a href={page.url} dangerouslySetInnerHTML={{__html: page.highlight.body}}></a></p>
-    </div>
-  </div>
-);
+class SearchResult extends React.Component {
+
+  handleClick() {
+    this.context.executeAction(searchClickthroughAction, {query: this.props.query, id: this.props.page.id })
+  }
+
+  render() {
+    let page = this.props.page;
+    var boundClick = this.handleClick.bind(this);
+
+    return (
+      <div className="st-result row">
+        <div className="col-md-1 type-container">
+          <span className="type docs">doc</span>
+        </div>
+        <div className="col-md-11">
+          <h2 className="title"><a onClick={boundClick} href={page.url} className="st-search-result-link">{page.title}</a></h2>
+          <p><a onClick={boundClick} href={page.url} dangerouslySetInnerHTML={{__html: page.highlight.body}}></a></p>
+        </div>
+      </div>
+    );
+  }
+
+}
+
+SearchResult.contextTypes = {
+  executeAction: React.PropTypes.func,
+};
 
 class SearchPage extends React.Component {
 
@@ -56,23 +74,28 @@ class SearchPage extends React.Component {
 
     switch (result.state) {
 
-      case SearchResultState.LOADING:
-        return <SearchSpinner />;
+    case SearchResultState.LOADING:
+      return <SearchSpinner />;
 
-      case SearchResultState.LOADED:
-        if (result.response.record_count == 0) {
-          return <p>No results found. Would you like to try another search term?</p>;
-        }
-        else {
-          // TODO: Show result count, pagination, etc.
-          return result.response.records.page.map(SearchResult);
-        }
+    case SearchResultState.LOADED:
+      if (result.response.record_count == 0) {
+        return <p>No results found. Would you like to try another search term?</p>;
+      }
+      else {
+        // TODO: Show result count, pagination, etc.
+        return result.response.records.page.map((page, i) => {
+          //var boundClick = this.handleClick.bind(this, page);
+          return (
+            <SearchResult page={page} query={result.response.info.page.query} key={i} />
+          );
+        });
+      }
 
-      case SearchResultState.ERROR:
-        return <p>There was an error loading the search result. Please try again.</p>;
+    case SearchResultState.ERROR:
+      return <p>There was an error loading the search result. Please try again.</p>;
 
-      default:
-        throw new Error(`Unknown search state ${result.state}`);
+    default:
+      throw new Error(`Unknown search state ${result.state}`);
 
     }
   }

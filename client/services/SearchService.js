@@ -1,20 +1,6 @@
 let SearchService = {};
 
-const engineKey = 's-M2Jb8-xTC1XeyCpWZ1';
-
-SearchService.search = (query) => {
-
-  let requestUrl = `https://api.swiftype.com/api/v1/public/engines/search?engine_key=${engineKey}`;
-
-  var body = {
-    'q': query,
-    'filters':{
-      'page': {
-        'type':['article']
-      }
-    }
-  };
-
+const postRequest = (requestUrl, body) => {
   return fetch(requestUrl, {
     method: 'POST',
     headers: new Headers({
@@ -36,7 +22,50 @@ SearchService.search = (query) => {
   .then(response => {
     return response.json();
   });
+}
 
+const pingUrl = (url, callback) => {
+  var img = new Image();
+  img.onload = img.onerror = function() {
+    clearTimeout(to);
+    callback();
+  };
+  img.src = url;
+}
+
+const baseUrl = 'https://api.swiftype.com';
+
+SearchService.search = (query) => {
+
+  let requestUrl = `${baseUrl}/api/v1/public/engines/search`;
+
+  var body = {
+    'engine_key': window.env.SWIFTYPE_ENGINE_KEY,
+    'q': query,
+    'filters':{
+      'page': {
+        'type':['article']
+      }
+    }
+  };
+
+  return postRequest(requestUrl, body);
+}
+
+SearchService.recordClickthrough = (query, id) => {
+  let requestUrl = '/search/clickthrough';
+
+  var params = {
+    t: new Date().getTime(),
+    engine_key: window.env.SWIFTYPE_ENGINE_KEY,
+    doc_id: id,
+    q: query,
+  };
+
+  var url = `${baseUrl}/api/v1/public/analytics/pc?` + $.param(params);
+  return new Promise((resolve) => {
+    return pingUrl(url, resolve);
+  });
 }
 
 export default SearchService;
