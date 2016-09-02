@@ -111,11 +111,13 @@ class TutorialPage extends React.Component {
                 <div className="navigation">
                   <Breadcrumbs {...this.props} customNavigationAction={quickstartNavigationAction} />
                 </div>
-                <section className="docs-content" data-swiftype-index='true'>
+                <section className="docs-content">
                   <IntroBanner />
-                  <h1 className="tutorial-title">{this.renderTitle()}</h1>
-                  <div data-swiftype-name="body" data-swiftype-type="text">{tutorial}</div>
-                  <div data-swiftype-index='false'>{prevNext}</div>
+                  <article data-swiftype-index='true'>
+                    <h1 className="tutorial-title">{this.renderTitle()}</h1>
+                    <div data-swiftype-name="body" data-swiftype-type="text">{tutorial}</div>
+                    <div data-swiftype-index='false'>{prevNext}</div>
+                  </article>
                 </section>
                 {tryBanner}
               </div>
