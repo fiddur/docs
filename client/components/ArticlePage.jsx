@@ -81,7 +81,7 @@ class ArticlePage extends React.Component {
     }
     else {
       return (
-        <section className="docs-content" data-swiftype-name="body" data-swiftype-type="text" data-swiftype-index='true' dangerouslySetInnerHTML={{__html: html}} />
+        <article className="docs-content" data-swiftype-name="body" data-swiftype-type="text" data-swiftype-index='true' dangerouslySetInnerHTML={{__html: html}} />
       );
     }
   }
