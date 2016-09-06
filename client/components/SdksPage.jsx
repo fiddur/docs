@@ -7,6 +7,16 @@ import CircleLogo from './CircleLogo';
 
 class SdksPage extends React.Component {
 
+  componentDidMount() {
+    this.metrics();
+  }
+
+  metrics() {
+    if (typeof document !== 'undefined') {
+      this.context.trackPage();
+    }
+  }
+
   render() {
 
     let {platforms} = this.props;
@@ -35,7 +45,8 @@ class SdksPage extends React.Component {
 }
 
 SdksPage.contextTypes = {
-  getStore: React.PropTypes.func
+  getStore: React.PropTypes.func,
+  trackPage: React.PropTypes.func
 };
 
 SdksPage = connectToStores(SdksPage, [NavigationStore], (context, props) => {

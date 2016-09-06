@@ -59,11 +59,22 @@ class SearchPage extends React.Component {
 
   componentDidMount() {
     if (typeof document !== 'undefined') {
+      this.metrics();
       let {query} = this.props;
       if (query) {
         this.context.executeAction(performSearchAction, {query});
       }
     }
+  }
+
+  componentDidUpdate(prevProps) {
+    if (prevProps.query !== this.props.query) {
+      this.metrics();
+    }
+  }
+
+  metrics() {
+    this.context.trackPage();
   }
 
   renderResultContent(result) {
@@ -125,6 +136,7 @@ class SearchPage extends React.Component {
 SearchPage.contextTypes = {
   getStore: React.PropTypes.func,
   executeAction: React.PropTypes.func,
+  trackPage: React.PropTypes.func
 };
 
 SearchPage = connectToStores(SearchPage, [SearchStore], (context, props) => {
