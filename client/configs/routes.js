@@ -42,7 +42,9 @@ export default {
   search: {
     path: '/docs/search',
     method: 'get',
-    handler: require('../components/SearchPage')
+    handler: require('../components/SearchPage'),
+    action: selectSection,
+    section: 'articles'
   },
 
   apis: {

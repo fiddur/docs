@@ -51,7 +51,7 @@ class SearchBox extends React.Component {
             className="search-input form-control"
             type="text"
             placeholder={placeholder}
-            text={text}
+            value={text}
             onChange={this.handleTextChange.bind(this)}
             onFocus={this.handleFocusChanged.bind(this, true)}
             onBlur={this.handleFocusChanged.bind(this, false)} />
