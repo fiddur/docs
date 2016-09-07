@@ -23,7 +23,23 @@
 
   .sidebar-item-list
     padding: 6px 0 0 26px
-    &:first-child { padding-top: 0px }
+    
+    &:first-child
+      padding-top: 0px
+    
+    &.sidebar-item-list-depth1
+      max-height: 0;
+      height: auto;
+      overflow: hidden;
+      padding-top: 0;
+      padding-bottom: 0;
+      transition: max-height 0s linear;
+      
+  .is-current .sidebar-item-list-depth1
+    max-height: 600px;   
+    transition: max-height 600ms ease-in-out;
+    
+      
   
   .sidebar-item-list-depth0
     padding-left: 0px

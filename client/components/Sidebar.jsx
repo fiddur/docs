@@ -1,4 +1,5 @@
-import * as React from 'react'
+import * as React from 'react';
+import _ from 'lodash';
 import NavigationStore from '../stores/NavigationStore';
 import {connectToStores} from 'fluxible-addons-react';
 import ArticleLink from './ArticleLink';
@@ -22,7 +23,6 @@ let SidebarItem = ({article, currentDepth, maxDepth}) => {
   return (
     <li className={'sidebar-item sidebar-item-depth' + currentDepth}>
       <ArticleLink article={article}>
-        {icon}
         <span className="sidebar-item-name">{article.title}</span>
       </ArticleLink>
       {children}
@@ -32,9 +32,73 @@ let SidebarItem = ({article, currentDepth, maxDepth}) => {
 };
 
 class Sidebar extends React.Component {
+  
+  constructor(props) {
+    super(props);
+    this.onSidebarChange = _.throttle(this.onSidebarChange, 600);
+  }
+  
+  componentDidUpdate() {
+     this.onSidebarChange()
+  }
+  
+  onSidebarChange() {
+    this.setCurrentList();
+    
+    let newDuration = this.getScrollDuration();
+    let newOffset = this.getActiveListOffset();
+    
+    this.scrollScene.duration(newDuration);
+    this.scrollScene.offset(newOffset);
+  }
+  
+  setCurrentList() {    
+    let $sidebar = $(this._sidebar);
+    let containers = '.sidebar-item-list-depth1, .sidebar-item-depth0';
+    
+    $(containers).removeClass('is-current');
+    
+    return $sidebar.find('.active').parents(containers).addClass('is-current');
+  }
+  
+  getActiveListOffset() {  
+    let $activeList = $(this._sidebar).find('.sidebar-item-depth0.is-current');
+      
+    if(!$activeList.length) {
+      return 0;
+    }
+      
+    return $activeList.position().top - 10;
+  }
+  
+  getScrollDuration() {    
+    let height = $('.docs-content').height() - 650;
+    let self = $(this._sidebar).height();
+    
+    if(height <= self) {
+      return 1;
+    }
+    
+    return height;
+  }
+  
+  componentDidMount() {  
+    let $activeItem = $(this._sidebar).find('.active');
+      
+    this.setCurrentList();
+    
+    this.scrollController = new ScrollMagic.Controller();
+    this.scrollScene = new ScrollMagic.Scene({
+      duration: this.getScrollDuration(),
+      triggerElement: ".docs-content",
+      triggerHook: 0,
+      offset: $activeItem.length ? this.getActiveListOffset() : 0
+    });
+  
+    this.scrollScene.setPin(".sidebar", {pushFollowers: false}).addTo(this.scrollController);
+  }
 
   render() {
-
     let {articles, maxDepth} = this.props;
 
     let items = undefined;
@@ -45,7 +109,7 @@ class Sidebar extends React.Component {
     }
 
     return (
-      <div className="sidebar">
+      <div ref={(c) => this._sidebar = c} className="sidebar">
         <ul className="sidebar-item-list sidebar-item-list-depth0">
           {items}
         </ul>
@@ -64,7 +128,7 @@ Sidebar.contextTypes = {
   getStore: React.PropTypes.func
 };
 
-Sidebar = connectToStores(Sidebar, [NavigationStore], (context, props) => {
+Sidebar = connectToStores(Sidebar, [NavigationStore], (context, props) => {  
   return {
     articles: context.getStore(NavigationStore).getCurrentSidebarArticles()
   };
