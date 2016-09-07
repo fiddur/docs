@@ -35,7 +35,7 @@ class Sidebar extends React.Component {
   
   constructor(props) {
     super(props);
-    this.onSidebarChange = _.throttle(this.onSidebarChange, 600);
+    this.onSidebarChange = _.throttle(this.onSidebarChange, 100);
   }
   
   componentDidUpdate() {
