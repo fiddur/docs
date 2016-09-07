@@ -162,8 +162,6 @@ appliance:
     children:
       - title: Geographic High-Availability
         url: /appliance/geo-ha
-      - title: Deployment Modules
-        url: /appliance/modules
       - title: Infrastructure Requirements
         url: /appliance/infrastructure
       - title: Customer Onboarding
