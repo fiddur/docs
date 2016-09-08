@@ -172,7 +172,7 @@ appliance:
 
   - title: "Appliance Administration"
     icon: "icon-budicon-327"
-    url: "#/admin"
+    url: "/appliance/admin"
     children:
       - title: Release Notes
         url: https://auth0.com/changelog/appliance
