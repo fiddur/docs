@@ -7,7 +7,7 @@
 articles:
 
   - title: Getting Started
-    url: "#"
+    url: "/overview"
     icon: "icon-budicon-500"
     children:
       - title: Overview
@@ -48,16 +48,16 @@ articles:
 
       - title: "Auth0 Guardian"
         url: "/multifactor-authentication/guardian"
-        # children:
-        #
-        #   - title: "Admin Guide"
-        #     url: "/multifactor-authentication/guardian/admin-guide"
-        #
-        #   - title: "Dev Guide"
-        #     url: "/multifactor-authentication/guardian/dev-guide"
-        #
-        #   - title: "User Guide"
-        #     url: "/multifactor-authentication/guardian/user-guide"
+        children:
+        
+          - title: "Admin Guide"
+            url: "/multifactor-authentication/guardian/admin-guide"
+        
+          - title: "Dev Guide"
+            url: "/multifactor-authentication/guardian/dev-guide"
+        
+          - title: "User Guide"
+            url: "/multifactor-authentication/guardian/user-guide"
 
       - title: "SMS"
         url: "/multifactor-authentication#mfa-with-sms"
@@ -90,25 +90,26 @@ articles:
     url: "/connector"
     icon: "icon-budicon-606"
 
-  - title: "UI Libraries"
-    url: "#ui-libraries"
+  - title: "Lock"
+    url: "/libraries/lock"
     icon: "icon-budicon-399"
     children:
-
-      - title: "Lock vs. Custom UI"
-        url: "/libraries/when-to-use-lock"
-
       - title: "Lock for Web"
         url: "/libraries/lock"
-
+        
       - title: "Lock for iOS"
         url: "/libraries/lock-ios"
 
       - title: "Lock for Android"
         url: "/libraries/lock-android"
 
+      - title: "Lock vs. Custom UI"
+        url: "/libraries/when-to-use-lock"
+
+      
+
   - title: "Plugins"
-    url: "#plugins"
+    url: "/cms#wordpress-plugin"
     icon: "icon-budicon-423"
     children:
 

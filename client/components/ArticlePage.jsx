@@ -2,6 +2,7 @@ import React from 'react';
 import { navigateAction } from 'fluxible-router';
 import { connectToStores } from 'fluxible-addons-react';
 import ApplicationStore from '../stores/ApplicationStore';
+import NavigationStore from '../stores/NavigationStore';
 import ContentStore from '../stores/ContentStore';
 import NavigationBar from './NavigationBar';
 import Sidebar from './Sidebar';
@@ -112,7 +113,7 @@ class ArticlePage extends React.Component {
           <div className="js-doc-template container">
             <div className="row">
               <div className="col-sm-3">
-                <Sidebar maxDepth={2} />
+                <Sidebar sectionTitle={this.props.section} maxDepth={3} />
               </div>
               <div ref="content" className="col-sm-9">
                 {this.renderContent()}
@@ -142,9 +143,12 @@ ArticlePage.contextTypes = {
 ArticlePage = connectToStores(ArticlePage, [ContentStore], (context, props) => {
   let appStore = context.getStore(ApplicationStore);
   let contentStore = context.getStore(ContentStore);
+  let navigationStore = context.getStore(NavigationStore);
+  
   return {
     env: appStore.getEnvironmentVars(),
     title: appStore.getPageTitle(),
+    section: navigationStore.getCurrentSection(),
     description: appStore.getPageDescription(),
     url: contentStore.getCurrentContentUrl(),
     html: contentStore.getCurrentContentHtml()
