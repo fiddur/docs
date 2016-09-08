@@ -75,7 +75,7 @@ class Sidebar extends React.Component {
     let self = $(this._sidebar).height();    
     let height = $('.docs-content').height() - Math.max(self, 600);
     
-    if(height <= self) {
+    if(height <= self || window.matchMedia("(max-width: 768px)").matches) {
       return 1;
     }
     
@@ -96,6 +96,8 @@ class Sidebar extends React.Component {
     });
   
     this.scrollScene.setPin(".sidebar", {pushFollowers: false}).addTo(this.scrollController);
+    
+    $(window).on('resize', _.debounce(() => { this.onSidebarChange() }, 200));
   }
 
   render() {
