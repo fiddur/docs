@@ -35,7 +35,7 @@ class Sidebar extends React.Component {
   
   constructor(props) {
     super(props);
-    this.onSidebarChange = _.throttle(this.onSidebarChange, 100);
+    this.onSidebarChange = _.throttle(this.onSidebarChange, 300);
   }
   
   componentDidUpdate() {
@@ -71,9 +71,9 @@ class Sidebar extends React.Component {
     return $activeList.position().top - 10;
   }
   
-  getScrollDuration() {    
-    let height = $('.docs-content').height() - 650;
-    let self = $(this._sidebar).height();
+  getScrollDuration() {
+    let self = $(this._sidebar).height();    
+    let height = $('.docs-content').height() - Math.max(self, 600);
     
     if(height <= self) {
       return 1;
@@ -110,6 +110,7 @@ class Sidebar extends React.Component {
 
     return (
       <div ref={(c) => this._sidebar = c} className="sidebar">
+        <div className="section-title">{this.props.sectionTitle}</div>
         <ul className="sidebar-item-list sidebar-item-list-depth0">
           {items}
         </ul>

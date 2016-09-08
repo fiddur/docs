@@ -48,16 +48,16 @@ articles:
 
       - title: "Auth0 Guardian"
         url: "/multifactor-authentication/guardian"
-        # children:
-        #
-        #   - title: "Admin Guide"
-        #     url: "/multifactor-authentication/guardian/admin-guide"
-        #
-        #   - title: "Dev Guide"
-        #     url: "/multifactor-authentication/guardian/dev-guide"
-        #
-        #   - title: "User Guide"
-        #     url: "/multifactor-authentication/guardian/user-guide"
+        children:
+        
+          - title: "Admin Guide"
+            url: "/multifactor-authentication/guardian/admin-guide"
+        
+          - title: "Dev Guide"
+            url: "/multifactor-authentication/guardian/dev-guide"
+        
+          - title: "User Guide"
+            url: "/multifactor-authentication/guardian/user-guide"
 
       - title: "SMS"
         url: "/multifactor-authentication#mfa-with-sms"
@@ -109,7 +109,7 @@ articles:
       
 
   - title: "Plugins"
-    url: "#plugins"
+    url: "/cms#wordpress-plugin"
     icon: "icon-budicon-423"
     children:
 
