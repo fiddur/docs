@@ -74,7 +74,7 @@ class ArticlePage extends React.Component {
         document.body.appendChild(el);
       }
       else {
-        $.globalEval(this.text || this.textContent || this.innerHTML || '');
+        $.globalEval(item.text || item.textContent || item.innerHTML || '');
       }
     });
   }
