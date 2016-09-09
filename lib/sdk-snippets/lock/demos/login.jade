@@ -7,7 +7,7 @@ html
         .col-xs-4.col-xs-offset-4.text-center
           button.btn.btn-xs.btn-success(onclick='lock.show()') Login
 
-    script(src=widget_url)
+    script(src=lock_url)
     script.
       // define lock
       var lock = new Auth0Lock('!{clientID}', '!{namespace}', {

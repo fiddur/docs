@@ -13,7 +13,7 @@ html
   body
     #root(style='width: 320px; margin: 40px auto; padding: 10px; border-style: dashed; border-width: 1px; box-sizing: border-box;')
       | embeded area
-    script(src=widget_url)
+    script(src=lock_url)
     script.
       if (window.Auth0Lock) {
         var lock = new Auth0Lock('!{clientID}', '!{namespace}', {

@@ -29,10 +29,9 @@ nconf.file('global', { file: config_file })
     'DOMAIN_URL_DOCS':   'http://localhost:3000/docs',
     'DOMAIN_URL_API2_EXPLORER': 'login0.myauth0.com',
     'WIDGET_FALLBACK_CLIENTID': 'aCbTAJNi5HbsjPJtRpSP6BIoLPOrSj2C',
-    'LOGIN_WIDGET_URL':  'https://cdn.auth0.com/js/lock/10.0/lock.min.js',
-    'LOCK_PASSWORDLESS_URL':  'https://cdn.auth0.com/js/lock-passwordless-1.0.min.js',
-    'AUTH0JS_URL':       'https://cdn.auth0.com/w2/auth0-6.8.min.js',
-    'AUTH0_ANGULAR_URL': 'http://cdn.auth0.com/w2/auth0-angular-1.1.js',
+    'LOCK_URL':  'https://cdn.auth0.com/js/lock/10.2/lock.min.js',
+    'LOCK_PASSWORDLESS_URL':  'https://cdn.auth0.com/js/lock-passwordless-2.2.min.js',
+    'AUTH0JS_URL':       'https://cdn.auth0.com/w2/auth0-7.1.min.js',
     'SENSITIVE_DATA_ENCRYPTION_KEY': '0123456789',
     'HMAC_ENCRYPTION_KEY': 'abcdefghij',
     'PUBLIC_ALLOWED_TUTORIALS': '/adldap-auth?,/adldap-x?,/adfs?',
@@ -57,14 +56,6 @@ nconf.file('global', { file: config_file })
 
 if (nconf.get('COOKIE_NAME') !== 'auth0l') {
   nconf.set('CURRENT_TENANT_COOKIE', nconf.get('COOKIE_NAME') + '_current_tenant');
-}
-
-if (!nconf.get('LOGIN_WIDGET_URL')) {
-  nconf.set('LOGIN_WIDGET_URL', 'https://' + nconf.get('DOMAIN_URL_SDK') + '/w2/auth0-widget.min.js');
-}
-
-if (!nconf.get('AUTH0JS_URL')) {
-  nconf.set('AUTH0JS_URL', 'https://' + nconf.get('DOMAIN_URL_SDK') + '/w2/auth0.min.js');
 }
 
 if (!nconf.get('AUTH0_DOMAIN') && nconf.get('AUTH0_TENANT') && nconf.get('DOMAIN_URL_SERVER')) {
