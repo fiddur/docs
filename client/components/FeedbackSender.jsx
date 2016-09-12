@@ -26,7 +26,7 @@ class FeedbackSender extends React.Component {
         </div>
         <div style={{display: 'none'}} className="feedback-no">
           <form className="send-feedback">
-            <textarea placeholder="Sorry to hear that!, how can we help you?" className="form-control"></textarea>
+            <textarea placeholder="Sorry to hear that! How can we help you?" className="form-control"></textarea>
             <input type="submit" value="Submit" className="submit btn btn-primary"/>
           </form>
         </div>
