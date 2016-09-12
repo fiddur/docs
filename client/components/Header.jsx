@@ -13,7 +13,7 @@ class Header extends Component {
     };
  
     this.checkIsLogged = this.checkIsLogged.bind(this);
-    this.checkIsLogged = this.checkIsFullWidth.bind(this);
+    this.checkIsFullWidth = this.checkIsFullWidth.bind(this);
   }
 
   componentDidMount() {
