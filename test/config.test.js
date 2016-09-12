@@ -9,25 +9,25 @@ describe('Configuration', function() {
 
   describe('app-types.yml', function() {
     it('is valid yml', function() {
-      var sidebar = yaml.safeLoad(fs.readFileSync('./config/app-types.yml'));
+      var sidebar = yaml.safeLoad(fs.readFileSync('./docs/config/app-types.yml'));
       assert.ok(sidebar)
     });
   });
   describe('cards.yml', function() {
     it('is valid yml', function() {
-      var sidebar = yaml.safeLoad(fs.readFileSync('./config/cards.yml'));
+      var sidebar = yaml.safeLoad(fs.readFileSync('./docs/config/cards.yml'));
       assert.ok(sidebar)
     });
   });
   describe('sections.yml', function() {
     it('is valid yml', function() {
-      var sidebar = yaml.safeLoad(fs.readFileSync('./config/sections.yml'));
+      var sidebar = yaml.safeLoad(fs.readFileSync('./docs/config/sections.yml'));
       assert.ok(sidebar)
     });
   });
   describe('sidebar.yml', function() {
     it('is valid yml', function() {
-      var sidebar = yaml.safeLoad(fs.readFileSync('./config/sidebar.yml'));
+      var sidebar = yaml.safeLoad(fs.readFileSync('./docs/config/sidebar.yml'));
       assert.ok(sidebar)
     });
   });

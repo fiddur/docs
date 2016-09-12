@@ -71,7 +71,7 @@ class ApplicationStore extends BaseStore {
     this.pageTitle = state.pageTitle;
     this.pageDescription = state.pageDescription;
   }
-  
+
 }
 
 ApplicationStore.storeName = 'ApplicationStore';
