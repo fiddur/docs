@@ -6,6 +6,7 @@ import NavigationStore from '../stores/NavigationStore';
 import ContentStore from '../stores/ContentStore';
 import NavigationBar from './NavigationBar';
 import Sidebar from './Sidebar';
+import FeedbackSender from './FeedbackSender';
 import setAnchorLinks from '../browser/anchorLinks';
 
 class ArticlePage extends React.Component {
@@ -106,6 +107,7 @@ class ArticlePage extends React.Component {
   }
 
   renderFull() {
+    let {metadata} = this.props;
     return (
       <div className="docs-article">
         <div className="document">
@@ -113,10 +115,16 @@ class ArticlePage extends React.Component {
           <div className="js-doc-template container">
             <div className="row">
               <div className="col-sm-3">
-                <Sidebar sectionTitle={this.props.section} maxDepth={3} />
+                <Sidebar sectionTitle={metadata.section} maxDepth={3} />
               </div>
               <div ref="content" className="col-sm-9">
                 {this.renderContent()}
+                <div className="article-interaction">
+                  <FeedbackSender />
+                  <a className="fixit" href={metadata.editUrl} target="_blank">
+                    Suggestions? Typos? Edit this document on GitHub
+                  </a>
+                </div>
               </div>
             </div>
           </div>
@@ -141,18 +149,21 @@ ArticlePage.contextTypes = {
 };
 
 ArticlePage = connectToStores(ArticlePage, [ContentStore], (context, props) => {
+
   let appStore = context.getStore(ApplicationStore);
   let contentStore = context.getStore(ContentStore);
   let navigationStore = context.getStore(NavigationStore);
+  let url = contentStore.getCurrentContentUrl();
   
   return {
     env: appStore.getEnvironmentVars(),
     title: appStore.getPageTitle(),
-    section: navigationStore.getCurrentSection(),
     description: appStore.getPageDescription(),
-    url: contentStore.getCurrentContentUrl(),
-    html: contentStore.getCurrentContentHtml()
+    url,
+    html: contentStore.getCurrentContentHtml(),
+    metadata: navigationStore.getMetadata(url)
   };
+
 });
 
 export default ArticlePage;
