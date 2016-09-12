@@ -138,8 +138,8 @@ server.use(middleware.redirectQuickstarts);
 
 // Routes
 server.use('/docs', require('./lib/api-explorer'));
-server.use('/docs', require('./lib/sdk-snippets/lock/demos-routes'));
-server.use('/docs', require('./lib/sdk-snippets/lock/snippets-routes'));
+server.use('/docs', require('./lib/demos/demos-routes'));
+server.use('/docs', require('./lib/demos/snippets-routes'));
 server.use('/docs', require('./lib/packager'));
 server.use('/docs', require('./lib/feedback'));
 server.use('/docs', require('./lib/sitemap'));
