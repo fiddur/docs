@@ -7,11 +7,13 @@ class Header extends Component {
 
     this.state = {
       logged: false,
+      fullWidth: false,
       showLock: () => {},
       showContactForm: () => {}
     };
-
+ 
     this.checkIsLogged = this.checkIsLogged.bind(this);
+    this.checkIsLogged = this.checkIsFullWidth.bind(this);
   }
 
   componentDidMount() {
@@ -39,6 +41,8 @@ class Header extends Component {
         contactForm.show();
       }
     });
+    
+    this.checkIsFullWidth();
 
     // Lock instance is created under Application component
     setTimeout(() => {
@@ -49,16 +53,27 @@ class Header extends Component {
 
   checkIsLogged() {
     if (!window.widget) return;
-
+    
     window.widget.getClient().getSSOData(false, (err, data) => {
       const logged = !data || !data.sso;
       if (logged) return;
       this.setState({ logged });
     });
   }
+  
+  checkIsFullWidth() {
+    let fullWidthRoutes = [
+      '/docs/api/management/v2',
+      '/docs/api/management/v2/'
+    ];
+    
+    if (fullWidthRoutes.indexOf(window.location.pathname) > -1) {
+      return this.setState({ fullWidth: true });
+    }
+  }
 
   render() {
-    const { logged, showLock, showContactForm } = this.state;
+    const { logged, showLock, showContactForm, fullWidth } = this.state;
 
     return logged
       ? <Auth0WebHeader
@@ -67,6 +82,7 @@ class Header extends Component {
           secondaryButtonOnClick={showContactForm}
           primaryButtonText="Open Dashboard"
           primaryButtonLink="https://manage.auth0.com"
+          featuredEnable={!fullWidth}
         />
       : <Auth0WebHeader
           className="header--docs"
@@ -74,6 +90,7 @@ class Header extends Component {
           secondaryButtonOnClick={showContactForm}
           secondaryButtonLink=""
           primaryButtonOnClick={showLock}
+          featuredEnable={!fullWidth}
         />;
   }
 }
