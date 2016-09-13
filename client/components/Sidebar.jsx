@@ -109,7 +109,12 @@ class Sidebar extends React.Component {
         <SidebarItem key={article.url} article={article} currentDepth={0} maxDepth={maxDepth} />
       ));
     }
-
+    
+    if(this.scrollScene) {
+      this.scrollScene.destroy(true);
+      this.scrollController.destroy(true);
+    }
+    
     return (
       <div ref={(c) => this._sidebar = c} className="sidebar">
         <div className="section-title">{this.props.sectionTitle}</div>
