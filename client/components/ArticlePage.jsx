@@ -150,17 +150,17 @@ ArticlePage.contextTypes = {
 
 ArticlePage = connectToStores(ArticlePage, [ContentStore], (context, props) => {
 
+  let {url} = props.currentRoute;
   let appStore = context.getStore(ApplicationStore);
   let contentStore = context.getStore(ContentStore);
   let navigationStore = context.getStore(NavigationStore);
-  let url = contentStore.getCurrentContentUrl();
   
   return {
+    url,
     env: appStore.getEnvironmentVars(),
     title: appStore.getPageTitle(),
     description: appStore.getPageDescription(),
-    url,
-    html: contentStore.getCurrentContentHtml(),
+    html: contentStore.getContentHtml(url),
     metadata: navigationStore.getMetadata(url)
   };
 

@@ -11,7 +11,6 @@ class ContentStore extends BaseStore {
   
   constructor(dispatcher) {
     super(dispatcher);
-    this.currentContentUrl = undefined;
     this.content = {};
   }
 
@@ -19,28 +18,9 @@ class ContentStore extends BaseStore {
     return this.content[url] || undefined;
   }
 
-  getCurrentContentUrl() {
-    return this.currentContentUrl;
-  }
-  
-  getCurrentContentHtml() {
-    if (!this.currentContentUrl) {
-      return undefined;
-    }
-    else {
-      let content = this.content[this.currentContentUrl];
-      if (content) {
-        return content.html || undefined;
-      }
-      else {
-        return undefined;
-      }
-    }
-  }
-
-  handleContentSelected(payload) {
-    this.currentContentUrl = payload.url;
-    this.emitChange();
+  getContentHtml(url) {
+    let content = this.getContent(url);
+    return content ? content.html : undefined;
   }
 
   handleContentLoading(payload) {
@@ -67,21 +47,18 @@ class ContentStore extends BaseStore {
   
   dehydrate() {
     return {
-      content: this.content,
-      currentContentUrl: this.currentContentUrl
+      content: this.content
     };
   }
   
   rehydrate(state) {
     this.content = state.content;
-    this.currentContentUrl = state.currentContentUrl;
   }
   
 }
 
 ContentStore.storeName = 'ContentStore';
 ContentStore.handlers = {
-  'CONTENT_SELECTED':     'handleContentSelected',
   'CONTENT_LOADING':      'handleContentLoading',
   'CONTENT_LOAD_SUCCESS': 'handleContentLoaded',
   'CONTENT_LOAD_FAILURE': 'handleContentLoadFailure'
