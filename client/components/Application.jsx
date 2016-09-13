@@ -73,7 +73,7 @@ class Application extends React.Component {
         Handler = <ErrorPage error={this.props.currentNavigateError} />;
       }
       else {
-        Handler = <Handler />;
+        Handler = <Handler {...this.props} />;
       }
     }
     else {
