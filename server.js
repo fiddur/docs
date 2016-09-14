@@ -13,10 +13,14 @@ import handlers from './lib/handlers';
 import strings from './lib/strings';
 import helmet from 'helmet';
 import agent from './lib/logs';
+import eventLogger from './lib/logs/event-logger';
+import requestLogger from './lib/logs/request-logger';
 
 const logger = agent.logger;
 
 var server = express();
+
+eventLogger.watch(process);
 
 server.use(agent.errorReporter.express.requestHandler);
 server.use(agent.errorReporter.express.errorHandler);
@@ -61,6 +65,10 @@ server.use('/test', function (req, res) {
 server.use('/docs/test', function (req, res) {
   res.sendStatus(200);
 });
+
+if (nconf.get('NODE_ENV') !== 'test') {
+  server.use(requestLogger);
+}
 
 var middleware = require('./lib/middleware');
 var sessionStore = require('./lib/session-store');
