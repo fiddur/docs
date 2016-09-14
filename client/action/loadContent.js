@@ -5,6 +5,8 @@ import NavigationStore from '../stores/NavigationStore';
 
 export default function loadContent(context, route, done) {
 
+  let logger = context.getService('LoggingService');
+
   let {ignoreMissing} = route;
   let url = parse(route.url).pathname;
 
@@ -21,11 +23,13 @@ export default function loadContent(context, route, done) {
   let success = (html) => {
     context.executeAction(selectSection, {url});
     context.dispatch('CONTENT_LOAD_SUCCESS', {url, html});
+    logger.debug('Content loaded successfully.', {url});
     if (done) done();
   };
 
   let failure = (err) => {
     context.dispatch('CONTENT_LOAD_FAILURE', {url, err});
+    logger.error('Error loading content.', { url, err });
     if (done) done(err);
   };
 
