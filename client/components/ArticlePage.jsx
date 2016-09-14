@@ -82,7 +82,7 @@ class ArticlePage extends React.Component {
   }
 
   renderContent() {
-    let {html} = this.props;
+    let {html, metadata} = this.props;
     if (!html) {
       return (
         <section className="docs-content">
@@ -93,8 +93,9 @@ class ArticlePage extends React.Component {
       );
     }
     else {
+      let classes = ['docs-content'].concat(metadata.classes);
       return (
-        <article className="docs-content" data-swiftype-name="body" data-swiftype-type="text" data-swiftype-index='true' dangerouslySetInnerHTML={{__html: html}} />
+        <article className={classes.join(' ')} data-swiftype-name="body" data-swiftype-type="text" data-swiftype-index='true' dangerouslySetInnerHTML={{__html: html}} />
       );
     }
   }
