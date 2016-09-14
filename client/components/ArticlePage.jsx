@@ -1,3 +1,4 @@
+import {parse} from 'url';
 import React from 'react';
 import { navigateAction } from 'fluxible-router';
 import { connectToStores } from 'fluxible-addons-react';
@@ -150,7 +151,7 @@ ArticlePage.contextTypes = {
 
 ArticlePage = connectToStores(ArticlePage, [ContentStore], (context, props) => {
 
-  let {url} = props.currentRoute;
+  let url = parse(props.currentRoute.url).pathname;
   let appStore = context.getStore(ApplicationStore);
   let contentStore = context.getStore(ContentStore);
   let navigationStore = context.getStore(NavigationStore);
