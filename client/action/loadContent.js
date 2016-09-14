@@ -29,7 +29,7 @@ export default function loadContent(context, route, done) {
 
   let failure = (err) => {
     context.dispatch('CONTENT_LOAD_FAILURE', {url, err});
-    logger.error('Error loading content.', { url, err });
+    logger.warn('Error loading content.', { url, err });
     if (done) done(err);
   };
 
