@@ -9,16 +9,21 @@ import methodOverride from 'method-override';
 import session from 'express-session';
 import nconf from 'nconf';
 import path from 'path';
-import winston from 'winston';
 import handlers from './lib/handlers';
 import strings from './lib/strings';
 import helmet from 'helmet';
+import agent from './lib/logs';
+import eventLogger from './lib/logs/event-logger';
+import requestLogger from './lib/logs/request-logger';
+
+const logger = agent.logger;
 
 var server = express();
 
-require('./lib/logs/setup');
-var eventLogger = require('./lib/logs/eventLogger');
 eventLogger.watch(process);
+
+server.use(agent.errorReporter.express.requestHandler);
+server.use(agent.errorReporter.express.errorHandler);
 
 passport.serializeUser(function(user, done) {
   if (!nconf.get('db')) {
@@ -61,16 +66,9 @@ server.use('/docs/test', function (req, res) {
   res.sendStatus(200);
 });
 
-// server.use('/docs', function (req, res, next) {
-//   if (req.url === '/docs') return next();
-//   req.url = req.url.replace(/\/$/,'');
-//   next();
-// });
-
 if (nconf.get('NODE_ENV') !== 'test') {
-  server.use(require('./lib/middleware/log_request'));
+  server.use(requestLogger);
 }
-
 
 var middleware = require('./lib/middleware');
 var sessionStore = require('./lib/session-store');
