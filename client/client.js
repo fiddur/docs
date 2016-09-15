@@ -31,7 +31,7 @@ plugin.registerService('ContentService', ContentService);
 debug('rehydrating app');
 
 // pass in the dehydrated server state from server.js
-app.rehydrate(dehydratedState, (err, context, props) => {
+app.rehydrate(dehydratedState, (err, context) => {
 
   if (err) {
     throw err;

@@ -15,30 +15,14 @@ class ArticlePage extends React.Component {
   componentDidMount() {
     this.executeEmbeddedScripts();
     //this.captureClicks();
-    this.initClient();
-    this.metrics();
+    setAnchorLinks();
   }
 
   componentDidUpdate(prevProps) {
     this.executeEmbeddedScripts();
     //this.captureClicks();
     //this.scrollToAnchor();
-    this.initClient();
-    if (prevProps.url !== this.props.url) {
-      this.metrics();
-    }
-  }
-
-  initClient() {
-    if (typeof document !== 'undefined') {
-      setAnchorLinks();
-    }
-  }
-
-  metrics() {
-    if (typeof document !== 'undefined') {
-      this.context.trackPage();
-    }
+    setAnchorLinks();
   }
 
   /*
@@ -144,10 +128,6 @@ class ArticlePage extends React.Component {
   }
 
 }
-
-ArticlePage.contextTypes = {
-  trackPage: React.PropTypes.func.isRequired
-};
 
 ArticlePage = connectToStores(ArticlePage, [ContentStore], (context, props) => {
 

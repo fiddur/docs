@@ -13,7 +13,7 @@ class Application extends React.Component {
 
   componentDidMount() {
     this.initClientScripts();
-    //this.startWatchingTenantCookie();
+    this.props.context.trackPage();
   }
 
   componentDidUpdate(prevProps, prevState) {
@@ -21,38 +21,15 @@ class Application extends React.Component {
     if (newProps.pageTitle !== prevProps.pageTitle) {
       document.title = newProps.pageTitle;
     }
+    if (newProps.currentRoute.url !== prevProps.currentRoute.url) {
+      this.props.context.trackPage();
+    }
     this.initClientScripts();
   }
 
   initClientScripts() {
     highlightCode();
     feedbackSender();
-  }
-
-  startWatchingTenantCookie() {
-    let {env, user} = this.props;
-
-    if (!user || !user.tenant) return;
-
-    let getCookie = function(name) {
-      let match = document.cookie.match(RegExp('(?:^|;\\s*)' + name + '=([^;]*)'));
-      return match ? match[1] : null;
-    };
-
-    let setCookie = function(name, value, days) {
-      let date = new Date();
-      date.setTime(date.getTime() + (days * 24 * 60 * 60 * 1000));
-      document.cookie = `${name}=${value}; expires=${date.toGMTString()}; path=/; domain=${env['COOKIE_SCOPE']}`;
-    };
-
-    setCookie(env['CURRENT_TENANT_COOKIE'], user.tenant, 7);
-
-    setInterval(function() {
-      let currentTenant = getCookie(env['CURRENT_TENANT_COOKIE']);
-      if (currentTenant && currentTenant !== user.tenant) {
-        window.location.reload(true);
-      }
-    }, 3000);
   }
 
   render() {

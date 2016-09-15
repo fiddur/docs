@@ -29,16 +29,6 @@ var initCarouselInBrowser = function() {
 
 class QuickstartsPage extends React.Component {
 
-  componentDidMount() {
-    this.metrics();
-  }
-  
-  metrics() {
-    if (typeof document !== 'undefined') {
-      this.context.trackPage();
-    }
-  }
-
   render() {
     return (
       <div className="document docs-quickstart-selector">
@@ -49,9 +39,5 @@ class QuickstartsPage extends React.Component {
   }
 
 }
-
-QuickstartsPage.contextTypes = {
-  trackPage: React.PropTypes.func
-};
 
 export default QuickstartsPage;
