@@ -6,13 +6,11 @@ class SearchBox extends React.Component {
 
   constructor(props) {
     super(props);
+
     this.state = {
       text: props.text,
-      focused: false,
-      iconCode: 489
+      focused: false
     };
-
-    this.handleClick = this.handleClick.bind(this);
   }
 
   componentWillReceiveProps(newProps) {
@@ -20,6 +18,12 @@ class SearchBox extends React.Component {
       this.setState({text: newProps.text});
     }
   }
+
+  handleFocusChanged(focused) {
+    this.setState({focused});
+    if (focused) this.refs.input.select();
+  }
+
 
   handleTextChange(evt) {
     this.setState({text: evt.target.value});
@@ -33,30 +37,28 @@ class SearchBox extends React.Component {
     this.context.executeAction(navigateAction, {url: '/docs/search?q=' + query});
   }
 
-  handleClick() {
-    this.props.handleOnClick();
-    this.setState({
-      iconCode: this.state.iconCode === 489 ? 471 : 489
-    });
-  }
-
   render() {
 
     let {placeholder, className} = this.props;
-    let {text} = this.state;
+    let {text, focused} = this.state;
 
     let classes = ['form-group', 'search-control'];
+    if (focused) classes.push('focused');
     if (className) classes.push(className);
 
     return (
       <form
         id="search"
         role="search"
+        className="search-form"
         autoComplete="off"
         onSubmit={this.handleSubmit.bind(this)}
       >
         <div className={classes.join(' ')}>
-          <i className={`icon-budicon-${this.state.iconCode}`} onClick={this.handleClick}/>
+          <i
+            className={`icon-budicon-${this.props.iconCode}`}
+            onClick={this.props.handleIconClick}
+          />
           <input
             id="search-input"
             ref="input"
@@ -65,6 +67,8 @@ class SearchBox extends React.Component {
             placeholder={placeholder}
             value={text}
             onChange={this.handleTextChange.bind(this)}
+            onFocus={this.handleFocusChanged.bind(this, true)}
+            onBlur={this.handleFocusChanged.bind(this, false)}
           />
         </div>
       </form>
@@ -80,11 +84,14 @@ SearchBox.contextTypes = {
 
 SearchBox.defaultProps = {
   placeholder: 'Search for docs',
-  text: ''
+  text: '',
+  iconCode: 489,
+  handleIconClick: () => {}
 };
 
 SearchBox.propTypes = {
-  handleOnClick: React.PropTypes.func
+  iconCode: React.PropTypes.number,
+  handleIconClick: React.PropTypes.func
 };
 
 export default SearchBox;

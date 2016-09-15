@@ -1,7 +1,9 @@
 .navigation-bar
   background: $bg-color-gray-light
-  white-space nowrap
-  overflow-x auto
+
+  +breakpoint("tablet", "max")
+    white-space nowrap
+    overflow-x auto
 
   &.is-fixed
     .wrapper
@@ -12,14 +14,17 @@
 
   &.is-search-active
     +breakpoint("tablet", "max")
-      .section-tabs
+      .navigation-bar-tabs
         display none
 
-      form
+      .search-form
         display block
 
-      .navigation-bar-search .search-input
-        width 100%
+        .navigation-bar-search
+          display block
+
+        .search-input
+          width 100% !important
 
   .wrapper
     border-bottom: 1px solid #EAEEF3
@@ -27,7 +32,7 @@
     width: 100%
     z-index: 800
 
-  form
+  .search-form
     padding 0
 
     +breakpoint("tablet", "max")
@@ -35,7 +40,6 @@
       padding-bottom 6px
       display inline-block
       margin-right 10px
-      cursor pointer
 
     +breakpoint("tablet")
       padding-top 16px
@@ -46,6 +50,7 @@
 
       .form-control
 
+        // Disable input animation on focus
         &:focus
           text-indent 26px
 
@@ -56,8 +61,9 @@
       i
         +breakpoint("tablet", "max")
           left 2px
+          cursor pointer
 
-  .section-tabs
+  .navigation-bar-tabs
     margin: 0
     font-size: 15px
     display inline-block

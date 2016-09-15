@@ -22,9 +22,9 @@ class NavigationBar extends React.Component {
     this.state = {
       searchActive: false
     };
-    this.formHandleClick = this.formHandleClick.bind(this);
+    this.handleIconClick = this.handleIconClick.bind(this);
   }
-  formHandleClick() {
+  handleIconClick() {
     this.setState({
       searchActive: !this.state.searchActive
     });
@@ -41,8 +41,12 @@ class NavigationBar extends React.Component {
     return (
       <div className={`navigation-bar ${this.state.searchActive ? 'is-search-active' : ''}`}>
         <div className="container">
-          <SearchBox className="navigation-bar-search" handleOnClick={this.formHandleClick}/>
-          <ul className="nav nav-tabs section-tabs">
+          <SearchBox
+            className="navigation-bar-search"
+            handleIconClick = {this.handleIconClick}
+            iconCode = {this.state.searchActive ? 471 : 489}
+          />
+          <ul className="navigation-bar-tabs nav nav-tabs">
             {tabs}
           </ul>
         </div>
