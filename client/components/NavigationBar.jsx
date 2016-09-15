@@ -16,24 +16,35 @@ let NavigationTab = (section, currentSection) => {
 };
 
 class NavigationBar extends React.Component {
+  constructor() {
+    super();
 
+    this.state = {
+      searchActive: false
+    };
+    this.formHandleClick = this.formHandleClick.bind(this);
+  }
+  formHandleClick() {
+    this.setState({
+      searchActive: !this.state.searchActive
+    });
+  }
   render() {
-
     let {sections, currentSection} = this.props;
 
-    // Create a navigation tab for each section of the site.
+    // Create a navigation tab for `each section of the site.
     let tabs = undefined;
     if (sections) {
       tabs = sections.map(section => NavigationTab(section, currentSection));
     }
 
     return (
-      <div className="navigation-bar">
+      <div className={`navigation-bar ${this.state.searchActive ? 'is-search-active' : ''}`}>
         <div className="container">
+          <SearchBox className="navigation-bar-search" handleOnClick={this.formHandleClick}/>
           <ul className="nav nav-tabs section-tabs">
             {tabs}
           </ul>
-          <SearchBox className="navigation-bar-search" />
         </div>
       </div>
     );

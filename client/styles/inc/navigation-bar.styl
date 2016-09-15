@@ -1,5 +1,7 @@
 .navigation-bar
   background: $bg-color-gray-light
+  white-space nowrap
+  overflow-x auto
 
   &.is-fixed
     .wrapper
@@ -8,6 +10,17 @@
         top: 0
         left: 0
 
+  &.is-search-active
+    +breakpoint("tablet", "max")
+      .section-tabs
+        display none
+
+      form
+        display block
+
+      .navigation-bar-search .search-input
+        width 100%
+
   .wrapper
     border-bottom: 1px solid #EAEEF3
     background: white
@@ -15,28 +28,61 @@
     z-index: 800
 
   form
-    padding: 22px 0 0
-    width: 30%
-    float: right
+    padding 0
+
+    +breakpoint("tablet", "max")
+      padding-top 8px
+      padding-bottom 6px
+      display inline-block
+      margin-right 10px
+      cursor pointer
+
+    +breakpoint("tablet")
+      padding-top 16px
+      float right
+      width 30%
+
+    .navigation-bar-search
+
+      .form-control
+
+        &:focus
+          text-indent 26px
+
+        +breakpoint("tablet", "max")
+          background-color transparent
+          width 0
+
+      i
+        +breakpoint("tablet", "max")
+          left 2px
 
   .section-tabs
     margin: 0
     font-size: 15px
-    float: left
+    display inline-block
     border-bottom: 0px
+
+    +breakpoint("tablet")
+      float left
+      display block
 
     a
       color: rgba($color-text, 0.8)
       height: 35px
-      line-height: 35px
+      line-height 1
 
       &:hover
         opacity: 0.7
 
     li
       margin: 0
-      padding: 15px 10px
+      padding: 4px 10px
       border-bottom: 2px solid transparent
+
+      +breakpoint("tablet")
+        padding-top 15px
+        padding-bottom 15px
 
       &.active
         color: #333
@@ -48,4 +94,7 @@
           border-bottom: 0px !important
 
       & + li
-        margin-left: 50px
+        margin-left 16px
+
+        +breakpoint("tablet")
+          margin-left: 50px
