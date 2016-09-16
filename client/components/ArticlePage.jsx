@@ -8,6 +8,7 @@ import NavigationBar from './NavigationBar';
 import Sidebar from './Sidebar';
 import FeedbackSender from './FeedbackSender';
 import setAnchorLinks from '../browser/anchorLinks';
+import { StickyContainer, Sticky } from 'react-sticky';
 
 class ArticlePage extends React.Component {
 
@@ -100,22 +101,24 @@ class ArticlePage extends React.Component {
       <div className="docs-article">
         <div className="document">
           <NavigationBar />
-          <div className="js-doc-template container">
-            <div className="row">
-              <div className="col-sm-3">
-                <Sidebar maxDepth={3} />
-              </div>
-              <div ref="content" className="col-sm-9">
-                {this.renderContent()}
-                <div className="article-interaction">
-                  <FeedbackSender />
-                  <a className="fixit" href={metadata ? metadata.editUrl : null} target="_blank">
-                    Suggestions? Typos? Edit this document on GitHub
-                  </a>
+          <StickyContainer>
+            <div className="js-doc-template container">
+              <div className="row">
+                <div className="sidebar-container col-sm-3">
+                  <Sidebar sectionTitle={metadata.section} maxDepth={3} />
+                </div>
+                <div ref="content" className="col-sm-9">
+                  {this.renderContent()}
+                  <div className="article-interaction">
+                    <FeedbackSender />
+                    <a className="fixit" href={metadata.editUrl} target="_blank">
+                      Suggestions? Typos? Edit this document on GitHub
+                    </a>
+                  </div>
                 </div>
               </div>
             </div>
-          </div>
+          </StickyContainer>
         </div>
       </div>
     );
@@ -138,7 +141,7 @@ ArticlePage = connectToStores(ArticlePage, [ContentStore], (context, props) => {
   let appStore = context.getStore(ApplicationStore);
   let contentStore = context.getStore(ContentStore);
   let navigationStore = context.getStore(NavigationStore);
-  
+
   return {
     url,
     env: appStore.getEnvironmentVars(),
