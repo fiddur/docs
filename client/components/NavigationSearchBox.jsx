@@ -1,5 +1,5 @@
-import React, { PropTypes } from 'react'
-import {navigateAction} from 'fluxible-router';
+import React, { PropTypes } from 'react';
+import { navigateAction } from 'fluxible-router';
 import performSearchAction from '../action/performSearch';
 
 class NavigationSearchBox extends React.Component {
@@ -10,29 +10,30 @@ class NavigationSearchBox extends React.Component {
       text: props.text
     };
     this.handleTextChange = this.handleTextChange.bind(this);
+    this.handleSubmit = this.handleSubmit.bind(this);
   }
 
   componentWillReceiveProps(newProps) {
     if (newProps.text && this.state.text !== newProps.text) {
-      this.setState({text: newProps.text});
+      this.setState({ text: newProps.text });
     }
   }
 
   handleTextChange(evt) {
-    this.setState({text: evt.target.value});
+    this.setState({ text: evt.target.value });
   }
 
   handleSubmit(evt) {
     evt.preventDefault();
-    this.refs.navInput.blur();
+    this.input.blur();
     let query = this.state.text;
-    this.context.executeAction(performSearchAction, {query});
-    this.context.executeAction(navigateAction, {url: '/docs/search?q=' + query});
+    this.context.executeAction(performSearchAction, { query });
+    this.context.executeAction(navigateAction, { url: '/docs/search?q=' + query });
   }
 
   render() {
-    let {placeholder, className} = this.props;
-    let {text, focused} = this.state;
+    let { placeholder, className } = this.props;
+    let { text, focused } = this.state;
 
     let classes = ['form-group', 'search-control'];
     if (className) classes.push(className);
@@ -43,7 +44,7 @@ class NavigationSearchBox extends React.Component {
         role="search"
         className="search-form"
         autoComplete="off"
-        onSubmit={this.handleSubmit.bind(this)}
+        onSubmit={this.handleSubmit}
       >
         <div className={classes.join(' ')}>
           <label htmlFor="nav-search-input">
@@ -55,7 +56,7 @@ class NavigationSearchBox extends React.Component {
           </label>
           <input
             id="nav-search-input"
-            ref="navInput"
+            ref={(elem) => { this.input = elem; }}
             className="search-input form-control"
             type="text"
             placeholder={placeholder}
