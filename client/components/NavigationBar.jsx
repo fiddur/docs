@@ -2,7 +2,7 @@ import * as React from 'react'
 import NavigationStore from '../stores/NavigationStore';
 import {NavLink} from 'fluxible-router';
 import {connectToStores} from 'fluxible-addons-react';
-import SearchBox from './SearchBox';
+import NavigationSearchBox from './NavigationSearchBox';
 
 let NavigationTab = (section, currentSection) => {
   let {id, title, url} = section;
@@ -22,6 +22,9 @@ class NavigationBar extends React.Component {
     this.state = {
       searchActive: false
     };
+
+    this.searchIconCode = 471;
+    this.closeIconCode = 489;
     this.handleIconClick = this.handleIconClick.bind(this);
   }
   handleIconClick() {
@@ -41,11 +44,11 @@ class NavigationBar extends React.Component {
     return (
       <div className={`navigation-bar ${this.state.searchActive ? 'is-search-active' : ''}`}>
         <div className="container">
-          <SearchBox
+          <NavigationSearchBox
             className="navigation-bar-search"
             handleIconClick = {this.handleIconClick}
-            iconCode = {this.state.searchActive ? 471 : 489}
-            focusEffect = {false}
+            iconCode = { this.state.searchActive ? this.searchIconCode : this.closeIconCode }
+            placeholder="Search for docs"
           />
           <ul className="navigation-bar-tabs nav nav-tabs">
             {tabs}
