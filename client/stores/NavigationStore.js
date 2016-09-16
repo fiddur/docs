@@ -6,7 +6,7 @@ class NavigationStore extends BaseStore {
   constructor(dispatcher) {
     super(dispatcher);
     this.navigation = null;
-    this.currentSection = null;
+    this.currentSection = 'articles';
   }
 
   getSections() {

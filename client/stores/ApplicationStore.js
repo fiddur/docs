@@ -1,5 +1,4 @@
 import BaseStore from 'fluxible/addons/BaseStore';
-import routesConfig from '../configs/routes';
 
 class ApplicationStore extends BaseStore {
 
@@ -7,9 +6,6 @@ class ApplicationStore extends BaseStore {
     super(dispatcher);
     this.env = null;
     this.user = null;
-    this.currentPageName = null;
-    this.currentPage = null;
-    this.pages = routesConfig;
     this.pageTitle = '';
     this.pageDescription = '';
   }
@@ -34,10 +30,6 @@ class ApplicationStore extends BaseStore {
     return this.user;
   }
 
-  getCurrentPageName() {
-    return this.currentPageName;
-  }
-
   getPageTitle() {
     return this.pageTitle;
   }
@@ -46,17 +38,10 @@ class ApplicationStore extends BaseStore {
     return this.pageDescription;
   }
 
-  getPages() {
-    return this.pages;
-  }
-
   dehydrate() {
     return {
       env: this.env,
       user: this.user,
-      currentPageName: this.currentPageName,
-      currentPage: this.currentPage,
-      pages: this.pages,
       pageTitle: this.pageTitle,
       pageDescription: this.pageDescription,
     };
@@ -65,9 +50,6 @@ class ApplicationStore extends BaseStore {
   rehydrate(state) {
     this.env = state.env;
     this.user = state.user;
-    this.currentPageName = state.currentPageName;
-    this.currentPage = state.currentPage;
-    this.pages = state.pages;
     this.pageTitle = state.pageTitle;
     this.pageDescription = state.pageDescription;
   }

@@ -74,13 +74,6 @@ export default {
     method: 'get',
     handler: require('../components/ArticlePage'),
     action: loadContent
-  },
-
-  error: {
-    path: '/error',
-    method: 'get',
-    handler: require('../components/ErrorPage'),
-    action: selectSection
   }
 
 };
