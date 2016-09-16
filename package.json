@@ -85,6 +85,7 @@
     "babel-polyfill": "^6.1.4",
     "bower": "^1.4.1",
     "bundle-loader": "^0.5.4",
+    "bunyan": "^1.8.1",
     "clean-webpack-plugin": "^0.1.9",
     "css-loader": "^0.23.1",
     "es6-promise": "^3.0.2",
