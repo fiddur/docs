@@ -43,7 +43,7 @@ class SearchBox extends React.Component {
     let {text, focused} = this.state;
 
     let classes = ['form-group', 'search-control'];
-    if (focused) classes.push('focused');
+    if (this.props.focusEffect && focused) classes.push('focused');
     if (className) classes.push(className);
 
     return (
@@ -86,6 +86,7 @@ SearchBox.defaultProps = {
   placeholder: 'Search for docs',
   text: '',
   iconCode: 489,
+  focusEffect: true,
   handleIconClick: () => {}
 };
 

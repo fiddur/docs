@@ -45,6 +45,7 @@ class NavigationBar extends React.Component {
             className="navigation-bar-search"
             handleIconClick = {this.handleIconClick}
             iconCode = {this.state.searchActive ? 471 : 489}
+            focusEffect = {false}
           />
           <ul className="navigation-bar-tabs nav nav-tabs">
             {tabs}
