@@ -7,7 +7,6 @@ import { connectToStores, provideContext } from 'fluxible-addons-react';
 import { handleHistory } from 'fluxible-router';
 import ErrorPage from './ErrorPage';
 import highlightCode from '../browser/highlightCode';
-import feedbackSender from '../browser/feedbackSender';
 import Header from './Header';
 
 class Application extends React.Component {
@@ -29,7 +28,6 @@ class Application extends React.Component {
 
   initClientScripts() {
     highlightCode();
-    feedbackSender();
   }
 
   getHandler() {

@@ -7,7 +7,7 @@ import NavigationStore from '../stores/NavigationStore';
 import ContentStore from '../stores/ContentStore';
 import NavigationBar from './NavigationBar';
 import Sidebar from './Sidebar';
-import FeedbackSender from './FeedbackSender';
+import FeedbackFooter from './FeedbackFooter';
 import setAnchorLinks from '../browser/anchorLinks';
 
 class ArticlePage extends React.Component {
@@ -66,7 +66,7 @@ class ArticlePage extends React.Component {
   }
 
   renderContent() {
-    let {html, metadata} = this.props;
+    let {url, html, metadata} = this.props;
 
     // If the document's content hasn't been loaded yet, display a spinner.
     if (!html) {
@@ -83,7 +83,10 @@ class ArticlePage extends React.Component {
     if (metadata) classes = classes.concat(metadata.classes);
 
     return (
-      <article className={classes.join(' ')} data-swiftype-name="body" data-swiftype-type="text" data-swiftype-index='true' dangerouslySetInnerHTML={{__html: html}} />
+      <div>
+        <article className={classes.join(' ')} data-swiftype-name="body" data-swiftype-type="text" data-swiftype-index='true' dangerouslySetInnerHTML={{__html: html}} />
+        <FeedbackFooter articleUrl={url} editUrl={metadata.editUrl} />
+      </div>
     );
   }
 
@@ -109,12 +112,6 @@ class ArticlePage extends React.Component {
                 </div>
                 <div ref="content" className="col-md-9">
                   {this.renderContent()}
-                  <div className="article-interaction">
-                    <FeedbackSender />
-                    <a className="fixit" href={metadata.editUrl} target="_blank">
-                      Suggestions? Typos? Edit this document on GitHub
-                    </a>
-                  </div>
                 </div>
               </div>
             </div>
