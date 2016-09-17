@@ -117,7 +117,7 @@ class Sidebar extends React.Component {
     
     return (
       <div ref={(c) => this._sidebar = c} className="sidebar">
-        <div className="section-title">{this.props.section}</div>
+        <div className="section-title">{this.props.sectionTitle}</div>
         <ul className="sidebar-item-list sidebar-item-list-depth0">
           {items}
         </ul>
@@ -136,11 +136,9 @@ Sidebar.contextTypes = {
   getStore: React.PropTypes.func
 };
 
-Sidebar = connectToStores(Sidebar, [NavigationStore], (context, props) => {
-  let store = context.getStore(NavigationStore);
+Sidebar = connectToStores(Sidebar, [NavigationStore], (context, props) => {  
   return {
-    section: store.getCurrentSection(),
-    articles: store.getCurrentSidebarArticles()
+    articles: context.getStore(NavigationStore).getCurrentSidebarArticles()
   };
 });
 
