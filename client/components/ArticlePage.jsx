@@ -1,4 +1,3 @@
-import {parse} from 'url';
 import React from 'react';
 import { navigateAction } from 'fluxible-router';
 import { connectToStores } from 'fluxible-addons-react';
@@ -67,6 +66,8 @@ class ArticlePage extends React.Component {
 
   renderContent() {
     let {html, metadata} = this.props;
+
+    // If the document's content hasn't been loaded yet, display a spinner.
     if (!html) {
       return (
         <section className="docs-content">
@@ -76,12 +77,13 @@ class ArticlePage extends React.Component {
         </section>
       );
     }
-    else {
-      let classes = ['docs-content'].concat(metadata.classes);
-      return (
-        <article className={classes.join(' ')} data-swiftype-name="body" data-swiftype-type="text" data-swiftype-index='true' dangerouslySetInnerHTML={{__html: html}} />
-      );
-    }
+
+    let classes = ['docs-content']
+    if (metadata) classes = classes.concat(metadata.classes);
+
+    return (
+      <article className={classes.join(' ')} data-swiftype-name="body" data-swiftype-type="text" data-swiftype-index='true' dangerouslySetInnerHTML={{__html: html}} />
+    );
   }
 
   renderFramed() {
@@ -101,13 +103,13 @@ class ArticlePage extends React.Component {
           <div className="js-doc-template container">
             <div className="row">
               <div className="col-sm-3">
-                <Sidebar sectionTitle={metadata.section} maxDepth={3} />
+                <Sidebar maxDepth={3} />
               </div>
               <div ref="content" className="col-sm-9">
                 {this.renderContent()}
                 <div className="article-interaction">
                   <FeedbackSender />
-                  <a className="fixit" href={metadata.editUrl} target="_blank">
+                  <a className="fixit" href={metadata ? metadata.editUrl : null} target="_blank">
                     Suggestions? Typos? Edit this document on GitHub
                   </a>
                 </div>
@@ -132,7 +134,7 @@ class ArticlePage extends React.Component {
 
 ArticlePage = connectToStores(ArticlePage, [ContentStore], (context, props) => {
 
-  let url = parse(props.currentRoute.url).pathname;
+  let {url} = props.currentRoute;
   let appStore = context.getStore(ApplicationStore);
   let contentStore = context.getStore(ContentStore);
   let navigationStore = context.getStore(NavigationStore);
