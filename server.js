@@ -9,12 +9,12 @@ import methodOverride from 'method-override';
 import session from 'express-session';
 import nconf from 'nconf';
 import path from 'path';
+import handlers from './lib/handlers';
 import strings from './lib/strings';
 import helmet from 'helmet';
 import agent from './lib/logs';
 import eventLogger from './lib/logs/event-logger';
 import requestLogger from './lib/logs/request-logger';
-import bootstrap from './lib/bootstrap';
 
 const logger = agent.logger;
 
@@ -155,7 +155,10 @@ server.get('/docs/switch', function (req, res) {
 });
 
 server.use('/docs/meta', require('./lib/api'));
-server.use('/docs', require('./lib/app'));
+
+// The master handler that will initialize the React app to display whatever
+// content we want to return.
+server.use('/docs', handlers.content);
 
 // This is just for localhost
 server.get('/', function(req, res) {
@@ -169,44 +172,10 @@ server.use(function(req, res, next) {
   next(err);
 });
 
-server.use(function(internalErr, req, res, next) {
-
-  // Log server errors.
-  if (internalErr.status > 499) {
-    logger.error(internalErr);
-  }
-
-  // Create a santitized, serializable error that we can return to the client. 
-  let err = {
-    status: internalErr.status || 500,
-    title:  internalErr.status === 404 ? strings.PAGE_NOT_FOUND : strings.ERROR_PROCESSING_REQUEST
-  };
-
-  // Don't send back stack traces in production.
-  if (process.env.NODE_ENV === 'production') {
-    err.message = title;
-    err.stack = '';
-  }
-  else {
-    err.message = internalErr.message;
-    err.stack = internalErr.stack;
-  }
-
-  if (res.locals.embedded) {
-    res.type('html')
-    .status(err.status)
-    .send(`<h1>${err.title}</h1><h2>${err.status}</h2><pre>${err.stack}</pre>`)
-    .end();
-  }
-  else {
-    bootstrap({err}, req, res, next);
-  }
-
-});
+server.use(handlers.error);
 
 server.use(function(err, req, res, next) {
-
-  // This is the worst-case scenario. If we've gotten here, the err page itself
+  // This is the worst-case scenario. If we've gotten here, the error page itself
   // encountered an error during rendering. If we're in production, just write
   // out a simple message; otherwise, dump the stack trace.
   if (process.env.NODE_ENV === 'production') {
@@ -217,7 +186,6 @@ server.use(function(err, req, res, next) {
   else {
     next(err);
   }
-
 });
 
 export default server;

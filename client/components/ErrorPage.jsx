@@ -9,7 +9,7 @@ class ErrorPage extends React.Component {
     var {error} = this.props;
 
     return (
-      <div className="docs-single docs-error">
+      <div className="docs-single">
         <NavigationBar />
         <div className="js-doc-template container">
           <div className="row">
@@ -19,7 +19,7 @@ class ErrorPage extends React.Component {
             <div className="col-sm-9">
               <section className="docs-content">
                 <h1>{error.title}</h1>
-                <h2>Error {error.status}</h2>
+                <h2>Error {error.statusCode}</h2>
                 <p>{error.message}</p>
                 <pre>{error.stack}</pre>
               </section>
