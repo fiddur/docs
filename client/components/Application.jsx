@@ -2,6 +2,7 @@
 
 import React from 'react';
 import ApplicationStore from '../stores/ApplicationStore';
+import ContentStore from '../stores/ContentStore';
 import { connectToStores, provideContext } from 'fluxible-addons-react';
 import { handleHistory } from 'fluxible-router';
 import ErrorPage from './ErrorPage';
@@ -32,59 +33,63 @@ class Application extends React.Component {
     feedbackSender();
   }
 
+  getHandler() {
+
+    let {content, currentRoute, currentNavigateError} = this.props;
+
+    if (!currentRoute) {
+      let error = {message: 'Not Found', status: 404};
+      return <ErrorPage error={error} />;
+    }
+
+    if (content && content.err) {
+      return <ErrorPage error={content.err} />;
+    }
+
+    if (currentNavigateError) {
+      return <ErrorPage error={currentNavigateError} />;
+    }
+
+    let Handler = currentRoute.handler;
+    return <Handler {...this.props} />;
+
+  }
+
   render() {
     // Temporary fix for: https://github.com/yahoo/fluxible-router/issues/108
     if (!this.props.currentRoute && typeof document !== 'undefined') {
       document.location = document.location;
     }
 
-    var Handler = undefined;
-    if (this.props.currentRoute) Handler = this.props.currentRoute.handler;
-
-    if (Handler) {
-      if (this.props.error) {
-        Handler = <ErrorPage error={this.props.error} />;
-      }
-      else if (this.props.currentNavigateError) {
-        var status = this.props.currentNavigateError.message === 'Not Found' ? 404 : 500;
-        Handler = <ErrorPage error={this.props.currentNavigateError} />;
-      }
-      else {
-        Handler = <Handler {...this.props} />;
-      }
-    }
-    else {
-      let error = {message: 'Not Found', status: 404};
-      Handler = <ErrorPage error={error} />;
-    }
-
     const isFramedMode = this.props.env['RENDER_MODE'] === 'framed';
-
     return (
       <div>
         {isFramedMode ? null : <Header/>}
-        <div>
-          {Handler}
-        </div>
+        {this.getHandler()}
       </div>
     );
   }
 
 }
 
-Application = connectToStores(
-  Application,
-  [ApplicationStore],
-  function (context, props) {
-    var appStore = context.getStore(ApplicationStore);
-    return {
-      env: appStore.getEnvironmentVars(),
-      user: appStore.getUser(),
-      pageTitle: appStore.getPageTitle(),
-      error: props.error
-    };
+Application = connectToStores(Application, [ApplicationStore], (context, props) => {
+
+  let appStore = context.getStore(ApplicationStore);
+
+  let content;
+  if (props.currentRoute) {
+    content = context.getStore(ContentStore).getContent(props.currentRoute.url);
   }
-);
+
+  return {
+    env: appStore.getEnvironmentVars(),
+    user: appStore.getUser(),
+    pageTitle: appStore.getPageTitle(),
+    currentRoute: props.currentRoute,
+    content
+  };
+
+});
 
 Application = provideContext(Application, {
   trackEvent: React.PropTypes.func.isRequired,
