@@ -9,7 +9,7 @@ export function getPageMetadata(quickstarts, quickstartId, platformId, articleId
 
     if (quickstartId && !quickstarts[quickstartId]) {
       var err = new Error('Invalid AppType.');
-      err.statusCode = 404;
+      err.status = 404;
       return reject(err);
     }
 
@@ -18,13 +18,13 @@ export function getPageMetadata(quickstarts, quickstartId, platformId, articleId
       let platform = quickstarts[quickstartId].platforms[platformId];
       if (!platform) {
         var err = new Error('Platform not found.');
-        err.statusCode = 404;
+        err.status = 404;
         return reject(err);
       }
       let platformTitle = platform.title;
       if (!platformTitle) {
         var err = new Error('Invalid platform: title is required on the index.yml config.');
-        err.statusCode = 500;
+        err.status = 500;
         return reject(err);
       }
       let defaultDescription = `Learn how to quickly add authentication to your ${platformTitle} app. Authenticate with any social or enterprise identity provider.`;
@@ -32,13 +32,13 @@ export function getPageMetadata(quickstarts, quickstartId, platformId, articleId
         let article = _.find(quickstarts[quickstartId].platforms[platformId].articles, { name: articleId });
         if (!article) {
           var err = new Error('Article not found.');
-          err.statusCode = 404;
+          err.status = 404;
           return reject(err);
         }
         let { title, description } = article;
         if (!title) {
           var err = new Error('Invalid article: title and description are required attributes.');
-          err.statusCode = 500;
+          err.status = 500;
           return reject(err);
         }
         if (!description) {

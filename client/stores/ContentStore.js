@@ -1,3 +1,4 @@
+import {parse} from 'url';
 import { BaseStore } from 'fluxible/addons';
 import _ from 'lodash';
 
@@ -7,6 +8,8 @@ export const ContentState = {
   ERROR: 'ERROR'
 };
 
+let normalizeUrl = (url) => parse(url).pathname;
+
 class ContentStore extends BaseStore {
   
   constructor(dispatcher) {
@@ -15,11 +18,11 @@ class ContentStore extends BaseStore {
   }
 
   getContent(url) {
-    return this.content[url] || undefined;
+    return this.content[normalizeUrl(url)] || undefined;
   }
 
   getContentHtml(url) {
-    let content = this.getContent(url);
+    let content = this.getContent(normalizeUrl(url));
     return content ? content.html : undefined;
   }
 
@@ -31,17 +34,13 @@ class ContentStore extends BaseStore {
   
   handleContentLoaded(payload) {
     let {url, html} = payload;
-    let content = this.content[url];
-    content.state = ContentState.LOADED;
-    content.html = html;
+    this.content[url] = {state: ContentState.LOADED, html};
     this.emitChange();
   }
   
   handleContentLoadFailure(payload) {
     let {url, err} = payload;
-    let content = this.content[url];
-    content.state = ContentState.ERROR;
-    content.error = err;
+    this.content[url] = {state: ContentState.ERROR, err};
     this.emitChange();
   }
   
