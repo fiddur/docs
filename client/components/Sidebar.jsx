@@ -1,27 +1,28 @@
 import * as React from 'react';
 import _ from 'lodash';
 import { connectToStores } from 'fluxible-addons-react';
+import { StickyContainer, Sticky } from 'react-sticky';
 import NavigationStore from '../stores/NavigationStore';
 import ArticleLink from './ArticleLink';
-import { StickyContainer, Sticky } from 'react-sticky';
 
 const SidebarItem = ({ article, currentDepth, maxDepth }) => {
   let children = undefined;
+  let icon = undefined;
+
   if (article.children && currentDepth < maxDepth) {
     const newDepth = currentDepth + 1;
     const items = article.children.map(child => (
       <SidebarItem key={child.url} article={child} currentDepth={newDepth} maxDepth={maxDepth} />
     ));
-    children = <ul className={'sidebar-item-list sidebar-item-list-depth' + newDepth}>{items}</ul>;
+    children = <ul className={`sidebar-item-list sidebar-item-list-depth${newDepth}`}>{items}</ul>;
   }
 
-  let icon = undefined;
   if (article.icon) {
-    icon = <i className={'sidebar-item-icon ' + article.icon} />;
+    icon = <i className={`sidebar-item-icon ${article.icon}`} />;
   }
 
   return (
-    <li className={'sidebar-item sidebar-item-depth' + currentDepth}>
+    <li className={`sidebar-item sidebar-item-depth${currentDepth}`}>
       <ArticleLink article={article}>
         <span className="sidebar-item-name">{article.title}</span>
       </ArticleLink>
@@ -49,12 +50,6 @@ class Sidebar extends React.Component {
 
   onSidebarChange() {
     this.setCurrentList();
-
-    const newDuration = this.getScrollDuration();
-    const newOffset = this.getActiveListOffset();
-
-    this.scrollScene.duration(newDuration);
-    this.scrollScene.offset(newOffset);
   }
 
   setCurrentList() {
@@ -76,17 +71,6 @@ class Sidebar extends React.Component {
     return $activeList.position().top - 10;
   }
 
-  getScrollDuration() {
-    const self = $(this._sidebar).height();
-    const height = $('.docs-content').height() - Math.max(self, 600);
-
-    if (height <= self || window.matchMedia('(max-width: 768px)').matches) {
-      return 1;
-    }
-
-    return height;
-  }
-
   handleToggle() {
     document.body.classList.toggle('overflow-hidden', !this.state.openDropdown)
     this.setState({
@@ -99,16 +83,6 @@ class Sidebar extends React.Component {
 
     this.setCurrentList();
 
-    this.scrollController = new ScrollMagic.Controller();
-    this.scrollScene = new ScrollMagic.Scene({
-      duration: this.getScrollDuration(),
-      triggerElement: '.docs-content',
-      triggerHook: 0,
-      offset: $activeItem.length ? this.getActiveListOffset() : 0
-    });
-
-    this.scrollScene.setPin('.sidebar', { pushFollowers: false }).addTo(this.scrollController);
-
     $(window).on('resize', _.debounce(() => { this.onSidebarChange(); }, 200));
   }
 
@@ -120,11 +94,6 @@ class Sidebar extends React.Component {
       items = articles.map(article => (
         <SidebarItem key={article.url} article={article} currentDepth={0} maxDepth={maxDepth} />
       ));
-    }
-
-    if (this.scrollScene) {
-      this.scrollScene.destroy(true);
-      this.scrollController.destroy(true);
     }
 
     return (
