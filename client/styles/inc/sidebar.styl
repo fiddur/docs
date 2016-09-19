@@ -8,6 +8,9 @@ body.overflow-hidden
     padding-right 0
     z-index 1
 
+  .sticky
+    height 60px
+
 .sidebar
 
   +breakpoint("tablet")
@@ -101,7 +104,10 @@ body.overflow-hidden
       overflow-y hidden
 
       &.is-dropdown-open
-        height 100vh
+        height calc(100vh - 124px)
+
+        .sticky &
+          height 100vh
 
   .sidebar-item-depth0
     > a
@@ -150,5 +156,5 @@ body.overflow-hidden
 
   .mobile-dropdown-content
     background-color white
-    height calc(100vh - 60px)
+    height calc(100% - 60px)
     overflow-y scroll
