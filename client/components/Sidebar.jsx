@@ -5,14 +5,17 @@ import { StickyContainer, Sticky } from 'react-sticky';
 import NavigationStore from '../stores/NavigationStore';
 import ArticleLink from './ArticleLink';
 
-const SidebarItem = ({ article, currentDepth, maxDepth }) => {
+const SidebarItem = ({ article, currentDepth, maxDepth, handleOnClick }) => {
   let children = undefined;
   let icon = undefined;
 
   if (article.children && currentDepth < maxDepth) {
     const newDepth = currentDepth + 1;
     const items = article.children.map(child => (
-      <SidebarItem key={child.url} article={child} currentDepth={newDepth} maxDepth={maxDepth} />
+      <SidebarItem
+        handleOnClick={handleOnClick} key={child.url} article={child}
+        currentDepth={newDepth} maxDepth={maxDepth}
+      />
     ));
     children = <ul className={`sidebar-item-list sidebar-item-list-depth${newDepth}`}>{items}</ul>;
   }
@@ -23,12 +26,16 @@ const SidebarItem = ({ article, currentDepth, maxDepth }) => {
 
   return (
     <li className={`sidebar-item sidebar-item-depth${currentDepth}`}>
-      <ArticleLink article={article}>
+      <ArticleLink article={article} onClick={handleOnClick}>
         <span className="sidebar-item-name">{article.title}</span>
       </ArticleLink>
       {children}
     </li>
   );
+};
+
+SidebarItem.propTypes = {
+  handleOnClick: React.PropTypes.func.isRequired
 };
 
 class Sidebar extends React.Component {
@@ -42,6 +49,7 @@ class Sidebar extends React.Component {
 
     this.onSidebarChange = _.throttle(this.onSidebarChange, 300);
     this.handleToggle = this.handleToggle.bind(this);
+    this.handleItemClick = this.handleItemClick.bind(this);
   }
 
   componentDidUpdate() {
@@ -86,13 +94,23 @@ class Sidebar extends React.Component {
     $(window).on('resize', _.debounce(() => { this.onSidebarChange(); }, 200));
   }
 
+  handleItemClick() {
+    this.setState({ openDropdown: false });
+  }
+
   render() {
     let { articles, maxDepth } = this.props;
 
     let items = undefined;
     if (articles) {
       items = articles.map(article => (
-        <SidebarItem key={article.url} article={article} currentDepth={0} maxDepth={maxDepth} />
+        <SidebarItem
+          key={article.url}
+          article={article}
+          currentDepth={0}
+          maxDepth={maxDepth}
+          handleOnClick={this.handleItemClick}
+        />
       ));
     }
 

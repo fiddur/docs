@@ -76,6 +76,22 @@ body.overflow-hidden
       padding-left: 15px;
       transition: max-height 0s linear;
 
+      .sidebar-item-depth1,
+      .sidebar-item-depth2
+        padding: 3px 0;
+        font-size: $font-size-small;
+
+        > a
+          color: $color-text-light;
+
+          &.active
+            color: darken($color-blue-light, 5%);
+            font-weight: $font-weight-normal;
+
+      +breakpoint("desktop", "max")
+        height auto
+        max-height none
+
     &.sidebar-item-list-depth2
       padding-left: 20px;
       padding-top: 0;
@@ -84,19 +100,6 @@ body.overflow-hidden
   .is-current .sidebar-item-list-depth1
     max-height: 600px;
     transition: max-height 600ms ease-in-out;
-
-
-    .sidebar-item-depth1,
-    .sidebar-item-depth2
-      padding: 3px 0;
-      font-size: $font-size-small;
-
-      > a
-        color: $color-text-light;
-
-        &.active
-          color: darken($color-blue-light, 5%);
-          font-weight: $font-weight-normal;
 
   .sidebar-item-list-depth0
     padding-left: 0px
