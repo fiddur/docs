@@ -1,6 +1,7 @@
 import React from 'react';
 import { navigateAction } from 'fluxible-router';
 import { connectToStores } from 'fluxible-addons-react';
+import { StickyContainer, Sticky } from 'react-sticky';
 import ApplicationStore from '../stores/ApplicationStore';
 import NavigationStore from '../stores/NavigationStore';
 import ContentStore from '../stores/ContentStore';
@@ -8,7 +9,6 @@ import NavigationBar from './NavigationBar';
 import Sidebar from './Sidebar';
 import FeedbackSender from './FeedbackSender';
 import setAnchorLinks from '../browser/anchorLinks';
-import { StickyContainer, Sticky } from 'react-sticky';
 
 class ArticlePage extends React.Component {
 
@@ -102,7 +102,7 @@ class ArticlePage extends React.Component {
         <div className="document">
           <NavigationBar />
           <StickyContainer>
-            <div className="js-doc-template container">
+            <div className="js-doc-template container" style={{ marginBottom: '40px' }}>
               <div className="row">
                 <div className="sidebar-container col-sm-3">
                   <Sidebar sectionTitle={metadata.section} maxDepth={3} />

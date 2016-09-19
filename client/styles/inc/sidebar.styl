@@ -8,8 +8,10 @@ body.overflow-hidden
     padding-right 0
     z-index 1
 
+  // Fix react-sticky placeholder height bug (only on mobile)
   .sticky
-    height 60px
+    +breakpoint("tablet", "max")
+      height 60px
 
 .sidebar
 
@@ -104,8 +106,10 @@ body.overflow-hidden
       overflow-y hidden
 
       &.is-dropdown-open
+        // Set the height to match the total viewport height minus the jumpt to top position
         height calc(100vh - 124px)
 
+        // When its in sticky state take all the viewport height
         .sticky &
           height 100vh
 
@@ -156,5 +160,7 @@ body.overflow-hidden
 
   .mobile-dropdown-content
     background-color white
-    height calc(100% - 60px)
-    overflow-y scroll
+
+    +breakpoint("tablet", "max")
+      height calc(100% - 60px)
+      overflow-y scroll

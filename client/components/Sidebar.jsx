@@ -103,7 +103,7 @@ class Sidebar extends React.Component {
           <ul className={`sidebar-item-list sidebar-item-list-depth0 ${this.state.openDropdown ? 'is-dropdown-open' : ''}`}>
             <div className="mobile-dropdown-trigger visible-xs" onClick={this.handleToggle}>
               <h5 className="mobile-dropdown-title">Jump to...</h5>
-              <i className="mobile-dropdown-icon icon-budicon-460" />
+              <i className={`mobile-dropdown-icon icon-budicon-${this.state.openDropdown ? '462' : '460'}`} />
             </div>
             <div className="mobile-dropdown-content">
               {items}

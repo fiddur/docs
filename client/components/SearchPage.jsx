@@ -110,7 +110,6 @@ class SearchPage extends React.Component {
         <NavigationBar />
         <div className="container">
           <h1>{title}</h1>
-          <SearchBox text={query} />
           <div className="search-results">
             {this.renderResultContent(result)}
           </div>

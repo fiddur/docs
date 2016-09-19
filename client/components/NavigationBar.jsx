@@ -7,7 +7,7 @@ import NavigationStore from '../stores/NavigationStore';
 import NavigationSearchBox from './NavigationSearchBox';
 
 let NavigationTab = (section, currentSection) => {
-  let {id, title, url} = section;
+  let { id, title, url } = section;
   let classes = ['nav-tab'];
   if (section.id == currentSection) classes.push('active');
   return (
@@ -25,16 +25,17 @@ const getCurrentSearchQuery = () => {
 };
 
 class NavigationBar extends React.Component {
-  constructor() {
-    super();
-
-    this.state = {
-      searchActive: false
-    };
+  constructor(props) {
+    super(props);
 
     this.searchIconCode = 471;
     this.closeIconCode = 489;
     this.handleIconClick = this.handleIconClick.bind(this);
+    this.query = getCurrentSearchQuery();
+
+    this.state = {
+      searchActive: false
+    };
   }
   handleIconClick() {
     this.setState({
@@ -42,10 +43,10 @@ class NavigationBar extends React.Component {
     });
   }
   render() {
-    let {sections, currentSection} = this.props;
+    const { sections, currentSection } = this.props;
 
     // Create a navigation tab for `each section of the site.
-    let tabs = undefined;
+    let tabs;
     if (sections) {
       tabs = sections.map(section => NavigationTab(section, currentSection));
     }
@@ -55,7 +56,7 @@ class NavigationBar extends React.Component {
         <div className="container">
           <NavigationSearchBox
             className="navigation-bar-search"
-            text={getCurrentSearchQuery() || ''}
+            text=""
             handleIconClick={this.handleIconClick}
             iconCode={this.state.searchActive ? this.searchIconCode : this.closeIconCode}
             placeholder="Search for docs"
