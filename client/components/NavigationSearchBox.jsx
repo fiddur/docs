@@ -77,7 +77,8 @@ NavigationSearchBox.contextTypes = {
 NavigationSearchBox.propTypes = {
   iconCode: PropTypes.number,
   handleIconClick: PropTypes.func.isRequired,
-  placeholder: PropTypes.string.isRequired
+  placeholder: PropTypes.string.isRequired,
+  text: PropTypes.string
 };
 
 export default NavigationSearchBox;

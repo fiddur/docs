@@ -1,7 +1,9 @@
-import * as React from 'react'
+import * as React from 'react';
+import url from 'url';
+import qs from 'querystring';
+import { connectToStores } from 'fluxible-addons-react';
+import { NavLink } from 'fluxible-router';
 import NavigationStore from '../stores/NavigationStore';
-import {NavLink} from 'fluxible-router';
-import {connectToStores} from 'fluxible-addons-react';
 import NavigationSearchBox from './NavigationSearchBox';
 
 let NavigationTab = (section, currentSection) => {
@@ -13,6 +15,13 @@ let NavigationTab = (section, currentSection) => {
       <NavLink href={url}>{title}</NavLink>
     </li>
   );
+};
+
+const getCurrentSearchQuery = () => {
+  if (typeof document === 'undefined') return undefined;
+
+  const urlobj = url.parse(document.location.toString());
+  return qs.parse(urlobj.query).q;
 };
 
 class NavigationBar extends React.Component {
@@ -46,8 +55,9 @@ class NavigationBar extends React.Component {
         <div className="container">
           <NavigationSearchBox
             className="navigation-bar-search"
-            handleIconClick = {this.handleIconClick}
-            iconCode = { this.state.searchActive ? this.searchIconCode : this.closeIconCode }
+            text={getCurrentSearchQuery() || ''}
+            handleIconClick={this.handleIconClick}
+            iconCode={this.state.searchActive ? this.searchIconCode : this.closeIconCode}
             placeholder="Search for docs"
           />
           <ul className="navigation-bar-tabs nav nav-tabs">
