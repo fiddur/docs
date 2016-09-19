@@ -101,7 +101,7 @@ class Sidebar extends React.Component {
         <div ref={(c) => this._sidebar = c} className="sidebar">
           { /* <div className="section-title">{this.props.sectionTitle}</div> */ }
           <ul className={`sidebar-item-list sidebar-item-list-depth0 ${this.state.openDropdown ? 'is-dropdown-open' : ''}`}>
-            <div className="mobile-dropdown-trigger visible-xs" onClick={this.handleToggle}>
+            <div className="mobile-dropdown-trigger" onClick={this.handleToggle}>
               <h5 className="mobile-dropdown-title">Jump to...</h5>
               <i className={`mobile-dropdown-icon icon-budicon-${this.state.openDropdown ? '462' : '460'}`} />
             </div>

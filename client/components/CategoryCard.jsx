@@ -17,7 +17,7 @@ class CategoryCard extends React.Component {
     ));
 
     return (
-      <div className="category-card-container col-sm-4">
+      <div className="category-card-container col-sm-6 col-md-4">
         <div className="category-card">
           <div className="category-card-header">
             <i className={category.icon + ' ' + category.color} />
@@ -31,7 +31,7 @@ class CategoryCard extends React.Component {
         </div>
       </div>
     );
-    
+
   }
 
 };

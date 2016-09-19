@@ -72,10 +72,10 @@ class TutorialPage extends React.Component {
     let tutorial = undefined;
     let sidebar = undefined;
     let prevNext = undefined;
-    let classes = ['col-sm-9'];
+    let classes = ['col-md-9'];
 
     if (platform && platform.articles.length > 1) {
-      sidebar = <div className="col-sm-3">
+      sidebar = <div className="col-md-3">
         <TutorialTableOfContents
           quickstart={quickstart}
           platform={platform}

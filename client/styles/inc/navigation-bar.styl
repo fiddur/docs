@@ -1,7 +1,7 @@
 .navigation-bar
   background: $bg-color-gray-light
 
-  +breakpoint("tablet", "max")
+  +breakpoint("desktop", "max")
     white-space nowrap
     overflow-x auto
 
@@ -13,7 +13,7 @@
         left: 0
 
   &.is-search-active
-    +breakpoint("tablet", "max")
+    +breakpoint("desktop", "max")
       .navigation-bar-tabs
         display none
 
@@ -26,6 +26,14 @@
         .search-input
           width 100% !important
 
+  > .container
+
+    +breakpoint("desktop", "max")
+      width auto
+
+    +breakpoint("desktop")
+      width 1016px
+
   .wrapper
     border-bottom: 1px solid #EAEEF3
     background: white
@@ -35,13 +43,13 @@
   .search-form
     padding 0
 
-    +breakpoint("tablet", "max")
+    +breakpoint("desktop", "max")
       padding-top 8px
       padding-bottom 6px
       display inline-block
       margin-right 10px
 
-    +breakpoint("tablet")
+    +breakpoint("desktop")
       padding-top 16px
       float right
       width 30%
@@ -54,7 +62,7 @@
         &:focus
           text-indent 26px
 
-        +breakpoint("tablet", "max")
+        +breakpoint("desktop", "max")
           background-color transparent
           width 0
 
@@ -64,7 +72,7 @@
         margin-bottom 0
 
       i
-        +breakpoint("tablet", "max")
+        +breakpoint("desktop", "max")
           left 2px
           cursor pointer
 
@@ -74,7 +82,7 @@
     display inline-block
     border-bottom: 0px
 
-    +breakpoint("tablet")
+    +breakpoint("desktop")
       float left
       display block
 
@@ -91,7 +99,7 @@
       padding: 4px 10px
       border-bottom: 2px solid transparent
 
-      +breakpoint("tablet")
+      +breakpoint("desktop")
         padding-top 15px
         padding-bottom 15px
 
@@ -107,5 +115,5 @@
       & + li
         margin-left 16px
 
-        +breakpoint("tablet")
+        +breakpoint("desktop")
           margin-left: 50px

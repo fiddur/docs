@@ -104,10 +104,10 @@ class ArticlePage extends React.Component {
           <StickyContainer>
             <div className="js-doc-template container" style={{ marginBottom: '40px' }}>
               <div className="row">
-                <div className="sidebar-container col-sm-3">
+                <div className="sidebar-container col-md-3">
                   <Sidebar sectionTitle={metadata.section} maxDepth={3} />
                 </div>
-                <div ref="content" className="col-sm-9">
+                <div ref="content" className="col-md-9">
                   {this.renderContent()}
                   <div className="article-interaction">
                     <FeedbackSender />

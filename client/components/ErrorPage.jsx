@@ -15,10 +15,10 @@ class ErrorPage extends React.Component {
           <NavigationBar />
           <div className="js-doc-template container">
             <div className="row">
-              <div className="sidebar-container col-sm-3">
+              <div className="sidebar-container col-md-3">
                 <Sidebar />
               </div>
-              <div className="col-sm-9">
+              <div className="col-md-9">
                 <section className="docs-content">
                   <h1>{error.title}</h1>
                   <h2>Error {error.status}</h2>
