@@ -26,7 +26,7 @@ const SidebarItem = ({ article, currentDepth, maxDepth, handleOnClick }) => {
 
   return (
     <li className={`sidebar-item sidebar-item-depth${currentDepth}`} onClick={handleOnClick}>
-      <ArticleLink article={article} onClick={handleOnClick}>
+      <ArticleLink article={article}>
         <span className="sidebar-item-name">{article.title}</span>
       </ArticleLink>
       {children}
@@ -49,7 +49,6 @@ class Sidebar extends React.Component {
 
     this.onSidebarChange = _.throttle(this.onSidebarChange, 300);
     this.handleToggle = this.handleToggle.bind(this);
-    this.handleItemClick = this.handleItemClick.bind(this);
   }
 
   componentDidUpdate() {
@@ -94,10 +93,6 @@ class Sidebar extends React.Component {
     $(window).on('resize', _.debounce(() => { this.onSidebarChange(); }, 200));
   }
 
-  handleItemClick() {
-    this.setState({ openDropdown: false });
-  }
-
   render() {
     let { articles, maxDepth } = this.props;
 
@@ -109,7 +104,7 @@ class Sidebar extends React.Component {
           article={article}
           currentDepth={0}
           maxDepth={maxDepth}
-          handleOnClick={this.handleItemClick}
+          handleOnClick={this.handleToggle}
         />
       ));
     }
@@ -117,7 +112,7 @@ class Sidebar extends React.Component {
     return (
       <Sticky>
         <div ref={(c) => this._sidebar = c} className="sidebar">
-          { /* <div className="section-title">{this.props.sectionTitle}</div> */ }
+          <div className="section-title">{this.props.sectionTitle}</div>
           <ul className={`sidebar-item-list sidebar-item-list-depth0 ${this.state.openDropdown ? 'is-dropdown-open' : ''}`}>
             <div className="mobile-dropdown-trigger" onClick={this.handleToggle}>
               <h5 className="mobile-dropdown-title">Jump to...</h5>

@@ -4,10 +4,10 @@ import { NavLink } from 'fluxible-router';
 class ArticleLink extends React.Component {
 
   render() {
-    let { article, children, onClick } = this.props;
+    let { article, children } = this.props;
     if (article.forceFullReload) {
       return (
-        <a href={article.url} onClick={onClick}>
+        <a href={article.url}>
           {children}
         </a>
       );
