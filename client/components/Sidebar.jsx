@@ -6,8 +6,8 @@ import NavigationStore from '../stores/NavigationStore';
 import ArticleLink from './ArticleLink';
 
 const SidebarItem = ({ article, currentDepth, maxDepth, handleOnClick }) => {
-  let children = undefined;
-  let icon = undefined;
+  let children;
+  let icon;
 
   if (article.children && currentDepth < maxDepth) {
     const newDepth = currentDepth + 1;
@@ -25,7 +25,7 @@ const SidebarItem = ({ article, currentDepth, maxDepth, handleOnClick }) => {
   }
 
   return (
-    <li className={`sidebar-item sidebar-item-depth${currentDepth}`}>
+    <li className={`sidebar-item sidebar-item-depth${currentDepth}`} onClick={handleOnClick}>
       <ArticleLink article={article} onClick={handleOnClick}>
         <span className="sidebar-item-name">{article.title}</span>
       </ArticleLink>
