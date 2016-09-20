@@ -166,6 +166,7 @@
     },
     "auth0-common-logging": {
       "version": "2.14.0",
+      "from": "auth0-common-logging@git://github.com/auth0/auth0-common-logging.git#d705a4cbf25274b92c6a81c249765a580d07a047",
       "resolved": "git://github.com/auth0/auth0-common-logging.git#d705a4cbf25274b92c6a81c249765a580d07a047",
       "dependencies": {
         "lodash": {
@@ -190,10 +191,12 @@
     },
     "auth0-instrumentation": {
       "version": "1.2.1",
+      "from": "auth0-instrumentation@git://github.com/auth0/auth0-instrumentation.git#48b8c665dafcacc61c86c9ae53253e39f2ad1f91",
       "resolved": "git://github.com/auth0/auth0-instrumentation.git#48b8c665dafcacc61c86c9ae53253e39f2ad1f91",
       "dependencies": {
         "auth0-common-logging": {
           "version": "2.12.1",
+          "from": "auth0-common-logging@git://github.com/auth0/auth0-common-logging.git#856099945aab465854d8127b790a66b05a41d0b1",
           "resolved": "git://github.com/auth0/auth0-common-logging.git#856099945aab465854d8127b790a66b05a41d0b1",
           "dependencies": {
             "lodash": {
