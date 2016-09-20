@@ -1,6 +1,6 @@
+@import '../../node_modules/auth0-tutorial-navigator/css/tutorial-navigator'
 @import '../../node_modules/auth0-styleguide/lib/vars'
 @import '../../node_modules/auth0-styleguide/lib/mixins'
-@import '../../node_modules/auth0-tutorial-navigator/css/tutorial-navigator'
 
 color_text_gray = rgba(0,0,0,.86);
 color_text_light = rgba(0,0,0,.54);
@@ -53,6 +53,12 @@ color_win8_cs= #f00;
 
 html
   text-rendering: auto;
+
+// Fix container width to match header and footer grid
+.container
+  max-width 1016px
+  width auto !important //Overwrite bootstrap styles
+
 
 header.site-header.site-header
   background-color: $bg-color-gray-light;
@@ -669,7 +675,7 @@ body
   border 1px solid #EAEEF3
   border-radius 3px
   margin-top 20px
-  +breakpoint("tablet")
+  +breakpoint("desktop")
     margin-top 60px
 
   ul, li
@@ -707,7 +713,7 @@ body
       margin-bottom 20px
 
     &:first-child
-      +breakpoint("tablet")
+      +breakpoint("desktop")
         border none
 
   .principal-title
@@ -733,11 +739,11 @@ body
       text-transform uppercase
       color $color-text
       margin 0
-    +breakpoint("tablet")
+    +breakpoint("desktop")
       display none
 
   .principal-content
-    +breakpoint("tablet")
+    +breakpoint("desktop")
       max-height 100%!important
 
 .try-banner.try-banner-alt
@@ -770,8 +776,9 @@ body
     &:hover
       color: white !important;
 
-  +breakpoint("tablet")
-    padding 30px 10px 10px
+  +breakpoint("desktop")
+    padding-top 40px
+    padding-bottom 10px
 
   .nav-tabs > li.active > a:focus
     border-top: 0;
@@ -785,7 +792,7 @@ body
 
   img
     max-width 100%
-  
+
   h1, h2:first-child
     font-size 40px
     font-weight 400
@@ -876,7 +883,7 @@ body
   border-top 1px solid #EAEEF3
   border-bottom 1px solid #EAEEF3
   padding 20px 0
-  +breakpoint("tablet")
+  +breakpoint("desktop")
     padding 50px 0
 
   h3
@@ -893,11 +900,11 @@ body
 
   .articles-item
     clearfix()
-    +breakpoint("tablet")
+    +breakpoint("desktop")
       grid(2, 0, ".item")
 
 .article-interaction
-  margin: 40px 10px
+  margin: 40px 10px 0
   position: relative
   overflow: hidden
 

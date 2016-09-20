@@ -1,6 +1,10 @@
 .navigation-bar
   background: $bg-color-gray-light
 
+  +breakpoint("desktop", "max")
+    white-space nowrap
+    overflow-x auto
+
   &.is-fixed
     .wrapper
       +breakpoint("desktop")
@@ -8,35 +12,104 @@
         top: 0
         left: 0
 
+  &.is-search-active
+    +breakpoint("desktop", "max")
+      .navigation-bar-tabs
+        display none
+
+      .search-form
+        display block
+        margin-right 0
+
+        .navigation-bar-search
+          display block
+
+          .form-control
+            background-color rgba(0,0,0,0.05)
+
+        .search-input
+          width 100% !important
+
+  > .container
+
+    +breakpoint("desktop", "max")
+      width auto
+
+    +breakpoint("desktop")
+      width 1016px
+
   .wrapper
     border-bottom: 1px solid #EAEEF3
     background: white
     width: 100%
     z-index: 800
 
-  form
-    padding: 22px 0 0
-    width: 30%
-    float: right
+  .search-form
+    padding 0
 
-  .section-tabs
+    +breakpoint("desktop", "max")
+      padding-top 8px
+      padding-bottom 6px
+      display inline-block
+      margin-right 10px
+      vertical-align top
+
+    +breakpoint("desktop")
+      padding-top 16px
+      float right
+      width 30%
+
+    .navigation-bar-search
+
+      .form-control
+
+        // Disable input animation on focus
+        &:focus
+          text-indent 26px
+
+        +breakpoint("desktop", "max")
+          background-color transparent
+          width 0
+
+      // Reset default label styles
+      label
+        display inline
+        margin-bottom 0
+
+      i
+        +breakpoint("desktop", "max")
+          left 9px
+          cursor pointer
+
+  .navigation-bar-tabs
     margin: 0
     font-size: 15px
-    float: left
+    display inline-block
     border-bottom: 0px
+
+    +breakpoint("desktop", "max")
+      vertical-align bottom
+
+    +breakpoint("desktop")
+      float left
+      display block
 
     a
       color: rgba($color-text, 0.8)
       height: 35px
-      line-height: 35px
+      line-height 1
 
       &:hover
         opacity: 0.7
 
     li
       margin: 0
-      padding: 15px 10px
+      padding: 4px 10px
       border-bottom: 2px solid transparent
+
+      +breakpoint("desktop")
+        padding-top 15px
+        padding-bottom 15px
 
       &.active
         color: #333
@@ -48,4 +121,7 @@
           border-bottom: 0px !important
 
       & + li
-        margin-left: 50px
+        margin-left 16px
+
+        +breakpoint("desktop")
+          margin-left: 50px

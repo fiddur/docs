@@ -1,11 +1,13 @@
-import * as React from 'react'
+import * as React from 'react';
+import url from 'url';
+import qs from 'querystring';
+import { connectToStores } from 'fluxible-addons-react';
+import { NavLink } from 'fluxible-router';
 import NavigationStore from '../stores/NavigationStore';
-import {NavLink} from 'fluxible-router';
-import {connectToStores} from 'fluxible-addons-react';
-import SearchBox from './SearchBox';
+import NavigationSearchBox from './NavigationSearchBox';
 
 let NavigationTab = (section, currentSection) => {
-  let {id, title, url} = section;
+  let { id, title, url } = section;
   let classes = ['nav-tab'];
   if (section.id == currentSection) classes.push('active');
   return (
@@ -15,25 +17,53 @@ let NavigationTab = (section, currentSection) => {
   );
 };
 
+const getCurrentSearchQuery = () => {
+  if (typeof document === 'undefined') return undefined;
+
+  const urlobj = url.parse(document.location.toString());
+  return qs.parse(urlobj.query).q;
+};
+
 class NavigationBar extends React.Component {
+  constructor(props) {
+    super(props);
 
+    this.searchIconCode = 471;
+    this.closeIconCode = 489;
+    this.handleIconClick = this.handleIconClick.bind(this);
+    this.query = getCurrentSearchQuery();
+
+    this.state = {
+      searchActive: false
+    };
+  }
+  handleIconClick() {
+    this.setState({
+      searchActive: !this.state.searchActive
+    });
+  }
   render() {
+    const { sections, currentSection } = this.props;
 
-    let {sections, currentSection} = this.props;
-
-    // Create a navigation tab for each section of the site.
-    let tabs = undefined;
+    // Create a navigation tab for `each section of the site.
+    let tabs;
     if (sections) {
       tabs = sections.map(section => NavigationTab(section, currentSection));
     }
 
     return (
-      <div className="navigation-bar">
+      <div className={`navigation-bar ${this.state.searchActive ? 'is-search-active' : ''}`}>
         <div className="container">
-          <ul className="nav nav-tabs section-tabs">
+          <NavigationSearchBox
+            className="navigation-bar-search"
+            text=""
+            handleIconClick={this.handleIconClick}
+            iconCode={this.state.searchActive ? this.searchIconCode : this.closeIconCode}
+            placeholder="Search for docs"
+          />
+          <ul className="navigation-bar-tabs nav nav-tabs">
             {tabs}
           </ul>
-          <SearchBox className="navigation-bar-search" />
         </div>
       </div>
     );

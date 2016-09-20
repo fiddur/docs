@@ -6,7 +6,11 @@ class SearchBox extends React.Component {
 
   constructor(props) {
     super(props);
-    this.state = {text: props.text, focused: false};
+
+    this.state = {
+      text: props.text,
+      focused: false
+    };
   }
 
   componentWillReceiveProps(newProps) {
@@ -42,9 +46,18 @@ class SearchBox extends React.Component {
     if (className) classes.push(className);
 
     return (
-      <form id="search" role="search" autoComplete="off" onSubmit={this.handleSubmit.bind(this)}>
+      <form
+        id="search"
+        role="search"
+        className="search-form"
+        autoComplete="off"
+        onSubmit={this.handleSubmit.bind(this)}
+      >
         <div className={classes.join(' ')}>
-          <i className="icon-budicon-489" />
+          <i
+            className="icon-budicon-489"
+            onClick={this.props.handleIconClick}
+          />
           <input
             id="search-input"
             ref="input"
@@ -54,7 +67,8 @@ class SearchBox extends React.Component {
             value={text}
             onChange={this.handleTextChange.bind(this)}
             onFocus={this.handleFocusChanged.bind(this, true)}
-            onBlur={this.handleFocusChanged.bind(this, false)} />
+            onBlur={this.handleFocusChanged.bind(this, false)}
+          />
         </div>
       </form>
     );
@@ -68,8 +82,8 @@ SearchBox.contextTypes = {
 };
 
 SearchBox.defaultProps = {
-  placeholder: "Search for docs",
-  text: ""
+  placeholder: 'Search for docs',
+  text: ''
 };
 
 export default SearchBox;

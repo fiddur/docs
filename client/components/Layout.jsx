@@ -89,7 +89,6 @@ class Layout extends React.Component {
 
           {this.getEnvScript()}
           <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
-          <script src="//cdnjs.cloudflare.com/ajax/libs/ScrollMagic/2.0.5/ScrollMagic.min.js"></script>
           <script src="https://cdn.ravenjs.com/3.5.1/raven.min.js"></script>
           <script src="//cdn.auth0.com/styleguide/vendor/bootstrap-3.2.0.min.js"></script>
           <script src="https://cdn.auth0.com/js/lock-9.2.min.js"></script>
