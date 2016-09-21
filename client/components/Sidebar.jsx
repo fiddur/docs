@@ -79,7 +79,18 @@ class Sidebar extends React.Component {
   }
 
   handleToggle() {
-    document.body.classList.toggle('overflow-hidden', !this.state.openDropdown)
+    $('html, body').toggleClass('overflow-hidden', !this.state.openDropdown);
+
+    // Set scrollable menu area acording to scroll offset
+    const sidebarTopOffset = this.sidebarContent.getBoundingClientRect().top;
+    const sidebarHeight = `calc(100vh - ${sidebarTopOffset.toString()}px)`;
+
+    if (!this.state.openDropdown) {
+      this.sidebarContent.style.height = sidebarHeight;
+    } else {
+      this.sidebarContent.style.height = '';
+    }
+
     this.setState({
       openDropdown: !this.state.openDropdown
     });
@@ -91,6 +102,24 @@ class Sidebar extends React.Component {
     this.setCurrentList();
 
     $(window).on('resize', _.debounce(() => { this.onSidebarChange(); }, 200));
+
+    // Fix Remove IOS Rubber effect
+    // https://github.com/luster-io/prevent-overscroll/blob/master/index.js
+    function removeIOSRubberEffect(element) {
+      element.addEventListener('touchmove', () => {
+        const top = element.scrollTop;
+        const totalScroll = element.scrollHeight;
+        const currentScroll = top + element.offsetHeight;
+
+        if (top === 0) {
+          element.scrollTop = 1;
+        } else if (currentScroll === totalScroll) {
+          element.scrollTop = top - 1;
+        }
+      });
+    }
+
+    removeIOSRubberEffect(this.sidebarScrollable);
   }
 
   render() {
@@ -113,12 +142,15 @@ class Sidebar extends React.Component {
       <Sticky>
         <div ref={(c) => this._sidebar = c} className="sidebar">
           <div className="section-title">{this.props.sectionTitle}</div>
-          <ul className={`sidebar-item-list sidebar-item-list-depth0 ${this.state.openDropdown ? 'is-dropdown-open' : ''}`}>
+          <ul
+            ref={(e) => { this.sidebarContent = e; }}
+            className={`sidebar-item-list sidebar-item-list-depth0 ${this.state.openDropdown ? 'is-dropdown-open' : ''}`}
+          >
             <div className="mobile-dropdown-trigger" onClick={this.handleToggle}>
               <h5 className="mobile-dropdown-title">Jump to...</h5>
               <i className={`mobile-dropdown-icon icon-budicon-${this.state.openDropdown ? '462' : '460'}`} />
             </div>
-            <div className="mobile-dropdown-content">
+            <div className="mobile-dropdown-content scrollable" ref={(e) => { this.sidebarScrollable = e; }}>
               {items}
             </div>
           </ul>

@@ -1,6 +1,9 @@
-body.overflow-hidden
-  +breakpoint("desktop", "max")
-    overflow hidden
+html,
+body
+  &.overflow-hidden
+    +breakpoint("desktop", "max")
+      overflow hidden
+      position relative
 
 .sidebar-container
   +breakpoint("desktop", "max")
@@ -112,14 +115,6 @@ body.overflow-hidden
       height 60px
       overflow-y hidden
       margin-bottom 0
-
-      &.is-dropdown-open
-        // Set the height to match the total viewport height minus the jumpt to top position
-        height calc(100vh - 124px)
-
-        // When its in sticky state take all the viewport height
-        .sticky &
-          height 100vh
 
   .sidebar-item-depth0
     > a
