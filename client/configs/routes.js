@@ -5,7 +5,7 @@ import selectSection from '../action/selectSection';
 export default {
 
   home: {
-    path: '/docs',
+    path: '/docs/',
     method: 'get',
     handler: require('../components/Home'),
     action: tutorialNavigatorActions.home
@@ -60,13 +60,6 @@ export default {
     handler: require('../components/SdksPage'),
     action: selectSection,
     section: 'sdks'
-  },
-
-  appliance: {
-    path: '/docs/appliance',
-    method: 'get',
-    handler: require('../components/ArticlePage'),
-    action: loadContent
   },
 
   article: {
