@@ -184,7 +184,7 @@ server.use(function(internalErr, req, res, next) {
 
   // Don't send back stack traces in production.
   if (process.env.NODE_ENV === 'production') {
-    err.message = title;
+    err.message = err.title;
     err.stack = '';
   }
   else {
