@@ -138,7 +138,7 @@ server.use(middleware.redirectQuickstarts);
 server.use('/docs', require('./lib/api-explorer'));
 server.use('/docs', require('./lib/demos/demos-routes'));
 server.use('/docs', require('./lib/demos/snippets-routes'));
-server.use('/docs', require('./lib/packager'));
+server.use('/docs/package', require('./lib/packager'));
 server.use('/docs', require('./lib/feedback'));
 server.use('/docs', require('./lib/sitemap'));
 server.use('/docs', require('./lib/updates'));
@@ -176,7 +176,7 @@ server.use(function(internalErr, req, res, next) {
     logger.error(internalErr);
   }
 
-  // Create a santitized, serializable error that we can return to the client. 
+  // Create a santitized, serializable error that we can return to the client.
   let err = {
     status: internalErr.status || 500,
     title:  internalErr.status === 404 ? strings.PAGE_NOT_FOUND : strings.ERROR_PROCESSING_REQUEST
@@ -210,9 +210,8 @@ server.use(function(err, req, res, next) {
   // encountered an error during rendering. If we're in production, just write
   // out a simple message; otherwise, dump the stack trace.
   if (process.env.NODE_ENV === 'production') {
-    res.type('html');
-    res.write(strings.ERROR_PROCESSING_REQUEST);
-    res.end();
+    res.status(err.status || 500);
+    res.render('error');
   }
   else {
     next(err);
