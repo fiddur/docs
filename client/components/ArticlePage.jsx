@@ -107,7 +107,7 @@ class ArticlePage extends React.Component {
             <div className="js-doc-template container" style={{ marginBottom: '40px' }}>
               <div className="row">
                 <div className="sidebar-container col-md-3">
-                  <Sidebar sectionTitle={metadata.section} maxDepth={3} url={url} />
+                  <Sidebar section={metadata.section} maxDepth={3} url={url} />
                 </div>
                 <div ref="content" className="col-md-9">
                   {this.renderContent()}

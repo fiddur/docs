@@ -1,7 +1,6 @@
 import * as React from 'react';
 import _ from 'lodash';
 import { connectToStores } from 'fluxible-addons-react';
-import { handleHistory } from 'fluxible-router';
 import { StickyContainer, Sticky } from 'react-sticky';
 import NavigationStore from '../stores/NavigationStore';
 import SidebarItem from './SidebarItem';
@@ -127,10 +126,10 @@ class Sidebar extends React.Component {
   }
 
   render() {
-    const { articles, maxDepth, sectionTitle } = this.props;
+    const { articles, maxDepth, section } = this.props;
     const { openDropdown, breadcrumb } = this.state;
 
-    let items;
+    let items = undefined;
     if (articles) {
       items = articles.map(article => (
         <SidebarItem
@@ -146,7 +145,7 @@ class Sidebar extends React.Component {
     return (
       <Sticky>
         <div ref={(c) => (this.sidebar = c)} className="sidebar">
-          <div className="section-title">{sectionTitle}</div>
+          <div className="section-title">{section}</div>
           <ul
             ref={(e) => { this.sidebarContent = e; }}
             className={`
@@ -175,17 +174,13 @@ class Sidebar extends React.Component {
 
 Sidebar.propTypes = {
   articles: React.PropTypes.array.isRequired,
-  sectionTitle: React.PropTypes.string.isRequired,
+  section: React.PropTypes.string.isRequired,
   maxDepth: React.PropTypes.number,
-  section: React.PropTypes.string,
   url: React.PropTypes.string
 };
 
 Sidebar.defaultProps = {
-  maxDepth: 2,
-  sectionTitle: '',
-  section: '',
-  articles: []
+  maxDepth: 2
 };
 
 Sidebar.contextTypes = {
