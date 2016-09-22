@@ -360,9 +360,8 @@
       }
     },
     "auth0-styleguide": {
-      "version": "4.8.6",
-      "from": "auth0-styleguide@git://github.com/auth0/styleguide.git#257e73d46ed0242aa6c53099a622eb212ef36f91",
-      "resolved": "git://github.com/auth0/styleguide.git#257e73d46ed0242aa6c53099a622eb212ef36f91"
+      "version": "4.8.11",
+      "resolved": "git://github.com/auth0/styleguide.git#7189d6111be11f31ad87b0e07b5d94901ed5ecd4"
     },
     "auth0-tutorial-navigator": {
       "version": "3.7.0",
