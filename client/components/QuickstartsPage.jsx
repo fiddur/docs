@@ -32,7 +32,7 @@ class QuickstartsPage extends React.Component {
   render() {
     return (
       <div className="document docs-quickstart-selector">
-        <NavigationBar />
+        <NavigationBar currentSection="quickstarts" />
         <TutorialNavigator {...this.props} customNavigationAction={quickstartNavigationAction} componentLoadedInBrowser={initCarouselInBrowser} />
       </div>
     );

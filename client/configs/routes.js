@@ -1,6 +1,5 @@
 import tutorialNavigatorActions from '../action/tutorialNavigatorActions';
 import loadContent from '../action/loadContent';
-import selectSection from '../action/selectSection';
 
 export default {
 
@@ -43,8 +42,6 @@ export default {
     path: '/docs/search',
     method: 'get',
     handler: require('../components/SearchPage'),
-    action: selectSection,
-    section: 'articles'
   },
 
   apis: {
@@ -58,8 +55,6 @@ export default {
     path: '/docs/sdks',
     method: 'get',
     handler: require('../components/SdksPage'),
-    action: selectSection,
-    section: 'sdks'
   },
 
   article: {

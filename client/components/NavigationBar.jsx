@@ -78,8 +78,7 @@ NavigationBar.contextTypes = {
 NavigationBar = connectToStores(NavigationBar, [NavigationStore], (context, props) => {
   let store = context.getStore(NavigationStore);
   return {
-    sections: store.getSections(),
-    currentSection: store.getCurrentSection()
+    sections: store.getSections()
   };
 });
 

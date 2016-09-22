@@ -1,14 +1,12 @@
-import {parse} from 'url';
 import { BaseStore } from 'fluxible/addons';
 import _ from 'lodash';
+import normalizeUrl from '../util/normalizeUrl';
 
 export const ContentState = {
   LOADING: 'LOADING',
   LOADED: 'LOADED',
   ERROR: 'ERROR'
 };
-
-let normalizeUrl = (url) => parse(url).pathname;
 
 class ContentStore extends BaseStore {
   

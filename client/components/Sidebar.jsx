@@ -141,7 +141,7 @@ class Sidebar extends React.Component {
     return (
       <Sticky>
         <div ref={(c) => this._sidebar = c} className="sidebar">
-          <div className="section-title">{this.props.sectionTitle}</div>
+          <div className="section-title">{this.props.section}</div>
           <ul
             ref={(e) => { this.sidebarContent = e; }}
             className={`sidebar-item-list sidebar-item-list-depth0 ${this.state.openDropdown ? 'is-dropdown-open' : ''}`}
@@ -172,8 +172,7 @@ Sidebar.contextTypes = {
 Sidebar = connectToStores(Sidebar, [NavigationStore], (context, props) => {
   let store = context.getStore(NavigationStore);
   return {
-    section: store.getCurrentSection(),
-    articles: store.getCurrentSidebarArticles()
+    articles: store.getSidebarArticles(props.section)
   };
 });
 

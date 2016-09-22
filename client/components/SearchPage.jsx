@@ -107,7 +107,7 @@ class SearchPage extends React.Component {
 
     return (
       <div className="document">
-        <NavigationBar />
+        <NavigationBar currentSection="articles" />
         <div className="container">
           <h1>{title}</h1>
           <div className="search-results">

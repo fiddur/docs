@@ -12,11 +12,11 @@ class ErrorPage extends React.Component {
     return (
       <StickyContainer>
         <div className="docs-single docs-error">
-          <NavigationBar />
+          <NavigationBar currentSection="articles" />
           <div className="js-doc-template container">
             <div className="row">
               <div className="sidebar-container col-md-3">
-                <Sidebar />
+                <Sidebar section="articles" />
               </div>
               <div className="col-md-9">
                 <section className="docs-content">
