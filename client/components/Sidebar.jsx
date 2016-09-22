@@ -82,6 +82,7 @@ class Sidebar extends React.Component {
   getBreadcrumb() {
     const pathname = window.location.pathname;
     const { articles } = this.props;
+    const arrow = '<i class="arrow-icon icon-budicon-461"></i>';
     let breadcrumb = '';
 
     const checkPath = (item) => {
@@ -95,7 +96,7 @@ class Sidebar extends React.Component {
       if (item.children) {
         // If the children is the selected item, add all parents title to the breadcrumb
         if (item.children.some(checkPath)) {
-          breadcrumb = `${item.title} > ${breadcrumb}`;
+          breadcrumb = `${item.title} ${arrow} ${breadcrumb}`;
           return true;
         }
       }
@@ -155,7 +156,9 @@ class Sidebar extends React.Component {
             `}
           >
             <div className="mobile-dropdown-trigger" onClick={this.handleToggle}>
-              <h5 className="mobile-dropdown-title">{breadcrumb}</h5>
+              <h5 className="mobile-dropdown-title">
+                <span dangerouslySetInnerHTML={{ __html: breadcrumb }} />
+              </h5>
               <i className={`mobile-dropdown-icon icon-budicon-${openDropdown ? '462' : '460'}`} />
             </div>
             <div
