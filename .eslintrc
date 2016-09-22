@@ -3,6 +3,8 @@
   parser: "babel-eslint"
   env:
     node: true
+    jquery: true
+    browser: true
   rules:
     strict: 0
     indent: [2, 2]
