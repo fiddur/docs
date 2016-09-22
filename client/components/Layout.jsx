@@ -84,7 +84,7 @@ class Layout extends React.Component {
           <meta className='swiftype' name='popularity' data-type='integer' content='2' />
 
           <link rel="shortcut icon" href="//cdn.auth0.com/styleguide/latest/lib/logos/img/favicon.png"/>
-          <link rel="stylesheet" href="//cdn.auth0.com/styleguide/4.6.5/index.min.css"/>
+          <link rel="stylesheet" href="//cdn.auth0.com/styleguide/4.8.11/index.min.css"/>
           {this.cssAssetBundle()}
 
           {this.getEnvScript()}
