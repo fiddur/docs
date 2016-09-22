@@ -1,5 +1,4 @@
 import {parse} from 'url';
-import selectSection from './selectSection';
 import ContentStore, {ContentState} from '../stores/ContentStore';
 import NavigationStore from '../stores/NavigationStore';
 
@@ -19,7 +18,6 @@ export default function loadContent(context, route, done) {
   }
 
   let success = (html) => {
-    context.executeAction(selectSection, {url});
     context.dispatch('CONTENT_LOAD_SUCCESS', {url, html});
     logger.debug('Content loaded successfully.', {url});
     if (done) done();

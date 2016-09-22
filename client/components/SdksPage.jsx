@@ -20,7 +20,7 @@ class SdksPage extends React.Component {
 
     return (
       <div className="document">
-        <NavigationBar />
+        <NavigationBar currentSection="sdks" />
         <div className="container">
           <ul className="sdk-platform-list circle-list">
             <h1>Select a platform</h1>

@@ -103,7 +103,7 @@ class TutorialPage extends React.Component {
     return (
       <div className="docs-quickstart">
         <div id="tutorial-template" className="docs-single animated fadeIn">
-          <NavigationBar />
+          <NavigationBar currentSection="quickstarts" />
           <div className="js-doc-template container">
             <div className="row">
               {sidebar}

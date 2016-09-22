@@ -1,6 +1,5 @@
 import { TutorialStore, loadArticleAction } from 'auth0-tutorial-navigator';
 import { getPageMetadata } from '../util/metadata';
-import selectSection from './selectSection';
 
 export default {
 
@@ -10,7 +9,6 @@ export default {
       getPageMetadata().then(metadata => {
         context.dispatch('UPDATE_PAGE_METADATA', metadata);
       }),
-      context.executeAction(selectSection, {section: undefined})
     ]);
   },
 
@@ -20,7 +18,6 @@ export default {
       getPageMetadata().then(metadata => {
         context.dispatch('UPDATE_PAGE_METADATA', metadata);
       }),
-      context.executeAction(selectSection, {section: 'quickstarts'})
     ]);
   },
 
@@ -32,7 +29,6 @@ export default {
         context.dispatch('LOAD_TUTORIAL_NAVIGATOR', {quickstartId});
         context.dispatch('UPDATE_PAGE_METADATA', metadata);
       }),
-      context.executeAction(selectSection, {section: 'quickstarts'})
     ]);
   },
 
@@ -44,7 +40,6 @@ export default {
         context.dispatch('LOAD_TUTORIAL_NAVIGATOR', {quickstartId, platformId});
         context.dispatch('UPDATE_PAGE_METADATA', metadata);
       }),
-      context.executeAction(selectSection, {section: 'quickstarts'}),
       context.executeAction(loadArticleAction, {quickstartId, platformId})
     ]);
   },
@@ -57,7 +52,6 @@ export default {
         context.dispatch('LOAD_TUTORIAL_NAVIGATOR', {quickstartId, platformId, articleId});
         context.dispatch('UPDATE_PAGE_METADATA', metadata);
       }),
-      context.executeAction(selectSection, {section: 'quickstarts'}),
       context.executeAction(loadArticleAction, {quickstartId, platformId, articleId})
     ]);
   }
