@@ -1,6 +1,4 @@
-var metricsLib = window.metricsLib = window.metricsLib || [];
-// A list of the methods in metrics.js to stub.
-metricsLib.methods = [
+const METHODS = [
   'segment',
   'track',
   'setUserId',
@@ -11,45 +9,47 @@ metricsLib.methods = [
   'ready',
   'traits'
 ];
-metricsLib.factory = function(method) {
-  return function() {
-    var args = Array.prototype.slice.call(arguments);
-    args.unshift(method);
-    metricsLib.push(args);
-    return metricsLib;
-  };
-};
-for (var i = 0; i < metricsLib.methods.length; i++) {
-  var key = metricsLib.methods[i];
-  metricsLib[key] = metricsLib.factory(key);
-}
-metricsLib.load = function(segmentKey, dwhEndpoint) {
-  if (null != window.Auth0Metrics) {
-    metricsLib = window.metricsLib = new Auth0Metrics(segmentKey, dwhEndpoint, 'docs');
-  }
-  else {
-    var script = document.createElement('script');
-    script.type = 'text/javascript';
-    script.async = true;
-    script.src = ('https:' === document.location.protocol
-      ? 'https://' : 'http://')
-      + 'cdn.auth0.com/js/m/metrics-1.min.js';
-    script.onerror = function() {
-      console.error('No metrics');
-    }
-    script.onload = function() {
-      // Grab analytics and make it private
-      metricsLib = window.metricsLib = new Auth0Metrics(segmentKey, dwhEndpoint, 'docs');
-    }
-    var first = document.getElementsByTagName('script')[0];
-    first.parentNode.insertBefore(script, first);
-  }
-};
 
-if (window.env.DWH_ENDPOINT) {
-  metricsLib.load(window.env.SEGMENT_KEY, window.env.DWH_ENDPOINT);
-  metricsLib.page();
+// Create stub functions for each of the public methods of the metrics library.
+// This allows the rest of the site to call into the metrics library without checking to make sure it is ready.
+let stubs = {};
+METHODS.forEach(function(name) {
+  stubs[name] = function() {
+    console.warn(`metrics.${name}() was called but the metrics library has not been loaded. Event was ignored.`);
+  };
+});
+
+// Temporarily expose the stub library as the public interface to metrics.
+window.metricsLib = stubs;
+
+if (!window.env.DWH_ENDPOINT) {
+  console.warn('DWH_ENDPOINT must be defined. All metrics events will be ignored.')
 }
 else {
-  console.warn('DWH_ENDPOINT must be defined for tracking to work.')
+
+  // Create a dynamic script element that will load the actual metrics library.
+  let script = document.createElement('script');
+  script.type = 'text/javascript';
+  script.async = true;
+  script.src = '//cdn.auth0.com/js/m/metrics-1.min.js';
+
+  script.onerror = function() {
+    console.error('There was an error loading the metrics library. All events will be ignored.');
+  };
+
+  script.onload = function() {
+
+    // Replace the stub library with the real one.
+    let metrics = window.metricsLib = new Auth0Metrics(window.env.SEGMENT_KEY, window.env.DWH_ENDPOINT, 'docs');
+
+    // When the metrics library is ready, call page() to register the first page view.
+    metrics.ready(function() {
+      metrics.page();
+    });
+
+  };
+
+  var node = document.getElementsByTagName('script')[0];
+  node.parentNode.insertBefore(script, node);
+
 }

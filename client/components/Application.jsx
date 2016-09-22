@@ -14,7 +14,6 @@ class Application extends React.Component {
 
   componentDidMount() {
     this.initClientScripts();
-    this.props.context.trackPage();
   }
 
   componentDidUpdate(prevProps, prevState) {
