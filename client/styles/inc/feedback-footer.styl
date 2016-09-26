@@ -1,0 +1,39 @@
+.feedback-footer
+  box-shadow: 0 0 3px rgba(0, 0, 0, 0.2)
+  margin-top: 40px
+  padding: 32px 48px
+
+  .feedback-title
+    display: inline-block
+    vertical-align: middle
+    font-size: 22px
+    margin-right: 20px
+
+  .feedback-buttons
+    display: inline-block
+    vertical-align: middle
+
+    .btn:disabled
+      background: $color-gray
+
+    .feedback-button-yes
+      margin-right: 20px
+      .btn-icon { color: $color-green }
+
+    .feedback-button-no
+      .btn-icon { color: $color-red }
+
+  .feedback-content
+    margin-top: 16px
+    max-width: 476px
+    position: relative
+    overflow: hidden
+
+  .feedback-message
+    color: $color-text-light
+
+  .feedback-form
+    textarea
+      margin-bottom: 16px
+    button
+      float: right
