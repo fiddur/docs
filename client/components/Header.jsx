@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import Auth0WebHeader from 'auth0-web-header';
+import { isUndefined } from 'lodash';
 
 class Header extends Component {
   constructor(props) {
@@ -11,7 +12,7 @@ class Header extends Component {
       showLock: () => {},
       showContactForm: () => {}
     };
- 
+
     this.checkIsLogged = this.checkIsLogged.bind(this);
     this.checkIsFullWidth = this.checkIsFullWidth.bind(this);
   }
@@ -20,6 +21,7 @@ class Header extends Component {
     const jQuery = window.jQuery;
     const metricsLib = window.metricsLib;
     const ContactForm = require('auth0-contact-form').default.ContactForm;
+
     const contactFormOptions = {
       onModalOpen() {
         metricsLib.track('open:talk-to-sales');
@@ -35,13 +37,12 @@ class Header extends Component {
     };
     const contactForm = new ContactForm(contactFormOptions);
 
-
     this.setState({
       showContactForm: () => {
         contactForm.show();
       }
     });
-    
+
     this.checkIsFullWidth();
 
     // Lock instance is created under Application component
@@ -52,21 +53,21 @@ class Header extends Component {
   }
 
   checkIsLogged() {
-    if (!window.widget) return;
-    
+    if (isUndefined(window.widget)) return;
+
     window.widget.getClient().getSSOData(false, (err, data) => {
-      const logged = !data || !data.sso;
-      if (logged) return;
+      if (err || isUndefined(data)) return;
+      const logged = data.sso;
       this.setState({ logged });
     });
   }
-  
+
   checkIsFullWidth() {
     let fullWidthRoutes = [
       '/docs/api/management/v2',
       '/docs/api/management/v2/'
     ];
-    
+
     if (fullWidthRoutes.indexOf(window.location.pathname) > -1) {
       return this.setState({ fullWidth: true });
     }
