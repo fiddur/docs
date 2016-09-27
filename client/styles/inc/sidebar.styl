@@ -152,6 +152,7 @@ body
 
   .mobile-dropdown-title
     margin 0
+    height 60px
     line-height 60px
     font-size 15px
     font-weight $font-weight-bold
@@ -160,7 +161,10 @@ body
     > span
       display block
       white-space nowrap
-      overflow-x scroll
+      overflow-x auto
+      overflow-y hidden
+      line-height 60px
+      height 60px
       padding-left 15px
       padding-right 70px
 
@@ -177,10 +181,10 @@ body
       position absolute
       top 0
       right 0
-      bottom 8px //Dont hide the scrollbar
+      bottom 15px //Dont hide the scrollbar
       width 80px
       background-color white
-      background linear-gradient(to right, transparent 0%, white 40%);
+      background linear-gradient(to right, rgba(255, 255, 255, 0) 0%, white 40%);
 
   .mobile-dropdown-icon
     position absolute
