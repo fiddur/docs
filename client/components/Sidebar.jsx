@@ -3,40 +3,7 @@ import _ from 'lodash';
 import { connectToStores } from 'fluxible-addons-react';
 import { StickyContainer, Sticky } from 'react-sticky';
 import NavigationStore from '../stores/NavigationStore';
-import ArticleLink from './ArticleLink';
-
-const SidebarItem = ({ article, currentDepth, maxDepth, handleOnClick }) => {
-  let children;
-  let icon;
-
-  if (article.children && currentDepth < maxDepth) {
-    const newDepth = currentDepth + 1;
-    const items = article.children.map(child => (
-      <SidebarItem
-        handleOnClick={handleOnClick} key={child.url} article={child}
-        currentDepth={newDepth} maxDepth={maxDepth}
-      />
-    ));
-    children = <ul className={`sidebar-item-list sidebar-item-list-depth${newDepth}`}>{items}</ul>;
-  }
-
-  if (article.icon) {
-    icon = <i className={`sidebar-item-icon ${article.icon}`} />;
-  }
-
-  return (
-    <li className={`sidebar-item sidebar-item-depth${currentDepth}`} onClick={handleOnClick}>
-      <ArticleLink article={article}>
-        <span className="sidebar-item-name">{article.title}</span>
-      </ArticleLink>
-      {children}
-    </li>
-  );
-};
-
-SidebarItem.propTypes = {
-  handleOnClick: React.PropTypes.func.isRequired
-};
+import SidebarItem from './SidebarItem';
 
 class Sidebar extends React.Component {
 
@@ -44,60 +11,17 @@ class Sidebar extends React.Component {
     super(props);
 
     this.state = {
-      openDropdown: false
+      openDropdown: false,
+      breadcrumb: 'Jump to...'
     };
 
     this.onSidebarChange = _.throttle(this.onSidebarChange, 300);
     this.handleToggle = this.handleToggle.bind(this);
-  }
-
-  componentDidUpdate() {
-    this.onSidebarChange();
-  }
-
-  onSidebarChange() {
-    this.setCurrentList();
-  }
-
-  setCurrentList() {
-    const $sidebar = $(this._sidebar);
-    const containers = '.sidebar-item-list-depth1, .sidebar-item-depth0';
-
-    $(containers).removeClass('is-current');
-
-    return $sidebar.find('.active').parents(containers).addClass('is-current');
-  }
-
-  getActiveListOffset() {
-    const $activeList = $(this._sidebar).find('.sidebar-item-depth0.is-current');
-
-    if (!$activeList.length) {
-      return 0;
-    }
-
-    return $activeList.position().top - 10;
-  }
-
-  handleToggle() {
-    $('html, body').toggleClass('overflow-hidden', !this.state.openDropdown);
-
-    // Set scrollable menu area acording to scroll offset
-    const sidebarTopOffset = this.sidebarContent.getBoundingClientRect().top;
-    const sidebarHeight = `calc(100vh - ${sidebarTopOffset.toString()}px)`;
-
-    if (!this.state.openDropdown) {
-      this.sidebarContent.style.height = sidebarHeight;
-    } else {
-      this.sidebarContent.style.height = '';
-    }
-
-    this.setState({
-      openDropdown: !this.state.openDropdown
-    });
+    this.getBreadcrumb = this.getBreadcrumb.bind(this);
   }
 
   componentDidMount() {
-    const $activeItem = $(this._sidebar).find('.active');
+    const $activeItem = $(this.sidebar).find('.active');
 
     this.setCurrentList();
 
@@ -120,10 +44,91 @@ class Sidebar extends React.Component {
     }
 
     removeIOSRubberEffect(this.sidebarScrollable);
+
+    this.getBreadcrumb();
+  }
+
+  componentWillReceiveProps(nextProps) {
+    this.getBreadcrumb();
+  }
+
+  componentDidUpdate() {
+    this.onSidebarChange();
+  }
+
+  onSidebarChange() {
+    this.setCurrentList();
+  }
+
+  setCurrentList() {
+    const $sidebar = $(this.sidebar);
+    const containers = '.sidebar-item-list-depth1, .sidebar-item-depth0';
+
+    $(containers).removeClass('is-current');
+
+    return $sidebar.find('.active').parents(containers).addClass('is-current');
+  }
+
+  getActiveListOffset() {
+    const $activeList = $(this.sidebar).find('.sidebar-item-depth0.is-current');
+
+    if (!$activeList.length) {
+      return 0;
+    }
+
+    return $activeList.position().top - 10;
+  }
+
+  getBreadcrumb() {
+    const pathname = window.location.pathname;
+    const { articles } = this.props;
+    const arrow = '<i class="arrow-icon icon-budicon-461"></i>';
+    let breadcrumb = '';
+
+    const checkPath = (item) => {
+      // Check if the item path is equals to the pathname
+      if (item.url === pathname) {
+        breadcrumb = item.title;
+        return true;
+      }
+
+      // Check all of the childrens
+      if (item.children) {
+        // If the children is the selected item, add all parents title to the breadcrumb
+        if (item.children.some(checkPath)) {
+          breadcrumb = `${item.title} ${arrow} ${breadcrumb}`;
+          return true;
+        }
+      }
+
+      return false;
+    };
+
+    articles.some(checkPath);
+    if (breadcrumb) this.setState({ breadcrumb });
+  }
+
+  handleToggle() {
+    $('html, body').toggleClass('overflow-hidden', !this.state.openDropdown);
+
+    // Set scrollable menu area acording to scroll offset
+    const sidebarTopOffset = this.sidebarContent.getBoundingClientRect().top;
+    const sidebarHeight = `calc(100vh - ${sidebarTopOffset.toString()}px)`;
+
+    if (!this.state.openDropdown) {
+      this.sidebarContent.style.height = sidebarHeight;
+    } else {
+      this.sidebarContent.style.height = '';
+    }
+
+    this.setState({
+      openDropdown: !this.state.openDropdown
+    });
   }
 
   render() {
-    let { articles, maxDepth } = this.props;
+    const { articles, maxDepth, section } = this.props;
+    const { openDropdown, breadcrumb } = this.state;
 
     let items = undefined;
     if (articles) {
@@ -140,17 +145,26 @@ class Sidebar extends React.Component {
 
     return (
       <Sticky>
-        <div ref={(c) => this._sidebar = c} className="sidebar">
-          <div className="section-title">{this.props.section}</div>
+        <div ref={(c) => (this.sidebar = c)} className="sidebar">
+          <div className="section-title">{section}</div>
           <ul
             ref={(e) => { this.sidebarContent = e; }}
-            className={`sidebar-item-list sidebar-item-list-depth0 ${this.state.openDropdown ? 'is-dropdown-open' : ''}`}
+            className={`
+              sidebar-item-list
+              sidebar-item-list-depth0
+              ${openDropdown ? 'is-dropdown-open' : ''}
+            `}
           >
             <div className="mobile-dropdown-trigger" onClick={this.handleToggle}>
-              <h5 className="mobile-dropdown-title">Jump to...</h5>
-              <i className={`mobile-dropdown-icon icon-budicon-${this.state.openDropdown ? '462' : '460'}`} />
+              <h5 className="mobile-dropdown-title">
+                <span dangerouslySetInnerHTML={{ __html: breadcrumb }} />
+              </h5>
+              <i className={`mobile-dropdown-icon icon-budicon-${openDropdown ? '462' : '460'}`} />
             </div>
-            <div className="mobile-dropdown-content scrollable" ref={(e) => { this.sidebarScrollable = e; }}>
+            <div
+              className="mobile-dropdown-content scrollable"
+              ref={(e) => { this.sidebarScrollable = e; }}
+            >
               {items}
             </div>
           </ul>
@@ -161,6 +175,13 @@ class Sidebar extends React.Component {
 
 }
 
+Sidebar.propTypes = {
+  articles: React.PropTypes.array.isRequired,
+  section: React.PropTypes.string.isRequired,
+  maxDepth: React.PropTypes.number,
+  url: React.PropTypes.string
+};
+
 Sidebar.defaultProps = {
   maxDepth: 2
 };
@@ -170,7 +191,7 @@ Sidebar.contextTypes = {
 };
 
 Sidebar = connectToStores(Sidebar, [NavigationStore], (context, props) => {
-  let store = context.getStore(NavigationStore);
+  const store = context.getStore(NavigationStore);
   return {
     articles: store.getSidebarArticles(props.section)
   };
