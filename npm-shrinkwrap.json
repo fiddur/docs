@@ -1,8 +1,8 @@
 {
   "name": "auth0-docs",
   "version": "2.0.0",
-  "npm-shrinkwrap-version": "6.0.1",
-  "node-version": "v4.5.0",
+  "npm-shrinkwrap-version": "6.0.2",
+  "node-version": "v4.4.2",
   "dependencies": {
     "async": {
       "version": "0.2.10",
@@ -361,11 +361,12 @@
     },
     "auth0-styleguide": {
       "version": "4.8.11",
+      "from": "auth0-styleguide@git://github.com/auth0/styleguide.git#7189d6111be11f31ad87b0e07b5d94901ed5ecd4",
       "resolved": "git://github.com/auth0/styleguide.git#7189d6111be11f31ad87b0e07b5d94901ed5ecd4"
     },
     "auth0-tutorial-navigator": {
-      "version": "3.7.0",
-      "resolved": "git://github.com/auth0/tutorial-navigator.git#58431f73a5da9745a4068310367ca07a6b58476d",
+      "version": "3.7.1",
+      "resolved": "git://github.com/auth0/tutorial-navigator.git#d0201f7880a0823ca5368ece6c8e97807baf7904",
       "dependencies": {
         "auth0-styleguide": {
           "version": "4.8.6",
@@ -392,8 +393,8 @@
                       "resolved": "https://registry.npmjs.org/isomorphic-fetch/-/isomorphic-fetch-2.2.1.tgz",
                       "dependencies": {
                         "node-fetch": {
-                          "version": "1.6.1",
-                          "resolved": "https://registry.npmjs.org/node-fetch/-/node-fetch-1.6.1.tgz",
+                          "version": "1.6.3",
+                          "resolved": "https://registry.npmjs.org/node-fetch/-/node-fetch-1.6.3.tgz",
                           "dependencies": {
                             "encoding": {
                               "version": "0.1.12",
@@ -432,8 +433,8 @@
                       "resolved": "https://registry.npmjs.org/promise/-/promise-7.1.1.tgz",
                       "dependencies": {
                         "asap": {
-                          "version": "2.0.4",
-                          "resolved": "https://registry.npmjs.org/asap/-/asap-2.0.4.tgz"
+                          "version": "2.0.5",
+                          "resolved": "https://registry.npmjs.org/asap/-/asap-2.0.5.tgz"
                         }
                       }
                     },
@@ -458,8 +459,8 @@
                   "resolved": "https://registry.npmjs.org/promise/-/promise-7.1.1.tgz",
                   "dependencies": {
                     "asap": {
-                      "version": "2.0.4",
-                      "resolved": "https://registry.npmjs.org/asap/-/asap-2.0.4.tgz"
+                      "version": "2.0.5",
+                      "resolved": "https://registry.npmjs.org/asap/-/asap-2.0.5.tgz"
                     }
                   }
                 },
