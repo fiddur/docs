@@ -57,12 +57,20 @@ class FeedbackFooter extends React.Component {
   }
 
   sendFeedback(positive, comment) {
-    var pageTitle = document.title;
-    var titleParts = document.title.split('-');
+    let pageTitle = document.title;
+    let titleParts = document.title.split('-');
     if (titleParts.length > 0) pageTitle = titleParts[0].trim();
     $.post('/docs/submit-feedback', {
       page_title: pageTitle,
       page_url: window.location.href,
+      positive,
+      comment
+    });
+    this.context.trackEvent('feedback:submit', {
+      path: window.location.pathname,
+      url: window.location.toString(),
+      title: pageTitle,
+      referrer: document.referrer,
       positive,
       comment
     });
@@ -120,6 +128,10 @@ class FeedbackFooter extends React.Component {
   }
 
 }
+
+FeedbackFooter.contextTypes = {
+  trackEvent: React.PropTypes.func.isRequired,
+};
 
 FeedbackFooter.propTypes = {
   articleUrl: React.PropTypes.string,
