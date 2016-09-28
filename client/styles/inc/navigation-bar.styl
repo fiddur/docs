@@ -27,6 +27,7 @@
           .form-control
             width 100% !important
             background-color rgba(0,0,0,0.05)
+            display inline-block
 
 
   > .container
@@ -60,6 +61,10 @@
 
     .navigation-bar-search
 
+      +breakpoint("desktop", "max")
+        min-width 32px
+        min-height 35px
+
       .form-control
 
         // Disable input animation on focus
@@ -67,6 +72,7 @@
           text-indent 26px
 
         +breakpoint("desktop", "max")
+          display none
           background-color transparent
           width 0
 
