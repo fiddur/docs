@@ -71,8 +71,8 @@ class FeedbackFooter extends React.Component {
       url: window.location.toString(),
       title: pageTitle,
       referrer: document.referrer,
-      positive,
-      comment
+      value: positive,
+      trackData: comment
     });
   }
 
