@@ -18,28 +18,20 @@ let NavigationTab = (section, currentSection) => {
   );
 };
 
-const getCurrentSearchQuery = () => {
-  if (typeof document === 'undefined') return undefined;
-
-  const urlobj = url.parse(document.location.toString());
-  return qs.parse(urlobj.query).q;
-};
-
 class NavigationBar extends React.Component {
   constructor(props) {
     super(props);
 
     this.searchIconCode = 471;
     this.closeIconCode = 489;
-    this.query = getCurrentSearchQuery();
 
     this.handleTextChange = this.handleTextChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
     this.handleIconClick = this.handleIconClick.bind(this);
 
     this.state = {
-      searchActive: false,
-      searchBoxText: ''
+      searchActive: !!props.query,
+      searchBoxText: props.query ? props.query : ''
     };
   }
 
@@ -99,6 +91,10 @@ class NavigationBar extends React.Component {
 NavigationBar.contextTypes = {
   getStore: React.PropTypes.func,
   executeAction: React.PropTypes.func
+};
+
+NavigationBar.propTypes = {
+  query: React.PropTypes.string
 };
 
 

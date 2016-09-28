@@ -7,17 +7,8 @@ import searchClickthroughAction from '../action/searchClickthroughAction';
 import {connectToStores} from 'fluxible-addons-react';
 import {navigateAction} from 'fluxible-router';
 import SearchStore, {SearchResultState} from '../stores/SearchStore';
+import RouteStore from '../stores/RouteStore';
 import SearchBox from './SearchBox';
-
-let getCurrentSearchQuery = () => {
-  if (typeof document === 'undefined') {
-    return undefined;
-  }
-  else {
-    let urlobj = url.parse(document.location.toString());
-    return qs.parse(urlobj.query).q;
-  }
-};
 
 let SearchSpinner = () => (
   <div className="auth0-spinner">
@@ -102,12 +93,12 @@ class SearchPage extends React.Component {
 
   render() {
 
-    let {query, result} = this.props;
+    let { query, result } = this.props;
     let title = result ? 'Search Results' : 'Search';
 
     return (
       <div className="document">
-        <NavigationBar currentSection="articles" />
+        <NavigationBar currentSection="articles" query={query} />
         <div className="container">
           <h1>{title}</h1>
           <div className="search-results">
@@ -126,11 +117,12 @@ SearchPage.contextTypes = {
   executeAction: React.PropTypes.func
 };
 
-SearchPage = connectToStores(SearchPage, [SearchStore], (context, props) => {
-  let store = context.getStore(SearchStore);
-  let query = getCurrentSearchQuery();
-  let result = query ? store.getResult(query) : undefined;
-  return {query, result};
+SearchPage = connectToStores(SearchPage, [SearchStore, RouteStore], (context, props) => {
+  const store = context.getStore(SearchStore);
+  const urlStore = context.getStore(RouteStore);
+  const query = urlStore.getCurrentRoute().query.q;
+  const result = query ? store.getResult(query) : undefined;
+  return { query, result };
 });
 
 export default SearchPage;
