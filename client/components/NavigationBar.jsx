@@ -2,9 +2,10 @@ import * as React from 'react';
 import url from 'url';
 import qs from 'querystring';
 import { connectToStores } from 'fluxible-addons-react';
-import { NavLink } from 'fluxible-router';
+import { NavLink, navigateAction } from 'fluxible-router';
 import NavigationStore from '../stores/NavigationStore';
 import NavigationSearchBox from './NavigationSearchBox';
+import performSearchAction from '../action/performSearch';
 
 let NavigationTab = (section, currentSection) => {
   let { id, title, url } = section;
@@ -30,18 +31,39 @@ class NavigationBar extends React.Component {
 
     this.searchIconCode = 471;
     this.closeIconCode = 489;
-    this.handleIconClick = this.handleIconClick.bind(this);
     this.query = getCurrentSearchQuery();
 
+    this.handleTextChange = this.handleTextChange.bind(this);
+    this.handleSubmit = this.handleSubmit.bind(this);
+    this.handleIconClick = this.handleIconClick.bind(this);
+
     this.state = {
-      searchActive: false
+      searchActive: false,
+      searchBoxText: ''
     };
   }
+
+  // Search box methods
   handleIconClick() {
+    const newSearchState = !this.state.searchActive;
+
     this.setState({
-      searchActive: !this.state.searchActive
+      searchActive: newSearchState,
+      searchBoxText: !newSearchState ? '' : this.state.searchBoxText
     });
   }
+
+  handleTextChange(e) {
+    this.setState({ searchBoxText: e.target.value });
+  }
+
+  handleSubmit(e) {
+    e.preventDefault();
+    const query = this.state.searchBoxText;
+    this.context.executeAction(performSearchAction, { query });
+    this.context.executeAction(navigateAction, { url: `/docs/search?q=${query}` });
+  }
+
   render() {
     const { sections, currentSection } = this.props;
 
@@ -55,11 +77,12 @@ class NavigationBar extends React.Component {
       <div className={`navigation-bar ${this.state.searchActive ? 'is-search-active' : ''}`}>
         <div className="container">
           <NavigationSearchBox
-            className="navigation-bar-search"
-            text=""
-            handleIconClick={this.handleIconClick}
-            iconCode={this.state.searchActive ? this.searchIconCode : this.closeIconCode}
+            text={this.state.searchBoxText}
             placeholder="Search for docs"
+            iconCode={this.state.searchActive ? this.searchIconCode : this.closeIconCode}
+            handleTextChange={this.handleTextChange}
+            handleSubmit={this.handleSubmit}
+            handleIconClick={this.handleIconClick}
           />
           <ul className="navigation-bar-tabs nav nav-tabs">
             {tabs}
@@ -72,8 +95,10 @@ class NavigationBar extends React.Component {
 }
 
 NavigationBar.contextTypes = {
-  getStore: React.PropTypes.func
+  getStore: React.PropTypes.func,
+  executeAction: React.PropTypes.func
 };
+
 
 NavigationBar = connectToStores(NavigationBar, [NavigationStore], (context, props) => {
   let store = context.getStore(NavigationStore);
