@@ -83,6 +83,8 @@ class NavigationBar extends React.Component {
             handleTextChange={this.handleTextChange}
             handleSubmit={this.handleSubmit}
             handleIconClick={this.handleIconClick}
+            ref={(e) => { this.input = e; }}
+            searchActive={this.state.searchActive}
           />
           <ul className="navigation-bar-tabs nav nav-tabs">
             {tabs}
