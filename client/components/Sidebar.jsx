@@ -80,14 +80,13 @@ class Sidebar extends React.Component {
   }
 
   getBreadcrumb() {
-    const pathname = window.location.pathname;
-    const { articles } = this.props;
+    const { articles, url } = this.props;
     const arrow = '<i class="arrow-icon icon-budicon-461"></i>';
     let breadcrumb = '';
 
     const checkPath = (item) => {
       // Check if the item path is equals to the pathname
-      if (item.url === pathname) {
+      if (item.url === url) {
         breadcrumb = item.title;
         return true;
       }
@@ -179,7 +178,7 @@ Sidebar.propTypes = {
   articles: React.PropTypes.array.isRequired,
   section: React.PropTypes.string.isRequired,
   maxDepth: React.PropTypes.number,
-  url: React.PropTypes.string
+  url: React.PropTypes.string.isRequired
 };
 
 Sidebar.defaultProps = {
@@ -192,6 +191,7 @@ Sidebar.contextTypes = {
 
 Sidebar = connectToStores(Sidebar, [NavigationStore], (context, props) => {
   const store = context.getStore(NavigationStore);
+
   return {
     articles: store.getSidebarArticles(props.section)
   };
