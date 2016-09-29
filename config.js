@@ -46,7 +46,7 @@ nconf.file('global', { file: config_file })
     LOG_TO_KINESIS_LEVEL: 'info',
     LOG_TO_WEB_LEVEL:     'error',
     PINGDOM_ID: process.env.NODE_ENV === 'production' ? '565cb401abe53d7b2cda7732' : false,
-    SENTRY_DSN: process.env.NODE_ENV === 'production' ? 'https://29ef6b5c3bbd4b9ba9f5710014e20c03@app.getsentry.com/57750' : false,
+    SENTRY_DSN: process.env.NODE_ENV === 'production' ? 'https://1163d638cb0845b794909d26dca01fbb@sentry.io/102638' : false,
     MOUSEFLOW_ID: process.env.NODE_ENV === 'production' ? '1f318101-e4cd-4d84-b95e-6a0e6771798d' : false,
     SWIFTYPE_ENGINE_KEY: 's-M2Jb8-xTC1XeyCpWZ1',
     TRELLO_LIST_ID: '57ec50a9ce30841a4b4aedf2',
