@@ -80,7 +80,8 @@ class Sidebar extends React.Component {
   }
 
   getBreadcrumb() {
-    const { articles, url } = this.props;
+    const { items, url } = this.props;
+
     const arrow = '<i class="arrow-icon icon-budicon-461"></i>';
     let breadcrumb = '';
 
@@ -103,7 +104,7 @@ class Sidebar extends React.Component {
       return false;
     };
 
-    articles.some(checkPath);
+    items.some(checkPath);
     if (breadcrumb) this.setState({ breadcrumb });
   }
 
@@ -125,22 +126,21 @@ class Sidebar extends React.Component {
     });
   }
 
-  render() {
-    const { articles, maxDepth, section } = this.props;
-    const { openDropdown, breadcrumb } = this.state;
+  renderItems() {
+    return this.props.items.map(item => (
+      <SidebarItem
+        key={item.url}
+        article={item}
+        currentDepth={0}
+        maxDepth={this.props.maxDepth}
+        handleOnClick={this.handleToggle}
+      />
+    ));
+  }
 
-    let items = undefined;
-    if (articles) {
-      items = articles.map(article => (
-        <SidebarItem
-          key={article.url}
-          article={article}
-          currentDepth={0}
-          maxDepth={maxDepth}
-          handleOnClick={this.handleToggle}
-        />
-      ));
-    }
+  render() {
+    const { items, maxDepth, section } = this.props;
+    const { openDropdown, breadcrumb } = this.state;
 
     return (
       <Sticky>
@@ -164,7 +164,7 @@ class Sidebar extends React.Component {
               className="mobile-dropdown-content scrollable"
               ref={(e) => { this.sidebarScrollable = e; }}
             >
-              {items}
+              { this.renderItems() }
             </div>
           </ul>
         </div>
@@ -175,7 +175,7 @@ class Sidebar extends React.Component {
 }
 
 Sidebar.propTypes = {
-  articles: React.PropTypes.array.isRequired,
+  items: React.PropTypes.array.isRequired,
   section: React.PropTypes.string.isRequired,
   maxDepth: React.PropTypes.number,
   url: React.PropTypes.string.isRequired
@@ -184,17 +184,5 @@ Sidebar.propTypes = {
 Sidebar.defaultProps = {
   maxDepth: 2
 };
-
-Sidebar.contextTypes = {
-  getStore: React.PropTypes.func
-};
-
-Sidebar = connectToStores(Sidebar, [NavigationStore], (context, props) => {
-  const store = context.getStore(NavigationStore);
-
-  return {
-    articles: store.getSidebarArticles(props.section)
-  };
-});
 
 export default Sidebar;

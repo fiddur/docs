@@ -16,7 +16,7 @@ class ErrorPage extends React.Component {
           <div className="js-doc-template container">
             <div className="row">
               <div className="sidebar-container col-md-3">
-                <Sidebar section="articles" />
+                <Sidebar section="articles" items={[]} />
               </div>
               <div className="col-md-9">
                 <section className="docs-content">
