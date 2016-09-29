@@ -1,13 +1,12 @@
 import React from 'react';
 import url from 'url';
 import qs from 'querystring';
+import { connectToStores } from 'fluxible-addons-react';
+import { RouteStore, navigateAction } from 'fluxible-router';
 import NavigationBar from './NavigationBar';
 import performSearchAction from '../action/performSearch';
 import searchClickthroughAction from '../action/searchClickthroughAction';
-import {connectToStores} from 'fluxible-addons-react';
-import {navigateAction} from 'fluxible-router';
-import SearchStore, {SearchResultState} from '../stores/SearchStore';
-import RouteStore from '../stores/RouteStore';
+import SearchStore, { SearchResultState } from '../stores/SearchStore';
 import SearchBox from './SearchBox';
 
 let SearchSpinner = () => (
