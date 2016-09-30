@@ -45,12 +45,6 @@ class Layout extends React.Component {
   }
 
   render() {
-    const isFramedMode = this.props.env['RENDER_MODE'] === 'framed';
-
-    const footer = isFramedMode
-      ? <footer><span>Powered by <a href="//auth0.com">Auth0</a></span></footer>
-      : <div id="footer" dangerouslySetInnerHTML={{__html: this.props.footer}}></div>;
-
     return (
       <html>
         <head>
@@ -98,7 +92,7 @@ class Layout extends React.Component {
         <body>
           <div data-swiftype-index='false' className="docs-single">
             <div id="app" dangerouslySetInnerHTML={{__html: this.props.markup}}></div>
-            {footer}
+            <div id="footer" dangerouslySetInnerHTML={{__html: this.props.footer}}></div>
           </div>
           <script dangerouslySetInnerHTML={{__html: this.props.state}}></script>
           <script src={getAssetBundleUrl('client')}></script>
