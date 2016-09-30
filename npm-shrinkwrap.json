@@ -190,13 +190,11 @@
       }
     },
     "auth0-instrumentation": {
-      "version": "1.2.1",
-      "from": "auth0-instrumentation@git://github.com/auth0/auth0-instrumentation.git#48b8c665dafcacc61c86c9ae53253e39f2ad1f91",
-      "resolved": "git://github.com/auth0/auth0-instrumentation.git#48b8c665dafcacc61c86c9ae53253e39f2ad1f91",
+      "version": "1.2.2",
+      "resolved": "git://github.com/auth0/auth0-instrumentation.git#98001666007c4ba1e61cf74b04be8d0af0f9d6b7",
       "dependencies": {
         "auth0-common-logging": {
           "version": "2.12.1",
-          "from": "auth0-common-logging@git://github.com/auth0/auth0-common-logging.git#856099945aab465854d8127b790a66b05a41d0b1",
           "resolved": "git://github.com/auth0/auth0-common-logging.git#856099945aab465854d8127b790a66b05a41d0b1",
           "dependencies": {
             "lodash": {
@@ -210,16 +208,16 @@
           "resolved": "https://registry.npmjs.org/aws-kinesis-writable/-/aws-kinesis-writable-2.0.0.tgz",
           "dependencies": {
             "aws-sdk": {
-              "version": "2.6.2",
-              "resolved": "https://registry.npmjs.org/aws-sdk/-/aws-sdk-2.6.2.tgz",
+              "version": "2.6.6",
+              "resolved": "https://registry.npmjs.org/aws-sdk/-/aws-sdk-2.6.6.tgz",
               "dependencies": {
                 "buffer": {
                   "version": "4.9.1",
                   "resolved": "https://registry.npmjs.org/buffer/-/buffer-4.9.1.tgz",
                   "dependencies": {
                     "base64-js": {
-                      "version": "1.1.2",
-                      "resolved": "https://registry.npmjs.org/base64-js/-/base64-js-1.1.2.tgz"
+                      "version": "1.2.0",
+                      "resolved": "https://registry.npmjs.org/base64-js/-/base64-js-1.2.0.tgz"
                     },
                     "ieee754": {
                       "version": "1.1.6",
@@ -239,9 +237,23 @@
                   "version": "0.15.0",
                   "resolved": "https://registry.npmjs.org/jmespath/-/jmespath-0.15.0.tgz"
                 },
+                "querystring": {
+                  "version": "0.2.0",
+                  "resolved": "https://registry.npmjs.org/querystring/-/querystring-0.2.0.tgz"
+                },
                 "sax": {
                   "version": "1.1.5",
                   "resolved": "https://registry.npmjs.org/sax/-/sax-1.1.5.tgz"
+                },
+                "url": {
+                  "version": "0.10.3",
+                  "resolved": "https://registry.npmjs.org/url/-/url-0.10.3.tgz",
+                  "dependencies": {
+                    "punycode": {
+                      "version": "1.3.2",
+                      "resolved": "https://registry.npmjs.org/punycode/-/punycode-1.3.2.tgz"
+                    }
+                  }
                 },
                 "xml2js": {
                   "version": "0.4.15",
@@ -336,8 +348,8 @@
           "resolved": "https://registry.npmjs.org/node-statsd/-/node-statsd-0.1.1.tgz"
         },
         "pidusage": {
-          "version": "1.0.7",
-          "resolved": "https://registry.npmjs.org/pidusage/-/pidusage-1.0.7.tgz"
+          "version": "1.0.8",
+          "resolved": "https://registry.npmjs.org/pidusage/-/pidusage-1.0.8.tgz"
         },
         "raven": {
           "version": "0.10.0",
