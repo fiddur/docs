@@ -107,7 +107,7 @@ server.use(function(req, res, next) {
     helmet.frameguard({ action: 'sameorigin' })(req, res, next);
   }
 });
-server.use(helmet.hsts( { maxAge: 31536000000 } ));
+server.use(helmet.hsts({ maxAge: 31536000000 }));
 server.use(helmet.xssFilter());
 server.use(helmet.noSniff());
 server.use(helmet.hidePoweredBy());
