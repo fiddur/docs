@@ -15,7 +15,6 @@ import agent from './lib/logs';
 import eventLogger from './lib/logs/event-logger';
 import requestLogger from './lib/logs/request-logger';
 import bootstrap from './lib/bootstrap';
-import cors from './lib/middleware/cors';
 import defaultValues from './lib/middleware/default-values';
 import embedded from './lib/middleware/embedded';
 import overrideIfAuthenticated from './lib/middleware/override-if-authenticated';
@@ -25,11 +24,11 @@ import setCurrentTenant from './lib/middleware/set-current-tenant';
 import setUserIsOwner from './lib/middleware/set-user-is-owner';
 import urlVariables from './lib/middleware/url-variables';
 import fetchABExperiments from './lib/middleware/ab-testing';
-import csp from './lib/middleware/csp';
 import redirectQuickstarts from './lib/middleware/redirect-quickstarts';
 import assetBundles from './lib/middleware/asset-bundles';
 import htmlComponents from './lib/middleware/html-components';
 import sessionStore from './lib/session-store';
+import cors from './lib/middleware/cors';
 
 const logger = agent.logger;
 
@@ -88,7 +87,9 @@ if (nconf.get('NODE_ENV') !== 'test') {
 }
 
 server.use(cookieParser());
-server.use(bodyParser.json());
+server.use(bodyParser.json({
+  type: ['json', 'application/csp-report']
+}));
 server.use(bodyParser.urlencoded({ extended: false }));
 server.use(session({
   secret: nconf.get('sessionSecret'),
@@ -106,9 +107,8 @@ server.use(session({
 }));
 
 // security headers
-server.use(csp);
 server.use(cors);
-server.use(helmet.frameguard({ action: 'sameorigin' }));
+server.use(helmet.frameguard({ action: 'deny' }));
 server.use(helmet.hsts({ maxAge: 31536000000 }));
 server.use(helmet.xssFilter());
 server.use(helmet.noSniff());
