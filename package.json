@@ -49,8 +49,6 @@
     "on-finished": "^2.3.0",
     "passport": "^0.3.2",
     "path-to-regexp": "^1.5.3",
-    "protobufjs": "^4.0.0",
-    "randomstring": "^1.0.7",
     "react": "^15.0.1",
     "react-dom": "^15.0.1",
     "request": "^2.75.0",
