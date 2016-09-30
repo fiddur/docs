@@ -15,6 +15,7 @@ import agent from './lib/logs';
 import eventLogger from './lib/logs/event-logger';
 import requestLogger from './lib/logs/request-logger';
 import bootstrap from './lib/bootstrap';
+import assetBundles from './lib/middleware/asset-bundles';
 
 const logger = agent.logger;
 
@@ -132,6 +133,7 @@ server.use(middleware.overrideIfClientInQsForPublicAllowedUrls);
 server.use(middleware.urlVariables);
 server.use(middleware.fetchABExperiments);
 server.use(middleware.redirectQuickstarts);
+server.use(assetBundles);
 
 // Routes
 server.use('/docs', require('./lib/api-explorer'));
