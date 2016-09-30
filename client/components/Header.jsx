@@ -80,6 +80,7 @@ class Header extends Component {
       ? <Auth0WebHeader
           className="header--docs"
           theme="gray"
+          secondaryButtonLink=""
           secondaryButtonOnClick={showContactForm}
           primaryButtonText="Open Dashboard"
           primaryButtonLink="https://manage.auth0.com"
