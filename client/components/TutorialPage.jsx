@@ -105,7 +105,10 @@ class TutorialPage extends React.Component {
             <div className="js-doc-template container" style={{ marginBottom: '40px' }}>
               <div className="row">
                 <div className="sidebar-container col-md-3">
-                  <Sidebar section={quickstart.title} maxDepth={3} items={this.sidebarItems} />
+                  <Sidebar
+                    section={quickstart.title} maxDepth={3}
+                    items={this.sidebarItems} url={this.props.currentRoute.url}
+                  />
                 </div>
                 <div className="col-md-9">
                   <div className="navigation" style={{ marginTop: '40px' }}>
