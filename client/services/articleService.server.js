@@ -4,14 +4,14 @@ import _ from 'lodash';
 
 export default function(req, res) {
   return {
-    
+
     loadArticle: function(quickstarts, payload) {
-      
+
       let {quickstartId, platformId, articleId} = payload;
-      
+
       return new Promise((resolve, reject) => {
         let pathname = `/${quickstarts[quickstartId].slug}/${platformId}/${articleId}`;
-        
+
         let doc = docsByUrl[pathname];
         if (!doc) {
           let error = new Error('No document found at ' + req.url);
@@ -20,11 +20,7 @@ export default function(req, res) {
         }
 
         try {
-          let locals = _.clone(res.locals);
-          locals.configuration[payload.quickstartId] = payload.platformId;
-          locals.configuration.internal = req.query.internal === 'true';
-
-          let html = renderContent(doc, locals, true /* absolute links */);
+          let html = renderContent(doc, res.locals, true /* absolute links */);
           return resolve(html);
         }
         catch (err) {
@@ -33,7 +29,7 @@ export default function(req, res) {
         }
 
       });
-      
+
     }
   };
 }
