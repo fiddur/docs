@@ -108,7 +108,7 @@ class TutorialPage extends React.Component {
                   <Sidebar section={quickstart.title} maxDepth={3} items={this.sidebarItems} />
                 </div>
                 <div className="col-md-9">
-                  <div className="navigation">
+                  <div className="navigation" style={{ marginTop: '40px' }}>
                     <Breadcrumbs {...this.props} customNavigationAction={quickstartNavigationAction} />
                   </div>
                   <section className="docs-content">
