@@ -16,6 +16,7 @@ import eventLogger from './lib/logs/event-logger';
 import requestLogger from './lib/logs/request-logger';
 import bootstrap from './lib/bootstrap';
 import assetBundles from './lib/middleware/asset-bundles';
+import htmlComponents from './lib/middleware/html-components';
 
 const logger = agent.logger;
 
@@ -134,6 +135,7 @@ server.use(middleware.urlVariables);
 server.use(middleware.fetchABExperiments);
 server.use(middleware.redirectQuickstarts);
 server.use(assetBundles);
+server.use(htmlComponents);
 
 // Routes
 server.use('/docs', require('./lib/api-explorer'));
@@ -142,7 +144,6 @@ server.use('/docs', require('./lib/feedback'));
 server.use('/docs', require('./lib/sitemap'));
 server.use('/docs', require('./lib/updates'));
 server.use('/docs', require('./lib/redirects'));
-
 
 
 server.get('/docs/switch', function (req, res) {
