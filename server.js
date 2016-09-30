@@ -9,8 +9,8 @@ import methodOverride from 'method-override';
 import session from 'express-session';
 import nconf from 'nconf';
 import path from 'path';
-import strings from './lib/strings';
 import helmet from 'helmet';
+import strings from './lib/strings';
 import agent from './lib/logs';
 import eventLogger from './lib/logs/event-logger';
 import requestLogger from './lib/logs/request-logger';
@@ -18,7 +18,7 @@ import bootstrap from './lib/bootstrap';
 
 const logger = agent.logger;
 
-var server = express();
+const server = express();
 
 eventLogger.watch(process);
 
@@ -123,7 +123,6 @@ server.use('/docs/media', express.static(path.join(__dirname, 'docs/media')));
 server.use(passport.initialize());
 server.use(passport.session());
 server.use(middleware.setCurrentTenant);
-server.use(middleware.configuration);
 server.use(middleware.setUserIsOwner);
 server.use(middleware.defaultValues);
 server.use(middleware.embedded);
@@ -136,8 +135,6 @@ server.use(middleware.redirectQuickstarts);
 
 // Routes
 server.use('/docs', require('./lib/api-explorer'));
-server.use('/docs', require('./lib/demos/demos-routes'));
-server.use('/docs', require('./lib/demos/snippets-routes'));
 server.use('/docs/package', require('./lib/packager'));
 server.use('/docs', require('./lib/feedback'));
 server.use('/docs', require('./lib/sitemap'));
