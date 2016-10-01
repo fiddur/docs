@@ -90,15 +90,7 @@ class ArticlePage extends React.Component {
     );
   }
 
-  renderFramed() {
-    return (
-      <div ref="content">
-        {this.renderContent()}
-      </div>
-    );
-  }
-
-  renderFull() {
+  render() {
     let { metadata } = this.props;
     let { url } = this.props.currentRoute;
 
@@ -121,15 +113,6 @@ class ArticlePage extends React.Component {
         </div>
       </div>
     );
-  }
-
-  render() {
-    if (this.props.env['RENDER_MODE'] == 'framed') {
-      return this.renderFramed();
-    }
-    else {
-      return this.renderFull();
-    }
   }
 
 }

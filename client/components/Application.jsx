@@ -58,10 +58,9 @@ class Application extends React.Component {
       document.location = document.location;
     }
 
-    const isFramedMode = this.props.env['RENDER_MODE'] === 'framed';
     return (
       <div>
-        {isFramedMode ? null : <Header/>}
+        <Header/>
         {this.getHandler()}
       </div>
     );
