@@ -2,7 +2,7 @@
   "name": "auth0-docs",
   "version": "2.0.0",
   "npm-shrinkwrap-version": "6.0.2",
-  "node-version": "v4.4.2",
+  "node-version": "v4.5.0",
   "dependencies": {
     "async": {
       "version": "0.2.10",
@@ -191,10 +191,12 @@
     },
     "auth0-instrumentation": {
       "version": "1.2.2",
+      "from": "auth0-instrumentation@git://github.com/auth0/auth0-instrumentation.git#98001666007c4ba1e61cf74b04be8d0af0f9d6b7",
       "resolved": "git://github.com/auth0/auth0-instrumentation.git#98001666007c4ba1e61cf74b04be8d0af0f9d6b7",
       "dependencies": {
         "auth0-common-logging": {
           "version": "2.12.1",
+          "from": "auth0-common-logging@git://github.com/auth0/auth0-common-logging.git#856099945aab465854d8127b790a66b05a41d0b1",
           "resolved": "git://github.com/auth0/auth0-common-logging.git#856099945aab465854d8127b790a66b05a41d0b1",
           "dependencies": {
             "lodash": {
@@ -377,94 +379,72 @@
       "resolved": "git://github.com/auth0/styleguide.git#7189d6111be11f31ad87b0e07b5d94901ed5ecd4"
     },
     "auth0-tutorial-navigator": {
-      "version": "3.7.1",
-      "resolved": "git://github.com/auth0/tutorial-navigator.git#d0201f7880a0823ca5368ece6c8e97807baf7904",
+      "version": "3.8.0",
+      "resolved": "git://github.com/auth0/tutorial-navigator.git#c2ceabf1d8b53c1b387a9b3b809a00441dab2b39",
       "dependencies": {
         "auth0-styleguide": {
           "version": "4.8.6",
           "resolved": "git://github.com/auth0/styleguide.git#257e73d46ed0242aa6c53099a622eb212ef36f91"
         },
         "flux": {
-          "version": "2.1.1",
-          "resolved": "https://registry.npmjs.org/flux/-/flux-2.1.1.tgz",
+          "version": "3.0.0",
+          "resolved": "https://registry.npmjs.org/flux/-/flux-3.0.0.tgz",
           "dependencies": {
             "fbemitter": {
               "version": "2.1.1",
-              "resolved": "https://registry.npmjs.org/fbemitter/-/fbemitter-2.1.1.tgz",
-              "dependencies": {
-                "fbjs": {
-                  "version": "0.8.4",
-                  "resolved": "https://registry.npmjs.org/fbjs/-/fbjs-0.8.4.tgz",
-                  "dependencies": {
-                    "core-js": {
-                      "version": "1.2.7",
-                      "resolved": "https://registry.npmjs.org/core-js/-/core-js-1.2.7.tgz"
-                    },
-                    "isomorphic-fetch": {
-                      "version": "2.2.1",
-                      "resolved": "https://registry.npmjs.org/isomorphic-fetch/-/isomorphic-fetch-2.2.1.tgz",
-                      "dependencies": {
-                        "node-fetch": {
-                          "version": "1.6.3",
-                          "resolved": "https://registry.npmjs.org/node-fetch/-/node-fetch-1.6.3.tgz",
-                          "dependencies": {
-                            "encoding": {
-                              "version": "0.1.12",
-                              "resolved": "https://registry.npmjs.org/encoding/-/encoding-0.1.12.tgz",
-                              "dependencies": {
-                                "iconv-lite": {
-                                  "version": "0.4.13",
-                                  "resolved": "https://registry.npmjs.org/iconv-lite/-/iconv-lite-0.4.13.tgz"
-                                }
-                              }
-                            },
-                            "is-stream": {
-                              "version": "1.1.0",
-                              "resolved": "https://registry.npmjs.org/is-stream/-/is-stream-1.1.0.tgz"
-                            }
-                          }
-                        }
-                      }
-                    },
-                    "loose-envify": {
-                      "version": "1.2.0",
-                      "resolved": "https://registry.npmjs.org/loose-envify/-/loose-envify-1.2.0.tgz",
-                      "dependencies": {
-                        "js-tokens": {
-                          "version": "1.0.3",
-                          "resolved": "https://registry.npmjs.org/js-tokens/-/js-tokens-1.0.3.tgz"
-                        }
-                      }
-                    },
-                    "object-assign": {
-                      "version": "4.1.0",
-                      "resolved": "https://registry.npmjs.org/object-assign/-/object-assign-4.1.0.tgz"
-                    },
-                    "promise": {
-                      "version": "7.1.1",
-                      "resolved": "https://registry.npmjs.org/promise/-/promise-7.1.1.tgz",
-                      "dependencies": {
-                        "asap": {
-                          "version": "2.0.5",
-                          "resolved": "https://registry.npmjs.org/asap/-/asap-2.0.5.tgz"
-                        }
-                      }
-                    },
-                    "ua-parser-js": {
-                      "version": "0.7.10",
-                      "resolved": "https://registry.npmjs.org/ua-parser-js/-/ua-parser-js-0.7.10.tgz"
-                    }
-                  }
-                }
-              }
+              "resolved": "https://registry.npmjs.org/fbemitter/-/fbemitter-2.1.1.tgz"
             },
             "fbjs": {
-              "version": "0.1.0-alpha.7",
-              "resolved": "https://registry.npmjs.org/fbjs/-/fbjs-0.1.0-alpha.7.tgz",
+              "version": "0.8.5",
+              "resolved": "https://registry.npmjs.org/fbjs/-/fbjs-0.8.5.tgz",
               "dependencies": {
                 "core-js": {
                   "version": "1.2.7",
                   "resolved": "https://registry.npmjs.org/core-js/-/core-js-1.2.7.tgz"
+                },
+                "immutable": {
+                  "version": "3.8.1",
+                  "resolved": "https://registry.npmjs.org/immutable/-/immutable-3.8.1.tgz"
+                },
+                "isomorphic-fetch": {
+                  "version": "2.2.1",
+                  "resolved": "https://registry.npmjs.org/isomorphic-fetch/-/isomorphic-fetch-2.2.1.tgz",
+                  "dependencies": {
+                    "node-fetch": {
+                      "version": "1.6.3",
+                      "resolved": "https://registry.npmjs.org/node-fetch/-/node-fetch-1.6.3.tgz",
+                      "dependencies": {
+                        "encoding": {
+                          "version": "0.1.12",
+                          "resolved": "https://registry.npmjs.org/encoding/-/encoding-0.1.12.tgz",
+                          "dependencies": {
+                            "iconv-lite": {
+                              "version": "0.4.13",
+                              "resolved": "https://registry.npmjs.org/iconv-lite/-/iconv-lite-0.4.13.tgz"
+                            }
+                          }
+                        },
+                        "is-stream": {
+                          "version": "1.1.0",
+                          "resolved": "https://registry.npmjs.org/is-stream/-/is-stream-1.1.0.tgz"
+                        }
+                      }
+                    }
+                  }
+                },
+                "loose-envify": {
+                  "version": "1.2.0",
+                  "resolved": "https://registry.npmjs.org/loose-envify/-/loose-envify-1.2.0.tgz",
+                  "dependencies": {
+                    "js-tokens": {
+                      "version": "1.0.3",
+                      "resolved": "https://registry.npmjs.org/js-tokens/-/js-tokens-1.0.3.tgz"
+                    }
+                  }
+                },
+                "object-assign": {
+                  "version": "4.1.0",
+                  "resolved": "https://registry.npmjs.org/object-assign/-/object-assign-4.1.0.tgz"
                 },
                 "promise": {
                   "version": "7.1.1",
@@ -476,15 +456,11 @@
                     }
                   }
                 },
-                "whatwg-fetch": {
-                  "version": "0.9.0",
-                  "resolved": "https://registry.npmjs.org/whatwg-fetch/-/whatwg-fetch-0.9.0.tgz"
+                "ua-parser-js": {
+                  "version": "0.7.10",
+                  "resolved": "https://registry.npmjs.org/ua-parser-js/-/ua-parser-js-0.7.10.tgz"
                 }
               }
-            },
-            "immutable": {
-              "version": "3.8.1",
-              "resolved": "https://registry.npmjs.org/immutable/-/immutable-3.8.1.tgz"
             }
           }
         },
@@ -2134,6 +2110,7 @@
         },
         "protobufjs": {
           "version": "4.0.0",
+          "from": "protobufjs@git://github.com/auth0/protobuf.js.git#8f9ebcd7d9ad1b357b4dc7db94d6fb6b43c934be",
           "resolved": "git://github.com/auth0/protobuf.js.git#8f9ebcd7d9ad1b357b4dc7db94d6fb6b43c934be",
           "dependencies": {
             "ascli": {
