@@ -1,6 +1,6 @@
 import React from 'react';
-import {TutorialNavigator} from 'auth0-tutorial-navigator';
-import {quickstartNavigationAction} from '../action/quickstartNavigationAction';
+import { TutorialNavigator } from 'auth0-tutorial-navigator';
+import { quickstartNavigationAction } from '../action/quickstartNavigationAction';
 import NavigationBar from './NavigationBar';
 
 // TODO: This depends on a "carousel" ref that's set by the TutorialNavigator itself.
@@ -19,10 +19,11 @@ var initCarouselInBrowser = function() {
     dotClass: 'dot',
     nav: false,
     responsive: {
-      0:   {items: 1, stagePadding: 60},
-      380: {items: 2, stagePadding: 0},
-      570: {items: 3, stagePadding: 0, autoWidth: true, center: false},
-      768: {items: 4, stagePadding: 0, autoWidth: true, center: false},
+      0: { items: 1, stagePadding: 60, center: true },
+      380: { items: 2, stagePadding: 0, center: true },
+      570: { items: 3, stagePadding: 0, center: true },
+      768: { items: 4, stagePadding: 0, center: false, mouseDrag: false, touchDrag: false },
+      880: { items: 4, stagePadding: 0, autoWidth: true, center: false, mouseDrag: false, touchDrag: false }
     }
   });
 };
@@ -33,7 +34,11 @@ class QuickstartsPage extends React.Component {
     return (
       <div className="document docs-quickstart-selector">
         <NavigationBar currentSection="quickstarts" />
-        <TutorialNavigator {...this.props} customNavigationAction={quickstartNavigationAction} componentLoadedInBrowser={initCarouselInBrowser} />
+        <TutorialNavigator
+          {...this.props}
+          customNavigationAction={quickstartNavigationAction}
+          componentLoadedInBrowser={initCarouselInBrowser}
+        />
       </div>
     );
   }

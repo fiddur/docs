@@ -23,10 +23,11 @@ var initCarouselInBrowser = function() {
     dotClass: 'dot',
     nav: false,
     responsive: {
-      0:   {items: 1, stagePadding: 60},
-      380: {items: 2, stagePadding: 0},
-      570: {items: 3, stagePadding: 0, autoWidth: true, center: false},
-      768: {items: 4, stagePadding: 0, autoWidth: true, center: false},
+      0: { items: 1, stagePadding: 60, center: true },
+      380: { items: 2, stagePadding: 0, center: true },
+      570: { items: 3, stagePadding: 0, center: true },
+      768: { items: 4, stagePadding: 0, center: false, mouseDrag: false, touchDrag: false },
+      880: { items: 4, stagePadding: 0, autoWidth: true, center: false, mouseDrag: false, touchDrag: false }
     }
   });
 };
@@ -49,7 +50,11 @@ class Home extends React.Component {
             <h1>Documentation</h1>
           </div>
         </div>
-        <TutorialNavigator {...this.props} customNavigationAction={quickstartNavigationAction} componentLoadedInBrowser={initCarouselInBrowser} />
+        <TutorialNavigator
+          {...this.props}
+          customNavigationAction={quickstartNavigationAction}
+          componentLoadedInBrowser={initCarouselInBrowser}
+        />
         {tryBanner}
         <div className="category-cards container center-block">
           <h1>Curated content to fully understand our platform</h1>
