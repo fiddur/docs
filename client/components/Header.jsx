@@ -18,25 +18,19 @@ class Header extends Component {
   }
 
   componentDidMount() {
-    (() => { // eslint-disable-line consistent-return
-      // localhost (without vagrant)
-      if (!window.env.DWH_ENDPOINT) return this.createContactForm();
+    const metricsLib = window.metricsLib;
+    const isMetricsLibLoaded = metricsLib.$options && metricsLib.$options.segmentKey;
 
-      // For vagrant || production:
-      const metricsLib = window.metricsLib;
-      const isMetricsLibLoaded = metricsLib.$options && metricsLib.$options.segmentKey;
-
-      if (isMetricsLibLoaded) {
+    if (isMetricsLibLoaded) {
+      this.createContactForm();
+    } else {
+      const metricsScript = document.getElementById('script-auth0-metrics');
+      const metricsScriptOnload = metricsScript.onload;
+      metricsScript.onload = () => {
+        metricsScriptOnload();
         this.createContactForm();
-      } else {
-        const metricsScript = document.getElementById('script-auth0-metrics');
-        const metricsScriptOnload = metricsScript.onload;
-        metricsScript.onload = () => {
-          metricsScriptOnload();
-          this.createContactForm();
-        };
-      }
-    })();
+      };
+    }
 
     this.checkIsFullWidth();
 
