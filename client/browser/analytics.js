@@ -30,6 +30,7 @@ else {
   // Create a dynamic script element that will load the actual metrics library.
   let script = document.createElement('script');
   script.type = 'text/javascript';
+  script.id = 'script-auth0-metrics';
   script.async = true;
   script.src = '//cdn.auth0.com/js/m/metrics-1.min.js';
 
