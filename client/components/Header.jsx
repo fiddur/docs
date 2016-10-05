@@ -18,9 +18,32 @@ class Header extends Component {
   }
 
   componentDidMount() {
-    const jQuery = window.jQuery;
     const metricsLib = window.metricsLib;
+    const isMetricsLibLoaded = metricsLib.$options && metricsLib.$options.segmentKey;
+
+    if (isMetricsLibLoaded) {
+      this.createContactForm();
+    } else {
+      const metricsScript = document.getElementById('script-auth0-metrics');
+      const metricsScriptOnload = metricsScript.onload;
+      metricsScript.onload = () => {
+        metricsScriptOnload();
+        this.createContactForm();
+      };
+    }
+
+    this.checkIsFullWidth();
+
+    this.checkIsLogged();
+    this.setState({ showLock: window.login });
+  }
+
+  createContactForm() {
+    const jQuery = window.jQuery;
+    // eslint-disable-next-line global-require
     const ContactForm = require('auth0-contact-form').default.ContactForm;
+
+    const metricsLib = window.metricsLib;
 
     const contactFormOptions = {
       onModalOpen() {
@@ -42,14 +65,6 @@ class Header extends Component {
         contactForm.show();
       }
     });
-
-    this.checkIsFullWidth();
-
-    // Lock instance is created under Application component
-    setTimeout(() => {
-      this.checkIsLogged();
-      this.setState({ showLock: window.login });
-    }, 50);
   }
 
   checkIsLogged() {
@@ -63,13 +78,13 @@ class Header extends Component {
   }
 
   checkIsFullWidth() {
-    let fullWidthRoutes = [
+    const fullWidthRoutes = [
       '/docs/api/management/v2',
       '/docs/api/management/v2/'
     ];
 
     if (fullWidthRoutes.indexOf(window.location.pathname) > -1) {
-      return this.setState({ fullWidth: true });
+      this.setState({ fullWidth: true });
     }
   }
 
@@ -77,23 +92,26 @@ class Header extends Component {
     const { logged, showLock, showContactForm, fullWidth } = this.state;
 
     return logged
-      ? <Auth0WebHeader
-          className="header--docs"
-          theme="gray"
-          secondaryButtonLink=""
-          secondaryButtonOnClick={showContactForm}
-          primaryButtonText="Open Dashboard"
-          primaryButtonLink="https://manage.auth0.com"
-          featuredEnable={!fullWidth}
-        />
-      : <Auth0WebHeader
-          className="header--docs"
-          theme="gray"
-          secondaryButtonOnClick={showContactForm}
-          secondaryButtonLink=""
-          primaryButtonOnClick={showLock}
-          featuredEnable={!fullWidth}
-        />;
+      ? (
+      <Auth0WebHeader
+        className="header--docs"
+        theme="gray"
+        secondaryButtonLink=""
+        secondaryButtonOnClick={showContactForm}
+        primaryButtonText="Open Dashboard"
+        primaryButtonLink="https://manage.auth0.com"
+        featuredEnable={!fullWidth}
+      />
+      ) : (
+      <Auth0WebHeader
+        className="header--docs"
+        theme="gray"
+        secondaryButtonLink=""
+        secondaryButtonOnClick={showContactForm}
+        primaryButtonOnClick={showLock}
+        featuredEnable={!fullWidth}
+      />
+      );
   }
 }
 
