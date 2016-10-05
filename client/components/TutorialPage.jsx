@@ -109,7 +109,7 @@ class TutorialPage extends React.Component {
               <div className="row">
                 <div className="sidebar-container col-md-3">
                   <Sidebar
-                    section={sidebarTitle} maxDepth={3}
+                    section={sidebarTitle} maxDepth={3} includeSectionInBreadcrumb isQuickstart
                     items={sidebarItems} url={this.props.currentRoute.url}
                   />
                 </div>

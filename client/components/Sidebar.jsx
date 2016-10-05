@@ -66,6 +66,18 @@ class Sidebar extends React.Component {
 
     $(containers).removeClass('is-current');
 
+    // Quick fix for quickstarts page and duplicate url
+    // When entering to an url like http://auth0.com/docs/quickstart/native/android
+    // display the first element of the technology as selected
+    if (this.props.isQuickstart && this.props.items.length) {
+      const firstElemUrl = this.props.items[0].url;
+      const technologyUrl = firstElemUrl.substr(0, firstElemUrl.lastIndexOf('/'));
+
+      if (technologyUrl === this.props.url) {
+        return $(containers).first().addClass('is-current');
+      }
+    }
+
     return $sidebar.find('.active').parents(containers).addClass('is-current');
   }
 
@@ -80,7 +92,7 @@ class Sidebar extends React.Component {
   }
 
   getBreadcrumb() {
-    const { items, url } = this.props;
+    const { items, url, includeSectionInBreadcrumb, isQuickstart, section } = this.props;
 
     const arrow = '<i class="arrow-icon icon-budicon-461"></i>';
     let breadcrumb = '';
@@ -105,6 +117,15 @@ class Sidebar extends React.Component {
     };
 
     items.some(checkPath);
+
+    if (breadcrumb && includeSectionInBreadcrumb) {
+      breadcrumb = `${section} ${arrow} ${breadcrumb}`;
+    }
+
+    if (!breadcrumb && isQuickstart) {
+      breadcrumb = section;
+    }
+
     if (breadcrumb) this.setState({ breadcrumb });
   }
 
@@ -178,11 +199,14 @@ Sidebar.propTypes = {
   items: React.PropTypes.array.isRequired,
   section: React.PropTypes.string.isRequired,
   maxDepth: React.PropTypes.number,
-  url: React.PropTypes.string.isRequired
+  url: React.PropTypes.string.isRequired,
+  includeSectionInBreadcrumb: React.PropTypes.bool,
+  isQuickstart: React.PropTypes.bool
 };
 
 Sidebar.defaultProps = {
-  maxDepth: 2
+  maxDepth: 2,
+  includeSectionInBreadcrumb: false
 };
 
 export default Sidebar;
