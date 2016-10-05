@@ -22,7 +22,7 @@ import overrideClientQsPublic from './lib/middleware/override-client-qs-public-u
 import overrideClientQs from './lib/middleware/override-client-qs';
 import setCurrentTenant from './lib/middleware/set-current-tenant';
 import setUserIsOwner from './lib/middleware/set-user-is-owner';
-import urlVariables from './lib/middleware/url-variables';
+import docsVariables from './lib/middleware/docs-variables';
 import fetchABExperiments from './lib/middleware/ab-testing';
 import redirectQuickstarts from './lib/middleware/redirect-quickstarts';
 import assetBundles from './lib/middleware/asset-bundles';
@@ -131,7 +131,7 @@ server.use(embedded);
 server.use(overrideIfAuthenticated);
 server.use(overrideClientQs);
 server.use(overrideClientQsPublic);
-server.use(urlVariables);
+server.use(docsVariables);
 server.use(fetchABExperiments);
 server.use(redirectQuickstarts);
 server.use(assetBundles);
