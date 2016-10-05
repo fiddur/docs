@@ -68,7 +68,7 @@ class Sidebar extends React.Component {
 
     // Quick fix for quickstarts page and duplicate url
     // When entering to an url like http://auth0.com/docs/quickstart/native/android
-    // display the first element of the technology as selected
+    // display the first article of the technology as selected
     if (this.props.isQuickstart && this.props.items.length) {
       const firstElemUrl = this.props.items[0].url;
       const technologyUrl = firstElemUrl.substr(0, firstElemUrl.lastIndexOf('/'));
@@ -122,8 +122,15 @@ class Sidebar extends React.Component {
       breadcrumb = `${section} ${arrow} ${breadcrumb}`;
     }
 
+    // Quick fix for quickstarts page and duplicate url
+    // When entering to an url like http://auth0.com/docs/quickstart/native/android
+    // display the first article title as selected in the breadcrumb
     if (!breadcrumb && isQuickstart) {
-      breadcrumb = section;
+      breadcrumb = items.length ? (
+        `${section} ${arrow} ${items[0].title}`
+      ) : (
+        `${section}`
+      );
     }
 
     if (breadcrumb) this.setState({ breadcrumb });
