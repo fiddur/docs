@@ -84,6 +84,9 @@ class TutorialPage extends React.Component {
     let sidebar = undefined;
     let prevNext = undefined;
 
+    let sidebarTitle = platform ? platform.title : '';
+    let sidebarItems = platform ? platform.articles : [];
+
     if (article) {
       tutorial = <Tutorial
         quickstart={quickstart}
@@ -106,8 +109,8 @@ class TutorialPage extends React.Component {
               <div className="row">
                 <div className="sidebar-container col-md-3">
                   <Sidebar
-                    section={quickstart.title} maxDepth={3}
-                    items={this.sidebarItems} url={this.props.currentRoute.url}
+                    section={sidebarTitle} maxDepth={3}
+                    items={sidebarItems} url={this.props.currentRoute.url}
                   />
                 </div>
                 <div className="col-md-9">
