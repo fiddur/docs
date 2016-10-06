@@ -19,17 +19,21 @@ class Header extends Component {
 
   componentDidMount() {
     const metricsLib = window.metricsLib;
-    const isMetricsLibLoaded = metricsLib.$options && metricsLib.$options.segmentKey;
+    const isMetricsLibLoaded = metricsLib && metricsLib.$options && metricsLib.$options.segmentKey;
 
     if (isMetricsLibLoaded) {
       this.createContactForm();
     } else {
       const metricsScript = document.getElementById('script-auth0-metrics');
-      const metricsScriptOnload = metricsScript.onload;
-      metricsScript.onload = () => {
-        metricsScriptOnload();
+      if (metricsScript) {
+        const metricsScriptOnload = metricsScript.onload;
+        metricsScript.onload = () => {
+          metricsScriptOnload();
+          this.createContactForm();
+        };
+      } else {
         this.createContactForm();
-      };
+      }
     }
 
     this.checkIsFullWidth();
