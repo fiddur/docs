@@ -138,7 +138,7 @@ server.use(assetBundles);
 server.use(htmlComponents);
 
 // Routes
-server.use('/docs', require('./lib/api-explorer'));
+server.use('/docs', require('./lib/api-explorer/middleware'));
 server.use('/docs/package', require('./lib/packager'));
 server.use('/docs', require('./lib/feedback'));
 server.use('/docs', require('./lib/sitemap'));

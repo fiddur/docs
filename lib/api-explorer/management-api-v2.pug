@@ -1,5 +1,12 @@
 div#api2-explorer
 
+//- Add this css so site header doesn't transform when API explorer loads
+style.
+  #header .container {
+    max-width: none!important;
+    width: 100%;
+  }
+
 script.
   jQuery.browser = jQuery.browser || {};
   (function () {
