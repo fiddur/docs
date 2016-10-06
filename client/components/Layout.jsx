@@ -1,5 +1,6 @@
 import React from 'react';
 import { getAssetBundleUrl } from '../../lib/utils';
+import Footer from './Footer';
 
 class Layout extends React.Component {
 
@@ -38,24 +39,10 @@ class Layout extends React.Component {
     }
   }
 
-  clientScriptBundle() {
-    if (!this.props.env.staticPage) {
-     return (<script src={getAssetBundleUrl('client')}></script>);
-    }
-    return undefined;
-  }
-
   getEnvScript() {
     let envString = JSON.stringify(this.props.env);
     let envCode = `window.env = ${envString};`;
     return (<script dangerouslySetInnerHTML={{__html: envCode}}></script>);
-  }
-
-  getFooter() {
-    if (!this.props.env.fullWidth) {
-      return (<div id="footer" dangerouslySetInnerHTML={{__html: this.props.footer}}></div>);
-    }
-    return undefined;
   }
 
   render() {
@@ -106,10 +93,10 @@ class Layout extends React.Component {
         <body>
           <div data-swiftype-index='false' className="docs-single">
             <div id="app" dangerouslySetInnerHTML={{__html: this.props.markup}}></div>
-            {this.getFooter()}
+            {this.props.env.fullWidth ? undefined : <Footer />}
           </div>
           <script dangerouslySetInnerHTML={{__html: this.props.state}}></script>
-          {this.clientScriptBundle()}
+          <script src={getAssetBundleUrl('client')}></script>
         </body>
       </html>
     );
