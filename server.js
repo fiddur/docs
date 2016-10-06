@@ -59,7 +59,7 @@ passport.deserializeUser((id, done) => {
   }
 });
 
-server.set('view engine', 'jade');
+server.set('view engine', 'pug');
 server.enable('trust proxy');
 
 if (nconf.get('NODE_ENV') === 'production') {
