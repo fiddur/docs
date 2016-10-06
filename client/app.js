@@ -2,6 +2,7 @@ import Fluxible from 'fluxible';
 import Application from './components/Application';
 import ApplicationStore from './stores/ApplicationStore';
 import ContentStore from './stores/ContentStore';
+import StaticContentStore from './stores/StaticContentStore';
 import { TutorialStore, ArticleStore } from 'auth0-tutorial-navigator';
 import NavigationStore from './stores/NavigationStore';
 import RouteStore from './stores/RouteStore';
@@ -30,5 +31,6 @@ app.registerStore(ArticleStore);
 app.registerStore(NavigationStore);
 app.registerStore(UserStore);
 app.registerStore(SearchStore);
+app.registerStore(StaticContentStore);
 
 module.exports = app;
