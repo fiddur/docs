@@ -66,10 +66,10 @@ let Footer = (props) => (
         <div className="column">
           <div className="social">
             <div className="twitter">
-              <iframe allowtransparency="true" frameborder="0" scrolling="no" src="//platform.twitter.com/widgets/follow_button.html?screen_name=auth0" className="twitter"></iframe>
+              <iframe allowTransparency="true" frameBorder="0" scrolling="no" src="//platform.twitter.com/widgets/follow_button.html?screen_name=auth0" className="twitter"></iframe>
             </div>
             <div className="facebook">
-              <iframe src="//www.facebook.com/plugins/like.php?href=https%3A%2F%2Ffacebook.com%2Fgetauth0&amp;width&amp;layout=button_count&amp;action=like&amp;show_faces=false&amp;show_count=false&amp;share=false&amp;height=21&amp;appId=507756515938786" scrolling="no" frameborder="0" allowtransparency="true" className="facebook"></iframe>
+              <iframe src="//www.facebook.com/plugins/like.php?href=https%3A%2F%2Ffacebook.com%2Fgetauth0&amp;width&amp;layout=button_count&amp;action=like&amp;show_faces=false&amp;show_count=false&amp;share=false&amp;height=21&amp;appId=507756515938786" scrolling="no" frameBorder="0" allowTransparency="true" className="facebook"></iframe>
             </div>
           </div>
         </div>
