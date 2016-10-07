@@ -1,22 +1,23 @@
 import React from 'react';
-import { TutorialStore, Breadcrumbs, Tutorial, TutorialTableOfContents, TutorialPrevNext } from 'auth0-tutorial-navigator';
-import { connectToStores, provideContext } from 'fluxible-addons-react';
 import NavigationBar from './NavigationBar';
 import TryBanner from './TryBanner';
 import IntroBanner from './IntroBanner';
+import { TutorialStore, Breadcrumbs, Tutorial, TutorialTableOfContents, TutorialPrevNext } from 'auth0-tutorial-navigator';
+import { connectToStores, provideContext } from 'fluxible-addons-react';
 import { quickstartNavigationAction } from '../action/quickstartNavigationAction';
 import highlightCode from '../browser/highlightCode';
 import setAnchorLinks from '../browser/anchorLinks';
-import ApplicationStore from '../stores/ApplicationStore';
+import UserStore from '../stores/UserStore';
 
 // TODO: Uses ref from within tutorial navigator, can we move this?
-const initTutorialInBrowser = () => {
+var initTutorialInBrowser = function() {
   highlightCode();
   setAnchorLinks();
+
   // Execute any scripts that came with the article
   if (this.refs.article && this.refs.article.innerHTML) {
-    const dom = $(this.refs.article.innerHTML);
-    dom.filter('script').each(() => {
+    var dom = $(this.refs.article.innerHTML);
+    dom.filter('script').each(function(){
       $.globalEval(this.text || this.textContent || this.innerHTML || '');
     });
   }
@@ -24,7 +25,7 @@ const initTutorialInBrowser = () => {
 
 class TutorialPage extends React.Component {
 
-  componentDidMount() {
+  componentDidMount () {
     this.initClient();
   }
 
@@ -39,34 +40,39 @@ class TutorialPage extends React.Component {
   }
 
   metrics() {
-    const { quickstart, platform } = this.props;
+    let {quickstart, platform} = this.props;
     if (!window.widget) return;
-    const eventData = {
-      clientID: window.widget.getClient()._clientID || '',
+    let eventData = {
+      'clientID': window.widget.getClient()._clientID || '',
       'tutorial-apptype': quickstart ? quickstart.name : '',
       'tutorial-platform': platform ? platform.name : ''
     };
-    $('#package .btn').off('click').on('click', () => {
-      this.context.getComponentContext().trackEvent('download:tutorial-seed', eventData);
+    $('#package .btn').off('click').on('click', function() {
+      context.getComponentContext().trackEvent('download:tutorial-seed', eventData);
     });
   }
 
   renderTitle() {
-    const { platform, article } = this.props;
-    if (!platform || !article) return '';
-    if (platform.articles.length === 1) return platform.title;
-    return `${platform.title} ${article.title}`;
+    let {platform, article} = this.props;
+    if (platform && article) {
+      if (platform.articles.length == 1) {
+        return platform.title;
+      }
+      else {
+        return platform.title + ' ' + article.title;
+      }
+    }
   }
 
   render() {
 
-    const { quickstart, platform, article, user } = this.props;
-    const tryBanner = user ? null : <TryBanner />;
+    let {quickstart, platform, article, isAuthenticated} = this.props;
+    let tryBanner = isAuthenticated ? null : <TryBanner/>;
 
-    const classes = ['col-md-9'];
-    let tutorial;
-    let sidebar;
-    let prevNext;
+    let tutorial = undefined;
+    let sidebar = undefined;
+    let prevNext = undefined;
+    let classes = ['col-md-9'];
 
     if (platform && platform.articles.length > 1) {
       sidebar = <div className="col-md-3">
@@ -107,10 +113,10 @@ class TutorialPage extends React.Component {
                 </div>
                 <section className="docs-content">
                   <IntroBanner />
-                  <article data-swiftype-index="true">
+                  <article data-swiftype-index='true'>
                     <h1 className="tutorial-title">{this.renderTitle()}</h1>
                     <div data-swiftype-name="body" data-swiftype-type="text">{tutorial}</div>
-                    <div data-swiftype-index="false">{prevNext}</div>
+                    <div data-swiftype-index='false'>{prevNext}</div>
                   </article>
                 </section>
                 {tryBanner}
@@ -127,7 +133,7 @@ class TutorialPage extends React.Component {
 TutorialPage.propTypes = {
   quickstart: React.PropTypes.object,
   platform: React.PropTypes.object,
-  article: React.PropTypes.object
+  article: React.PropTypes.object,
 };
 
 TutorialPage.contextTypes = {
@@ -136,14 +142,14 @@ TutorialPage.contextTypes = {
   trackEvent: React.PropTypes.func.isRequired
 };
 
-TutorialPage = connectToStores(TutorialPage, [TutorialStore, ApplicationStore], (context, props) => {
-  const tutorialStore = context.getStore(TutorialStore);
-  const appStore = context.getStore(ApplicationStore);
+TutorialPage = connectToStores(TutorialPage, [TutorialStore, UserStore], (context, props) => {
+  let tutorialStore = context.getStore(TutorialStore);
+  let userStore = context.getStore(UserStore);
   return {
     quickstart: tutorialStore.getCurrentQuickstart(),
     platform: tutorialStore.getCurrentPlatform(),
     article: tutorialStore.getCurrentArticle(),
-    user: appStore.getUser()
+    isAuthenticated: userStore.isAuthenticated()
   };
 });
 

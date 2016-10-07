@@ -1,8 +1,10 @@
+/*globals document, $*/
+
 import React from 'react';
-import { connectToStores, provideContext } from 'fluxible-addons-react';
-import { handleHistory } from 'fluxible-router';
 import ApplicationStore from '../stores/ApplicationStore';
 import ContentStore from '../stores/ContentStore';
+import { connectToStores, provideContext } from 'fluxible-addons-react';
+import { handleHistory } from 'fluxible-router';
 import ErrorPage from './ErrorPage';
 import highlightCode from '../browser/highlightCode';
 import Header from './Header';
@@ -29,10 +31,11 @@ class Application extends React.Component {
   }
 
   getHandler() {
-    const { content, currentRoute, currentNavigateError } = this.props;
+
+    let {content, currentRoute, currentNavigateError} = this.props;
 
     if (!currentRoute) {
-      let error = { message: 'Not Found', status: 404 };
+      let error = {message: 'Not Found', status: 404};
       return <ErrorPage error={error} />;
     }
 
@@ -46,20 +49,18 @@ class Application extends React.Component {
 
     let Handler = currentRoute.handler;
     return <Handler {...this.props} />;
+
   }
 
-
   render() {
-    const { currentRoute, user } = this.props;
-
     // Temporary fix for: https://github.com/yahoo/fluxible-router/issues/108
-    if (!currentRoute && typeof document !== 'undefined') {
+    if (!this.props.currentRoute && typeof document !== 'undefined') {
       document.location = document.location;
     }
 
     return (
       <div>
-        <Header user={user} currentRoute={currentRoute} />
+        <Header/>
         {this.getHandler()}
       </div>
     );
@@ -68,7 +69,8 @@ class Application extends React.Component {
 }
 
 Application = connectToStores(Application, [ApplicationStore], (context, props) => {
-  const appStore = context.getStore(ApplicationStore);
+
+  let appStore = context.getStore(ApplicationStore);
 
   let content;
   if (props.currentRoute) {
@@ -82,6 +84,7 @@ Application = connectToStores(Application, [ApplicationStore], (context, props) 
     currentRoute: props.currentRoute,
     content
   };
+
 });
 
 Application = provideContext(Application, {
