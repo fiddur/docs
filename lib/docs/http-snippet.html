@@ -23,7 +23,7 @@
   <div class="tab-content">
     <% _.forEach(snippets, function(snippet) { %>
       <div role="tabpanel" class="tab-pane <%= snippet.key === 'shell' ? 'active' : '' %>" id="<%- id + '_' + snippet.key %>">
-        <pre><code class="<%- snippet.css %>"><%= snippet.code %></code></pre>
+        <pre><code class="<%- snippet.css %> no-lines"><%= snippet.code %></code></pre>
       </div>
     <% }); %>
   </div>

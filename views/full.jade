@@ -1,0 +1,17 @@
+extends base
+
+block head
+  script(src=getAssetBundleUrl('base'))
+
+block body
+  // Add this css so site header doesn't transform when API explorer loads
+  style.
+    #header .container {
+      max-width: none!important;
+      width: 100%;
+    }
+  header#header!= webheader
+
+  section.content
+    block content
+      != sections.content

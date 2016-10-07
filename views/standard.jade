@@ -1,0 +1,28 @@
+extends base
+
+include ./inc/navbar.jade
+
+block head
+  script(src=getAssetBundleUrl('standard'))
+
+block body
+  .docs-single
+    header#header!= webheader
+
+    mixin navbar('api')
+
+    //- Start content
+    .js-doc-template.container
+      .row
+        .col-md-3
+          block sidebar
+
+        .col-md-9
+          section.docs-content
+            block content
+            
+          - if (!locals.user)
+            #try-banner
+              include ../node_modules/auth0-styleguide/lib/try-banner/demo.jade
+          
+    include ../node_modules/auth0-styleguide/lib/footer/demo.jade

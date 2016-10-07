@@ -1,6 +1,5 @@
 import React from 'react';
 import { getAssetBundleUrl } from '../../lib/utils';
-import Footer from './Footer';
 
 class Layout extends React.Component {
 
@@ -42,7 +41,7 @@ class Layout extends React.Component {
   getEnvScript() {
     let envString = JSON.stringify(this.props.env);
     let envCode = `window.env = ${envString};`;
-    return (<script dangerouslySetInnerHTML={{__html: envCode}}></script>);
+    return <script dangerouslySetInnerHTML={{__html: envCode}}></script>;
   }
 
   render() {
@@ -93,14 +92,16 @@ class Layout extends React.Component {
         <body>
           <div data-swiftype-index='false' className="docs-single">
             <div id="app" dangerouslySetInnerHTML={{__html: this.props.markup}}></div>
-            {this.props.env.fullWidth ? undefined : <Footer />}
+            <div id="footer" dangerouslySetInnerHTML={{__html: this.props.footer}}></div>
           </div>
           <script dangerouslySetInnerHTML={{__html: this.props.state}}></script>
           <script src={getAssetBundleUrl('client')}></script>
         </body>
       </html>
     );
+
   }
+
 }
 
 export default Layout;
