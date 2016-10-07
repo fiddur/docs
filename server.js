@@ -22,11 +22,9 @@ import overrideClientQsPublic from './lib/middleware/override-client-qs-public-u
 import overrideClientQs from './lib/middleware/override-client-qs';
 import setCurrentTenant from './lib/middleware/set-current-tenant';
 import setUserIsOwner from './lib/middleware/set-user-is-owner';
-import urlVariables from './lib/middleware/url-variables';
+import docsVariables from './lib/middleware/docs-variables';
 import fetchABExperiments from './lib/middleware/ab-testing';
 import redirectQuickstarts from './lib/middleware/redirect-quickstarts';
-import assetBundles from './lib/middleware/asset-bundles';
-import htmlComponents from './lib/middleware/html-components';
 import sessionStore from './lib/session-store';
 import cors from './lib/middleware/cors';
 
@@ -59,7 +57,7 @@ passport.deserializeUser((id, done) => {
   }
 });
 
-server.set('view engine', 'jade');
+server.set('view engine', 'pug');
 server.enable('trust proxy');
 
 if (nconf.get('NODE_ENV') === 'production') {
@@ -131,14 +129,12 @@ server.use(embedded);
 server.use(overrideIfAuthenticated);
 server.use(overrideClientQs);
 server.use(overrideClientQsPublic);
-server.use(urlVariables);
+server.use(docsVariables);
 server.use(fetchABExperiments);
 server.use(redirectQuickstarts);
-server.use(assetBundles);
-server.use(htmlComponents);
 
 // Routes
-server.use('/docs', require('./lib/api-explorer'));
+server.use('/docs', require('./lib/api-explorer/middleware'));
 server.use('/docs/package', require('./lib/packager'));
 server.use('/docs', require('./lib/feedback'));
 server.use('/docs', require('./lib/sitemap'));
@@ -192,8 +188,8 @@ server.use((internalErr, req, res, next) => {
 
 server.use((err, req, res, next) => {
   // This is the worst-case scenario. If we've gotten here, the err page itself
-  // encountered an error during rendering. If we're in production, just write
-  // out a simple message; otherwise, dump the stack trace.
+  // encountered an error during rendering. If we're in production, show
+  // error page; otherwise, dump the stack trace.
   if (process.env.NODE_ENV === 'production') {
     res.status(err.status || 500);
     res.render('error');
