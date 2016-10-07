@@ -9,7 +9,7 @@ new WebpackDevServer(webpack(config), {
   publicPath: config.output.publicPath,
   hot: true,
   historyApiFallback: true,
-  //quiet: true,
+  quiet: true,
   proxy: {
     '*': {
       target: 'http://localhost:5050'

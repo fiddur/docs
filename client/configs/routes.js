@@ -57,6 +57,18 @@ export default {
     handler: require('../components/SdksPage'),
   },
 
+  mgmtApiExplorerV2: {
+    path: '/docs/api/management/v2',
+    method: 'get',
+    handler: require('../components/StaticPage')
+  },
+
+  authApiExplorer: {
+    path: '/docs/api/authentication',
+    method: 'get',
+    handler: require('../components/StaticPage')
+  },
+
   article: {
     path: '/docs/*',
     method: 'get',
