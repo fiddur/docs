@@ -43,7 +43,7 @@ describe('AutoTitlePlugin', () => {
         const plugin = new AutoTitlePlugin();
         const example = EXAMPLES.NoTitle;
         const meta = plugin.getMetadata(example.meta, example.content);
-        expect(meta).to.deep.equal({ title: 'Document' });
+        expect(meta).to.deep.equal({ title: AutoTitlePlugin.defaults.defaultTitle });
       });
       it('allows overriding of the default title', () => {
         const defaultTitle = 'Test Default Title';
