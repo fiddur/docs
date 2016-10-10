@@ -91,8 +91,8 @@ class ArticlePage extends React.Component {
   }
 
   render() {
-    let { metadata } = this.props;
-    let { url } = this.props.currentRoute;
+    const { metadata, sidebarArticles } = this.props;
+    const { url } = this.props.currentRoute;
 
     return (
       <div className="docs-article">
@@ -102,7 +102,7 @@ class ArticlePage extends React.Component {
             <div className="js-doc-template container" style={{ marginBottom: '40px' }}>
               <div className="row">
                 <div className="sidebar-container col-md-3">
-                  <Sidebar section={metadata.section} maxDepth={3} url={url} />
+                  <Sidebar items={sidebarArticles} section={metadata.section} maxDepth={3} url={url} />
                 </div>
                 <div ref="content" className="col-md-9">
                   {this.renderContent()}
@@ -114,12 +114,11 @@ class ArticlePage extends React.Component {
       </div>
     );
   }
-
 }
 
 ArticlePage = connectToStores(ArticlePage, [ContentStore], (context, props) => {
 
-  let {url} = props.currentRoute;
+  let { url } = props.currentRoute;
   let appStore = context.getStore(ApplicationStore);
   let contentStore = context.getStore(ContentStore);
   let navigationStore = context.getStore(NavigationStore);
@@ -130,9 +129,9 @@ ArticlePage = connectToStores(ArticlePage, [ContentStore], (context, props) => {
     title: appStore.getPageTitle(),
     description: appStore.getPageDescription(),
     html: contentStore.getContentHtml(url),
-    metadata: navigationStore.getMetadata(url)
+    metadata: navigationStore.getMetadata(url),
+    sidebarArticles: navigationStore.getSidebarArticles(navigationStore.getMetadata(url).section)
   };
-
 });
 
 export default ArticlePage;
