@@ -4,30 +4,16 @@ import Pipeline from '../../lib/pipeline/Pipeline';
 import Compiler from '../../lib/pipeline/Compiler';
 import Cache from '../../lib/pipeline/Cache';
 import File from '../../lib/pipeline/models/File';
-
-const mockScanner = {
-  scan: (dir) => [
-    new File(
-      resolve(__dirname, 'articles/test1.md'),
-      '/articles/test1.md',
-      'This is an *example* document.'
-    ),
-    new File(
-      resolve(__dirname, 'articles/test2.md'),
-      '/articles/test2.md',
-      'This is a another _example_ document.'
-    )
-  ]
-};
-
-const createPipeline = () => new Pipeline({
-  scanner: mockScanner,
-  compiler: new Compiler(),
-  cache: new Cache(),
-  renderContext: {}
-});
+import FakeScanner from './mocks/FakeScanner';
 
 describe('Pipeline', () => {
+
+  const createPipeline = () => new Pipeline({
+    scanner: new FakeScanner({ baseDir: resolve(__dirname, 'docs') }),
+    compiler: new Compiler(),
+    cache: new Cache(),
+    renderContext: {}
+  });
 
   describe('when use() is called', () => {
 
