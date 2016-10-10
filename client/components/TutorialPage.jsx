@@ -3,6 +3,7 @@ import { StickyContainer, Sticky } from 'react-sticky';
 import { connectToStores, provideContext } from 'fluxible-addons-react';
 import { TutorialStore, Breadcrumbs, Tutorial, TutorialTableOfContents, TutorialPrevNext } from 'auth0-tutorial-navigator';
 import NavigationBar from './NavigationBar';
+import Sidebar from './Sidebar';
 import TryBanner from './TryBanner';
 import IntroBanner from './IntroBanner';
 import { quickstartNavigationAction } from '../action/quickstartNavigationAction';
@@ -11,7 +12,7 @@ import setAnchorLinks from '../browser/anchorLinks';
 import ApplicationStore from '../stores/ApplicationStore';
 
 // TODO: Uses ref from within tutorial navigator, can we move this?
-const initTutorialInBrowser = () => {
+function initTutorialInBrowser() {
   highlightCode();
   setAnchorLinks();
   // Execute any scripts that came with the article
@@ -21,7 +22,7 @@ const initTutorialInBrowser = () => {
       $.globalEval(this.text || this.textContent || this.innerHTML || '');
     });
   }
-};
+}
 
 class TutorialPage extends React.Component {
 
