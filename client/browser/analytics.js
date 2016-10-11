@@ -40,6 +40,11 @@ else {
 
   script.onload = function() {
 
+    if (typeof Auth0Metrics === 'undefined') {
+      console.log('Auth0Metrics is not loaded.');
+      return;
+    }
+
     // Replace the stub library with the real one.
     let metrics = window.metricsLib = new Auth0Metrics(window.env.SEGMENT_KEY, window.env.DWH_ENDPOINT, 'docs');
 

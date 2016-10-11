@@ -3,27 +3,26 @@ import { StickyContainer, Sticky } from 'react-sticky';
 import { connectToStores, provideContext } from 'fluxible-addons-react';
 import { TutorialStore, Breadcrumbs, Tutorial, TutorialTableOfContents, TutorialPrevNext } from 'auth0-tutorial-navigator';
 import NavigationBar from './NavigationBar';
+import Sidebar from './Sidebar';
 import TryBanner from './TryBanner';
 import IntroBanner from './IntroBanner';
 import { quickstartNavigationAction } from '../action/quickstartNavigationAction';
 import highlightCode from '../browser/highlightCode';
 import setAnchorLinks from '../browser/anchorLinks';
-import UserStore from '../stores/UserStore';
-import Sidebar from './Sidebar';
+import ApplicationStore from '../stores/ApplicationStore';
 
 // TODO: Uses ref from within tutorial navigator, can we move this?
-const initTutorialInBrowser = function () {
+function initTutorialInBrowser() {
   highlightCode();
   setAnchorLinks();
-
   // Execute any scripts that came with the article
   if (this.refs.article && this.refs.article.innerHTML) {
-    var dom = $(this.refs.article.innerHTML);
-    dom.filter('script').each(function () {
+    const dom = $(this.refs.article.innerHTML);
+    dom.filter('script').each(() => {
       $.globalEval(this.text || this.textContent || this.innerHTML || '');
     });
   }
-};
+}
 
 class TutorialPage extends React.Component {
 
@@ -36,7 +35,7 @@ class TutorialPage extends React.Component {
       .map((item) => Object.assign({}, item, { children: item.articles }));
   }
 
-  componentDidMount () {
+  componentDidMount() {
     this.initClient();
   }
 
@@ -51,41 +50,35 @@ class TutorialPage extends React.Component {
   }
 
   metrics() {
-    let {quickstart, platform} = this.props;
+    const { quickstart, platform } = this.props;
     if (!window.widget) return;
-    let eventData = {
-      'clientID': window.widget.getClient()._clientID || '',
+    const eventData = {
+      clientID: window.widget.getClient()._clientID || '',
       'tutorial-apptype': quickstart ? quickstart.name : '',
       'tutorial-platform': platform ? platform.name : ''
     };
-    $('#package .btn').off('click').on('click', function() {
-      context.getComponentContext().trackEvent('download:tutorial-seed', eventData);
+    $('#package .btn').off('click').on('click', () => {
+      this.context.getComponentContext().trackEvent('download:tutorial-seed', eventData);
     });
   }
 
   renderTitle() {
-    let {platform, article} = this.props;
-    if (platform && article) {
-      if (platform.articles.length == 1) {
-        return platform.title;
-      }
-      else {
-        return platform.title + ' ' + article.title;
-      }
-    }
+    const { platform, article } = this.props;
+    if (!platform || !article) return '';
+    if (platform.articles.length === 1) return platform.title;
+    return `${platform.title} ${article.title}`;
   }
 
   render() {
 
     const { quickstart, platform, article, isAuthenticated } = this.props;
     const tryBanner = isAuthenticated ? null : <TryBanner />;
+    const sidebarTitle = platform ? platform.title : '';
+    const sidebarItems = platform ? platform.articles : [];
 
-    let tutorial = undefined;
-    let sidebar = undefined;
-    let prevNext = undefined;
-
-    let sidebarTitle = platform ? platform.title : '';
-    let sidebarItems = platform ? platform.articles : [];
+    let tutorial;
+    let sidebar;
+    let prevNext;
 
     if (article) {
       tutorial = <Tutorial
@@ -140,7 +133,7 @@ class TutorialPage extends React.Component {
 TutorialPage.propTypes = {
   quickstart: React.PropTypes.object,
   platform: React.PropTypes.object,
-  article: React.PropTypes.object,
+  article: React.PropTypes.object
 };
 
 TutorialPage.contextTypes = {
@@ -149,14 +142,14 @@ TutorialPage.contextTypes = {
   trackEvent: React.PropTypes.func.isRequired
 };
 
-TutorialPage = connectToStores(TutorialPage, [TutorialStore, UserStore], (context, props) => {
-  let tutorialStore = context.getStore(TutorialStore);
-  let userStore = context.getStore(UserStore);
+TutorialPage = connectToStores(TutorialPage, [TutorialStore, ApplicationStore], (context, props) => {
+  const tutorialStore = context.getStore(TutorialStore);
+  const appStore = context.getStore(ApplicationStore);
   return {
     quickstart: tutorialStore.getCurrentQuickstart(),
     platform: tutorialStore.getCurrentPlatform(),
     article: tutorialStore.getCurrentArticle(),
-    isAuthenticated: userStore.isAuthenticated()
+    user: appStore.getUser()
   };
 });
 

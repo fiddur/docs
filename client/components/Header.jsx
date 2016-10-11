@@ -3,53 +3,27 @@ import Auth0WebHeader from 'auth0-web-header';
 import { isUndefined } from 'lodash';
 
 class Header extends Component {
-  constructor(props) {
-    super(props);
-
-    this.state = {
-      logged: false,
-      fullWidth: false,
-      showLock: () => {},
-      showContactForm: () => {}
-    };
-
-    this.checkIsLogged = this.checkIsLogged.bind(this);
-    this.checkIsFullWidth = this.checkIsFullWidth.bind(this);
-  }
 
   componentDidMount() {
     const metricsLib = window.metricsLib;
     const isMetricsLibLoaded = metricsLib && metricsLib.$options && metricsLib.$options.segmentKey;
+    const metricsScriptTag = document.getElementById('script-auth0-metrics');
 
-    if (isMetricsLibLoaded) {
-      this.createContactForm();
+    if (isMetricsLibLoaded || !metricsScriptTag) {
+      this.createContactForm(metricsLib);
     } else {
-      const metricsScript = document.getElementById('script-auth0-metrics');
-      if (metricsScript) {
-        const metricsScriptOnload = metricsScript.onload;
-        metricsScript.onload = () => {
-          metricsScriptOnload();
-          this.createContactForm();
-        };
-      } else {
-        this.createContactForm();
-      }
+      const metricsScriptOnload = metricsScriptTag.onload;
+      metricsScriptTag.onload = () => {
+        metricsScriptOnload();
+        this.createContactForm(metricsLib);
+      };
     }
-
-    this.checkIsFullWidth();
-
-    this.checkIsLogged();
-    this.setState({ showLock: window.login });
   }
 
-  createContactForm() {
-    const jQuery = window.jQuery;
-    // eslint-disable-next-line global-require
-    const ContactForm = require('auth0-contact-form').default.ContactForm;
-
-    const metricsLib = window.metricsLib;
-
-    const contactFormOptions = {
+  createContactForm(metricsLib) {
+    // eslint-disable-next-line global-require, import/newline-after-import
+    const { ContactForm } = require('auth0-contact-form').default;
+    this.contactForm = new ContactForm({
       onModalOpen() {
         metricsLib.track('open:talk-to-sales');
       },
@@ -61,62 +35,37 @@ class Header extends Component {
         metricsLib.track('fail:register:lead:pricing-contact-form', metricsData);
         metricsLib.track('fail-sent:talk-to-sales', metricsData);
       }
-    };
-    const contactForm = new ContactForm(contactFormOptions);
-
-    this.setState({
-      showContactForm: () => {
-        contactForm.show();
-      }
     });
-  }
-
-  checkIsLogged() {
-    if (isUndefined(window.widget)) return;
-
-    window.widget.getClient().getSSOData(false, (err, data) => {
-      if (err || isUndefined(data)) return;
-      const logged = data.sso;
-      this.setState({ logged });
-    });
-  }
-
-  checkIsFullWidth() {
-    const fullWidthRoutes = [
-      '/docs/api/management/v2',
-      '/docs/api/management/v2/'
-    ];
-
-    if (fullWidthRoutes.indexOf(window.location.pathname) > -1) {
-      this.setState({ fullWidth: true });
-    }
   }
 
   render() {
-    const { logged, showLock, showContactForm, fullWidth } = this.state;
+    const { currentRoute, user } = this.props;
 
-    return logged
-      ? (
-      <Auth0WebHeader
-        className="header--docs"
-        theme="gray"
-        secondaryButtonLink=""
-        secondaryButtonOnClick={showContactForm}
-        primaryButtonText="Open Dashboard"
-        primaryButtonLink="https://manage.auth0.com"
-        featuredEnable={!fullWidth}
-      />
-      ) : (
-      <Auth0WebHeader
-        className="header--docs"
-        theme="gray"
-        secondaryButtonLink=""
-        secondaryButtonOnClick={showContactForm}
-        primaryButtonOnClick={showLock}
-        featuredEnable={!fullWidth}
-      />
-      );
+    // TODO: Could this be keyed off something other than the URL?
+    const fullWidth = currentRoute.url.indexOf('/docs/api/management/v2') !== -1;
+
+    const props = {
+      classname: 'header--docs',
+      theme: 'gray',
+      secondaryButtonLink: '',
+      secondaryButtonOnClick: () => this.contactForm.show(),
+      featuredEnable: !fullWidth
+    };
+
+    if (user) {
+      props.primaryButtonText = 'Open Dashboard';
+      props.primaryButtonLink = 'https://manage.auth0.com/';
+    } else {
+      props.primaryButtonOnClick = () => window.login();
+    }
+
+    return <Auth0WebHeader {...props} />;
   }
 }
+
+Header.propTypes = {
+  currentRoute: React.PropTypes.object,
+  user: React.PropTypes.object
+};
 
 export default Header;
