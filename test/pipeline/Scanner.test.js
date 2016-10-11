@@ -9,7 +9,9 @@ describe('Scanner', () => {
   let scanner;
   const expectedFiles = [
     'docs/test.md',
-    'docs/test.html'
+    'docs/test.html',
+    'docs/_partial.md',
+    'docs/_includes/example.md'
   ];
 
   beforeEach(() => {

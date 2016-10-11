@@ -1,18 +1,14 @@
-import fs from 'fs';
-import { basename, extname, resolve } from 'path';
+import { basename, extname } from 'path';
 import { expect } from 'chai';
 import matter from 'gray-matter';
+import getTestFile from './util/getTestFile';
 import Compiler from '../../lib/pipeline/Compiler';
-import File from '../../lib/pipeline/models/File';
 import Document from '../../lib/pipeline/models/Document';
 
 describe('Compiler', () => {
 
   let compiler;
-
-  const path = 'docs/test.html';
-  const filename = resolve(__dirname, path);
-  const file = new File(filename, path, fs.readFileSync(filename, 'utf8'));
+  const file = getTestFile('docs/test.html');
 
   const metadataPlugins = [
     { getMetadata(meta, content) { return { foo: 42 }; } },
@@ -41,8 +37,6 @@ describe('Compiler', () => {
       expect(doc.filename).to.equal(file.filename);
       expect(doc.hash).to.equal(basename(file.filename));
       expect(doc.extension).to.equal(extname(file.filename));
-      expect(doc.isSpecial).to.equal(false);
-      expect(doc.isInclude).to.equal(false);
     });
 
     it('merges metadata from document front matter into the Document', () => {
