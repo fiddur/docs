@@ -41,15 +41,12 @@ class Header extends Component {
   render() {
     const { currentRoute, user } = this.props;
 
-    // TODO: Could this be keyed off something other than the URL?
-    const fullWidth = currentRoute.url.indexOf('/docs/api/management/v2') !== -1;
-
     const props = {
-      classname: 'header--docs',
+      className: this.props.fullWidth ? 'header-full-width' : '',
       theme: 'gray',
       secondaryButtonLink: '',
       secondaryButtonOnClick: () => this.contactForm.show(),
-      featuredEnable: !fullWidth
+      featuredEnable: !this.props.fullWidth
     };
 
     if (user) {
@@ -65,7 +62,8 @@ class Header extends Component {
 
 Header.propTypes = {
   currentRoute: React.PropTypes.object,
-  user: React.PropTypes.object
+  user: React.PropTypes.object,
+  fullWidth: React.PropTypes.bool
 };
 
 export default Header;
