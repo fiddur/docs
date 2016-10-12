@@ -1,0 +1,1 @@
+Markdown include: foo = ${foo}, bar = ${bar}

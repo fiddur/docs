@@ -1,0 +1,1 @@
+Here is an include: <%= include('_includes/html', { foo: 'locals-foo', bar: 'locals-bar' }) %>

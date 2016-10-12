@@ -1,1 +1,1 @@
-This is a *special* file that can be included
+This is a *special* file that can be included.
