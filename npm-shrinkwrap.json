@@ -2,7 +2,7 @@
   "name": "auth0-docs",
   "version": "2.0.0",
   "npm-shrinkwrap-version": "6.0.2",
-  "node-version": "v4.4.2",
+  "node-version": "v4.5.0",
   "dependencies": {
     "async": {
       "version": "0.2.10",
@@ -379,13 +379,11 @@
       "resolved": "git://github.com/auth0/styleguide.git#7189d6111be11f31ad87b0e07b5d94901ed5ecd4"
     },
     "auth0-tutorial-navigator": {
-      "version": "3.8.0",
-      "from": "auth0-tutorial-navigator@git://github.com/auth0/tutorial-navigator.git#c2ceabf1d8b53c1b387a9b3b809a00441dab2b39",
-      "resolved": "git://github.com/auth0/tutorial-navigator.git#c2ceabf1d8b53c1b387a9b3b809a00441dab2b39",
+      "version": "3.9.2",
+      "resolved": "git://github.com/auth0/tutorial-navigator.git#7ed986fad2926028b50f8160d78008aa73574e52",
       "dependencies": {
         "auth0-styleguide": {
           "version": "4.8.6",
-          "from": "auth0-styleguide@git://github.com/auth0/styleguide.git#257e73d46ed0242aa6c53099a622eb212ef36f91",
           "resolved": "git://github.com/auth0/styleguide.git#257e73d46ed0242aa6c53099a622eb212ef36f91"
         },
         "flux": {
