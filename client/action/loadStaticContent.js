@@ -1,4 +1,4 @@
-export default function loadStaticContent(context, html, done) {
-  context.dispatch('STATIC_CONTENT_LOADED', { html });
+export default function loadStaticContent(context, content, done) {
+  context.dispatch('STATIC_CONTENT_LOADED', content);
   done();
 }

@@ -9,56 +9,56 @@ export const ContentState = {
 };
 
 class ContentStore extends BaseStore {
-  
+
   constructor(dispatcher) {
     super(dispatcher);
-    this.content = {};
+    this.contents = {};
   }
 
   getContent(url) {
-    return this.content[normalizeUrl(url)] || undefined;
+    return this.contents[normalizeUrl(url)] || undefined;
   }
 
   getContentHtml(url) {
-    let content = this.getContent(normalizeUrl(url));
+    const content = this.getContent(normalizeUrl(url));
     return content ? content.html : undefined;
   }
 
   handleContentLoading(payload) {
-    let {url} = payload;
-    this.content[url] = {state: ContentState.LOADING};
+    const { url } = payload;
+    this.contents[url] = { state: ContentState.LOADING };
     this.emitChange();
   }
-  
+
   handleContentLoaded(payload) {
-    let {url, html} = payload;
-    this.content[url] = {state: ContentState.LOADED, html};
+    const { url, content } = payload;
+    this.contents[url] = { state: ContentState.LOADED, html: content.html, meta: content.meta };
     this.emitChange();
   }
-  
+
   handleContentLoadFailure(payload) {
-    let {url, err} = payload;
-    this.content[url] = {state: ContentState.ERROR, err};
+    const { url, err } = payload;
+    this.contents[url] = { state: ContentState.ERROR, err };
     this.emitChange();
   }
-  
+
   dehydrate() {
     return {
-      content: this.content
+      contents: this.contents
     };
   }
-  
+
   rehydrate(state) {
-    this.content = state.content;
+    this.contents = state.contents;
   }
-  
+
 }
 
 ContentStore.storeName = 'ContentStore';
 ContentStore.handlers = {
-  'CONTENT_LOADING':      'handleContentLoading',
-  'CONTENT_LOAD_SUCCESS': 'handleContentLoaded',
-  'CONTENT_LOAD_FAILURE': 'handleContentLoadFailure'
+  CONTENT_LOADING: 'handleContentLoading',
+  CONTENT_LOAD_SUCCESS: 'handleContentLoaded',
+  CONTENT_LOAD_FAILURE: 'handleContentLoadFailure'
 };
 
 export default ContentStore;

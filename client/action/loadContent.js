@@ -1,42 +1,35 @@
-import {parse} from 'url';
-import ContentStore, {ContentState} from '../stores/ContentStore';
-import NavigationStore from '../stores/NavigationStore';
+import { parse } from 'url';
+import ContentStore, { ContentState } from '../stores/ContentStore';
 
 export default function loadContent(context, route, done) {
+  const logger = context.getService('LoggingService');
+  const url = parse(route.url).pathname;
 
-  let logger = context.getService('LoggingService');
-  let url = parse(route.url).pathname;
+  context.dispatch('CONTENT_SELECTED', { url });
 
-  context.dispatch('CONTENT_SELECTED', {url});
-
-  let metadata = context.getStore(NavigationStore).getMetadata(url);
-  if (metadata) {
+  const success = (content) => {
     context.dispatch('UPDATE_PAGE_METADATA', {
-      pageTitle: metadata.title,
-      pageDescription: metadata.description
+      pageTitle: content.meta.title,
+      pageDescription: content.meta.description
     });
-  }
-
-  let success = (html) => {
-    context.dispatch('CONTENT_LOAD_SUCCESS', {url, html});
-    logger.debug('Content loaded successfully.', {url});
+    context.dispatch('CONTENT_LOAD_SUCCESS', { url, content });
+    logger.debug('Content loaded successfully.', { url });
     if (done) done();
   };
 
-  let failure = (err) => {
-    context.dispatch('CONTENT_LOAD_FAILURE', {url, err});
+  const failure = (err) => {
+    context.dispatch('CONTENT_LOAD_FAILURE', { url, err });
     logger.warn('Error loading content.', { url, err });
     if (done) done();
   };
 
   // First, check to see if the content has already been loaded.
-  let content = context.getStore(ContentStore).getContent(url);
+  const content = context.getStore(ContentStore).getContent(url);
   if (content) {
-    if (content.state == ContentState.LOADED) {
+    if (content.state === ContentState.LOADED) {
       // If it has been loaded, just return the already-loaded content.
-      return success(content.html);
-    }
-    else if (content.state == ContentState.LOADING) {
+      return success(content);
+    } else if (content.state === ContentState.LOADING) {
       // If it's already being loaded, don't load it again.
       return done();
     }
@@ -44,10 +37,9 @@ export default function loadContent(context, route, done) {
 
   // If the content hasn't been loaded (or a previous load resulted in
   // an error), try to load it using the ContentService.
-  context.dispatch('CONTENT_LOADING', {url});
+  context.dispatch('CONTENT_LOADING', { url });
   return context.getService('ContentService')
   .load(url)
   .then(success)
   .catch(failure);
-
 }
