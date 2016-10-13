@@ -54,6 +54,9 @@ class Sidebar extends React.Component {
   }
 
   shouldComponentUpdate(nextProps, nextState) {
+    // There are situations when the pages are transitioning when the section or the url
+    // may not yet be known. To provide a smooth transition we dont want to rerender this
+    // component until the new page's values are set.
     if (!nextProps.section || !nextProps.url) {
       return false;
     }
@@ -211,10 +214,11 @@ class Sidebar extends React.Component {
 }
 
 Sidebar.propTypes = {
+  // Note: section and url required because of state change, see shouldComponentUpdate
   items: React.PropTypes.array.isRequired,
-  section: React.PropTypes.string.isRequired,
+  section: React.PropTypes.string,
   maxDepth: React.PropTypes.number,
-  url: React.PropTypes.string.isRequired,
+  url: React.PropTypes.string,
   includeSectionInBreadcrumb: React.PropTypes.bool,
   isQuickstart: React.PropTypes.bool
 };
