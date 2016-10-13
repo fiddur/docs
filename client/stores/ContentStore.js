@@ -1,12 +1,7 @@
 import { BaseStore } from 'fluxible/addons';
 import _ from 'lodash';
 import normalizeUrl from '../util/normalizeUrl';
-
-export const ContentState = {
-  LOADING: 'LOADING',
-  LOADED: 'LOADED',
-  ERROR: 'ERROR'
-};
+import LoadState from './LoadState';
 
 class ContentStore extends BaseStore {
 
@@ -26,19 +21,19 @@ class ContentStore extends BaseStore {
 
   handleContentLoading(payload) {
     const { url } = payload;
-    this.contents[url] = { state: ContentState.LOADING };
+    this.contents[url] = { state: LoadState.LOADING };
     this.emitChange();
   }
 
   handleContentLoaded(payload) {
     const { url, content } = payload;
-    this.contents[url] = { state: ContentState.LOADED, html: content.html, meta: content.meta };
+    this.contents[url] = { state: LoadState.LOADED, html: content.html, meta: content.meta };
     this.emitChange();
   }
 
   handleContentLoadFailure(payload) {
     const { url, err } = payload;
-    this.contents[url] = { state: ContentState.ERROR, err };
+    this.contents[url] = { state: LoadState.ERROR, err };
     this.emitChange();
   }
 

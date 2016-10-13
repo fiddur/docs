@@ -10,6 +10,7 @@ import { ArticleService, ServiceKeys } from 'auth0-tutorial-navigator';
 import LoggingService from './services/LoggingService.client';
 import ContentService from './services/ContentService.client';
 import SearchService from './services/SearchService';
+import NavigationService from './services/NavigationService.client';
 
 require('./styles/docs.styl');
 
@@ -27,6 +28,7 @@ let plugin = app.getPlugin('ServiceProxyPlugin');
 plugin.registerService(ServiceKeys.ArticleService, ArticleService);
 plugin.registerService('LoggingService', LoggingService);
 plugin.registerService('ContentService', ContentService);
+plugin.registerService('NavigationService', NavigationService);
 
 debug('rehydrating app');
 

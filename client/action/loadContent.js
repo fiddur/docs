@@ -1,5 +1,6 @@
 import { parse } from 'url';
-import ContentStore, { ContentState } from '../stores/ContentStore';
+import ContentStore from '../stores/ContentStore';
+import LoadState from '../stores/LoadState';
 
 export default function loadContent(context, route, done) {
   const logger = context.getService('LoggingService');
@@ -26,10 +27,10 @@ export default function loadContent(context, route, done) {
   // First, check to see if the content has already been loaded.
   const content = context.getStore(ContentStore).getContent(url);
   if (content) {
-    if (content.state === ContentState.LOADED) {
+    if (content.state === LoadState.LOADED) {
       // If it has been loaded, just return the already-loaded content.
       return success(content);
-    } else if (content.state === ContentState.LOADING) {
+    } else if (content.state === LoadState.LOADING) {
       // If it's already being loaded, don't load it again.
       return done();
     }
