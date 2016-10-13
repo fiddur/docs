@@ -1,5 +1,6 @@
 import * as React from 'react';
 import _ from 'lodash';
+import PureRenderMixin from 'react-addons-pure-render-mixin';
 import { connectToStores } from 'fluxible-addons-react';
 import { StickyContainer, Sticky } from 'react-sticky';
 import NavigationStore from '../stores/NavigationStore';
@@ -50,6 +51,13 @@ class Sidebar extends React.Component {
 
   componentWillReceiveProps(nextProps) {
     this.getBreadcrumb();
+  }
+
+  shouldComponentUpdate(nextProps, nextState) {
+    if (!nextProps.section || !nextProps.url) {
+      return false;
+    }
+    return PureRenderMixin.shouldComponentUpdate(this, nextProps, nextState);
   }
 
   componentDidUpdate() {

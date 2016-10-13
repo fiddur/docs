@@ -2,7 +2,7 @@
   "name": "auth0-docs",
   "version": "2.0.0",
   "npm-shrinkwrap-version": "6.0.2",
-  "node-version": "v4.5.0",
+  "node-version": "v4.4.2",
   "dependencies": {
     "async": {
       "version": "0.2.10",
@@ -379,11 +379,13 @@
       "resolved": "git://github.com/auth0/styleguide.git#7189d6111be11f31ad87b0e07b5d94901ed5ecd4"
     },
     "auth0-tutorial-navigator": {
-      "version": "3.9.2",
-      "resolved": "git://github.com/auth0/tutorial-navigator.git#7ed986fad2926028b50f8160d78008aa73574e52",
+      "version": "3.8.0",
+      "from": "auth0-tutorial-navigator@git://github.com/auth0/tutorial-navigator.git#c2ceabf1d8b53c1b387a9b3b809a00441dab2b39",
+      "resolved": "git://github.com/auth0/tutorial-navigator.git#c2ceabf1d8b53c1b387a9b3b809a00441dab2b39",
       "dependencies": {
         "auth0-styleguide": {
           "version": "4.8.6",
+          "from": "auth0-styleguide@git://github.com/auth0/styleguide.git#257e73d46ed0242aa6c53099a622eb212ef36f91",
           "resolved": "git://github.com/auth0/styleguide.git#257e73d46ed0242aa6c53099a622eb212ef36f91"
         },
         "flux": {
@@ -2870,6 +2872,10 @@
           "resolved": "https://registry.npmjs.org/object-assign/-/object-assign-4.1.0.tgz"
         }
       }
+    },
+    "react-addons-pure-render-mixin": {
+      "version": "15.3.2",
+      "resolved": "https://registry.npmjs.org/react-addons-pure-render-mixin/-/react-addons-pure-render-mixin-15.3.2.tgz"
     },
     "react-dom": {
       "version": "15.3.2",
