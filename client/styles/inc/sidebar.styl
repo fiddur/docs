@@ -37,6 +37,18 @@ body
     font-size: 14px
     padding: 6px 0
 
+    .arrow-item
+
+      &:hover i
+        left 4px
+
+      i
+        position relative
+        left 0
+        font-size 10px
+        margin-left 10px
+        transition all 0.2s ease-out
+
     .sidebar-item-icon
       margin-right: 12px
 
@@ -44,6 +56,7 @@ body
       white-space: nowrap
 
     &.sidebar-item-depth0
+
       +breakpoint("desktop", "max")
         margin-left 15px
         margin-right 15px
@@ -55,6 +68,13 @@ body
           margin-top 8px
           margin-bottom 8px
           width 100%
+
+      +breakpoint("desktop")
+        &.expanded
+          .sidebar-item-list-depth1,
+          .sidebar-item-list-depth2
+            height auto
+            max-height none
 
     a
       &:link, &:visited

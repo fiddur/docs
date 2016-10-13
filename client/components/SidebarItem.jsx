@@ -21,7 +21,10 @@ const SidebarItem = ({ article, currentDepth, maxDepth, handleOnClick }) => {
   }
 
   return (
-    <li className={`sidebar-item sidebar-item-depth${currentDepth}`} onClick={handleOnClick}>
+    <li
+      className={`sidebar-item sidebar-item-depth${currentDepth} ${article.expanded ? 'expanded' : ''}`}
+      onClick={handleOnClick}
+    >
       <ArticleLink article={article}>
         <span className="sidebar-item-name">{article.title}</span>
       </ArticleLink>
