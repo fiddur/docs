@@ -1,0 +1,1 @@
+Here is a snippet: <%= snippet(snippets.example) %>

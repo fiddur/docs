@@ -5,7 +5,7 @@ describe('AutoUrlPlugin', () => {
 
   describe('when getMetadata() is called', () => {
 
-    describe('with url already set in metadata', () => {
+    describe('with url already set on document', () => {
       it('does not return a new url', () => {
         const plugin = new AutoUrlPlugin();
         const meta = plugin.getMetadata({ url: '/articles/test-example' }, '');
@@ -13,7 +13,7 @@ describe('AutoUrlPlugin', () => {
       });
     });
 
-    describe('with url not set in metadata', () => {
+    describe('with url not set on document', () => {
       it('returns a url using the path', () => {
         const path = '/articles/test-example';
         const plugin = new AutoUrlPlugin();

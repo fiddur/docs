@@ -5,7 +5,7 @@ describe('AutoEditUrlPlugin', () => {
 
   describe('when getMetadata() is called', () => {
 
-    describe('with editUrl already set in metadata', () => {
+    describe('with editUrl already set on document', () => {
       it('does not return a new editUrl', () => {
         const plugin = new AutoEditUrlPlugin();
         const meta = plugin.getMetadata({ editUrl: 'http://example.com' }, '');
@@ -13,7 +13,7 @@ describe('AutoEditUrlPlugin', () => {
       });
     });
 
-    describe('with editUrl not set in metadata', () => {
+    describe('with editUrl not set on document', () => {
       it('returns an editUrl using the baseUrl and the hash', () => {
         const plugin = new AutoEditUrlPlugin();
         const hash = 'example.md';

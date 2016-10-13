@@ -1,0 +1,1 @@
+Snippet: foo = ${foo}, bar = ${bar}

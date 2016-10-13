@@ -8,13 +8,14 @@ describe('Scanner', () => {
 
   let scanner;
   const expectedFiles = [
-    'docs/include-html.md',
-    'docs/include-html-locals.md',
-    'docs/include-markdown.md',
-    'docs/include-markdown-locals.md',
-    'docs/include-multiple.md',
-    'docs/test.md',
-    'docs/test.html'
+    'docs/articles/include-html.md',
+    'docs/articles/include-html-locals.md',
+    'docs/articles/include-markdown.md',
+    'docs/articles/include-markdown-locals.md',
+    'docs/articles/include-multiple.md',
+    'docs/articles/include-snippet.md',
+    'docs/articles/test.md',
+    'docs/articles/test.html'
   ];
 
   beforeEach(() => {
@@ -39,7 +40,7 @@ describe('Scanner', () => {
   describe('when a file changes after it has been scanned', () => {
 
     it('emits a change event for the file', (done) => {
-      const filename = 'docs/test.md';
+      const filename = 'docs/articles/test.md';
       scanner.on('change', file => {
         expect(file.path).to.equal(filename);
         done();

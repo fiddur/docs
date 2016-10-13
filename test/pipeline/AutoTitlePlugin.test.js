@@ -3,7 +3,7 @@ import AutoTitlePlugin from '../../lib/pipeline/plugins/metadata/AutoTitlePlugin
 
 const EXAMPLES = {
   AlreadyHasTitle: {
-    meta: { title: 'Title in Metadata' },
+    meta: { title: 'Title on document' },
     content: '# Title in Content\nThis is an example document.'
   },
   TitleInContent: {
@@ -20,7 +20,7 @@ describe('AutoTitlePlugin', () => {
 
   describe('when getMetadata() is called', () => {
 
-    describe('with the title already set in metadata', () => {
+    describe('with the title already set on document', () => {
       it('does not return a new title', () => {
         const plugin = new AutoTitlePlugin();
         const example = EXAMPLES.AlreadyHasTitle;
@@ -29,7 +29,7 @@ describe('AutoTitlePlugin', () => {
       });
     });
 
-    describe('with the title not set in metadata, but available in content', () => {
+    describe('with the title not set on document, but available in content', () => {
       it('extracts the title from the content', () => {
         const plugin = new AutoTitlePlugin();
         const example = EXAMPLES.TitleInContent;
@@ -38,7 +38,7 @@ describe('AutoTitlePlugin', () => {
       });
     });
 
-    describe('with the title not set in metadata, nor available in content', () => {
+    describe('with the title not set on document, nor available in content', () => {
       it('sets a default title on the Document', () => {
         const plugin = new AutoTitlePlugin();
         const example = EXAMPLES.NoTitle;

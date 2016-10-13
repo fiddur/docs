@@ -8,7 +8,7 @@ import Document from '../../lib/pipeline/models/Document';
 describe('Compiler', () => {
 
   let compiler;
-  const file = getTestFile('docs/test.html');
+  const file = getTestFile('docs/articles/test.html');
 
   const metadataPlugins = [
     { getMetadata(meta, content) { return { foo: 42 }; } },

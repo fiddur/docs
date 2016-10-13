@@ -5,7 +5,7 @@ describe('AutoSectionPlugin', () => {
 
   describe('when getMetadata() is called', () => {
 
-    describe('with section already set in metadata', () => {
+    describe('with section already set on document', () => {
       it('does not return a new section', () => {
         const plugin = new AutoSectionPlugin();
         const meta = plugin.getMetadata({ section: 'api' }, '');
@@ -13,7 +13,7 @@ describe('AutoSectionPlugin', () => {
       });
     });
 
-    describe('with section not set in metadata', () => {
+    describe('with section not set on document', () => {
       it('returns a default section', () => {
         const plugin = new AutoSectionPlugin();
         const meta = plugin.getMetadata({}, '');
