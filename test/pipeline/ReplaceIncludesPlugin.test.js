@@ -21,7 +21,7 @@ describe('ReplaceIncludesPlugin', () => {
 
     describe('when the content contains a call to include()', () => {
       it('adds the included file as a dependency', () => {
-        const file = getTestFile('docs/articles/include-markdown.md');
+        const file = getTestFile('articles/include-markdown.md');
         const doc = new Document(file, { foo: 'meta-foo', bar: 'meta-bar' });
         plugin.transform(doc, file.text);
         expect(doc.dependencies.has(resolve(__dirname, 'docs/articles/_includes/markdown.md')));
@@ -31,7 +31,7 @@ describe('ReplaceIncludesPlugin', () => {
     describe('when the content contains a call to include() for a markdown file', () => {
       describe('without a hash of local variables', () => {
         it('inserts the included content using variables from metadata', () => {
-          const file = getTestFile('docs/articles/include-markdown.md');
+          const file = getTestFile('articles/include-markdown.md');
           const doc = new Document(file, { foo: 'meta-foo', bar: 'meta-bar' });
           const transformed = plugin.transform(doc, file.text);
           expect(transformed).to.equal('Here is an include: <p>Markdown include: foo = meta-foo, bar = meta-bar</p>\n');
@@ -39,7 +39,7 @@ describe('ReplaceIncludesPlugin', () => {
       });
       describe('with a hash of local variables', () => {
         it('inserts the included content using variables from the local hash', () => {
-          const file = getTestFile('docs/articles/include-markdown-locals.md');
+          const file = getTestFile('articles/include-markdown-locals.md');
           const doc = new Document(file, { foo: 'meta-foo', bar: 'meta-bar' });
           const transformed = plugin.transform(doc, file.text);
           expect(transformed).to.equal('Here is an include: <p>Markdown include: foo = locals-foo, bar = locals-bar</p>\n');
@@ -50,7 +50,7 @@ describe('ReplaceIncludesPlugin', () => {
     describe('when the content contains a call to include() for an HTML file', () => {
       describe('without a hash of local variables', () => {
         it('inserts the included content using variables from metadata', () => {
-          const file = getTestFile('docs/articles/include-html.md');
+          const file = getTestFile('articles/include-html.md');
           const doc = new Document(file, { foo: 'meta-foo', bar: 'meta-bar' });
           const transformed = plugin.transform(doc, file.text);
           expect(transformed).to.equal('Here is an include: HTML include: foo = meta-foo, bar = meta-bar');
@@ -58,7 +58,7 @@ describe('ReplaceIncludesPlugin', () => {
       });
       describe('with a hash of local variables', () => {
         it('inserts the included content using variables from the local hash', () => {
-          const file = getTestFile('docs/articles/include-html-locals.md');
+          const file = getTestFile('articles/include-html-locals.md');
           const doc = new Document(file, { foo: 'meta-foo', bar: 'meta-bar' });
           const transformed = plugin.transform(doc, file.text);
           expect(transformed).to.equal('Here is an include: HTML include: foo = locals-foo, bar = locals-bar');
@@ -68,7 +68,7 @@ describe('ReplaceIncludesPlugin', () => {
 
     describe('when the content contains multiple calls to include()', () => {
       it('processes both includes correctly', () => {
-        const file = getTestFile('docs/articles/include-multiple.md');
+        const file = getTestFile('articles/include-multiple.md');
         const doc = new Document(file, { foo: 'meta-foo', bar: 'meta-bar' });
         const transformed = plugin.transform(doc, file.text);
         expect(transformed).to.equal(
@@ -80,7 +80,7 @@ describe('ReplaceIncludesPlugin', () => {
 
     describe('when the content contains a call to snippet()', () => {
       it('adds the included file as a dependency', () => {
-        const file = getTestFile('docs/articles/include-snippet.md');
+        const file = getTestFile('articles/include-snippet.md');
         const doc = new Document(file, {
           snippets: { example: 'example-snippet' },
           foo: 'meta-foo',
@@ -90,7 +90,7 @@ describe('ReplaceIncludesPlugin', () => {
         expect(doc.dependencies.has(resolve(__dirname, 'docs/snippets/example-snippet.md')));
       });
       it('inserts the included content', () => {
-        const file = getTestFile('docs/articles/include-snippet.md');
+        const file = getTestFile('articles/include-snippet.md');
         const doc = new Document(file, {
           snippets: { example: 'example-snippet' },
           foo: 'meta-foo',
