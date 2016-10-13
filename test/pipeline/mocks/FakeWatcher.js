@@ -10,18 +10,18 @@ class FakeWatcher extends EventEmitter {
     this.baseDir = options.baseDir;
   }
 
-  add(paths) {
+  watch(paths) {
   }
 
   stop() {
   }
 
   simulateAdd(path) {
-    this.emit('add', new File(this.baseDir, path));
+    this.emit('add', File.load(this.baseDir, path));
   }
 
   simulateChange(path) {
-    this.emit('change', new File(this.baseDir, path));
+    this.emit('change', File.load(this.baseDir, path));
   }
 
 }

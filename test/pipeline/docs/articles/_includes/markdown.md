@@ -1,1 +1,1 @@
-Markdown include: foo = ${foo}, bar = ${bar}
+Markdown _include_: foo = ${foo}, bar = ${bar}
