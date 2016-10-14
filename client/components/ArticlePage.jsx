@@ -9,6 +9,7 @@ import NavigationBar from './NavigationBar';
 import Sidebar from './Sidebar';
 import FeedbackFooter from './FeedbackFooter';
 import setAnchorLinks from '../browser/anchorLinks';
+import Spinner from './Spinner';
 
 class ArticlePage extends React.Component {
 
@@ -70,13 +71,7 @@ class ArticlePage extends React.Component {
 
     // If the document's content hasn't been loaded yet, display a spinner.
     if (!content || !content.html || !content.meta) {
-      return (
-        <section className="docs-content">
-          <div className='auth0-spinner'>
-            <div className='spinner'></div>
-          </div>
-        </section>
-      );
+      return (<Spinner />);
     }
 
     let classes = ['docs-content']
