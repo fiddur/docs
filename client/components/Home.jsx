@@ -1,16 +1,17 @@
 import React from 'react';
-import {connectToStores} from 'fluxible-addons-react';
-import {TutorialNavigator} from 'auth0-tutorial-navigator';
-import {quickstartNavigationAction} from '../action/quickstartNavigationAction';
+import { connectToStores } from 'fluxible-addons-react';
+import { TutorialNavigator, TutorialStore } from 'auth0-tutorial-navigator';
+import { quickstartNavigationAction } from '../action/quickstartNavigationAction';
 import NavigationStore from '../stores/NavigationStore';
 import CategoryCard from './CategoryCard';
 import TryBanner from './TryBanner';
 import SearchBox from './SearchBox';
+import Spinner from './Spinner';
 
 // TODO: This depends on a "carousel" ref that's set by the TutorialNavigator itself.
 // Can we move this into the component's codebase somehow?
-var initCarouselInBrowser = function() {
-  var $carousel = $(this.refs.carousel);
+function initCarouselInBrowser() {
+  const $carousel = $(this.refs.carousel);
   $carousel.owlCarousel({
     margin: 20,
     center: true,
@@ -30,16 +31,29 @@ var initCarouselInBrowser = function() {
       880: { items: 4, stagePadding: 0, autoWidth: true, center: false, mouseDrag: false, touchDrag: false }
     }
   });
-};
+}
 
 class Home extends React.Component {
 
+  renderTutorialNav() {
+    if (!this.props.quickstarts) {
+      return <Spinner />;
+    }
+
+    return (
+      <TutorialNavigator
+        {...this.props}
+        customNavigationAction={quickstartNavigationAction}
+        componentLoadedInBrowser={initCarouselInBrowser}
+      />
+    );
+  }
+
   render() {
+    const { cardDefinitions, isAuthenticated } = this.props;
+    const tryBanner = isAuthenticated ? null : <TryBanner />;
 
-    let {cardDefinitions, isAuthenticated} = this.props;
-    let tryBanner = isAuthenticated ? null : <TryBanner/>;
-
-    let cards = cardDefinitions.map(category => (
+    const cards = cardDefinitions.map(category => (
       <CategoryCard key={category.id} category={category} />
     ));
 
@@ -50,11 +64,7 @@ class Home extends React.Component {
             <h1>Documentation</h1>
           </div>
         </div>
-        <TutorialNavigator
-          {...this.props}
-          customNavigationAction={quickstartNavigationAction}
-          componentLoadedInBrowser={initCarouselInBrowser}
-        />
+        {this.renderTutorialNav()}
         {tryBanner}
         <div className="category-cards container center-block">
           <h1>Curated content to fully understand our platform</h1>
@@ -68,14 +78,17 @@ class Home extends React.Component {
 }
 
 Home.propTypes = {
-  isAuthenticated: React.PropTypes.bool
-}
+  isAuthenticated: React.PropTypes.bool,
+  quickstarts: React.PropTypes.object,
+  cardDefinitions: React.PropTypes.array
+};
 
 Home.contextTypes = {
   getStore: React.PropTypes.func
 };
 
-Home = connectToStores(Home, [NavigationStore], (context, props) => ({
+Home = connectToStores(Home, [NavigationStore, TutorialStore], (context, props) => ({
+  quickstarts: context.getStore(TutorialStore).getQuickstarts(),
   cardDefinitions: context.getStore(NavigationStore).getCards()
 }));
 

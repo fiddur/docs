@@ -6,26 +6,26 @@ class StaticContentStore extends BaseStore {
 
   constructor(dispatcher) {
     super(dispatcher);
-    this.html = {};
+    this.content = {};
   }
 
-  getContentHtml() {
-    return this.html;
+  getContent() {
+    return this.content;
   }
 
   handleContentLoaded(payload) {
-    this.html = payload.html;
+    this.content = payload;
     this.emitChange();
   }
 
   dehydrate() {
     return {
-      html: this.html
+      content: this.content
     };
   }
 
   rehydrate(state) {
-    this.html = state.html;
+    this.content = state.content;
   }
 
 }

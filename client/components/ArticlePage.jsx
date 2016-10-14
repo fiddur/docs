@@ -9,6 +9,7 @@ import NavigationBar from './NavigationBar';
 import Sidebar from './Sidebar';
 import FeedbackFooter from './FeedbackFooter';
 import setAnchorLinks from '../browser/anchorLinks';
+import Spinner from './Spinner';
 
 class ArticlePage extends React.Component {
 
@@ -66,43 +67,40 @@ class ArticlePage extends React.Component {
   }
 
   renderContent() {
-    let {url, html, metadata} = this.props;
+    let { url, content } = this.props;
 
     // If the document's content hasn't been loaded yet, display a spinner.
-    if (!html) {
-      return (
-        <section className="docs-content">
-          <div className='auth0-spinner'>
-            <div className='spinner'></div>
-          </div>
-        </section>
-      );
+    if (!content || !content.html || !content.meta) {
+      return (<Spinner />);
     }
 
     let classes = ['docs-content']
-    if (metadata) classes = classes.concat(metadata.classes);
+    if (content.meta) classes = classes.concat(content.meta.classes);
 
     return (
       <div>
-        <article className={classes.join(' ')} data-swiftype-name="body" data-swiftype-type="text" data-swiftype-index='true' dangerouslySetInnerHTML={{__html: html}} />
-        <FeedbackFooter articleUrl={url} editUrl={metadata.editUrl} />
+        <article className={classes.join(' ')} data-swiftype-name="body" data-swiftype-type="text" data-swiftype-index='true' dangerouslySetInnerHTML={{ __html: content.html }} />
+        <FeedbackFooter articleUrl={url} editUrl={ content.meta.editUrl } />
       </div>
     );
   }
 
   render() {
-    const { metadata, sidebarArticles } = this.props;
+    const { content, sidebarArticles } = this.props;
     const { url } = this.props.currentRoute;
+
+    // TODO: Sidebar needs to not update until all this is ready again
+    const section = (content && content.meta) ? content.meta.section : undefined;
 
     return (
       <div className="docs-article">
         <div className="document">
-          <NavigationBar currentSection={metadata.section} />
+          <NavigationBar currentSection={section} />
           <StickyContainer>
             <div className="js-doc-template container" style={{ marginBottom: '40px' }}>
               <div className="row">
                 <div className="sidebar-container col-md-3">
-                  <Sidebar items={sidebarArticles} section={metadata.section} maxDepth={3} url={url} />
+                  <Sidebar items={sidebarArticles} section={section} maxDepth={3} url={url} />
                 </div>
                 <div ref="content" className="col-md-9">
                   {this.renderContent()}
@@ -123,14 +121,18 @@ ArticlePage = connectToStores(ArticlePage, [ContentStore], (context, props) => {
   let contentStore = context.getStore(ContentStore);
   let navigationStore = context.getStore(NavigationStore);
 
+  const content = contentStore.getContent(url);
+
+  let sidebarArticles = [];
+  if (content && content.meta) {
+    sidebarArticles = navigationStore.getSidebarArticles(content.meta.section);
+  }
+
   return {
     url,
     env: appStore.getEnvironmentVars(),
-    title: appStore.getPageTitle(),
-    description: appStore.getPageDescription(),
-    html: contentStore.getContentHtml(url),
-    metadata: navigationStore.getMetadata(url),
-    sidebarArticles: navigationStore.getSidebarArticles(navigationStore.getMetadata(url).section)
+    content,
+    sidebarArticles
   };
 });
 

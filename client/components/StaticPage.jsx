@@ -12,11 +12,11 @@ import setAnchorLinks from '../browser/anchorLinks';
 class StaticPage extends React.Component {
 
   render() {
-    let { html, metadata } = this.props;
+    let { content } = this.props;
     const { url } = this.props.currentRoute;
 
     // If the document's content hasn't been loaded yet, display a spinner.
-    if (!html) {
+    if (!content || !content.html || !content.meta) {
       return (
         <section className="docs-content">
           <div className='auth0-spinner'>
@@ -27,10 +27,10 @@ class StaticPage extends React.Component {
     }
 
     let classes = ['content']
-    if (metadata) classes = classes.concat(metadata.classes);
+    if (content.meta) classes = classes.concat(content.meta.classes);
 
     return (
-      <section className={classes.join(' ')} data-swiftype-name="body" data-swiftype-type="text" data-swiftype-index='true' dangerouslySetInnerHTML={{__html: html}} />
+      <section className={classes.join(' ')} data-swiftype-name="body" data-swiftype-type="text" data-swiftype-index='true' dangerouslySetInnerHTML={{__html: content.html}} />
     );
   }
 
@@ -40,16 +40,14 @@ StaticPage = connectToStores(StaticPage, [StaticContentStore], (context, props) 
 
   let {url} = props.currentRoute;
   let appStore = context.getStore(ApplicationStore);
-  let contentStore = context.getStore(StaticContentStore);
-  let navigationStore = context.getStore(NavigationStore);
+  let staticContentStore = context.getStore(StaticContentStore);
 
   return {
     url,
     env: appStore.getEnvironmentVars(),
     title: appStore.getPageTitle(),
     description: appStore.getPageDescription(),
-    html: contentStore.getContentHtml(),
-    metadata: navigationStore.getMetadata(url)
+    content: staticContentStore.getContent()
   };
 });
 

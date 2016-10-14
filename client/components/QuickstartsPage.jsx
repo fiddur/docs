@@ -1,7 +1,9 @@
 import React from 'react';
-import { TutorialNavigator } from 'auth0-tutorial-navigator';
+import { connectToStores } from 'fluxible-addons-react';
+import { TutorialNavigator, TutorialStore } from 'auth0-tutorial-navigator';
 import { quickstartNavigationAction } from '../action/quickstartNavigationAction';
 import NavigationBar from './NavigationBar';
+import Spinner from './Spinner';
 
 // TODO: This depends on a "carousel" ref that's set by the TutorialNavigator itself.
 // Can we move this into the component's codebase somehow?
@@ -31,6 +33,10 @@ var initCarouselInBrowser = function() {
 class QuickstartsPage extends React.Component {
 
   render() {
+    if (!this.props.quickstarts) {
+      return (<Spinner />);
+    }
+
     return (
       <div className="document docs-quickstart-selector">
         <NavigationBar currentSection="quickstarts" />
@@ -44,5 +50,21 @@ class QuickstartsPage extends React.Component {
   }
 
 }
+
+QuickstartsPage.contextTypes = {
+  getStore: React.PropTypes.func
+};
+
+QuickstartsPage.propTypes = {
+  quickstarts: React.PropTypes.object
+};
+
+
+QuickstartsPage = connectToStores(QuickstartsPage, [TutorialStore], (context, props) => {
+  const store = context.getStore(TutorialStore);
+  return {
+    quickstarts: store.getQuickstarts()
+  };
+});
 
 export default QuickstartsPage;

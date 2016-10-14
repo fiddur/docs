@@ -10,20 +10,23 @@ export default function(req, res) {
   ContentService.load = (id) => {
     return new Promise((resolve, reject) => {
 
-      let url = parse(req.url).pathname.replace(/^\/docs/, '');
-      let doc = docsByUrl[url];
+      const url = parse(req.url).pathname.replace(/^\/docs/, '');
+      const doc = docsByUrl[url];
 
       if (!doc) {
-        var error = new Error('No content found at ' + req.url);
+        const error = new Error('No content found at ' + req.url);
         error.status = 404;
         return reject(error);
       }
 
-      let context = _.clone(res.locals);
-      let content = renderContent(doc, context, true /* absolute links */);
+      const context = _.clone(res.locals);
+      const html = renderContent(doc, context, true /* absolute links */);
+      const result = {
+        html,
+        meta: _.clone(doc.meta)
+      };
 
-      return resolve(content);
-
+      return resolve(result);
     });
   };
 

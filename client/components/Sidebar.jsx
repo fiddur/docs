@@ -1,5 +1,6 @@
 import * as React from 'react';
 import _ from 'lodash';
+import PureRenderMixin from 'react-addons-pure-render-mixin';
 import { connectToStores } from 'fluxible-addons-react';
 import { StickyContainer, Sticky } from 'react-sticky';
 import NavigationStore from '../stores/NavigationStore';
@@ -50,6 +51,16 @@ class Sidebar extends React.Component {
 
   componentWillReceiveProps(nextProps) {
     this.getBreadcrumb();
+  }
+
+  shouldComponentUpdate(nextProps, nextState) {
+    // There are situations when the pages are transitioning when the section or the url
+    // may not yet be known. To provide a smooth transition we dont want to rerender this
+    // component until the new page's values are set.
+    if (!nextProps.section || !nextProps.url) {
+      return false;
+    }
+    return PureRenderMixin.shouldComponentUpdate(this, nextProps, nextState);
   }
 
   componentDidUpdate() {
@@ -203,10 +214,11 @@ class Sidebar extends React.Component {
 }
 
 Sidebar.propTypes = {
+  // Note: section and url required because of state change, see shouldComponentUpdate
   items: React.PropTypes.array.isRequired,
-  section: React.PropTypes.string.isRequired,
+  section: React.PropTypes.string,
   maxDepth: React.PropTypes.number,
-  url: React.PropTypes.string.isRequired,
+  url: React.PropTypes.string,
   includeSectionInBreadcrumb: React.PropTypes.bool,
   isQuickstart: React.PropTypes.bool
 };
