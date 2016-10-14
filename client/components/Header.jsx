@@ -50,7 +50,6 @@ class Header extends Component {
     };
 
     if (user) {
-      props.primaryButtonText = 'Open Dashboard';
       props.primaryButtonLink = 'https://manage.auth0.com/';
     } else {
       props.primaryButtonOnClick = () => window.login();
