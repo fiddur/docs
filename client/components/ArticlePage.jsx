@@ -79,8 +79,14 @@ class ArticlePage extends React.Component {
 
     return (
       <div>
-        <article className={classes.join(' ')} data-swiftype-name="body" data-swiftype-type="text" data-swiftype-index='true' dangerouslySetInnerHTML={{ __html: content.html }} />
-        <FeedbackFooter articleUrl={url} editUrl={ content.meta.editUrl } />
+        <article
+          className={classes.join(' ')}
+          data-swiftype-name="body"
+          data-swiftype-type="text"
+          data-swiftype-index="true"
+          dangerouslySetInnerHTML={{ __html: content.html }}
+        />
+        <FeedbackFooter articleUrl={url} editUrl={content.meta.editUrl} />
       </div>
     );
   }
