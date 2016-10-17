@@ -1,5 +1,4 @@
 import NavigationStore from '../stores/NavigationStore';
-import LoadState from '../stores/LoadState';
 
 export default function loadCards(context, payload) {
   const logger = context.getService('LoggingService');
@@ -15,12 +14,10 @@ export default function loadCards(context, payload) {
   };
 
   // First, check to see if the content has already been loaded.
-  const content = context.getStore(NavigationStore).getCards();
-  if (content) {
-    if (content.state === LoadState.LOADED) {
-      // If it has been loaded, just return the already-loaded content.
-      return success(content);
-    }
+  const cards = context.getStore(NavigationStore).getCards();
+  if (cards) {
+    // If it has been loaded, just return.
+    return Promise.resolve();
   }
 
   // If the cards haven't been loaded (or a previous load resulted in

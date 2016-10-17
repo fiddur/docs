@@ -43,7 +43,7 @@ class NavigationStore extends BaseStore {
     if (this.platforms) {
       return this.platforms;
     }
-    return [];
+    return undefined;
   }
 
   getQuickstarts() {
@@ -70,7 +70,6 @@ class NavigationStore extends BaseStore {
     this.platforms = payload.platforms;
     this.emitChange();
   }
-
 
   dehydrate() {
     return {
