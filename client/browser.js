@@ -7,3 +7,4 @@ require('./vendor/owl.carousel.js');
 require('./browser/locksso');
 require('./browser/metrics');
 require('./browser/sentry');
+require('./browser/slate');

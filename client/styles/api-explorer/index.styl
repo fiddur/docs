@@ -1,0 +1,156 @@
+
+@import 'vars'
+@import 'modules/nav'
+
+.api-explorer
+  position: relative;
+
+  .api-sidebar
+    position: absolute;
+    left: 0;
+    top: 0;
+    height: 100%;
+    background: color_gray_1;
+    min-height: 100vh;
+    +breakpoint("desktop")
+      width: $nav-width;
+    +breakpoint("desktop-hd")
+      width: $nav-width-hd;
+
+  ////////////////////////////////////////////////////////////////////////////////
+  // PAGE LAYOUT AND CODE SAMPLE BACKGROUND
+  ////////////////////////////////////////////////////////////////////////////////
+  .page-wrapper
+    position: relative
+    z-index: 10
+    min-height: 100%
+    padding-bottom: 1px
+
+    +breakpoint("desktop")
+      margin-left: $nav-width;
+
+    +breakpoint("desktop-hd")
+      margin-left: $nav-width-hd;
+
+    // prevent margin overflow
+    // The dark box is what gives the code samples their dark background.
+    // It sits essentially under the actual content block, which has a
+    // transparent background.
+    // I know, it's hackish, but it's the simplist way to make the left
+    // half of the content always this background color.
+    .dark-box
+      width: $examples-width
+      background-color: $examples-bg
+      position: absolute
+      right: 0
+      top: 0
+      bottom: 0
+    .lang-selector
+      position: fixed
+      z-index: 50
+      border-bottom: 5px solid $lang-select-active-bg
+
+    .lang-selector
+      background-color: $lang-select-bg
+      width: 100%
+      font-weight: bold
+      a
+        display: block
+        float: left
+        color: $lang-select-text
+        text-decoration: none
+        padding: 0 10px
+        line-height: 30px
+        outline: 0
+        &:active, &:focus
+          background-color: $lang-select-pressed-bg
+          color: $lang-select-pressed-text
+        &.active
+          background-color: $lang-select-active-bg
+          color: $lang-select-active-text
+      &:after
+        content: ''
+        clear: both
+        display: block
+
+    ////////////////////////////////////////////////////////////////////////////////
+    // CONTENT STYLES
+    ////////////////////////////////////////////////////////////////////////////////
+    // This is all the stuff with the light background in the left half of the page
+    .api-content
+      // to place content above the dark box
+      position: relative
+      z-index: 30
+      &:after
+        content: ''
+        display: block
+        clear: both
+
+      h1, h2, h3, h4, h5, h6, p, table, ul, ol, aside, dl
+        margin-right: $examples-width
+        padding-left: 30px;
+        padding-right: 30px;
+
+
+    ////////////////////////////////////////////////////////////////////////////////
+    // CODE SAMPLE STYLES
+    ////////////////////////////////////////////////////////////////////////////////
+    // This is all the stuff that appears in the right half of the page
+    .api-content
+      pre, blockquote
+        background-color: $code-bg
+        color: #fff
+        padding: 2em $main-padding
+        margin: 0
+        width: $examples-width
+        float: right
+        clear: right
+        box-sizing: border-box
+        @extend $right-col
+        & > p
+          margin: 0
+        a
+          color: #fff
+          text-decoration: none
+          border-bottom: dashed 1px #ccc
+        code
+          background-color: $code-bg !important
+      blockquote
+        & > p
+          background-color: $code-annotation-bg
+          border-radius: 5px
+          padding: $code-annotation-padding
+          color: #ccc
+          border-top: 1px solid #000
+          border-bottom: 1px solid #404040
+
+
+
+
+
+    ////////////////////////////////////////////////////////////////////////////////
+    // RESPONSIVE DESIGN
+    ////////////////////////////////////////////////////////////////////////////////
+    // These are the styles for phones and tablets
+    // There are also a couple styles disperesed
+    @media (max-width: $tablet-width)
+      .page-wrapper
+        margin-left: 0
+    @media (max-width: $phone-width)
+      .dark-box
+        display: none
+      $left-col
+        margin-right: 0
+      .tocify-wrapper .lang-selector
+        display: block
+      .page-wrapper .lang-selector
+        display: none
+      $right-col
+        width: auto
+        float: none
+      $right-col + $left-col
+        margin-top: $main-padding
+    .highlight .c, .highlight .cm, .highlight .c1, .highlight .cs
+      color: #909090
+    .highlight, .highlight .w
+      background-color: $code-bg
