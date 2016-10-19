@@ -45,6 +45,10 @@
       right: 0
       top: 0
       bottom: 0
+
+      .sticky
+        z-index 50 //Show lang-selector in front of code examples
+
     .lang-selector
       position: fixed
       z-index: 50
@@ -93,6 +97,10 @@
 
       .table
         width: $examples-width
+
+      // Remove margin-top of first header
+      h1#introduction
+        margin-top 0
 
 
     ////////////////////////////////////////////////////////////////////////////////

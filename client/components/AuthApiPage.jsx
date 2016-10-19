@@ -5,6 +5,7 @@ import PureRenderMixin from 'react-addons-pure-render-mixin';
 import ApplicationStore from '../stores/ApplicationStore';
 import NavigationStore from '../stores/NavigationStore';
 import ContentStore from '../stores/ContentStore';
+import { StickyContainer, Sticky } from 'react-sticky';
 import Spinner from './Spinner';
 
 const languages = [
@@ -44,46 +45,51 @@ class AuthApiPage extends React.Component {
 
   render() {
     return (
-      <section
-        className="content api-explorer"
-        data-swiftype-name="body"
-        data-swiftype-type="text"
-        data-swiftype-index="true"
-      >
-        <div className="api-sidebar tocify-wrapper">
-          <div className="sticky-nav-placeholder">
-            <div className="sticky-nav fixed">
-              {/* <div className="lang-selector">
-                <a href="#" data-language-name="shell">shell</a>
-                <a href="#" data-language-name="js">js</a>
-              </div> */}
-              {/* <div className="search">
-                <input type="text" className="search" id="input-search" placeholder="Search">
-              </div>
-              <ul className="search-results"></ul> */}
-              <div id="toc">
-                <div className="title">Authentication API</div>
-              </div>
-              {/* <ul className="toc-footer">
-                <li>Footer</li>
-              </ul> */}
+      <StickyContainer>
+        <section
+          className="content api-explorer"
+          data-swiftype-name="body"
+          data-swiftype-type="text"
+          data-swiftype-index="true"
+        >
+          <div className="api-sidebar tocify-wrapper">
+            <div className="sticky-nav-placeholder">
+              <Sticky>
+                <div className="sticky-nav">
+                  {/* <div className="lang-selector">
+                    <a href="#" data-language-name="shell">shell</a>
+                    <a href="#" data-language-name="js">js</a>
+                  </div> */}
+                  {/* <div className="search">
+                    <input type="text" className="search" id="input-search" placeholder="Search">
+                  </div>
+                  <ul className="search-results"></ul> */}
+                  <div id="toc">
+                    <div className="title">Authentication API</div>
+                  </div>
+                  {/* <ul className="toc-footer">
+                    <li>Footer</li>
+                  </ul> */}
+                </div>
+              </Sticky>
             </div>
           </div>
-        </div>
-        <div className="page-wrapper">
-          <div className="dark-box" />
-          <div className="api-content">
-            {this.renderContent()}
-          </div>
-          <div className="dark-box">
-            <div className="lang-selector">
-              {languages.map((language) => (
-                <a href={`#${language}`} key={language} data-language-name={language}>{language}</a>
-              ))}
+          <div className="page-wrapper">
+            <div className="dark-box">
+              <Sticky>
+                <div className="lang-selector">
+                  {languages.map((language) => (
+                    <a href={`#${language}`} key={language} data-language-name={language}>{language}</a>
+                  ))}
+                </div>
+              </Sticky>
+            </div>
+            <div className="api-content">
+              {this.renderContent()}
             </div>
           </div>
-        </div>
-      </section>
+        </section>
+      </StickyContainer>
     );
   }
 }
