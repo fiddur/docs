@@ -97,7 +97,7 @@ class Layout extends React.Component {
         <body>
           <div data-swiftype-index='false' className="docs-single">
             <div id="app" dangerouslySetInnerHTML={{__html: this.props.markup}}></div>
-            {this.props.env.fullWidth ? undefined : <Footer />}
+            {this.props.env.fullWidth || this.props.env.FRAMED_MODE ? undefined : <Footer />}
           </div>
           <script dangerouslySetInnerHTML={{__html: this.props.state}}></script>
           <script src={getAssetBundleUrl('client')}></script>

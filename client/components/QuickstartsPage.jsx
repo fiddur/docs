@@ -10,6 +10,7 @@ class QuickstartsPage extends React.Component {
 
   render() {
     const { isAuthenticated } = this.props;
+    const isFramedMode = this.props.env.FRAMED_MODE;
     const tryBanner = isAuthenticated ? null : <TryBanner />;
 
     if (!this.props.quickstarts) {
@@ -18,11 +19,11 @@ class QuickstartsPage extends React.Component {
 
     return (
       <div className="document docs-quickstart-selector">
-        <NavigationBar currentSection="quickstarts" />
+        {isFramedMode ? undefined : <NavigationBar currentSection="quickstarts" />}
         <TutorialNavigator
           {...this.props}
         />
-        {tryBanner}
+        {isFramedMode ? undefined : tryBanner}
       </div>
     );
   }

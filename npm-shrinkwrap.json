@@ -3257,6 +3257,10 @@
       "version": "5.0.5",
       "resolved": "https://registry.npmjs.org/react-sticky/-/react-sticky-5.0.5.tgz"
     },
+    "react-sticky": {
+      "version": "5.0.5",
+      "resolved": "https://registry.npmjs.org/react-sticky/-/react-sticky-5.0.5.tgz"
+    },
     "request": {
       "version": "2.75.0",
       "resolved": "https://registry.npmjs.org/request/-/request-2.75.0.tgz",

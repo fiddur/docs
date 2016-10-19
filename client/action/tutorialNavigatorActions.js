@@ -18,7 +18,7 @@ export default {
     return Promise.all([
       getPageMetadata().then(metadata => {
         context.dispatch('UPDATE_PAGE_METADATA', metadata);
-      }),
+      })
     ]);
   },
 

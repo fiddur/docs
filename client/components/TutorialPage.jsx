@@ -11,6 +11,7 @@ import Sidebar from './Sidebar';
 import TryBanner from './TryBanner';
 import IntroBanner from './IntroBanner';
 import FeedbackFooter from './FeedbackFooter';
+import TutorialNextSteps from './TutorialNavigator/TutorialNextSteps';
 import initSampleBox from '../browser/sampleBox';
 import ApplicationStore from '../stores/ApplicationStore';
 
@@ -67,16 +68,18 @@ class TutorialPage extends React.Component {
   }
 
   render() {
-
     const { quickstart, platform, article, isAuthenticated } = this.props;
     const tryBanner = isAuthenticated ? null : <TryBanner />;
     const sidebarTitle = platform ? platform.title : '';
     const sidebarItems = platform ? platform.articles : [];
+    const isFramedMode = this.props.env.FRAMED_MODE;
 
     let tutorial;
     let sidebar;
     let prevNext;
     let feedbackFooter;
+    let nextSteps;
+    let columnWidth = 12;
 
     if (article) {
       tutorial = (<Tutorial
@@ -93,35 +96,54 @@ class TutorialPage extends React.Component {
       // from the doc's metadata once we are loading it.
       const editUrl = `https://github.com/auth0/docs/edit/master/articles/${quickstart.slug}/${platform.name}/${article.name}.md`;
       feedbackFooter = <FeedbackFooter url={article.url} editUrl={editUrl} />;
+      nextSteps = (
+        <div data-swiftype-index="false">
+          <TutorialPrevNext
+            quickstart={quickstart}
+            platform={platform}
+            currentArticle={article}
+          />
+        </div>
+      );
+    }
+
+    if (isFramedMode) {
+      //nextSteps = <TutorialNextSteps quickstart={quickstart} platform={platform} />;
+    }
+
+    if (!isFramedMode) {
+      columnWidth = 9;
+      sidebar = (
+        <div className="sidebar-container col-md-3">
+          <Sidebar
+            section={sidebarTitle} maxDepth={3} includeSectionInBreadcrumb isQuickstart
+            items={sidebarItems} url={this.props.currentRoute.url}
+          />
+        </div>
+      );
     }
 
     return (
       <div className="docs-quickstart">
         <div id="tutorial-template" className="docs-single animated fadeIn">
-          <NavigationBar currentSection="quickstarts" />
+          {isFramedMode ? undefined : <NavigationBar currentSection="quickstarts" />}
           <StickyContainer>
             <div className="js-doc-template container" style={{ marginBottom: '40px' }}>
               <div className="row">
-                <div className="sidebar-container col-md-3">
-                  <Sidebar
-                    section={sidebarTitle} maxDepth={3} includeSectionInBreadcrumb isQuickstart
-                    items={sidebarItems} url={this.props.currentRoute.url}
-                  />
-                </div>
-                <div className="col-md-9">
+                {sidebar}
+                <div className={`col-sm-${columnWidth}`}>
                   <div className="navigation" style={{ marginTop: '40px' }}>
                     <Breadcrumbs {...this.props} />
                   </div>
                   <section className="docs-content">
-                    <IntroBanner />
+                    {isFramedMode ? undefined : <IntroBanner />}
                     <article data-swiftype-index="true">
                       <h1 className="tutorial-title">{this.renderTitle()}</h1>
                       <div data-swiftype-name="body" data-swiftype-type="text">{tutorial}</div>
-                      <div data-swiftype-index="false">{prevNext}</div>
-                      <div data-swiftype-index="false">{feedbackFooter}</div>
+                      {nextSteps}
                     </article>
                   </section>
-                  {tryBanner}
+                  {isFramedMode ? undefined : tryBanner}
                 </div>
               </div>
             </div>
@@ -136,7 +158,10 @@ class TutorialPage extends React.Component {
 TutorialPage.propTypes = {
   quickstart: React.PropTypes.object,
   platform: React.PropTypes.object,
-  article: React.PropTypes.object
+  article: React.PropTypes.object,
+  isAuthenticated: React.PropTypes.bool,
+  env: React.PropTypes.object.isRequired,
+  currentRoute: React.PropTypes.object.isRequired
 };
 
 TutorialPage.contextTypes = {
