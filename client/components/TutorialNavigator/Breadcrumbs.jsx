@@ -7,12 +7,11 @@ import { connectToStores } from 'fluxible-addons-react';
 class Breadcrumbs extends React.Component {
 
   handleClick(params) {
-    let action = this.props.customNavigationAction || navigateAction;
     let payload = {};
     if (params.quickstart) payload.quickstartId = params.quickstart.name;
     if (params.platform)   payload.platformId   = params.platform.name;
     if (params.article)    payload.articleId    = params.article.name;
-    this.context.executeAction(action, payload);
+    this.context.executeAction(navigateAction, payload);
   }
 
   render() {
@@ -42,7 +41,7 @@ class Breadcrumbs extends React.Component {
       crumbs.push(
         <li itemProp="itemListElement" itemScope itemType="http://schema.org/ListItem" key={index}>
           <a itemProp="item" key="base" onClick={this.handleClick.bind(this, {})}>
-            <span className="text" itemProp="name">Documentation</span>
+            <span className="text" itemProp="name">Quickstarts</span>
             <meta itemProp="position" content={index} />
           </a>
         </li>
@@ -91,8 +90,7 @@ Breadcrumbs.propTypes = {
   quickstart: React.PropTypes.object,
   platform: React.PropTypes.object,
   article: React.PropTypes.object,
-  isRestricted: React.PropTypes.bool,
-  customNavigationAction: React.PropTypes.func
+  isRestricted: React.PropTypes.bool
 }
 
 Breadcrumbs.contextTypes = {

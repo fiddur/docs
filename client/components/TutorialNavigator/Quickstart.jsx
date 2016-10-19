@@ -4,8 +4,7 @@ import navigateAction from '../../action/navigateTutorial';
 class Quickstart extends React.Component {
 
   handleClick(quickstart) {
-    let action = this.props.customNavigationAction || navigateAction;
-    this.context.executeAction(action, {quickstartId: quickstart.name});
+    this.context.executeAction(navigateAction, {quickstartId: quickstart.name});
   }
 
   render() {
@@ -26,8 +25,7 @@ class Quickstart extends React.Component {
 }
 
 Quickstart.propTypes = {
-  quickstart: React.PropTypes.object,
-  customNavigationAction: React.PropTypes.func
+  quickstart: React.PropTypes.object
 }
 
 Quickstart.contextTypes = {

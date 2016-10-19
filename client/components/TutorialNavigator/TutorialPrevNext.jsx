@@ -6,21 +6,16 @@ import navigateAction from '../../action/navigateTutorial';
 class TutorialPrevNext extends React.Component {
 
   handleClick(article) {
-    let {quickstart, platform, customNavigationAction} = this.props;
+    let {quickstart, platform } = this.props;
     let payload = {
       quickstartId: quickstart.name,
       platformId: platform.name,
       articleId: article.name
     };
-    if (customNavigationAction) {
-      this.context.executeAction(customNavigationAction, payload);
-    }
-    else {
-      Promise.all([
-        this.context.executeAction(loadArticleAction, payload),
-        this.context.executeAction(navigateAction, payload)
-      ]);
-    }
+    Promise.all([
+      this.context.executeAction(loadArticleAction, payload),
+      this.context.executeAction(navigateAction, payload)
+    ]);
   }
 
   render() {
@@ -67,8 +62,7 @@ class TutorialPrevNext extends React.Component {
 TutorialPrevNext.propTypes = {
   quickstart: React.PropTypes.object,
   platform: React.PropTypes.object,
-  currentArticle: React.PropTypes.object,
-  customNavigationAction: React.PropTypes.func
+  currentArticle: React.PropTypes.object
 }
 
 TutorialPrevNext.contextTypes = {

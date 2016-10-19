@@ -6,7 +6,7 @@ import navigateAction from '../../action/navigateTutorial';
 class TutorialTableOfContents extends React.Component {
 
   handleClick(article, isFirst) {
-    let {quickstart, platform, customNavigationAction} = this.props;
+    let {quickstart, platform } = this.props;
     let payload = {
       quickstartId: quickstart.name,
       platformId: platform.name
@@ -14,15 +14,7 @@ class TutorialTableOfContents extends React.Component {
     if (!isFirst) {
       payload.articleId = article.name;
     }
-    if (customNavigationAction) {
-      this.context.executeAction(customNavigationAction, payload);
-    }
-    else {
-      Promise.all([
-        this.context.executeAction(loadArticleAction, payload),
-        this.context.executeAction(navigateAction, payload)
-      ]);
-    }
+    this.context.executeAction(navigateAction, payload);
   }
 
   render() {
@@ -54,8 +46,7 @@ class TutorialTableOfContents extends React.Component {
 TutorialTableOfContents.propTypes = {
   quickstart: React.PropTypes.object,
   platform: React.PropTypes.object,
-  currentArticle: React.PropTypes.object,
-  customNavigationAction: React.PropTypes.func
+  currentArticle: React.PropTypes.object
 }
 
 TutorialTableOfContents.contextTypes = {

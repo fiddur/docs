@@ -5,20 +5,12 @@ import loadArticleAction from '../../action/loadTutorialNavArticle';
 class Platform extends React.Component {
 
   handleClick() {
-    let {quickstart, platform, customNavigationAction} = this.props;
+    let {quickstart, platform } = this.props;
     let payload = {
       quickstartId: quickstart.name,
       platformId: platform.name
     };
-    if (customNavigationAction) {
-      this.context.executeAction(customNavigationAction, payload);
-    }
-    else {
-      Promise.all([
-        this.context.executeAction(loadArticleAction, payload),
-        this.context.executeAction(navigateAction, payload)
-      ]);
-    }
+    this.context.executeAction(navigateAction, payload)
   }
 
   getStyle() {
@@ -48,8 +40,7 @@ class Platform extends React.Component {
 
 Platform.propTypes = {
   quickstart: React.PropTypes.object,
-  platform: React.PropTypes.object,
-  customNavigationAction: React.PropTypes.func
+  platform: React.PropTypes.object
 }
 
 Platform.contextTypes = {

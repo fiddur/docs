@@ -1,22 +1,21 @@
 import React from 'react';
 import { connectToStores } from 'fluxible-addons-react';
 import ArticleStore from '../../stores/ArticleStore';
+import highlightCode from '../../browser/highlightCode';
+import setAnchorLinks from '../../browser/anchorLinks';
 
 class Tutorial extends React.Component {
 
-  componentDidMount () {
-    this.initClient();
-  }
+  initHtml(element) {
+    // Execute any scripts that came with the article
+    if (element && element.innerHTML) {
+      highlightCode();
+      setAnchorLinks();
 
-  componentDidUpdate(prevProps) {
-    if (prevProps.articleHtml !== this.props.articleHtml) {
-      this.initClient();
-    }
-  }
-
-  initClient() {
-    if (this.props.componentLoadedInBrowser && typeof window !== 'undefined') {
-      this.props.componentLoadedInBrowser.call(this);
+      const dom = $(element.innerHTML);
+      dom.filter('script').each(() => {
+        $.globalEval(this.text || this.textContent || this.innerHTML || '');
+      });
     }
   }
 
@@ -32,7 +31,7 @@ class Tutorial extends React.Component {
     }
 
     let markup = {__html: articleHtml};
-    return <div ref="article" dangerouslySetInnerHTML={markup} />;
+    return <div ref={this.initHtml} dangerouslySetInnerHTML={markup} />;
   }
 
 }
@@ -41,8 +40,7 @@ Tutorial.propTypes = {
   quickstart: React.PropTypes.object,
   platform: React.PropTypes.object,
   article: React.PropTypes.object,
-  articleHtml: React.PropTypes.string,
-  componentLoadedInBrowser: React.PropTypes.func
+  articleHtml: React.PropTypes.string
 }
 
 Tutorial = connectToStores(Tutorial, [ArticleStore], (context, props) => {

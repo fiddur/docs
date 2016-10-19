@@ -39,7 +39,7 @@ export default {
   quickstartAppType: {
     path: '/docs/quickstart/:quickstartId',
     method: 'get',
-    handler: HomePage,
+    handler: QuickstartsPage,
     action: (context, payload) =>
       loadQuickstarts(context, payload).then(() =>
         tutorialNavigatorActions.quickstart(context, payload)

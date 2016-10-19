@@ -11,24 +11,8 @@ import Sidebar from './Sidebar';
 import TryBanner from './TryBanner';
 import IntroBanner from './IntroBanner';
 import FeedbackFooter from './FeedbackFooter';
-import { quickstartNavigationAction } from '../action/quickstartNavigationAction';
-import highlightCode from '../browser/highlightCode';
-import setAnchorLinks from '../browser/anchorLinks';
 import initSampleBox from '../browser/sampleBox';
 import ApplicationStore from '../stores/ApplicationStore';
-
-// TODO: Uses ref from within tutorial navigator, can we move this?
-function initTutorialInBrowser() {
-  highlightCode();
-  setAnchorLinks();
-  // Execute any scripts that came with the article
-  if (this.refs.article && this.refs.article.innerHTML) {
-    const dom = $(this.refs.article.innerHTML);
-    dom.filter('script').each(() => {
-      $.globalEval(this.text || this.textContent || this.innerHTML || '');
-    });
-  }
-}
 
 class TutorialPage extends React.Component {
 
@@ -99,13 +83,11 @@ class TutorialPage extends React.Component {
         quickstart={quickstart}
         platform={platform}
         article={article}
-        componentLoadedInBrowser={initTutorialInBrowser}
       />);
       prevNext = (<TutorialPrevNext
         quickstart={quickstart}
         platform={platform}
         currentArticle={article}
-        customNavigationAction={quickstartNavigationAction}
       />);
       // TODO: This is temporary; we should switch to using the actual editUrl
       // from the doc's metadata once we are loading it.
@@ -128,7 +110,7 @@ class TutorialPage extends React.Component {
                 </div>
                 <div className="col-md-9">
                   <div className="navigation" style={{ marginTop: '40px' }}>
-                    <Breadcrumbs {...this.props} customNavigationAction={quickstartNavigationAction} />
+                    <Breadcrumbs {...this.props} />
                   </div>
                   <section className="docs-content">
                     <IntroBanner />

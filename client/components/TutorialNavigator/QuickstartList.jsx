@@ -3,14 +3,33 @@ import Quickstart from './Quickstart';
 
 class QuickstartList extends React.Component {
 
-  componentDidMount() {
-    if (this.props.componentLoadedInBrowser && typeof window !== 'undefined') {
-      this.props.componentLoadedInBrowser.call(this);
+  loadCarousel(element) {
+    if (typeof window !== 'undefined') {
+      const $carousel = $(element);
+      $carousel.owlCarousel({
+        margin: 20,
+        center: true,
+        dots: true,
+        navContainerClass: 'nav',
+        navClass: ['prev', 'next'],
+        baseClass: 'js-carousel',
+        itemClass: 'item',
+        dotsClass: 'dots',
+        dotClass: 'dot',
+        nav: false,
+        responsive: {
+          0: { items: 1, stagePadding: 60, center: true },
+          380: { items: 2, stagePadding: 0, center: true },
+          570: { items: 3, stagePadding: 0, center: true },
+          768: { items: 4, stagePadding: 0, center: false, mouseDrag: false, touchDrag: false },
+          880: { items: 4, stagePadding: 0, autoWidth: true, center: false, mouseDrag: false, touchDrag: false }
+        }
+      });
     }
   }
 
   render() {
-    let {quickstarts, customNavigationAction} = this.props;
+    let {quickstarts } = this.props;
     let items = null;
     let hide = 'hide ';
     if (quickstarts) {
@@ -18,13 +37,12 @@ class QuickstartList extends React.Component {
       items = Object.keys(quickstarts).map(name => (
         <Quickstart
           key={name}
-          quickstart={quickstarts[name]}
-          customNavigationAction={customNavigationAction} />
+          quickstart={quickstarts[name]} />
       ));
     }
     return (
       <div className={hide + "quickstart-list container"}>
-        <div className="js-carousel" ref="carousel">{items}</div>
+        <div className="js-carousel" ref={this.loadCarousel}>{items}</div>
       </div>
     );
   }
@@ -32,9 +50,7 @@ class QuickstartList extends React.Component {
 }
 
 QuickstartList.propTypes = {
-  quickstarts: React.PropTypes.object,
-  customNavigationAction: React.PropTypes.func,
-  componentLoadedInBrowser: React.PropTypes.func
+  quickstarts: React.PropTypes.object
 };
 
 export default QuickstartList;
