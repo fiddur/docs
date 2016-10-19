@@ -8,8 +8,7 @@ export default function loadQuickstarts(context, payload) {
 
   const success = ({ quickstarts }) => {
     context.dispatch('QUICKSTARTS_LOAD_SUCCESS', { quickstarts });
-    logger.debug('Quickstarts loaded successfully.');
-    return context.executeAction(loadSettingsAction, { quickstarts });
+    logger.debug('Platforms loaded successfully.');
   };
 
   const failure = (err) => {

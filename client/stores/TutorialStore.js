@@ -11,7 +11,6 @@ class TutorialStore extends BaseStore {
     this.currentArticleId = undefined;
     this.restricted = false;
     this.singleArticleMode = false;
-    this.baseUrl = undefined;
   }
 
   getQuickstarts() {
@@ -24,10 +23,6 @@ class TutorialStore extends BaseStore {
 
   getSingleArticleMode() {
     return this.singleArticleMode;
-  }
-
-  getBaseUrl() {
-    return this.baseUrl;
   }
 
   getCurrentQuickstart() {
@@ -77,16 +72,14 @@ class TutorialStore extends BaseStore {
     this.emitChange();
   }
 
-  handleSettingsLoaded(payload) {
+  handleQuickstartsLoaded(payload) {
     this.quickstarts = payload.quickstarts;
+    this.emitChange();
+  }
+
+  handleSettingsLoaded(payload) {
     this.restricted = payload.restricted;
     this.singleArticleMode = payload.singleArticleMode;
-    this.baseUrl = payload.baseUrl;
-    if (payload.selectedTutorial) {
-      this.currentQuickstartId = payload.selectedTutorial.quickstartId;
-      this.currentPlatformId = payload.selectedTutorial.platformId;
-      this.currentArticleId = payload.selectedTutorial.articleId;
-    }
     this.emitChange();
   }
 
@@ -114,9 +107,10 @@ class TutorialStore extends BaseStore {
 
 TutorialStore.storeName = 'TutorialStore';
 TutorialStore.handlers = {
-  'ARTICLE_LOADED':          'handleArticleSelected',
-  'LOAD_TUTORIAL_NAVIGATOR': 'handleTutorialNavigatorLoaded',
-  'LOAD_SETTINGS':           'handleSettingsLoaded'
+  ARTICLE_LOADED: 'handleArticleSelected',
+  LOAD_TUTORIAL_NAVIGATOR: 'handleTutorialNavigatorLoaded',
+  QUICKSTARTS_LOAD_SUCCESS: 'handleQuickstartsLoaded',
+  LOAD_SETTINGS: 'handleSettingsLoaded'
 };
 
 export default TutorialStore;
