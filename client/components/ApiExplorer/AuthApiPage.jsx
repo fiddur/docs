@@ -7,10 +7,12 @@ import NavigationStore from '../../stores/NavigationStore';
 import ContentStore from '../../stores/ContentStore';
 import Spinner from '../Spinner';
 
+const languages = ['shell', 'javascript'];
+
 class AuthApiPage extends React.Component {
 
   componentDidMount() {
-    window.initApiExplorer();
+    window.initApiExplorer(languages);
   }
 
   shouldComponentUpdate(nextProps, nextState) {
@@ -33,9 +35,6 @@ class AuthApiPage extends React.Component {
   }
 
   render() {
-
-    const languageTags = ['shell', 'javascript'];
-
     return (
       <section
         className="content api-explorer"
@@ -43,7 +42,7 @@ class AuthApiPage extends React.Component {
         data-swiftype-type="text"
         data-swiftype-index="true"
       >
-        <div className="api-sidebar">
+        <div className="api-sidebar tocify-wrapper">
           <div className="sticky-nav-placeholder">
             <div className="sticky-nav fixed">
               {/* <div className="lang-selector">

@@ -1,11 +1,16 @@
 /* global jQuery */
 
-const initLang = require('./app/_lang');
-const initToc = require('./app/_toc');
+import { setupLanguages, initEvents } from './app/_lang';
+import { makeToc, animateToc } from './app/_toc';
 
-export default function initApiExplorer() {
-  initLang();
-  initToc();
+export default function initApiExplorer(languages) {
+  makeToc();
+  animateToc();
+  initEvents();
+  setupLanguages(languages);
+  // $('.content').imagesLoaded( function() {
+  //   window.toc.calculateHeights();
+  // });
 }
 
 if (typeof window !== 'undefined') {
