@@ -399,6 +399,7 @@
       "from": "auth0-styleguide@git://github.com/auth0/styleguide.git#4070d20e008616a249f181aa2f5591b1b8829202",
       "resolved": "git://github.com/auth0/styleguide.git#4070d20e008616a249f181aa2f5591b1b8829202"
     },
+<<<<<<< e9f374beed60c1501f352f068e57738029762e6b
     "auth0-tutorial-navigator": {
       "version": "3.9.3",
       "resolved": "git://github.com/auth0/tutorial-navigator.git#4a77a454870b414af5a7ad381292689efd430fac",
@@ -499,6 +500,8 @@
         }
       }
     },
+=======
+>>>>>>> Moved tutorial navigator into codebase
     "auth0-web-header": {
       "version": "2.0.1",
       "resolved": "https://registry.npmjs.org/auth0-web-header/-/auth0-web-header-2.0.1.tgz"

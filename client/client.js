@@ -6,7 +6,7 @@ import ReactDOM from 'react-dom';
 import d from 'debug';
 import { createElementWithContext } from 'fluxible-addons-react';
 import app from './app';
-import { ArticleService, ServiceKeys } from 'auth0-tutorial-navigator';
+import ArticleService from './services/ArticleService.client';
 import LoggingService from './services/LoggingService.client';
 import ContentService from './services/ContentService.client';
 import SearchService from './services/SearchService';
@@ -24,8 +24,8 @@ window.React = React; // For chrome dev tool support
 window.fluxibleDebug = debug;
 
 // Register services
-let plugin = app.getPlugin('ServiceProxyPlugin');
-plugin.registerService(ServiceKeys.ArticleService, ArticleService);
+const plugin = app.getPlugin('ServiceProxyPlugin');
+plugin.registerService('ArticleService', ArticleService);
 plugin.registerService('LoggingService', LoggingService);
 plugin.registerService('ContentService', ContentService);
 plugin.registerService('NavigationService', NavigationService);

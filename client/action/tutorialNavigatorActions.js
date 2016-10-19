@@ -1,4 +1,5 @@
-import { TutorialStore, loadArticleAction } from 'auth0-tutorial-navigator';
+import TutorialStore from '../stores/TutorialStore';
+import loadArticleAction from './loadTutorialNavArticle';
 import { getPageMetadata } from '../util/metadata';
 
 export default {

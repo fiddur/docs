@@ -1,0 +1,170 @@
+.quickstart-list
+
+  &.container
+    padding: 0;
+    padding-top: 30px;
+    margin: 0 auto;
+
+  +breakpoint("tablet")
+    min-height: 302px;
+
+  .item
+    animation: fadeIn 300ms;
+
+
+#tutorial-navigator
+
+  // Carousel loaded quickstart styles
+  .js-carousel.owl-loaded
+
+    .center .quickstart
+      +breakpoint("tablet", "max")
+        cursor: pointer;
+        background: white;
+        color: $color-oil;
+        pointer-events: auto;
+        opacity: 1;
+
+        .cta
+          opacity: 1;
+          pointer-events: auto;
+
+        i,
+        .symbol
+          opacity: 1;
+
+        .symbol
+          background: #F3F3F3;
+
+    .quickstart
+      +breakpoint("tablet", "max")
+        opacity: 0.3;
+        background: #A9B3BC;
+        box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.1);
+        pointer-events: none;
+
+        .symbol
+          opacity: 0.5;
+
+        .cta
+          opacity: 1;
+          pointer-events: none;
+
+
+  .quickstart
+    white-space normal
+    vertical-align top
+    cursor pointer
+    padding 15px 10px
+    border-radius 3px
+    transition background 100ms ease
+    margin-bottom 5px
+    animation-timing-function cubic-bezier(0.455, 0.03, 0.515, 0.955)
+    animation-duration 200ms
+
+    // Default styles when carousel is not loaded
+    +breakpoint("tablet", "max")
+      box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.1);
+      background-color white
+      color $color-oil
+
+      .symbol
+        background-color #F3F3F3
+
+      .cta
+        opacity: 1;
+
+    .symbol
+      display inline-block;
+      border-radius 50%;
+      height 100px;
+      width 100px;
+      margin-bottom 20px;
+      background-color white
+      position relative
+
+      &:after
+        position: absolute;
+        top: 0;
+        left: 0;
+        content: "";
+        display: block;
+        height: 100%;
+        width: 100%;
+        background-size: 50% 50%;
+        background-repeat: no-repeat;
+        background-position: center center;
+
+      i
+        font-size: 40px;
+        top: 30%;
+        animation: none;
+        color: #363C42;
+
+    .btn
+      letter-spacing: 0.005em;
+      font-size: 12px;
+
+    .title
+      display: block;
+      color: #333;
+
+    .description
+      color $color-text
+      line-height normal
+      font-size 1.4rem
+      margin-bottom 10px
+      max-width 180px
+
+    .cta
+      opacity: 0;
+      transition: opacity 100ms ease;
+
+    .sample
+      opacity: 0.5;
+      font-size: 12px;
+
+    &[data-type="native"]
+      .symbol
+        &:after
+          background-image: url('https://auth0.com/docs/img/quickstarts/native-mobile.svg');
+
+    &[data-type="spa"]
+      .symbol
+        &:after
+          background-image: url('https://auth0.com/docs/img/quickstarts/spa.svg');
+
+    &[data-type="webapp"]
+      .symbol
+        &:after
+          background-image: url('https://auth0.com/docs/img/quickstarts/webapp.svg');
+
+    &[data-type="backend"]
+      .symbol
+        &:after
+          background-image: url('https://auth0.com/docs/img/quickstarts/backend.svg');
+
+
+    +breakpoint("tablet", "max")
+      i,
+      .symbol
+        opacity: 1;
+
+      .symbol
+        background-color #F3F3F3
+
+      .cta
+        opacity: 1;
+        pointer-events: auto;
+
+    &:hover
+      +breakpoint("tablet")
+        background-color white
+        color $color-oil
+        box-shadow 0 2px 4px 0 rgba(0, 0, 0, 0.1)
+
+        .symbol
+          background-color #F3F3F3
+
+        .cta
+          opacity: 1;

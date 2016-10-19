@@ -1,6 +1,7 @@
 import React from 'react';
 import { connectToStores } from 'fluxible-addons-react';
-import { TutorialNavigator, TutorialStore } from 'auth0-tutorial-navigator';
+import TutorialNavigator from './TutorialNavigator/TutorialNavigator';
+import TutorialStore from '../stores/TutorialStore';
 import { quickstartNavigationAction } from '../action/quickstartNavigationAction';
 import NavigationBar from './NavigationBar';
 import Spinner from './Spinner';

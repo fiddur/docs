@@ -1,4 +1,5 @@
-import { loadSettingsAction, TutorialStore } from 'auth0-tutorial-navigator';
+import TutorialStore from '../stores/TutorialStore';
+import loadSettingsAction from './loadTutorialNavSettings'
 import NavigationStore from '../stores/NavigationStore';
 import LoadState from '../stores/LoadState';
 

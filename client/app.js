@@ -1,5 +1,6 @@
 import Fluxible from 'fluxible';
-import { TutorialStore, ArticleStore } from 'auth0-tutorial-navigator';
+import TutorialStore from './stores/TutorialStore';
+import ArticleStore from './stores/ArticleStore';
 import serviceProxyPlugin from 'fluxible-plugin-service-proxy';
 import devToolsPlugin from 'fluxible-plugin-devtools';
 import Application from './components/Application';

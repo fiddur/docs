@@ -1,7 +1,11 @@
 import React from 'react';
 import { StickyContainer, Sticky } from 'react-sticky';
 import { connectToStores, provideContext } from 'fluxible-addons-react';
-import { TutorialStore, Breadcrumbs, Tutorial, TutorialTableOfContents, TutorialPrevNext } from 'auth0-tutorial-navigator';
+import TutorialStore from '../stores/TutorialStore';
+import Breadcrumbs from './TutorialNavigator/Breadcrumbs';
+import Tutorial from './TutorialNavigator/Tutorial';
+import TutorialTableOfContents from './TutorialNavigator/TutorialTableOfContents';
+import TutorialPrevNext from './TutorialNavigator/TutorialPrevNext';
 import NavigationBar from './NavigationBar';
 import Sidebar from './Sidebar';
 import TryBanner from './TryBanner';
