@@ -10,7 +10,7 @@ import ArticlePage from '../components/ArticlePage';
 import SearchPage from '../components/SearchPage';
 import TutorialPage from '../components/TutorialPage';
 import QuickstartsPage from '../components/QuickstartsPage';
-import AuthApiPage from '../components/ApiExplorer/AuthApiPage';
+import AuthApiPage from '../components/AuthApiPage';
 
 export default {
 

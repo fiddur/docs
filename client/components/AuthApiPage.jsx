@@ -2,12 +2,20 @@ import React from 'react';
 import { navigateAction } from 'fluxible-router';
 import { connectToStores } from 'fluxible-addons-react';
 import PureRenderMixin from 'react-addons-pure-render-mixin';
-import ApplicationStore from '../../stores/ApplicationStore';
-import NavigationStore from '../../stores/NavigationStore';
-import ContentStore from '../../stores/ContentStore';
-import Spinner from '../Spinner';
+import ApplicationStore from '../stores/ApplicationStore';
+import NavigationStore from '../stores/NavigationStore';
+import ContentStore from '../stores/ContentStore';
+import Spinner from './Spinner';
 
-const languages = ['shell', 'javascript'];
+const languages = [
+  'shell',
+  'javascript',
+  'ruby',
+  'python',
+  'csharp',
+  'php',
+  'java'
+];
 
 class AuthApiPage extends React.Component {
 
@@ -69,8 +77,9 @@ class AuthApiPage extends React.Component {
           </div>
           <div className="dark-box">
             <div className="lang-selector">
-              <a href="#" data-language-name="shell">shell</a>
-              <a href="#" data-language-name="js">js</a>
+              {languages.map((language) => (
+                <a href={`#${language}`} key={language} data-language-name={language}>{language}</a>
+              ))}
             </div>
           </div>
         </div>
