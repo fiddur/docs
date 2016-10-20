@@ -2,10 +2,10 @@ import React from 'react';
 import { navigateAction } from 'fluxible-router';
 import { connectToStores } from 'fluxible-addons-react';
 import PureRenderMixin from 'react-addons-pure-render-mixin';
+import { StickyContainer, Sticky } from 'react-sticky';
 import ApplicationStore from '../stores/ApplicationStore';
 import NavigationStore from '../stores/NavigationStore';
 import ContentStore from '../stores/ContentStore';
-import { StickyContainer, Sticky } from 'react-sticky';
 import Spinner from './Spinner';
 
 const languages = [
@@ -104,7 +104,6 @@ AuthApiPage = connectToStores(AuthApiPage, [ContentStore, NavigationStore], (con
   const appStore = context.getStore(ApplicationStore);
   const contentStore = context.getStore(ContentStore);
   const navigationStore = context.getStore(NavigationStore);
-
   return {
     url,
     env: appStore.getEnvironmentVars(),
