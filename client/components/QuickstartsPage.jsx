@@ -9,8 +9,7 @@ import TryBanner from './TryBanner';
 class QuickstartsPage extends React.Component {
 
   render() {
-    const { isAuthenticated } = this.props;
-    const isFramedMode = this.props.env.FRAMED_MODE;
+    const { isAuthenticated, isFramedMode } = this.props;
     const tryBanner = isAuthenticated ? null : <TryBanner />;
 
     if (!this.props.quickstarts) {
@@ -36,6 +35,7 @@ QuickstartsPage.contextTypes = {
 
 QuickstartsPage.propTypes = {
   isAuthenticated: React.PropTypes.bool,
+  isFramedMode: React.PropTypes.bool.isRequired,
   quickstarts: React.PropTypes.object
 };
 
@@ -43,7 +43,8 @@ QuickstartsPage.propTypes = {
 QuickstartsPage = connectToStores(QuickstartsPage, [TutorialStore], (context, props) => {
   const store = context.getStore(TutorialStore);
   return {
-    quickstarts: store.getQuickstarts()
+    quickstarts: store.getQuickstarts(),
+    isFramedMode: props.env.FRAMED_MODE
   };
 });
 

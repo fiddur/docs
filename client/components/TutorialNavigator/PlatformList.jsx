@@ -4,14 +4,16 @@ import Platform from './Platform';
 class PlatformList extends React.Component {
 
   render() {
-    let {quickstart } = this.props;
+    const { quickstart, isFramedMode } = this.props;
 
-    let items = Object.keys(quickstart.platforms).map((name, i) => (
+    const items = Object.keys(quickstart.platforms).map((name, i) => (
       <Platform
         key={quickstart.name + i}
         delay={20 * i}
         quickstart={quickstart}
-        platform={quickstart.platforms[name]} />
+        platform={quickstart.platforms[name]}
+        isFramedMode={isFramedMode}
+      />
     ));
 
     return (
@@ -24,7 +26,8 @@ class PlatformList extends React.Component {
 }
 
 PlatformList.propTypes = {
-  quickstart: React.PropTypes.object
+  quickstart: React.PropTypes.object,
+  isFramedMode: React.PropTypes.bool.isRequired
 };
 
 export default PlatformList;

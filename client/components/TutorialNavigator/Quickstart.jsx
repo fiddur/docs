@@ -3,15 +3,23 @@ import navigateAction from '../../action/navigateTutorial';
 
 class Quickstart extends React.Component {
 
+  constructor() {
+    super();
+    this.handleClick = this.handleClick.bind(this);
+  }
+
   handleClick(quickstart) {
-    this.context.executeAction(navigateAction, {quickstartId: quickstart.name});
+    this.context.executeAction(navigateAction, {
+      isFramedMode: this.props.isFramedMode,
+      quickstartId: this.props.quickstart.name
+    });
   }
 
   render() {
-    var {quickstart} = this.props;
+    const { quickstart } = this.props;
     return (
-      <div className="quickstart" data-type={quickstart.name} onClick={this.handleClick.bind(this, quickstart)}>
-        <div className="symbol"></div>
+      <div className="quickstart" data-type={quickstart.name} onClick={this.handleClick}>
+        <div className="symbol" />
         <strong className="title">{quickstart.title}</strong>
         <p className="description">{quickstart.description}</p>
         <p className="sample">{quickstart.example}</p>
@@ -25,11 +33,12 @@ class Quickstart extends React.Component {
 }
 
 Quickstart.propTypes = {
-  quickstart: React.PropTypes.object
-}
+  quickstart: React.PropTypes.object,
+  isFramedMode: React.PropTypes.bool.isRequired
+};
 
 Quickstart.contextTypes = {
-  executeAction: React.PropTypes.func,
+  executeAction: React.PropTypes.func
 };
 
 export default Quickstart;

@@ -3,6 +3,7 @@ import { connectToStores } from 'fluxible-addons-react';
 import ArticleStore from '../../stores/ArticleStore';
 import highlightCode from '../../browser/highlightCode';
 import setAnchorLinks from '../../browser/anchorLinks';
+import Spinner from '../Spinner';
 
 class Tutorial extends React.Component {
 
@@ -20,17 +21,13 @@ class Tutorial extends React.Component {
   }
 
   render() {
-    let {articleHtml} = this.props;
+    const { articleHtml } = this.props;
 
     if (!articleHtml) {
-      return <div className='loading-tutorial'>
-        <div className='auth0-spinner'>
-          <div className='spinner'></div>
-        </div>
-      </div>;
+      return <Spinner />;
     }
 
-    let markup = {__html: articleHtml};
+    const markup = { __html: articleHtml };
     return <div ref={this.initHtml} dangerouslySetInnerHTML={markup} />;
   }
 
@@ -41,11 +38,11 @@ Tutorial.propTypes = {
   platform: React.PropTypes.object,
   article: React.PropTypes.object,
   articleHtml: React.PropTypes.string
-}
+};
 
 Tutorial = connectToStores(Tutorial, [ArticleStore], (context, props) => {
-  let {quickstart, platform, article} = props;
-  let store = context.getStore(ArticleStore);
+  const { quickstart, platform, article } = props;
+  const store = context.getStore(ArticleStore);
   return {
     articleHtml: store.getArticleHtml(quickstart.name, platform.name, article.name)
   };

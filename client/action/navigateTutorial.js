@@ -13,9 +13,12 @@ export default function navigateTutorial(context, payload, done) {
   }
 
   if (platformId) tokens.push(platformId);
-  if (articleId)  tokens.push(articleId);
+  if (articleId) tokens.push(articleId);
 
   let url = tokens.join('/');
-  return navigateAction(context, {url}, done);
+  if (payload.isFramedMode) {
+    url += '?framed=1';
+  }
+  return navigateAction(context, { url }, done);
 
 }

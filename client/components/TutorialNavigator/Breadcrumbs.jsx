@@ -1,22 +1,53 @@
 import React from 'react';
 import _ from 'lodash';
+import { connectToStores } from 'fluxible-addons-react';
 import navigateAction from '../../action/navigateTutorial';
 import TutorialStore from '../../stores/TutorialStore';
-import { connectToStores } from 'fluxible-addons-react';
+
 
 class Breadcrumbs extends React.Component {
 
-  handleClick(params) {
-    let payload = {};
-    if (params.quickstart) payload.quickstartId = params.quickstart.name;
-    if (params.platform)   payload.platformId   = params.platform.name;
-    if (params.article)    payload.articleId    = params.article.name;
-    this.context.executeAction(navigateAction, payload);
+  constructor() {
+    super();
+    this.handleClickHome = this.handleClickHome.bind(this);
+    this.handleClickQuickstart = this.handleClickQuickstart.bind(this);
+    this.handleClickPlatform = this.handleClickPlatform.bind(this);
+    this.hanldeClickArticle = this.hanldeClickArticle.bind(this);
+  }
+
+  handleClickHome() {
+    this.context.executeAction(navigateAction, {
+      isFramedMode: this.props.isFramedMode
+    });
+  }
+
+  handleClickQuickstart() {
+    this.context.executeAction(navigateAction, {
+      isFramedMode: this.props.isFramedMode,
+      quickstartId: this.props.quickstart.name
+    });
+  }
+
+  handleClickPlatform() {
+    this.context.executeAction(navigateAction, {
+      isFramedMode: this.props.isFramedMode,
+      quickstartId: this.props.quickstart.name,
+      platformId: this.props.platform.name
+    });
+  }
+
+  hanldeClickArticle() {
+    this.context.executeAction(navigateAction, {
+      isFramedMode: this.props.isFramedMode,
+      quickstartId: this.props.quickstart.name,
+      platformId: this.props.platform.name,
+      articleId: this.props.article.name
+    });
   }
 
   render() {
-    let crumbs = [];
-    let {quickstart, platform, article, isRestricted, isSingleArticleMode} = this.props;
+    const crumbs = [];
+    const { quickstart, platform, article, isRestricted, isSingleArticleMode } = this.props;
     let index = 1;
 
     if (!quickstart) {
@@ -29,18 +60,17 @@ class Breadcrumbs extends React.Component {
     if (isRestricted) {
       crumbs.push(
         <li itemProp="itemListElement" itemScope itemType="http://schema.org/ListItem" key={index}>
-          <a itemProp="item" key="quickstart" onClick={this.handleClick.bind(this, {quickstart})}>
+          <a itemProp="item" key="quickstart" onClick={this.handleClickQuickstart}>
             <span className="text" itemProp="name">{quickstart.title}</span>
             <meta itemProp="position" content={index} />
           </a>
         </li>
       );
       index++;
-    }
-    else {
+    } else {
       crumbs.push(
         <li itemProp="itemListElement" itemScope itemType="http://schema.org/ListItem" key={index}>
-          <a itemProp="item" key="base" onClick={this.handleClick.bind(this, {})}>
+          <a itemProp="item" key="base" onClick={this.handleClickHome}>
             <span className="text" itemProp="name">Quickstarts</span>
             <meta itemProp="position" content={index} />
           </a>
@@ -49,7 +79,7 @@ class Breadcrumbs extends React.Component {
       index++;
       crumbs.push(
         <li itemProp="itemListElement" itemScope itemType="http://schema.org/ListItem" key={index}>
-          <a itemProp="item" key="quickstart" onClick={this.handleClick.bind(this, {quickstart})}>
+          <a itemProp="item" key="quickstart" onClick={this.handleClickQuickstart}>
             <span className="text" itemProp="name">{quickstart.title}</span>
             <meta itemProp="position" content={index} />
           </a>
@@ -61,7 +91,10 @@ class Breadcrumbs extends React.Component {
     if (platform) {
       crumbs.push(
         <li itemProp="itemListElement" itemScope itemType="http://schema.org/ListItem" key={index}>
-          <a itemProp="item" key="platform" onClick={this.handleClick.bind(this, {quickstart, platform})}>
+          <a
+            itemProp="item" key="platform"
+            onClick={this.handleClickPlatform}
+          >
             <span className="text" itemProp="name">{platform.title}</span>
             <meta itemProp="position" content={index} />
           </a>
@@ -71,7 +104,11 @@ class Breadcrumbs extends React.Component {
       if (article && platform.articles.length > 1 && !isSingleArticleMode) {
         crumbs.push(
           <li itemProp="itemListElement" itemScope itemType="http://schema.org/ListItem" key={index}>
-            <a itemProp="item" key="article" onClick={this.handleClick.bind(this, {quickstart, platform, article})}>
+            <a
+              itemProp="item"
+              key="article"
+              onClick={this.handleClickArticle}
+            >
               <span className="text" itemProp="name">{article.title}</span>
               <meta itemProp="position" content={index} />
             </a>
@@ -90,16 +127,18 @@ Breadcrumbs.propTypes = {
   quickstart: React.PropTypes.object,
   platform: React.PropTypes.object,
   article: React.PropTypes.object,
-  isRestricted: React.PropTypes.bool
-}
+  isRestricted: React.PropTypes.bool,
+  isFramedMode: React.PropTypes.bool.isRequired,
+  isSingleArticleMode: React.PropTypes.bool
+};
 
 Breadcrumbs.contextTypes = {
   getStore: React.PropTypes.func,
-  executeAction: React.PropTypes.func,
+  executeAction: React.PropTypes.func
 };
 
 Breadcrumbs = connectToStores(Breadcrumbs, [TutorialStore], (context, props) => {
-  let store = context.getStore(TutorialStore);
+  const store = context.getStore(TutorialStore);
   return {
     quickstart: store.getCurrentQuickstart(),
     platform: store.getCurrentPlatform(),

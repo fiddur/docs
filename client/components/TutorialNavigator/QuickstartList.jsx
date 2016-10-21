@@ -29,7 +29,7 @@ class QuickstartList extends React.Component {
   }
 
   render() {
-    let {quickstarts } = this.props;
+    const { quickstarts, isFramedMode } = this.props;
     let items = null;
     let hide = 'hide ';
     if (quickstarts) {
@@ -37,11 +37,13 @@ class QuickstartList extends React.Component {
       items = Object.keys(quickstarts).map(name => (
         <Quickstart
           key={name}
-          quickstart={quickstarts[name]} />
+          quickstart={quickstarts[name]}
+          isFramedMode={isFramedMode}
+        />
       ));
     }
     return (
-      <div className={hide + "quickstart-list container"}>
+      <div className={`${hide} quickstart-list container`}>
         <div className="js-carousel" ref={this.loadCarousel}>{items}</div>
       </div>
     );
@@ -50,7 +52,8 @@ class QuickstartList extends React.Component {
 }
 
 QuickstartList.propTypes = {
-  quickstarts: React.PropTypes.object
+  quickstarts: React.PropTypes.object,
+  isFramedMode: React.PropTypes.bool.isRequired
 };
 
 export default QuickstartList;

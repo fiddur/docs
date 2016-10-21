@@ -68,11 +68,10 @@ class TutorialPage extends React.Component {
   }
 
   render() {
-    const { quickstart, platform, article, isAuthenticated } = this.props;
+    const { quickstart, platform, article, isAuthenticated, isFramedMode } = this.props;
     const tryBanner = isAuthenticated ? null : <TryBanner />;
     const sidebarTitle = platform ? platform.title : '';
     const sidebarItems = platform ? platform.articles : [];
-    const isFramedMode = this.props.env.FRAMED_MODE;
 
     let tutorial;
     let sidebar;
@@ -102,13 +101,14 @@ class TutorialPage extends React.Component {
             quickstart={quickstart}
             platform={platform}
             currentArticle={article}
+            isFramedMode={isFramedMode}
           />
         </div>
       );
     }
 
     if (isFramedMode) {
-      //nextSteps = <TutorialNextSteps quickstart={quickstart} platform={platform} />;
+      nextSteps = undefined; // <TutorialNextSteps quickstart={quickstart} platform={platform} />;
     }
 
     if (!isFramedMode) {
@@ -160,8 +160,8 @@ TutorialPage.propTypes = {
   platform: React.PropTypes.object,
   article: React.PropTypes.object,
   isAuthenticated: React.PropTypes.bool,
-  env: React.PropTypes.object.isRequired,
-  currentRoute: React.PropTypes.object.isRequired
+  currentRoute: React.PropTypes.object.isRequired,
+  isFramedMode: React.PropTypes.bool.isRequired
 };
 
 TutorialPage.contextTypes = {
@@ -177,7 +177,8 @@ TutorialPage = connectToStores(TutorialPage, [TutorialStore, ApplicationStore], 
     quickstart: tutorialStore.getCurrentQuickstart(),
     platform: tutorialStore.getCurrentPlatform(),
     article: tutorialStore.getCurrentArticle(),
-    user: appStore.getUser()
+    user: appStore.getUser(),
+    isFramedMode: props.env.FRAMED_MODE
   };
 });
 
