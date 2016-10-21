@@ -7,8 +7,19 @@ import Document from '../../lib/pipeline/models/Document';
 
 describe('Compiler', () => {
 
+  const vars = { environment: 'test' };
+
+  describe('when the constructor is called', () => {
+    describe('without a vars option', () => {
+      it('throws an Error', () => {
+        const func = () => new Compiler();
+        expect(func).to.throw(/vars option/);
+      });
+    });
+  });
+
   describe('when use() is called', () => {
-    const compiler = new Compiler();
+    const compiler = new Compiler({ vars });
     describe('with an invalid plugin', () => {
       const plugin = {};
       it('throws an Error', () => {
@@ -29,11 +40,12 @@ describe('Compiler', () => {
   describe('when compile() is called with a File', () => {
 
     const file = getTestFile('articles/test.html');
-    const compiler = new Compiler();
-    compiler.use({ getMetadata(meta, content) { return { foo: 42 }; } });
-    compiler.use({ getMetadata(meta, content) { return { bar: 123 }; } });
-    compiler.use({ transform(meta, content) { return `ONE(${content})`; } });
-    compiler.use({ transform(meta, content) { return `TWO(${content})`; } });
+    const expectedContent = 'title = HTML Test File, example = this is read from front matter, environment = test';
+    let compiler;
+
+    beforeEach(() => {
+      compiler = new Compiler({ vars });
+    });
 
     it('returns a Document', () => {
       const doc = compiler.compile(file);
@@ -55,16 +67,24 @@ describe('Compiler', () => {
     });
 
     it('merges metadata from metadata plugins into the Document', () => {
+      compiler.use({ getMetadata(meta, content) { return { foo: 42 }; } });
+      compiler.use({ getMetadata(meta, content) { return { bar: 123 }; } });
       const doc = compiler.compile(file);
       expect(doc.foo).to.equal(42);
       expect(doc.bar).to.equal(123);
     });
 
+    it('adds the rendered content to the Document, making available vars and metadata', () => {
+      const doc = compiler.compile(file);
+      expect(doc.content).to.equal(expectedContent);
+    });
+
     it('allows content plugins to transform Document content in a stepwise fashion', () => {
+      compiler.use({ transform(meta, content) { return `ONE(${content})`; } });
+      compiler.use({ transform(meta, content) { return `TWO(${content})`; } });
       const doc = compiler.compile(file);
       const raw = matter(file.text);
-      const content = doc.template({});
-      expect(content).to.equal(`TWO(ONE(${raw.content}))`);
+      expect(doc.content).to.equal(`TWO(ONE(${expectedContent}))`);
     });
 
   });
