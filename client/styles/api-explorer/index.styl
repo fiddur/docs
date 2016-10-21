@@ -85,10 +85,16 @@
       // to place content above the dark box
       position: relative
       z-index: 30
+
       &:after
         content: ''
         display: block
         clear: both
+
+      .api-section
+        padding 20px 0
+        min-height 100vh
+        border-bottom 1px solid rgba(black, 0.075)
 
       h1, h2, h3, h4, h5, h6, p, ul, ol, aside, dl
         margin-right: $examples-width
@@ -98,6 +104,19 @@
       h1
         margin 20px 0 40px
         font-size 32px
+
+      h2
+        font-size 24px
+        margin-top 36px
+
+      h3
+        font-weight $font-weight-bold
+        font-size 16px
+        color $color-oil
+        margin-top 36px
+
+      li, p
+        color #4d4d4d
 
       table
         width calc(50% - 60px)
@@ -111,6 +130,7 @@
           padding 0
 
         li
+          margin 10px 0
           padding-left 20px
           position relative
 
@@ -118,20 +138,17 @@
         list-style-type none
 
         li:before
+          content "—"
           position absolute
-          top 11px
-          left 0
-          content ''
-          width 5px
-          height 5px
-          display inline-block
-          background-color black
-          border-radius 50%
+          left 0px
+          top 0px
+          opacity 0.5
 
-      .api-section
-        padding 20px 0
-        min-height 100vh
-        border-bottom 1px solid rgba(black, 0.075)
+      .anchor-heading
+        cursor auto
+
+        > .anchor
+          display none
 
 
     ////////////////////////////////////////////////////////////////////////////////
@@ -148,23 +165,30 @@
         float: right
         clear: right
         box-sizing: border-box
+        font-style normal
+        border none
+
         @extend $right-col
+
         & > p
           margin: 0
+
         a
           color: #fff
           text-decoration: none
           border-bottom: dashed 1px #ccc
+
         code
           background-color: $code-bg !important
+
       blockquote
+        padding 10px $main-padding
+        background-color $examples-bg
+
         & > p
-          background-color: $code-annotation-bg
-          border-radius: 5px
-          padding: $code-annotation-padding
-          color: #ccc
-          border-top: 1px solid #000
-          border-bottom: 1px solid #404040
+          padding 0 15px
+          color white
+          font-size 16px
 
       .code-snippet-title
         font-size 14px
