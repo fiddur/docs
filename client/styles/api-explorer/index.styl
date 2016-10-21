@@ -90,7 +90,7 @@
         display: block
         clear: both
 
-      h1, h2, h3, h4, h5, h6, p, table, ul, ol, aside, dl
+      h1, h2, h3, h4, h5, h6, p, ul, ol, aside, dl
         margin-right: $examples-width
         padding-left: 30px;
         padding-right: 30px;
@@ -99,8 +99,10 @@
         margin 20px 0 40px
         font-size 32px
 
-      .table
-        width: $examples-width
+      table
+        width calc(50% - 60px)
+        margin-left 30px
+        margin-right $examples-width
 
       .api-section
         padding 20px 0
@@ -116,7 +118,7 @@
       pre, blockquote
         background-color: $code-bg
         color: #fff
-        padding: 2em $main-padding
+        padding: 0 $main-padding
         margin: 0
         width: $examples-width
         float: right
