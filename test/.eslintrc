@@ -2,6 +2,7 @@ rules:
   import/no-extraneous-dependencies: [error, { devDependencies: true }]
   padded-blocks: off
   max-len: off
+  no-unused-expressions: off
 globals:
   describe: true
   it: true

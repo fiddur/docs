@@ -1,7 +1,4 @@
 import EventEmitter from 'events';
-import fs from 'fs';
-import { resolve } from 'path';
-import File from '../../../lib/pipeline/models/File';
 
 class FakeWatcher extends EventEmitter {
 
@@ -14,14 +11,6 @@ class FakeWatcher extends EventEmitter {
   }
 
   stop() {
-  }
-
-  simulateAdd(path) {
-    this.emit('add', File.load(this.baseDir, path));
-  }
-
-  simulateChange(path) {
-    this.emit('change', File.load(this.baseDir, path));
   }
 
 }
