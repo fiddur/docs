@@ -104,6 +104,30 @@
         margin-left 30px
         margin-right $examples-width
 
+      ul, ol
+
+        ul, ol, li, p
+          margin 0
+          padding 0
+
+        li
+          padding-left 20px
+          position relative
+
+      ul
+        list-style-type none
+
+        li:before
+          position absolute
+          top 11px
+          left 0
+          content ''
+          width 5px
+          height 5px
+          display inline-block
+          background-color black
+          border-radius 50%
+
       .api-section
         padding 20px 0
         min-height 100vh
