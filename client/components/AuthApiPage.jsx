@@ -56,10 +56,6 @@ class AuthApiPage extends React.Component {
             <div className="sticky-nav-placeholder">
               <Sticky>
                 <div className="sticky-nav">
-                  {/* <div className="lang-selector">
-                    <a href="#" data-language-name="shell">shell</a>
-                    <a href="#" data-language-name="js">js</a>
-                  </div> */}
                   {/* <div className="search">
                     <input type="text" className="search" id="input-search" placeholder="Search">
                   </div>
@@ -79,6 +75,11 @@ class AuthApiPage extends React.Component {
             <div className="lang-selector-container">
               <Sticky>
                 <div className="lang-selector">
+                  <div className="lang-selector-selected">
+                    <span className="language-label">Language:</span>
+                    <span className="language js-selected-language"></span>
+                    <i className="icon-budicon-460" />
+                  </div>
                   {languages.map((language) => (
                     <a
                       href={`#${language}`} key={language}

@@ -24,10 +24,15 @@ function activateLanguage(language) {
 
   $(".lang-selector a").removeClass('active');
   $(".lang-selector a[data-language-name='" + language + "']").addClass('active');
+
   for (var i=0; i < languages.length; i++) {
     $(".language-" + languages[i]).hide();
     $(".lang-specific." + languages[i]).hide();
   }
+
+  $('.lang-selector .js-selected-language').text(language);
+  $('.lang-selector').removeClass('open');
+
   $(".language-" + language).show();
   $(".lang-specific." + language).show();
 
@@ -154,6 +159,9 @@ function initEvents() {
       pushURL(language);
       activateLanguage(language);
       return false;
+    });
+    $('.lang-selector .lang-selector-selected').on('click', function(){
+      $('.lang-selector').toggleClass('open');
     });
     window.onpopstate = function() {
       activateLanguage(getLanguageFromQueryString());

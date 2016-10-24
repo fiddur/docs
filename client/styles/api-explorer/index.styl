@@ -57,15 +57,21 @@
       background-color: $lang-select-bg
       width: 100%
       text-transform capitalize
+      display flex
+      justify-content space-between
+
+      .lang-selector-selected
+        display none
 
       a
         display: block
-        float: left
         color: $lang-select-text
         text-decoration: none
-        padding: 10px 16px
+        padding: 10px 0
         line-height: 30px
         outline: 0
+        text-align center
+        flex-grow 1
 
         &:active, &:focus
           background-color: $lang-select-pressed-bg
@@ -79,6 +85,41 @@
         content: ''
         clear: both
         display: block
+
+      +breakpoint("desktop", "max")
+        flex-direction column
+        position relative
+
+        &.open a
+          display block
+
+        > a
+          display none
+          text-align left
+          padding-left 20px
+
+          &.active
+            background-color black
+
+        .lang-selector-selected
+          display block
+          height 50px
+          line-height 50px
+          padding 0 20px
+          cursor pointer
+
+          > i
+            position absolute
+            right 20px
+            top 4px
+            color white
+
+          > .language-label
+            padding-right 5px
+            color rgba(white, 0.5)
+
+          > .language
+            color white
 
     ////////////////////////////////////////////////////////////////////////////////
     // CONTENT STYLES
