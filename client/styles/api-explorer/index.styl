@@ -12,10 +12,12 @@
     height: 100%;
     background: color_gray_1;
     min-height: 100vh;
+
     +breakpoint("desktop")
       width: $nav-width;
-    +breakpoint("desktop-hd")
-      width: $nav-width-hd;
+
+    // +breakpoint("desktop-hd")
+    //   width: $nav-width-hd;
 
   ////////////////////////////////////////////////////////////////////////////////
   // PAGE LAYOUT AND CODE SAMPLE BACKGROUND
@@ -142,13 +144,14 @@
 
       h1, h2, h3, h4, h5, h6, p, ul, ol, aside, dl
         margin-right: $examples-width
-        padding-left: 30px;
-        padding-right: 30px;
+        padding-left: 40px;
+        padding-right: 40px;
 
       h1
         margin 0
         padding-top 40px
         padding-bottom 20px
+        line-height 48px
         font-size 32px
 
       h2
@@ -165,8 +168,8 @@
         color #4d4d4d
 
       table
-        width calc(50% - 60px)
-        margin-left 30px
+        width calc(50% - 80px)
+        margin-left 40px
         margin-right $examples-width
 
       ul, ol
