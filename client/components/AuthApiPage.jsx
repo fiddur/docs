@@ -75,11 +75,17 @@ class AuthApiPage extends React.Component {
             </div>
           </div>
           <div className="page-wrapper">
-            <div className="dark-box">
+            <div className="dark-box" />
+            <div className="lang-selector-container">
               <Sticky>
                 <div className="lang-selector">
                   {languages.map((language) => (
-                    <a href={`#${language}`} key={language} data-language-name={language}>{language}</a>
+                    <a
+                      href={`#${language}`} key={language}
+                      data-language-name={language}
+                    >
+                      {language}
+                    </a>
                   ))}
                 </div>
               </Sticky>
