@@ -8,6 +8,7 @@ import ReplaceIncludesPlugin from '../../lib/pipeline/plugins/content/ReplaceInc
 import File from '../../lib/pipeline/models/File';
 import Document from '../../lib/pipeline/models/Document';
 import FakeWatcher from './mocks/FakeWatcher';
+import getTestFile from './util/getTestFile';
 
 describe('Cache', () => {
 
@@ -41,7 +42,7 @@ describe('Cache', () => {
     describe('for a file that matches one of the documentPaths expressions', () => {
       it('compiles the file to a document and adds it to the cache', () => {
         const path = 'articles/test.html';
-        watcher.emit('add', File.load(baseDir, path));
+        watcher.emit('add', watcher.load(path));
         const doc = cache.get(path);
         expect(doc).to.be.instanceof(Document);
       });
@@ -52,37 +53,53 @@ describe('Cache', () => {
   describe('when watcher emits a change event', () => {
 
     let cache;
+    let watcher;
     const vars = { environment: 'test' };
     const baseDir = resolve(__dirname, 'docs');
-    const watcher = new FakeWatcher({ baseDir });
     const compiler = new Compiler({ vars });
+    compiler.use({ getMetadata() { return { foo: 'abc', bar: 'def' }; } });
     compiler.use(new MarkdownPlugin());
     compiler.use(new ReplaceIncludesPlugin({ snippetsDir: resolve(__dirname, 'docs/snippets') }));
 
     beforeEach(() => {
+      watcher = new FakeWatcher({ baseDir });
       cache = new Cache({ watcher, compiler });
     });
 
     describe('for an existing document', () => {
       it('recompiles the document', () => {
         const path = 'articles/include-recursive.html';
-        const file = {
-          path,
-          filename: resolve(baseDir, path),
-          text: 'original content'
-        };
-        watcher.emit('add', file);
-        let doc = cache.get(path);
-        expect(doc.content).to.equal('original content');
-        file.text = 'new content';
-        watcher.emit('change', file);
-        doc = cache.get(path);
-        expect(doc.content).to.equal('new content');
+        const filename = resolve(baseDir, path);
+        let compiledFiles = {};
+        cache.on('add', doc => {
+          compiledFiles[doc.filename] = true;
+        });
+        watcher.emit('add', watcher.load(path));
+        expect(compiledFiles).to.have.all.keys(filename);
+        compiledFiles = [];
+        watcher.emit('change', watcher.load(path));
+        expect(compiledFiles).to.have.all.keys(filename);
       });
     });
 
     describe('for a dependency of existing documents', () => {
       it('recompiles all documents that depend on the changed file', () => {
+        let compiledFiles = {};
+        cache.on('add', doc => {
+          compiledFiles[doc.filename] = true;
+        });
+        watcher.emit('add', watcher.load('articles/include-recursive.html'));
+        watcher.emit('add', watcher.load('articles/include-markdown.html'));
+        expect(compiledFiles).to.have.all.keys([
+          resolve(baseDir, 'articles/include-recursive.html'),
+          resolve(baseDir, 'articles/include-markdown.html')
+        ]);
+        compiledFiles = {};
+        watcher.emit('change', watcher.load('articles/_includes/markdown.md'));
+        expect(compiledFiles).to.have.all.keys([
+          resolve(baseDir, 'articles/include-recursive.html'),
+          resolve(baseDir, 'articles/include-markdown.html')
+        ]);
       });
     });
 

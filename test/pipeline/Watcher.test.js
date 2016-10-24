@@ -9,12 +9,14 @@ describe('Watcher', () => {
   let watcher;
   const baseDir = resolve(__dirname, 'docs');
   const expectedFiles = [
-    'articles/include-html.md',
-    'articles/include-html-locals.md',
-    'articles/include-markdown.md',
-    'articles/include-markdown-locals.md',
-    'articles/include-multiple.md',
-    'articles/include-snippet.md',
+    'articles/include-html.html',
+    'articles/include-html-locals.html',
+    'articles/include-markdown.html',
+    'articles/include-markdown-locals.html',
+    'articles/include-multiple.html',
+    'articles/include-recursive.html',
+    'articles/include-recursive-locals.html',
+    'articles/include-snippet.html',
     'articles/test.md',
     'articles/test.html'
   ];
