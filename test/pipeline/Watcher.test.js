@@ -9,6 +9,12 @@ describe('Watcher', () => {
   let watcher;
   const baseDir = resolve(__dirname, 'docs');
   const expectedFiles = [
+    'articles/_includes/html.html',
+    'articles/_includes/markdown.md',
+    'articles/_includes/recursive.html',
+    'articles/_partial.md',
+    'articles/cache-find.html',
+    'articles/cache-get.html',
     'articles/include-html.html',
     'articles/include-html-locals.html',
     'articles/include-markdown.html',
@@ -34,6 +40,16 @@ describe('Watcher', () => {
         expect(file).to.be.instanceof(File);
         expect(expectedFiles).to.include(file.path, `Watcher returned unexpected file ${file.filename}`);
         if (count === expectedFiles.length) setImmediate(done);
+      });
+      watcher.watch('articles');
+    });
+
+    it('emits ready event once all files have been found', (done) => {
+      let count = 0;
+      watcher.on('add', file => count++);
+      watcher.on('ready', () => {
+        expect(count).to.equal(expectedFiles.length);
+        done();
       });
       watcher.watch('articles');
     });

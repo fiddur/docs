@@ -12,6 +12,9 @@ import getTestFile from './util/getTestFile';
 
 describe('Cache', () => {
 
+  const vars = { environment: 'test' };
+  const baseDir = resolve(__dirname, 'docs');
+
   describe('when constructor is called', () => {
     describe('without a compiler option', () => {
       it('throws an Error', () => {
@@ -27,13 +30,97 @@ describe('Cache', () => {
     });
   });
 
-  describe('when watcher emits an add event', () => {
+  describe('when get() is called', () => {
 
-    let cache;
-    const vars = { environment: 'test' };
-    const baseDir = resolve(__dirname, 'docs');
     const watcher = new FakeWatcher({ baseDir });
     const compiler = new Compiler({ vars });
+    const cache = new Cache({ watcher, compiler });
+
+    describe('with a path of a loaded document', () => {
+      it('returns the document', () => {
+        const doc = new Document(getTestFile('articles/test.md'));
+        cache.add(doc);
+        expect(cache.get(doc.path)).to.equal(doc);
+      });
+    });
+    describe('with a non-existent path', () => {
+      it('returns undefined', () => {
+        expect(cache.get('does-not-exist')).to.equal(undefined);
+      });
+    });
+
+  });
+
+  describe('when getByFilename() is called', () => {
+
+    const watcher = new FakeWatcher({ baseDir });
+    const compiler = new Compiler({ vars });
+    const cache = new Cache({ watcher, compiler });
+
+    describe('with a path of a loaded document', () => {
+      it('returns the document', () => {
+        const doc = new Document(getTestFile('articles/test.md'));
+        cache.add(doc);
+        expect(cache.getByFilename(doc.filename)).to.equal(doc);
+      });
+    });
+    describe('with a non-existent filename', () => {
+      it('returns undefined', () => {
+        expect(cache.getByFilename('does-not-exist')).to.equal(undefined);
+      });
+    });
+
+  });
+
+  describe('when getByUrl() is called', () => {
+
+    const watcher = new FakeWatcher({ baseDir });
+    const compiler = new Compiler({ vars });
+    const cache = new Cache({ watcher, compiler });
+
+    describe('with a path of a loaded document', () => {
+      it('returns the document', () => {
+        const doc = new Document(getTestFile('articles/test.md'));
+        cache.add(doc);
+        expect(cache.getByUrl(doc.url)).to.equal(doc);
+      });
+    });
+    describe('with a non-existent URL', () => {
+      it('returns undefined', () => {
+        expect(cache.getByUrl('does-not-exist')).to.equal(undefined);
+      });
+    });
+
+  });
+
+  describe('when find() is called', () => {
+
+    const watcher = new FakeWatcher({ baseDir });
+    const compiler = new Compiler({ vars });
+    const cache = new Cache({ watcher, compiler });
+
+    describe('with a path of a loaded document', () => {
+      it('returns the document', () => {
+        const doc1 = new Document(getTestFile('articles/test.html'));
+        const doc2 = new Document(getTestFile('articles/test.md'));
+        cache.add(doc1);
+        cache.add(doc2);
+        expect(cache.find('articles')).to.eql([doc1, doc2]);
+      });
+    });
+    describe('with a query that matches no documents', () => {
+      it('returns an empty array', () => {
+        expect(cache.find('does-not-exist')).to.eql([]);
+      });
+    });
+
+  });
+
+  describe('when watcher emits an add event', () => {
+
+    const watcher = new FakeWatcher({ baseDir });
+    const compiler = new Compiler({ vars });
+    let cache;
 
     beforeEach(() => {
       cache = new Cache({ watcher, compiler });
@@ -52,11 +139,10 @@ describe('Cache', () => {
 
   describe('when watcher emits a change event', () => {
 
-    let cache;
-    let watcher;
-    const vars = { environment: 'test' };
-    const baseDir = resolve(__dirname, 'docs');
     const compiler = new Compiler({ vars });
+    let watcher;
+    let cache;
+
     compiler.use({ getMetadata() { return { foo: 'abc', bar: 'def' }; } });
     compiler.use(new MarkdownPlugin());
     compiler.use(new ReplaceIncludesPlugin({ snippetsDir: resolve(__dirname, 'docs/snippets') }));
