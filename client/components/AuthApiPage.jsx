@@ -56,16 +56,13 @@ class AuthApiPage extends React.Component {
             <div className="sticky-nav-placeholder">
               <Sticky>
                 <div className="sticky-nav">
-                  {/* <div className="search">
-                    <input type="text" className="search" id="input-search" placeholder="Search">
+                  <div className="sticky-nav-selected">
+                    <span>Menu</span>
+                    <i className="icon-budicon-460" />
                   </div>
-                  <ul className="search-results"></ul> */}
                   <div id="toc">
                     <div className="title">Authentication API</div>
                   </div>
-                  {/* <ul className="toc-footer">
-                    <li>Footer</li>
-                  </ul> */}
                 </div>
               </Sticky>
             </div>
@@ -73,11 +70,11 @@ class AuthApiPage extends React.Component {
           <div className="page-wrapper">
             <div className="dark-box" />
             <div className="lang-selector-container">
-              <Sticky>
+              <Sticky topOffset={-43} stickyClassName={'sticky lang-mobile-sticky'}>
                 <div className="lang-selector">
                   <div className="lang-selector-selected">
                     <span className="language-label">Language:</span>
-                    <span className="language js-selected-language"></span>
+                    <span className="language js-selected-language" />
                     <i className="icon-budicon-460" />
                   </div>
                   {languages.map((language) => (

@@ -6,14 +6,13 @@
   position: relative;
 
   .api-sidebar
-    position: absolute;
-    left: 0;
-    top: 0;
-    height: 100%;
-    background: color_gray_1;
-    min-height: 100vh;
-
     +breakpoint("desktop")
+      position: absolute;
+      left: 0;
+      top: 0;
+      height: 100%;
+      background: color_gray_1;
+      min-height: 100vh;
       width: $nav-width;
 
     // +breakpoint("desktop-hd")
@@ -47,6 +46,10 @@
       right: 0
       top: 0
       bottom: 0
+
+    .lang-mobile-sticky
+      +breakpoint("desktop", "max")
+        top: 43px !important
 
     .lang-selector-container
       z-index 50

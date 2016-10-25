@@ -35,6 +35,10 @@ export function makeToc() {
 
   $(".page-wrapper").click(closeToc);
   $(".tocify-item").click(closeToc);
+
+  $('.sticky-nav-selected').on('click', function(){
+    $('.sticky-nav .tocify').toggleClass('open');
+  });
 };
 
 // Hack to make already open sections to start opened,
