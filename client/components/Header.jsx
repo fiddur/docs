@@ -28,11 +28,11 @@ class Header extends Component {
         metricsLib.track('open:talk-to-sales');
       },
       onFormSuccess(metricsData) {
-        metricsLib.track('register:lead:pricing-contact-form', metricsData);
+        metricsLib.track('register:lead:talk-to-sales-modal', metricsData);
         metricsLib.track('sent:talk-to-sales', metricsData);
       },
       onFormFail(metricsData) {
-        metricsLib.track('fail:register:lead:pricing-contact-form', metricsData);
+        metricsLib.track('fail:register:lead:talk-to-sales-modal', metricsData);
         metricsLib.track('fail-sent:talk-to-sales', metricsData);
       }
     });
