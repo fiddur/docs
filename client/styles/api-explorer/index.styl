@@ -54,9 +54,15 @@
     .lang-selector-container
       z-index 50
       position absolute
-      width 50%
       top 0
       right 0
+
+      +breakpoint("tablet", "max")
+        width 100%
+        left 0
+
+      +breakpoint("tablet")
+        width 50%
 
     .lang-selector
       background-color: $lang-select-bg
@@ -135,6 +141,10 @@
       position: relative
       z-index: 30
 
+      // To push content down the language selector sticky element
+      +breakpoint("tablet", "max")
+        padding-top 43px
+
       &:after
         content: ''
         display: block
@@ -142,13 +152,17 @@
 
       .api-section
         padding-bottom 80px
-        min-height 100vh
         border-bottom 1px solid rgba(black, 0.075)
 
+        +breakpoint("tablet")
+          min-height 100vh
+
       h1, h2, h3, h4, h5, h6, p, ul, ol, aside, dl
-        margin-right: $examples-width
         padding-left: 40px;
         padding-right: 40px;
+
+        +breakpoint("tablet")
+          margin-right: $examples-width
 
       h1
         margin 0
@@ -171,9 +185,12 @@
         color #4d4d4d
 
       table
-        width calc(50% - 80px)
         margin-left 40px
-        margin-right $examples-width
+        width calc(100% - 80px)
+
+        +breakpoint("tablet")
+          width calc(50% - 80px)
+          margin-right $examples-width
 
       ul, ol
 
@@ -213,14 +230,16 @@
         color: #fff
         padding: 0 $main-padding
         margin: 0
-        width: $examples-width
-        float: right
-        clear: right
         box-sizing: border-box
         font-style normal
         border none
 
         @extend $right-col
+
+        +breakpoint("tablet")
+          width: $examples-width
+          float: right
+          clear: right
 
         & > p
           margin: 0
@@ -232,6 +251,14 @@
 
         code
           background-color: $code-bg !important
+
+          +breakpoint("tablet", "max")
+
+            padding 30px 12px !important
+
+      pre
+        +breakpoint("tablet", "max")
+          margin-bottom 20px
 
       blockquote
         padding 10px $main-padding
@@ -246,12 +273,14 @@
         font-size 14px
         letter-spacing 1px
         text-transform uppercase
-        color white
         padding 20px 28px
         margin 0
-        width 50%
-        float right
-        clear right
+
+        +breakpoint("tablet")
+          color white
+          width 50%
+          float right
+          clear right
 
 
 
