@@ -9,19 +9,20 @@ import ContentStore from '../stores/ContentStore';
 import Spinner from './Spinner';
 
 const languages = [
-  'shell',
-  'javascript',
-  'ruby',
-  'python',
-  'csharp',
-  'php',
-  'java'
+  { key: 'http', name: 'HTTP' },
+  { key: 'shell', name: 'Shell' },
+  { key: 'javascript', name: 'JavaScript' },
+  { key: 'csharp', name: 'C#' }
 ];
 
 class AuthApiPage extends React.Component {
 
   componentDidMount() {
-    window.initApiExplorer(languages);
+    const languageKeys = [];
+    languages.map((language) =>
+      languageKeys.push(language.key)
+    );
+    window.initApiExplorer(languageKeys);
   }
 
   shouldComponentUpdate(nextProps, nextState) {
@@ -79,10 +80,10 @@ class AuthApiPage extends React.Component {
                   </div>
                   {languages.map((language) => (
                     <a
-                      href={`#${language}`} key={language}
-                      data-language-name={language}
+                      href={`#${language.key}`} key={language.key}
+                      data-language-name={language.key}
                     >
-                      {language}
+                      {language.name}
                     </a>
                   ))}
                 </div>
