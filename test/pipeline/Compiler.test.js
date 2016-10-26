@@ -78,7 +78,7 @@ describe('Compiler', () => {
 
     it('adds the rendered content to the Document, making available vars and metadata', () => {
       const doc = compiler.compile(file, cache);
-      expect(doc.content).to.equal(expectedContent);
+      expect(doc.render()).to.equal(expectedContent);
     });
 
     it('allows content plugins to transform Document content in a stepwise fashion', () => {
@@ -86,7 +86,7 @@ describe('Compiler', () => {
       compiler.use({ transform(meta, content) { return `TWO(${content})`; } });
       const doc = compiler.compile(file, cache);
       const raw = matter(file.text);
-      expect(doc.content).to.equal(`TWO(ONE(${expectedContent}))`);
+      expect(doc.render()).to.equal(`TWO(ONE(${expectedContent}))`);
     });
   });
 
