@@ -1,35 +1,20 @@
-import { docsByUrl, docUrls } from '../../lib/docs/builder';
-import { renderContent } from '../../lib/docs/renderer';
 import _ from 'lodash';
+import docs from '../../lib/pipeline';
 
-export default function(req, res) {
+export default function createArticleService(req, res) {
   return {
-
-    loadArticle: function(quickstarts, payload) {
-
-      let {quickstartId, platformId, articleId} = payload;
-
+    loadArticle: (quickstarts, payload) => {
+      const { quickstartId, platformId, articleId } = payload;
       return new Promise((resolve, reject) => {
-        let pathname = `/${quickstarts[quickstartId].slug}/${platformId}/${articleId}`;
-
-        let doc = docsByUrl[pathname];
+        const url = [quickstarts[quickstartId].slug, platformId, articleId].join('/');
+        const doc = docs.getByUrl(url);
         if (!doc) {
-          let error = new Error('No document found at ' + req.url);
+          const error = new Error(`No document found at ${req.url}`);
           error.status = 404;
           return reject(error);
         }
-
-        try {
-          let html = renderContent(doc, res.locals, true /* absolute links */);
-          return resolve(html);
-        }
-        catch (err) {
-          err.status = 500;
-          return reject(err);
-        }
-
+        return doc.render();
       });
-
     }
   };
 }

@@ -1,34 +1,29 @@
 import _ from 'lodash';
 import { parse } from 'url';
-import { docsByUrl, docUrls } from '../../lib/docs/builder';
-import { renderContent } from '../../lib/docs/renderer'
+import docs from '../../lib/pipeline';
 
-export default function(req, res) {
+export default function createContentService(req, res) {
+  const ContentService = {};
 
-  let ContentService = {};
-
-  ContentService.load = (id) => {
-    return new Promise((resolve, reject) => {
-
+  ContentService.load = (id) => (
+    new Promise((resolve, reject) => {
       const url = parse(req.url).pathname.replace(/^\/docs/, '');
-      const doc = docsByUrl[url];
+      const doc = docs.getByUrl(url);
 
       if (!doc) {
-        const error = new Error('No content found at ' + req.url);
+        const error = new Error(`No content found at ${req.url}`);
         error.status = 404;
         return reject(error);
       }
 
-      const context = _.clone(res.locals);
-      const html = renderContent(doc, context, true /* absolute links */);
       const result = {
-        html,
-        meta: _.clone(doc.meta)
+        html: doc.render(),
+        meta: doc.toJSON()
       };
 
       return resolve(result);
-    });
-  };
+    })
+  );
 
   return ContentService;
 }
