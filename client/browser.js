@@ -5,5 +5,5 @@
 require('babel-polyfill');
 require('./vendor/owl.carousel.js');
 require('./browser/locksso');
-require('./browser/analytics');
+require('./browser/metrics');
 require('./browser/sentry');
