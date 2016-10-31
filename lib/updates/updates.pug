@@ -12,14 +12,15 @@ mixin update(name, updates)
           div!=update.description
 
 block content
-  h1=title
-    a(class="rss-label" href="https://auth0.com/docs/updates/feed")
-      img(src="/docs/img/feed-icon-28x28.png")
+  div.container
+    h1=title
+      a(class="rss-label" href="https://auth0.com/docs/updates/feed")
+        img(src="/docs/img/feed-icon-28x28.png")
 
-  each update in updates
-    h2=update.title
-    +update('Added', update.added)
-    +update('Fixed', update.fixed)
-    +update('Changed', update.changed)
-    hr.update-space
-    
+    each update in updates
+      h2=update.title
+      +update('Added', update.added)
+      +update('Fixed', update.fixed)
+      +update('Changed', update.changed)
+      hr.update-space
+
