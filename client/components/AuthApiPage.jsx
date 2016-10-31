@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { PropTypes } from 'react';
 import { navigateAction } from 'fluxible-router';
 import { connectToStores } from 'fluxible-addons-react';
 import PureRenderMixin from 'react-addons-pure-render-mixin';
@@ -14,6 +14,44 @@ const languages = [
   { key: 'javascript', name: 'JavaScript' },
   { key: 'csharp', name: 'C#' }
 ];
+
+// Change sticky properties depending on width viewport
+class ResponsiveSticky extends React.Component {
+  constructor() {
+    super();
+
+    // Server side rendering fix
+    if (typeof window === 'undefined') {
+      this.state = {};
+      return;
+    }
+
+    this.state = {
+      responsiveMode: window.matchMedia('(max-width: 768px)').matches
+    };
+  }
+  componentDidMount() {
+    window.addEventListener('resize', () => {
+      this.setState({
+        responsiveMode: window.matchMedia('(max-width: 768px)').matches
+      });
+    });
+  }
+  render() {
+    const { children, mobileOffset, desktopOffset, ...props } = this.props;
+    return (
+      <Sticky topOffset={this.state.responsiveMode ? mobileOffset : desktopOffset} {...props}>
+        {this.props.children}
+      </Sticky>
+    );
+  }
+}
+
+ResponsiveSticky.propTypes = {
+  children: PropTypes.node.isRequired,
+  mobileOffset: PropTypes.number.isRequired,
+  desktopOffset: PropTypes.number.isRequired
+};
 
 class AuthApiPage extends React.Component {
 
@@ -71,7 +109,11 @@ class AuthApiPage extends React.Component {
           <div className="page-wrapper">
             <div className="dark-box" />
             <div className="lang-selector-container">
-              <Sticky topOffset={-43} stickyClassName={'sticky lang-mobile-sticky'}>
+              <ResponsiveSticky
+                mobileOffset={-43}
+                desktopOffset={0}
+                stickyClassName={'sticky lang-mobile-sticky'}
+              >
                 <div className="lang-selector">
                   <div className="lang-selector-selected">
                     <span className="language-label">Language:</span>
@@ -87,7 +129,7 @@ class AuthApiPage extends React.Component {
                     </a>
                   ))}
                 </div>
-              </Sticky>
+              </ResponsiveSticky>
             </div>
             <div className="api-content">
               {this.renderContent()}
