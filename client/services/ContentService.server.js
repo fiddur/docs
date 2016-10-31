@@ -17,7 +17,7 @@ export default function createContentService(req, res) {
       }
 
       const result = {
-        html: doc.render(),
+        html: doc.getContent(),
         meta: doc.toJSON()
       };
 

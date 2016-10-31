@@ -44,8 +44,30 @@ describe('Cache', () => {
       });
     });
     describe('with a non-existent path', () => {
+      it('throws an Error', () => {
+        const func = () => cache.get('does-not-exist');
+        expect(func).to.throw(/exists in the cache/);
+      });
+    });
+
+  });
+
+  describe('when tryGet() is called', () => {
+
+    const watcher = new FakeWatcher({ baseDir });
+    const compiler = new Compiler({ vars });
+    const cache = new Cache({ watcher, compiler });
+
+    describe('with a path of a loaded document', () => {
+      it('returns the document', () => {
+        const doc = new Document(getTestFile('articles/test.md'));
+        cache.add(doc);
+        expect(cache.tryGet(doc.path)).to.equal(doc);
+      });
+    });
+    describe('with a non-existent path', () => {
       it('returns undefined', () => {
-        expect(cache.get('does-not-exist')).to.equal(undefined);
+        expect(cache.tryGet('does-not-exist')).to.equal(undefined);
       });
     });
 
@@ -82,7 +104,7 @@ describe('Cache', () => {
       it('returns the document', () => {
         const doc = new Document(getTestFile('articles/test.md'));
         cache.add(doc);
-        expect(cache.getByUrl(doc.url)).to.equal(doc);
+        expect(cache.getByUrl(doc.meta.url)).to.equal(doc);
       });
     });
     describe('with a non-existent URL', () => {

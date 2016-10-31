@@ -1,1 +1,1 @@
-Snippet: foo = ${foo}, bar = ${bar}
+Snippet: foo = ${meta.foo}, bar = ${meta.bar}

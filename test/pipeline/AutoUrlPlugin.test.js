@@ -8,23 +8,24 @@ describe('AutoUrlPlugin', () => {
     describe('with url already set on document', () => {
       it('does not return a new url', () => {
         const plugin = new AutoUrlPlugin();
-        const meta = plugin.getMetadata({ url: '/articles/test-example' }, '');
-        expect(meta).to.equal(null);
+        const doc = { meta: { url: '/articles/test-example' } };
+        const output = plugin.getMetadata(doc, '');
+        expect(output).to.equal(null);
       });
     });
 
     describe('with url not set on document', () => {
       it('returns a url using the path', () => {
-        const path = '/articles/test-example';
         const plugin = new AutoUrlPlugin();
-        const meta = plugin.getMetadata({ path }, '');
-        expect(meta).to.deep.equal({ url: path });
+        const doc = { path: '/articles/test-example', meta: {} };
+        const output = plugin.getMetadata(doc, '');
+        expect(output).to.deep.equal({ url: doc.path });
       });
       it('makes "index" files have the url of the parent directory', () => {
-        const path = '/articles/example/index';
+        const doc = { path: '/articles/example/index', meta: {} };
         const plugin = new AutoUrlPlugin();
-        const meta = plugin.getMetadata({ path }, '');
-        expect(meta).to.deep.equal({ url: '/articles/example' });
+        const output = plugin.getMetadata(doc, '');
+        expect(output).to.deep.equal({ url: '/articles/example' });
       });
     });
 

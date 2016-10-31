@@ -10,8 +10,11 @@ describe('Watcher', () => {
   const baseDir = resolve(__dirname, 'docs');
   const expectedFiles = [
     'articles/_includes/html.html',
+    'articles/_includes/html-locals.html',
     'articles/_includes/markdown.md',
+    'articles/_includes/markdown-locals.md',
     'articles/_includes/recursive.html',
+    'articles/_includes/recursive-locals.html',
     'articles/_partial.md',
     'articles/cache-find.html',
     'articles/cache-get.html',
@@ -25,7 +28,7 @@ describe('Watcher', () => {
     'articles/include-snippet.html',
     'articles/test.md',
     'articles/test.html'
-  ];
+  ].map(filename => resolve(baseDir, filename));
 
   beforeEach(() => {
     watcher = new Watcher({ baseDir });
@@ -38,7 +41,7 @@ describe('Watcher', () => {
       watcher.on('add', file => {
         count++;
         expect(file).to.be.instanceof(File);
-        expect(expectedFiles).to.include(file.path, `Watcher returned unexpected file ${file.filename}`);
+        expect(expectedFiles).to.include(file.filename, `Watcher returned unexpected file ${file.filename}`);
         if (count === expectedFiles.length) setImmediate(done);
       });
       watcher.watch('articles');
@@ -59,9 +62,9 @@ describe('Watcher', () => {
   describe('when a file changes after it has been found', () => {
 
     it('emits a change event for the file', (done) => {
-      const filename = 'articles/test.md';
+      const filename = resolve(baseDir, 'articles/test.md');
       watcher.on('change', file => {
-        expect(file.path).to.equal(filename);
+        expect(file.filename).to.equal(filename);
         done();
       });
       watcher.watch('articles');

@@ -64,29 +64,29 @@ describe('Compiler', () => {
 
     it('merges metadata from document front matter into the Document', () => {
       const doc = compiler.compile(file, cache);
-      expect(doc.title).to.equal('HTML Test File');
-      expect(doc.example).to.equal('this is read from front matter');
+      expect(doc.meta.title).to.equal('HTML Test File');
+      expect(doc.meta.example).to.equal('this is read from front matter');
     });
 
     it('merges metadata from metadata plugins into the Document', () => {
-      compiler.use({ getMetadata(meta, content) { return { foo: 42 }; } });
-      compiler.use({ getMetadata(meta, content) { return { bar: 123 }; } });
+      compiler.use({ getMetadata(doc, content) { return { foo: 42 }; } });
+      compiler.use({ getMetadata(doc, content) { return { bar: 123 }; } });
       const doc = compiler.compile(file, cache);
-      expect(doc.foo).to.equal(42);
-      expect(doc.bar).to.equal(123);
+      expect(doc.meta.foo).to.equal(42);
+      expect(doc.meta.bar).to.equal(123);
     });
 
     it('adds the rendered content to the Document, making available vars and metadata', () => {
       const doc = compiler.compile(file, cache);
-      expect(doc.render()).to.equal(expectedContent);
+      expect(doc.getContent()).to.equal(expectedContent);
     });
 
     it('allows content plugins to transform Document content in a stepwise fashion', () => {
-      compiler.use({ transform(meta, content) { return `ONE(${content})`; } });
-      compiler.use({ transform(meta, content) { return `TWO(${content})`; } });
+      compiler.use({ transform(doc, content) { return `ONE(${content})`; } });
+      compiler.use({ transform(doc, content) { return `TWO(${content})`; } });
       const doc = compiler.compile(file, cache);
       const raw = matter(file.text);
-      expect(doc.render()).to.equal(`TWO(ONE(${expectedContent}))`);
+      expect(doc.getContent()).to.equal(`TWO(ONE(${expectedContent}))`);
     });
   });
 

@@ -12,7 +12,7 @@ class FakeCache extends EventEmitter {
   add(doc) {
     this.docsByPath[doc.path] = doc;
     this.docsByFilename[doc.filename] = doc;
-    this.docsByUrl[doc.url] = doc;
+    this.docsByUrl[doc.meta.url] = doc;
     this.emit('add', doc);
   }
 
@@ -20,7 +20,7 @@ class FakeCache extends EventEmitter {
     Object.keys(this.docsByPath)
     .forEach(path => {
       const doc = this.docsByPath[path];
-      doc.render();
+      doc.getContent();
     });
   }
 

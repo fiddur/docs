@@ -1,1 +1,1 @@
-Markdown _include_: foo = ${foo}, bar = ${bar}
+Markdown _include_: foo = ${meta.foo}, bar = ${meta.bar}
