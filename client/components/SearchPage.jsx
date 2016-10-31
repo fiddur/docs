@@ -33,7 +33,7 @@ class SearchResult extends React.Component {
         </div>
         <div className="col-md-11">
           <h2 className="title"><a onClick={boundClick} href={page.url} className="st-search-result-link">{page.title}</a></h2>
-          <p><a onClick={boundClick} href={page.url} dangerouslySetInnerHTML={{__html: page.highlight.body}}></a></p>
+          <p><a onClick={boundClick} href={page.url} dangerouslySetInnerHTML={{ __html: page.highlight.body }}></a></p>
         </div>
       </div>
     );
@@ -70,8 +70,7 @@ class SearchPage extends React.Component {
     case SearchResultState.LOADED:
       if (result.response.record_count == 0) {
         return <p>No results found. Would you like to try another search term?</p>;
-      }
-      else {
+      } else {
         // TODO: Show result count, pagination, etc.
         return result.response.records.page.map((page, i) => {
           //var boundClick = this.handleClick.bind(this, page);

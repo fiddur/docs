@@ -1,7 +1,7 @@
-let SearchService = {};
+const SearchService = {};
 
-const postRequest = (requestUrl, body) => {
-  return fetch(requestUrl, {
+const postRequest = (requestUrl, body) =>
+  fetch(requestUrl, {
     method: 'POST',
     headers: new Headers({
       'Content-Type': 'application/json'
@@ -12,60 +12,54 @@ const postRequest = (requestUrl, body) => {
     if (response.status >= 200 && response.status < 400) {
       return response;
     }
-    else {
-      var error = new Error(response.statusText);
-      error.status = response.status;
-      error.response = response;
-      throw error;
-    }
+
+    const error = new Error(response.statusText);
+    error.status = response.status;
+    error.response = response;
+    throw error;
   })
-  .then(response => {
-    return response.json();
-  });
-}
+  .then(response => response.json());
 
 const pingUrl = (url, callback) => {
-  var img = new Image();
-  img.onload = img.onerror = function() {
-    clearTimeout(to);
+  const img = new Image();
+  img.onload = img.onerror = function onError() {
     callback();
   };
   img.src = url;
-}
+};
 
 const baseUrl = 'https://api.swiftype.com';
 
 SearchService.search = (query) => {
+  const requestUrl = `${baseUrl}/api/v1/public/engines/search`;
 
-  let requestUrl = `${baseUrl}/api/v1/public/engines/search`;
-
-  var body = {
-    'engine_key': window.env.SWIFTYPE_ENGINE_KEY,
-    'q': query,
-    'filters':{
-      'page': {
-        'type':['article']
+  const body = {
+    engine_key: window.env.SWIFTYPE_ENGINE_KEY,
+    q: query,
+    spelling: 'retry',
+    filters: {
+      page: {
+        type: ['article']
       }
     }
   };
 
   return postRequest(requestUrl, body);
-}
+};
 
 SearchService.recordClickthrough = (query, id) => {
-  let requestUrl = '/search/clickthrough';
+  const requestUrl = '/search/clickthrough';
 
-  var params = {
+  const params = {
     t: new Date().getTime(),
     engine_key: window.env.SWIFTYPE_ENGINE_KEY,
     doc_id: id,
-    q: query,
+    q: query
   };
 
-  var url = `${baseUrl}/api/v1/public/analytics/pc?` + $.param(params);
-  return new Promise((resolve) => {
-    return pingUrl(url, resolve);
-  });
-}
+  const urlParams = $.param(params);
+  const url = `${baseUrl}/api/v1/public/analytics/pc?${urlParams}`;
+  return new Promise((resolve) => pingUrl(url, resolve));
+};
 
 export default SearchService;
