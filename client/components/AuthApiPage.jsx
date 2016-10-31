@@ -28,13 +28,13 @@ class ResponsiveSticky extends React.Component {
     }
 
     this.state = {
-      responsiveMode: window.matchMedia('(max-width: 768px)').matches
+      responsiveMode: window.matchMedia('(max-width: 992px)').matches
     };
   }
   componentDidMount() {
     window.addEventListener('resize', () => {
       this.setState({
-        responsiveMode: window.matchMedia('(max-width: 768px)').matches
+        responsiveMode: window.matchMedia('(max-width: 992px)').matches
       });
     });
   }
@@ -57,11 +57,7 @@ ResponsiveSticky.propTypes = {
 class AuthApiPage extends React.Component {
 
   componentDidMount() {
-    const languageKeys = [];
-    languages.map((language) =>
-      languageKeys.push(language.key)
-    );
-    window.initApiExplorer(languageKeys);
+    window.initApiExplorer(languages);
   }
 
   shouldComponentUpdate(nextProps, nextState) {

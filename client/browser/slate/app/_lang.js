@@ -17,6 +17,7 @@ under the License.
 */
 
 var languages = [];
+var languagesNames = [];
 
 function activateLanguage(language) {
   if (!language) return;
@@ -30,7 +31,7 @@ function activateLanguage(language) {
     $(".lang-specific." + languages[i]).hide();
   }
 
-  $('.lang-selector .js-selected-language').text(language);
+  $('.lang-selector .js-selected-language').text(languagesNames[languages.indexOf(language)]);
   $('.lang-selector').removeClass('open');
 
   $(".language-" + language).show();
@@ -134,7 +135,13 @@ function pushURL(language) {
 function setupLanguages(l) {
   var defaultLanguage = localStorage.getItem("language");
 
-  languages = l;
+  languages = [];
+  languagesNames = [];
+
+  l.forEach((language) => {
+    languages.push(language.key);
+    languagesNames.push(language.name);
+  });
 
   var presetLanguage = getLanguageFromQueryString();
   if (presetLanguage) {
