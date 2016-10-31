@@ -15,7 +15,8 @@ const languages = [
   { key: 'csharp', name: 'C#' }
 ];
 
-// Change sticky properties depending on width viewport
+// HOC for react sticky for
+// changing sticky properties depending on width viewport
 class ResponsiveSticky extends React.Component {
   constructor() {
     super();
