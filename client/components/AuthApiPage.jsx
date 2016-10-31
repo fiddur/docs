@@ -11,8 +11,7 @@ import Spinner from './Spinner';
 const languages = [
   { key: 'http', name: 'HTTP' },
   { key: 'shell', name: 'Shell' },
-  { key: 'javascript', name: 'JavaScript' },
-  { key: 'csharp', name: 'C#' }
+  { key: 'javascript', name: 'JavaScript' }
 ];
 
 // HOC for react sticky for

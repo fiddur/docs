@@ -184,6 +184,10 @@
         color $color-oil
         margin-top 36px
 
+      // Remove margins of empty paragraphs
+      p:empty
+        margin 0
+
       li, p
         color #4d4d4d
 
@@ -276,7 +280,7 @@
         font-size 14px
         letter-spacing 1px
         text-transform uppercase
-        padding 20px 28px
+        padding 0 28px 20px
         margin 0
 
         +breakpoint("tablet")
