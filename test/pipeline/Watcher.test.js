@@ -15,6 +15,10 @@ describe('Watcher', () => {
     'articles/_includes/markdown-locals.md',
     'articles/_includes/recursive.html',
     'articles/_includes/recursive-locals.html',
+    'articles/example-quickstarts/platform-a/01-example.md',
+    'articles/example-quickstarts/platform-a/index.yml',
+    'articles/example-quickstarts/platform-b/00-intro.md',
+    'articles/example-quickstarts/platform-b/index.yml',
     'articles/_partial.md',
     'articles/cache-find.html',
     'articles/cache-get.html',
@@ -26,6 +30,7 @@ describe('Watcher', () => {
     'articles/include-recursive.html',
     'articles/include-recursive-locals.html',
     'articles/include-snippet.html',
+    'articles/index.yml',
     'articles/test.md',
     'articles/test.html'
   ].map(filename => resolve(baseDir, filename));

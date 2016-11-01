@@ -2,7 +2,7 @@ import EventEmitter from 'events';
 
 class FakeCache extends EventEmitter {
 
-  constructor(options = {}) {
+  constructor() {
     super();
     this.docsByPath = {};
     this.docsByFilename = {};
