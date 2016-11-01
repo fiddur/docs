@@ -240,6 +240,7 @@
         box-sizing: border-box
         font-style normal
         border none
+        border-radius 0
 
         @extend $right-col
 
@@ -263,9 +264,9 @@
 
             padding 30px 12px !important
 
-      pre
+      pre + p
         +breakpoint("tablet", "max")
-          margin-bottom 20px
+          margin-top 20px
 
       blockquote
         padding 10px $main-padding
@@ -282,6 +283,7 @@
         text-transform uppercase
         padding 0 28px 20px
         margin 0
+        display none
 
         +breakpoint("tablet")
           color white
