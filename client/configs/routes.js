@@ -92,6 +92,12 @@ export default {
     handler: StaticPage
   },
 
+  authApiExplorerLegacy: {
+    path: '/docs/api/authentication',
+    method: 'get',
+    handler: StaticPage
+  },
+
   authApiExplorer: {
     path: '/docs/api/authentication/reference',
     method: 'get',
