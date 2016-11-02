@@ -58,8 +58,9 @@ describe('Compiler', () => {
       const doc = compiler.compile(file, cache);
       expect(doc.path).to.equal(file.path);
       expect(doc.filename).to.equal(file.filename);
-      expect(doc.hash).to.equal(basename(file.filename));
+      expect(doc.basename).to.equal(basename(file.filename));
       expect(doc.extension).to.equal(extname(file.filename));
+      expect(doc.hash).to.equal(basename(file.filename).replace(extname(file.filename), ''));
     });
 
     it('merges metadata from document front matter into the Document', () => {

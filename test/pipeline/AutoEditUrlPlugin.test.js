@@ -19,14 +19,14 @@ describe('AutoEditUrlPlugin', () => {
         const plugin = new AutoEditUrlPlugin();
         const doc = { hash: 'example.md', meta: { } };
         const output = plugin.getMetadata(doc, '');
-        expect(output).to.deep.equal({ editUrl: AutoEditUrlPlugin.defaults.baseUrl + doc.hash });
+        expect(output).to.deep.equal({ editUrl: AutoEditUrlPlugin.defaults.baseUrl + doc.basename });
       });
       it('allows overriding of the baseUrl', () => {
         const baseUrl = 'http://different-site.com/';
         const plugin = new AutoEditUrlPlugin({ baseUrl });
         const doc = { hash: 'example.md', meta: {} };
         const output = plugin.getMetadata(doc, '');
-        expect(output).to.deep.equal({ editUrl: baseUrl + doc.hash });
+        expect(output).to.deep.equal({ editUrl: baseUrl + doc.basename });
       });
     });
 
