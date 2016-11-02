@@ -3,20 +3,34 @@ import { expect } from 'chai';
 import getTestDocument from './util/getTestDocument';
 import getTestFile from './util/getTestFile';
 import FakeCache from './mocks/FakeCache';
+import UrlFormatter from '../../lib/pipeline/UrlFormatter';
 import ConnectionsReducer from '../../lib/pipeline/reducers/ConnectionsReducer';
 
 describe('ConnectionsReducer', () => {
+
+  const baseUrl = 'https://tests.local/';
+  const mediaUrl = 'https://cdn.cloud/';
+
+  describe('when the constructor is called', () => {
+    describe('without a urlFormatter option', () => {
+      it('throws an Error', () => {
+        const func = () => new ConnectionsReducer();
+        expect(func).to.throw(/requires a urlFormatter option/);
+      });
+    });
+  });
 
   describe('when reduce() is called', () => {
     let result;
     const doc1 = getTestDocument(getTestFile('articles/connections/database/mysql.md'));
     const doc2 = getTestDocument(getTestFile('articles/connections/social/facebook.md'));
+    const urlFormatter = new UrlFormatter({ baseUrl, mediaUrl });
 
     before(() => {
       const cache = new FakeCache();
       cache.add(doc1);
       cache.add(doc2);
-      const reducer = new ConnectionsReducer();
+      const reducer = new ConnectionsReducer({ urlFormatter });
       result = reducer.reduce(cache);
     });
 
@@ -31,10 +45,17 @@ describe('ConnectionsReducer', () => {
         const doc = docs[index];
         expect(entry.title).to.equal(doc.meta.connection);
         expect(entry.hash).to.equal(doc.hash);
-        expect(entry.url).to.equal(doc.meta.url);
-        expect(entry.image).to.equal(doc.meta.image);
         expect(entry.alias).to.equal(doc.meta.alias);
         expect(entry.seo_alias).to.equal(doc.meta.seo_alias);
+      });
+    });
+
+    it('formats URLs using the UrlFormatter', () => {
+      const docs = [doc1, doc2];
+      result.forEach((entry, index) => {
+        const doc = docs[index];
+        expect(entry.url).to.equal(urlFormatter.format(doc.meta.url));
+        expect(entry.image).to.equal(urlFormatter.format(doc.meta.image));
       });
     });
 

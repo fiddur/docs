@@ -3,26 +3,37 @@ import { expect } from 'chai';
 import getTestDocument from './util/getTestDocument';
 import getTestFile from './util/getTestFile';
 import FakeCache from './mocks/FakeCache';
+import UrlFormatter from '../../lib/pipeline/UrlFormatter';
 import PlatformsReducer from '../../lib/pipeline/reducers/PlatformsReducer';
 
 describe('PlatformsReducer', () => {
 
+  const baseUrl = 'https://tests.local/';
+  const mediaUrl = 'https://cdn.cloud/';
+  const urlFormatter = new UrlFormatter({ baseUrl, mediaUrl });
+
   const articlesDir = resolve(__dirname, 'docs/articles');
   const appTypes = [
-    { title: 'Example', name: 'example', slug: 'example-quickstarts' }
+    { title: 'Example', name: 'example', slug: 'example-quickstarts', flavor: 'vanilla' }
   ];
 
   describe('when the constructor is called', () => {
     describe('without an appTypes option', () => {
       it('throws an Error', () => {
-        const func = () => new PlatformsReducer({ articlesDir });
+        const func = () => new PlatformsReducer({ articlesDir, urlFormatter });
         expect(func).to.throw(/requires an appTypes option/);
       });
     });
     describe('without an articlesDir option', () => {
       it('throws an Error', () => {
-        const func = () => new PlatformsReducer({ appTypes });
+        const func = () => new PlatformsReducer({ appTypes, urlFormatter });
         expect(func).to.throw(/requires an articlesDir option/);
+      });
+    });
+    describe('without a urlFormatter option', () => {
+      it('throws an Error', () => {
+        const func = () => new PlatformsReducer({ appTypes, articlesDir });
+        expect(func).to.throw(/requires a urlFormatter option/);
       });
     });
   });
@@ -36,63 +47,40 @@ describe('PlatformsReducer', () => {
       const cache = new FakeCache();
       cache.add(doc1);
       cache.add(doc2);
-      const reducer = new PlatformsReducer({ appTypes, articlesDir });
+      const reducer = new PlatformsReducer({ appTypes, articlesDir, urlFormatter });
       result = reducer.reduce(cache);
     });
 
-    it('returns an object a key for each app type', () => {
-      expect(Object.keys(result)).to.deep.equal(['example']);
+    it('returns an array of platforms', () => {
+      expect(result).to.be.an('array');
+      expect(result).to.have.length(2);
     });
 
-    it('builds a list of platforms for each app type', () => {
-      expect(result.example).to.be.an('array');
-      expect(result.example).to.have.length(2);
+    it('creates platform entries using metadata read from index files', () => {
+      const [platformA, platformB] = result;
+      expect(platformA.name).to.equal('Platform A');
+      expect(platformA.hash).to.equal('platform-a');
+      expect(platformB.name).to.equal('Platform B');
+      expect(platformB.hash).to.equal('platform-b');
     });
 
-    it('sets basic information on each platform', () => {
-      const platform = result.example[0];
-      expect(platform.name).to.equal('platform-a');
-      expect(platform.type).to.equal('example');
-      expect(platform.url).to.equal('/docs/quickstart/example/platform-a');
+    it('sets the platform_type using the appType name', () => {
+      const [platformA, platformB] = result;
+      expect(platformA.platform_type).to.equal('example');
+      expect(platformB.platform_type).to.equal('example');
     });
 
-    it('merges metadata from index files into the platforms', () => {
-      const platform = result.example[0];
-      expect(platform.foo).to.equal(42);
-      expect(platform.bar).to.equal(123);
+    it('formats platform URLs using the UrlFormatter', () => {
+      const [platformA, platformB] = result;
+      expect(platformA.url).to.equal(urlFormatter.format('/docs/quickstart/example/platform-a'));
+      expect(platformB.url).to.equal(urlFormatter.format('/docs/quickstart/example/platform-b'));
     });
 
-    it('adds a list of articles to each platform', () => {
-      const [platformA, platformB] = result.example;
-      expect(platformA.articles).to.be.an('array');
-      expect(platformA.articles).to.have.length(1);
-      expect(platformB.articles).to.be.an('array');
-      expect(platformB.articles).to.have.length(1);
+    it('formats platform image URLs using the UrlFormatter', () => {
+      const [platformA, platformB] = result;
+      expect(platformA.image).to.equal(urlFormatter.format('/media/platforms/platform-a.png'));
+      expect(platformB.image).to.equal(urlFormatter.format('/media/platforms/platform-b.png'));
     });
-
-    it('sets basic information on each article', () => {
-      const platform = result.example[0];
-      const article = platform.articles[0];
-      expect(article.name).to.equal('01-example');
-      expect(article.number).to.equal(1);
-      expect(article.url).to.equal('/docs/quickstart/example/platform-a/01-example');
-    });
-
-    it('merges metadata from corresponding documents into the articles', () => {
-      const platform = result.example[0];
-      const article = platform.articles[0];
-      expect(article.title).to.equal(doc1.meta.title);
-      expect(article.description).to.equal(doc1.meta.description);
-      expect(article.budicon).to.equal(doc1.meta.budicon);
-    });
-
-    it('sets a default article for the platform if one is specified in the index file', () => {
-      const [platformA, platformB] = result.example;
-      expect(platformA.defaultArticle).to.exist;
-      expect(platformA.defaultArticle.name).to.equal('01-example');
-      expect(platformB.defaultArticle).to.not.exist;
-    });
-
   });
 
 });
