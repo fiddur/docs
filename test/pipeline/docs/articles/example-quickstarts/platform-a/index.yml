@@ -1,7 +1,5 @@
 title: Platform A
 image: /media/platforms/platform-a.png
 default_article: 01-example
-foo: 42
-bar: 123
 articles:
   - 01-example

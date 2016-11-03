@@ -21,7 +21,7 @@ describe('ReplaceIncludesPlugin', () => {
     const plugin = new ReplaceIncludesPlugin({ snippetsDir: resolve(__dirname, 'docs/snippets') });
     const process = (doc, file) => {
       const content = plugin.transform(doc, file.text);
-      return template(content)(doc);
+      return template(content)({ meta: doc });
     };
 
     describe('when the content contains a call to include()', () => {
@@ -47,8 +47,7 @@ describe('ReplaceIncludesPlugin', () => {
         it('inserts the included content using variables from the local hash', () => {
           const file = getTestFile('articles/include-markdown-locals.html');
           const doc = new Document(file, { foo: 'meta-foo', bar: 'meta-bar' });
-          let content = process(doc, file);
-          content = template(content)(doc);
+          const content = process(doc, file);
           expect(content).to.equal('Here is an include: <p>Markdown <em>include</em>: foo = locals-foo, bar = locals-bar</p>\n');
         });
       });

@@ -18,14 +18,14 @@ describe('createRenderer', () => {
 
   describe('when called with a Document with a call to cache.get()', () => {
     const file = getTestFile('articles/cache-get.html');
-    const doc1 = getTestDocument(getTestFile('articles/test.md'));
+    const doc1 = getTestDocument(getTestFile('articles/test-markdown.md'));
     const doc2 = getTestDocument(file);
     it('gets the requested doc from the cache', () => {
       cache.add(doc1);
       const template = _.template(file.text);
       const renderer = createRenderer(template, doc2, cache, vars);
       const content = renderer();
-      expect(content).to.equal('The path of the cached document is articles/test.md');
+      expect(content).to.equal('The path of the cached document is articles/test-markdown');
     });
     it('adds the returned doc as a dependency', () => {
       cache.add(doc1);
@@ -38,8 +38,8 @@ describe('createRenderer', () => {
 
   describe('when called with a Document with a call to cache.find()', () => {
     const file = getTestFile('articles/cache-find.html');
-    const doc1 = getTestDocument(getTestFile('articles/test.md'));
-    const doc2 = getTestDocument(getTestFile('articles/test.html'));
+    const doc1 = getTestDocument(getTestFile('articles/test-markdown.md'));
+    const doc2 = getTestDocument(getTestFile('articles/test-html.html'));
     const doc3 = getTestDocument(file);
     it('gets the requested docs from the cache', () => {
       cache.add(doc1);
@@ -47,7 +47,7 @@ describe('createRenderer', () => {
       const template = _.template(file.text);
       const renderer = createRenderer(template, doc3, cache, vars);
       const content = renderer();
-      expect(content).to.equal('The path of the cached documents are:\n\narticles/test.md\n\narticles/test.html\n');
+      expect(content).to.equal('The path of the cached documents are:\n\narticles/test-markdown\n\narticles/test-html\n');
     });
     it('adds the returned docs as dependencies', () => {
       cache.add(doc1);

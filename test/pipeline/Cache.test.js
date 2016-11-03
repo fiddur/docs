@@ -38,7 +38,7 @@ describe('Cache', () => {
 
     describe('with a path of a loaded document', () => {
       it('returns the document', () => {
-        const doc = new Document(getTestFile('articles/test.md'));
+        const doc = new Document(getTestFile('articles/test-markdown.md'));
         cache.add(doc);
         expect(cache.get(doc.path)).to.equal(doc);
       });
@@ -60,7 +60,7 @@ describe('Cache', () => {
 
     describe('with a path of a loaded document', () => {
       it('returns the document', () => {
-        const doc = new Document(getTestFile('articles/test.md'));
+        const doc = new Document(getTestFile('articles/test-markdown.md'));
         cache.add(doc);
         expect(cache.tryGet(doc.path)).to.equal(doc);
       });
@@ -81,7 +81,7 @@ describe('Cache', () => {
 
     describe('with a path of a loaded document', () => {
       it('returns the document', () => {
-        const doc = new Document(getTestFile('articles/test.md'));
+        const doc = new Document(getTestFile('articles/test-markdown.md'));
         cache.add(doc);
         expect(cache.getByFilename(doc.filename)).to.equal(doc);
       });
@@ -102,9 +102,9 @@ describe('Cache', () => {
 
     describe('with a path of a loaded document', () => {
       it('returns the document', () => {
-        const doc = new Document(getTestFile('articles/test.md'));
+        const doc = new Document(getTestFile('articles/test-markdown.md'));
         cache.add(doc);
-        expect(cache.getByUrl(doc.meta.url)).to.equal(doc);
+        expect(cache.getByUrl(doc.url)).to.equal(doc);
       });
     });
     describe('with a non-existent URL', () => {
@@ -123,8 +123,8 @@ describe('Cache', () => {
 
     describe('with a path of a loaded document', () => {
       it('returns the document', () => {
-        const doc1 = new Document(getTestFile('articles/test.html'));
-        const doc2 = new Document(getTestFile('articles/test.md'));
+        const doc1 = new Document(getTestFile('articles/test-html.html'));
+        const doc2 = new Document(getTestFile('articles/test-markdown.md'));
         cache.add(doc1);
         cache.add(doc2);
         expect(cache.find('articles')).to.eql([doc1, doc2]);
@@ -150,9 +150,8 @@ describe('Cache', () => {
 
     describe('for a file that matches one of the documentPaths expressions', () => {
       it('compiles the file to a document and adds it to the cache', () => {
-        const path = 'articles/test.html';
-        watcher.emit('add', watcher.load(path));
-        const doc = cache.get(path);
+        watcher.emit('add', watcher.load('articles/test-html.html'));
+        const doc = cache.get('articles/test-html');
         expect(doc).to.be.instanceof(Document);
       });
     });
@@ -176,16 +175,16 @@ describe('Cache', () => {
 
     describe('for an existing document', () => {
       it('recompiles the document', () => {
-        const path = 'articles/include-recursive.html';
-        const filename = resolve(baseDir, path);
+        const shortname = 'articles/include-recursive.html';
+        const filename = resolve(baseDir, shortname);
         let compiledFiles = {};
         cache.on('add', doc => {
           compiledFiles[doc.filename] = true;
         });
-        watcher.emit('add', watcher.load(path));
+        watcher.emit('add', watcher.load(shortname));
         expect(compiledFiles).to.have.all.keys(filename);
         compiledFiles = [];
-        watcher.emit('change', watcher.load(path));
+        watcher.emit('change', watcher.load(shortname));
         expect(compiledFiles).to.have.all.keys(filename);
       });
     });

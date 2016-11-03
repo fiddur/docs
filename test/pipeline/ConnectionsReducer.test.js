@@ -43,10 +43,10 @@ describe('ConnectionsReducer', () => {
       const docs = [doc1, doc2];
       result.forEach((entry, index) => {
         const doc = docs[index];
-        expect(entry.title).to.equal(doc.meta.connection);
+        expect(entry.title).to.equal(doc.connection);
         expect(entry.hash).to.equal(doc.hash);
-        expect(entry.alias).to.equal(doc.meta.alias);
-        expect(entry.seo_alias).to.equal(doc.meta.seo_alias);
+        expect(entry.alias).to.equal(doc.alias);
+        expect(entry.seo_alias).to.equal(doc.seo_alias);
       });
     });
 
@@ -54,8 +54,8 @@ describe('ConnectionsReducer', () => {
       const docs = [doc1, doc2];
       result.forEach((entry, index) => {
         const doc = docs[index];
-        expect(entry.url).to.equal(urlFormatter.format(doc.meta.url));
-        expect(entry.image).to.equal(urlFormatter.format(doc.meta.image));
+        expect(entry.url).to.equal(urlFormatter.format(doc.url));
+        expect(entry.image).to.equal(urlFormatter.format(doc.image));
       });
     });
 

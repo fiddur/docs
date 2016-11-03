@@ -8,7 +8,7 @@ describe('AutoUrlPlugin', () => {
     describe('with url already set on document', () => {
       it('does not return a new url', () => {
         const plugin = new AutoUrlPlugin();
-        const doc = { meta: { url: '/articles/test-example' } };
+        const doc = { url: '/articles/test-example' };
         const output = plugin.getMetadata(doc, '');
         expect(output).to.equal(null);
       });
@@ -17,12 +17,12 @@ describe('AutoUrlPlugin', () => {
     describe('with url not set on document', () => {
       it('returns a url using the path', () => {
         const plugin = new AutoUrlPlugin();
-        const doc = { path: '/articles/test-example', meta: {} };
+        const doc = { path: '/articles/test-example' };
         const output = plugin.getMetadata(doc, '');
         expect(output).to.deep.equal({ url: doc.path });
       });
       it('makes "index" files have the url of the parent directory', () => {
-        const doc = { path: '/articles/example/index', meta: {} };
+        const doc = { path: '/articles/example/index' };
         const plugin = new AutoUrlPlugin();
         const output = plugin.getMetadata(doc, '');
         expect(output).to.deep.equal({ url: '/articles/example' });

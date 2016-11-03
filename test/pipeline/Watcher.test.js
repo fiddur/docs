@@ -34,8 +34,8 @@ describe('Watcher', () => {
     'articles/include-recursive-locals.html',
     'articles/include-snippet.html',
     'articles/index.yml',
-    'articles/test.md',
-    'articles/test.html'
+    'articles/test-markdown.md',
+    'articles/test-html.html'
   ].map(filename => resolve(baseDir, filename));
 
   beforeEach(() => {
@@ -70,7 +70,7 @@ describe('Watcher', () => {
   describe('when a file changes after it has been found', () => {
 
     it('emits a change event for the file', (done) => {
-      const filename = resolve(baseDir, 'articles/test.md');
+      const filename = resolve(baseDir, 'articles/test-markdown.md');
       watcher.on('change', file => {
         expect(file.filename).to.equal(filename);
         done();

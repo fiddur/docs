@@ -40,7 +40,7 @@ describe('Compiler', () => {
 
   describe('when compile() is called with a File', () => {
 
-    const file = getTestFile('articles/test.html');
+    const file = getTestFile('articles/test-html.html');
     const cache = {};
     const expectedContent = 'title = HTML Test File, example = this is read from front matter, environment = test';
     let compiler;
@@ -54,27 +54,28 @@ describe('Compiler', () => {
       expect(doc).to.be.instanceof(Document);
     });
 
-    it('adds basic metadata to the Document', () => {
+    it('sets file-oriented properties on the Document', () => {
       const doc = compiler.compile(file, cache);
-      expect(doc.path).to.equal(file.path);
       expect(doc.filename).to.equal(file.filename);
-      expect(doc.basename).to.equal(basename(file.filename));
-      expect(doc.extension).to.equal(extname(file.filename));
-      expect(doc.hash).to.equal(basename(file.filename).replace(extname(file.filename), ''));
+      expect(doc.shortname).to.equal('articles/test-html.html');
+      expect(doc.basename).to.equal('test-html.html');
+      expect(doc.extension).to.equal('.html');
+      expect(doc.path).to.equal('articles/test-html');
+      expect(doc.hash).to.equal('test-html');
     });
 
     it('merges metadata from document front matter into the Document', () => {
       const doc = compiler.compile(file, cache);
-      expect(doc.meta.title).to.equal('HTML Test File');
-      expect(doc.meta.example).to.equal('this is read from front matter');
+      expect(doc.title).to.equal('HTML Test File');
+      expect(doc.example).to.equal('this is read from front matter');
     });
 
     it('merges metadata from metadata plugins into the Document', () => {
       compiler.use({ getMetadata(doc, content) { return { foo: 42 }; } });
       compiler.use({ getMetadata(doc, content) { return { bar: 123 }; } });
       const doc = compiler.compile(file, cache);
-      expect(doc.meta.foo).to.equal(42);
-      expect(doc.meta.bar).to.equal(123);
+      expect(doc.foo).to.equal(42);
+      expect(doc.bar).to.equal(123);
     });
 
     it('adds the rendered content to the Document, making available vars and metadata', () => {

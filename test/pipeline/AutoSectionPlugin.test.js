@@ -8,7 +8,7 @@ describe('AutoSectionPlugin', () => {
     describe('with section already set on document', () => {
       it('does not return a new section', () => {
         const plugin = new AutoSectionPlugin();
-        const doc = { meta: { section: 'api' } };
+        const doc = { section: 'api' };
         const output = plugin.getMetadata(doc, '');
         expect(output).to.equal(null);
       });
@@ -17,14 +17,14 @@ describe('AutoSectionPlugin', () => {
     describe('with section not set on document', () => {
       it('returns a default section', () => {
         const plugin = new AutoSectionPlugin();
-        const doc = { meta: {} };
+        const doc = {};
         const output = plugin.getMetadata(doc, '');
         expect(output).to.deep.equal({ section: AutoSectionPlugin.defaults.section });
       });
       it('allows overriding of the default section', () => {
         const section = 'test-example';
         const plugin = new AutoSectionPlugin({ section });
-        const doc = { meta: {} };
+        const doc = {};
         const output = plugin.getMetadata(doc, '');
         expect(output).to.deep.equal({ section });
       });

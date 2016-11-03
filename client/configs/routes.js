@@ -71,13 +71,6 @@ export default {
     handler: SearchPage
   },
 
-  apis: {
-    path: '/docs/api/info',
-    method: 'get',
-    handler: ArticlePage,
-    action: loadContent
-  },
-
   // sdks: {
   //   path: '/docs/sdks',
   //   method: 'get',

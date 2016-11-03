@@ -5,6 +5,7 @@ import '../../config';
 describe('createPipeline', function() {
   this.timeout(30000);
   let pipeline;
+
   before(() => {
     pipeline = createPipeline();
   });

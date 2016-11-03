@@ -1,6 +1,6 @@
 import fs from 'fs';
 import EventEmitter from 'events';
-import { resolve } from 'path';
+import { relative, resolve } from 'path';
 import File from '../../../lib/pipeline/models/File';
 
 class FakeWatcher extends EventEmitter {
@@ -18,8 +18,9 @@ class FakeWatcher extends EventEmitter {
 
   load(path, encoding = 'utf8') {
     const filename = resolve(this.baseDir, path);
+    const shortname = relative(this.baseDir, filename);
     const text = fs.readFileSync(filename, encoding);
-    return new File(path, filename, text);
+    return new File(filename, shortname, text);
   }
 
 }

@@ -3,9 +3,14 @@ import { expect } from 'chai';
 import getTestDocument from './util/getTestDocument';
 import getTestFile from './util/getTestFile';
 import FakeCache from './mocks/FakeCache';
+import UrlFormatter from '../../lib/pipeline/UrlFormatter';
 import QuickstartsReducer from '../../lib/pipeline/reducers/QuickstartsReducer';
 
 describe('QuickstartsReducer', () => {
+
+  const baseUrl = 'https://tests.local/docs';
+  const mediaUrl = 'https://cdn.cloud/';
+  const urlFormatter = new UrlFormatter({ baseUrl, mediaUrl });
 
   const articlesDir = resolve(__dirname, 'docs/articles');
   const appTypes = [
@@ -15,14 +20,20 @@ describe('QuickstartsReducer', () => {
   describe('when the constructor is called', () => {
     describe('without an appTypes option', () => {
       it('throws an Error', () => {
-        const func = () => new QuickstartsReducer({ articlesDir });
+        const func = () => new QuickstartsReducer({ articlesDir, urlFormatter });
         expect(func).to.throw(/requires an appTypes option/);
       });
     });
     describe('without an articlesDir option', () => {
       it('throws an Error', () => {
-        const func = () => new QuickstartsReducer({ appTypes });
+        const func = () => new QuickstartsReducer({ appTypes, urlFormatter });
         expect(func).to.throw(/requires an articlesDir option/);
+      });
+    });
+    describe('without an urlFormatter option', () => {
+      it('throws an Error', () => {
+        const func = () => new QuickstartsReducer({ appTypes, articlesDir });
+        expect(func).to.throw(/requires a urlFormatter option/);
       });
     });
   });
@@ -36,7 +47,7 @@ describe('QuickstartsReducer', () => {
       const cache = new FakeCache();
       cache.add(doc1);
       cache.add(doc2);
-      const reducer = new QuickstartsReducer({ appTypes, articlesDir });
+      const reducer = new QuickstartsReducer({ appTypes, articlesDir, urlFormatter });
       result = reducer.reduce(cache);
     });
 
@@ -61,14 +72,9 @@ describe('QuickstartsReducer', () => {
     it('sets basic information on each platform', () => {
       const platform = result.example.platforms['platform-a'];
       expect(platform.name).to.equal('platform-a');
-      expect(platform.type).to.equal('example');
-      expect(platform.url).to.equal('/docs/quickstart/example/platform-a');
-    });
-
-    it('merges metadata from index files into the platforms', () => {
-      const platform = result.example.platforms['platform-a'];
-      expect(platform.foo).to.equal(42);
-      expect(platform.bar).to.equal(123);
+      expect(platform.title).to.equal('Platform A');
+      expect(platform.url).to.equal(urlFormatter.format('/quickstart/example/platform-a'));
+      expect(platform.image).to.equal(urlFormatter.format('/media/platforms/platform-a.png'));
     });
 
     it('adds a list of articles to each platform', () => {
@@ -84,14 +90,14 @@ describe('QuickstartsReducer', () => {
       const article = result.example.platforms['platform-a'].articles[0];
       expect(article.name).to.equal('01-example');
       expect(article.number).to.equal(1);
-      expect(article.url).to.equal('/docs/quickstart/example/platform-a/01-example');
+      expect(article.url).to.equal(urlFormatter.format('/quickstart/example/platform-a/01-example'));
     });
 
     it('merges metadata from corresponding documents into the articles', () => {
       const article = result.example.platforms['platform-a'].articles[0];
-      expect(article.title).to.equal(doc1.meta.title);
-      expect(article.description).to.equal(doc1.meta.description);
-      expect(article.budicon).to.equal(doc1.meta.budicon);
+      expect(article.title).to.equal(doc1.title);
+      expect(article.description).to.equal(doc1.description);
+      expect(article.budicon).to.equal(doc1.budicon);
     });
 
     it('sets a default article for the platform if one is specified in the index file', () => {
