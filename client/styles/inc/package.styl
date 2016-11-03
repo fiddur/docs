@@ -1,60 +1,64 @@
 .package
-  clearfix();
-  background-color: white;
-  border: 1px solid rgb(231, 233, 237);
-  border-radius: 3px;
-  padding: 20px;
+  clearfix()
+  background-color: white
+  border: 1px solid rgb(231, 233, 237)
+  border-radius: $border-radius-base
+  padding: 24px 28px
+  position relative
 
-  +breakpoint("desktop")
-    line-height: 45px;
-
-  .btn
-    display: block;
-
-    & + .btn
-      +breakpoint("desktop", "max")
-        margin-top 10px
-
-  .button-area
-    padding: 0 20px;
+  .package-information
+    width calc(100% - 140px)
 
     +breakpoint("desktop")
-      float: right;
-      width: 40%;
+      float: left
 
-      .btn
-        display: inline-block;
-        width: 100%;
+    .package-header
+      font-size: 24px
+      margin 0
+      margin-bottom 8px
+      line-height: 1
+      font-weight normal
 
-  .info
-    position: relative;
-
-    +breakpoint("desktop")
-      float: left;
-      width: 60%;
-
-  i
-    display: block;
-    font-size: 20px;
-    opacity: 0.5;
-    text-align: center;
+  .package-buttons
 
     +breakpoint("desktop")
-      margin-left: 20px;
-      vertical-align: middle;
-      display inline-block
-      line-height 0
+      text-align: center
+      float right
 
-  p
-    margin: 0;
-    margin-bottom: 15px;
-    text-align: center;
-    line-height: 2;
+    .btn
+      display: inline-block
+      padding: 5px 20px
 
-    +breakpoint("desktop")
-      margin-bottom 0
-      text-align: left;
-      padding-left: 20px;
-      max-width: 80%;
-      display inline-block
-      vertical-align: middle;
+      +breakpoint("desktop")
+        display: block
+
+    .github-link
+      line-height: 42px
+      padding-left: 8px
+
+      &:after
+        font-size: 0.8em
+        content: ' \25B8'
+
+      +breakpoint("desktop")
+        padding-left: 0
+
+  .package-requirements
+
+    .package-requirements-header
+      font-weight: 500
+
+    .package-requirements-list
+      margin-bottom: 0
+      padding 0
+      list-style-type none
+
+      li
+        &:before
+          content ''
+          display inline-block
+          margin-right 8px
+          width 8px
+          height 8px
+          border-radius 50%
+          border 2px solid $color-blue-light
