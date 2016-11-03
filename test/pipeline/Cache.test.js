@@ -102,7 +102,7 @@ describe('Cache', () => {
 
     describe('with a path of a loaded document', () => {
       it('returns the document', () => {
-        const doc = new Document(getTestFile('articles/test-markdown.md'));
+        const doc = new Document(getTestFile('articles/test-markdown.md'), { url: '/articles/test-markdown' });
         cache.add(doc);
         expect(cache.getByUrl(doc.url)).to.equal(doc);
       });

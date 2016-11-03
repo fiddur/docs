@@ -107,17 +107,17 @@ describe('ReplaceIncludesPlugin', () => {
       it('adds the included file as a dependency', () => {
         const file = getTestFile('articles/include-snippet.html');
         const doc = new Document(file, {
-          snippets: { example: 'example-snippet' },
+          snippets: { example: 'foo/snippet-foo' },
           foo: 'meta-foo',
           bar: 'meta-bar'
         });
         process(doc, file);
-        expect(doc.dependencies.has(resolve(__dirname, 'docs/snippets/example-snippet.md')));
+        expect(doc.dependencies.has(resolve(__dirname, 'docs/snippets/foo/snippet-foo.md')));
       });
       it('inserts the included content', () => {
         const file = getTestFile('articles/include-snippet.html');
         const doc = new Document(file, {
-          snippets: { example: 'example-snippet' },
+          snippets: { example: 'foo/snippet-foo' },
           foo: 'meta-foo',
           bar: 'meta-bar'
         });

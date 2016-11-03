@@ -21,12 +21,6 @@ describe('AutoUrlPlugin', () => {
         const output = plugin.getMetadata(doc, '');
         expect(output).to.deep.equal({ url: doc.path });
       });
-      it('makes "index" files have the url of the parent directory', () => {
-        const doc = { path: '/articles/example/index' };
-        const plugin = new AutoUrlPlugin();
-        const output = plugin.getMetadata(doc, '');
-        expect(output).to.deep.equal({ url: '/articles/example' });
-      });
     });
 
   });

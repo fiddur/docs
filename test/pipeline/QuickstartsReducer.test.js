@@ -73,7 +73,7 @@ describe('QuickstartsReducer', () => {
       const platform = result.example.platforms['platform-a'];
       expect(platform.name).to.equal('platform-a');
       expect(platform.title).to.equal('Platform A');
-      expect(platform.url).to.equal(urlFormatter.format('/quickstart/example/platform-a'));
+      expect(platform.url).to.equal('/docs/quickstart/example/platform-a');
       expect(platform.image).to.equal(urlFormatter.format('/media/platforms/platform-a.png'));
     });
 
@@ -90,7 +90,7 @@ describe('QuickstartsReducer', () => {
       const article = result.example.platforms['platform-a'].articles[0];
       expect(article.name).to.equal('01-example');
       expect(article.number).to.equal(1);
-      expect(article.url).to.equal(urlFormatter.format('/quickstart/example/platform-a/01-example'));
+      expect(article.url).to.equal('/docs/quickstart/example/platform-a/01-example');
     });
 
     it('merges metadata from corresponding documents into the articles', () => {
