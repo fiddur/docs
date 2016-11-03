@@ -42,15 +42,15 @@ describe('SnippetsReducer', () => {
       expect(bar.items).to.have.length(1);
     });
 
-    it('loads the raw content of each snippet', () => {
+    it('transforms the Markdown content of each snippet', () => {
       const foo = result.get('foo/snippet-foo');
       expect(foo).to.exist;
       expect(foo.hash).to.equal('snippet-foo');
-      expect(foo.content).to.equal('Snippet: foo = ${meta.foo}, bar = ${meta.bar}');
+      expect(foo.content).to.equal('<p>Snippet: foo = ${meta.foo}, bar = ${meta.bar}</p>\n');
       const bar = result.get('bar/snippet-bar');
       expect(bar).to.exist;
       expect(bar.hash).to.equal('snippet-bar');
-      expect(bar.content).to.equal('This is an example snippet with metadata.');
+      expect(bar.content).to.equal('<p>This is an example snippet with metadata.</p>\n');
     });
 
     it('merges metadata from snippet front matter into the entries', () => {

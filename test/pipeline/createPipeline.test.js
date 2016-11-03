@@ -20,9 +20,11 @@ describe('createPipeline', function() {
 
   it('registers reductions', (done) => {
     pipeline.whenReady(() => {
+      expect(pipeline.getReduction('articles')).to.exist;
       expect(pipeline.getReduction('connections')).to.exist;
       expect(pipeline.getReduction('platforms')).to.exist;
       expect(pipeline.getReduction('quickstarts')).to.exist;
+      expect(pipeline.getReduction('snippets')).to.exist;
       done();
     });
   });

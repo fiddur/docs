@@ -42,6 +42,12 @@ class FakeCache extends EventEmitter {
     .map(path => this.docsByPath[path]);
   }
 
+  forEach(func) {
+    Object.keys(this.docsByPath).forEach(path => {
+      func(this.docsByPath[path]);
+    });
+  }
+
 }
 
 FakeCache.defaults = {
