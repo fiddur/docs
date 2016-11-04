@@ -30,18 +30,18 @@ describe('UpdatesReducer', () => {
       expect(result).to.have.length(2);
     });
 
-    it('sets dates of each entry to match the filename', () => {
-      expect(result[0].date).to.eql(new Date('2016-11-03'));
-      expect(result[1].date).to.eql(new Date('2016-11-04'));
+    it('returns entries in reverse-chronological order', () => {
+      expect(result[0].date).to.eql(new Date('2016-11-04'));
+      expect(result[1].date).to.eql(new Date('2016-11-03'));
     });
 
     it('sets the title of each entry to the filename without the extension', () => {
-      expect(result[0].title).to.equal('2016-11-03');
-      expect(result[1].title).to.equal('2016-11-04');
+      expect(result[0].title).to.equal('2016-11-04');
+      expect(result[1].title).to.equal('2016-11-03');
     });
 
     it('correctly processes adds', () => {
-      const adds = result[0].added;
+      const adds = result[1].added;
       expect(adds).to.be.an('array');
       expect(adds).to.have.length(1);
       expect(adds[0].title).to.equal('add-example');
@@ -49,7 +49,7 @@ describe('UpdatesReducer', () => {
     });
 
     it('correctly processes fixes', () => {
-      const fixes = result[0].fixed;
+      const fixes = result[1].fixed;
       expect(fixes).to.be.an('array');
       expect(fixes).to.have.length(2);
       expect(fixes[0].title).to.equal('fix-example-1');
@@ -59,7 +59,7 @@ describe('UpdatesReducer', () => {
     });
 
     it('correctly processes changes', () => {
-      const changes = result[1].changed;
+      const changes = result[0].changed;
       expect(changes).to.be.an('array');
       expect(changes).to.have.length(2);
       expect(changes[0].title).to.equal('change-example-1');
@@ -69,7 +69,7 @@ describe('UpdatesReducer', () => {
     });
 
     it('merges metadata from the update entries into the tree', () => {
-      const changes = result[1].changed;
+      const changes = result[0].changed;
       expect(changes).to.be.an('array');
       expect(changes).to.have.length(2);
       expect(changes[1].foo).to.equal(42);

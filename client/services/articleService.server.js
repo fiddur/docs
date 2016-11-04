@@ -13,7 +13,7 @@ export default function createArticleService(req, res) {
           error.status = 404;
           return reject(error);
         }
-        return doc.getContent();
+        resolve(doc.getContent());
       });
     }
   };
