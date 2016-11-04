@@ -1,5 +1,6 @@
 import _ from 'lodash';
 import docs from '../../lib/pipeline';
+import replaceUserVars from '../../lib/replaceUserVars';
 
 export default function createArticleService(req, res) {
   return {
@@ -13,7 +14,8 @@ export default function createArticleService(req, res) {
           error.status = 404;
           return reject(error);
         }
-        resolve(doc.getContent());
+        const html = replaceUserVars(doc.getContent(), res.locals);
+        resolve(html);
       });
     }
   };

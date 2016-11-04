@@ -1,6 +1,7 @@
 import _ from 'lodash';
 import { parse } from 'url';
 import docs from '../../lib/pipeline';
+import replaceUserVars from '../../lib/replaceUserVars';
 
 export default function createContentService(req, res) {
   const ContentService = {};
@@ -17,7 +18,7 @@ export default function createContentService(req, res) {
       }
 
       const result = {
-        html: doc.getContent(),
+        html: replaceUserVars(doc.getContent(), res.locals),
         meta: doc.toJSON()
       };
 
