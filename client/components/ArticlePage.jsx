@@ -22,6 +22,8 @@ class ArticlePage extends React.Component {
     setAnchorLinks();
     initSampleBox();
 
+    if (!this.props.content.meta.toc) return;
+
     // Attach TOC dropdown component next to the article title
     $('h1.anchor-heading').after('<div id="toc-header-container"></div>');
     ReactDOM.render(
