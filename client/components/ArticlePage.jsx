@@ -12,7 +12,7 @@ import FeedbackFooter from './FeedbackFooter';
 import setAnchorLinks from '../browser/anchorLinks';
 import Spinner from './Spinner';
 import initSampleBox from '../browser/sampleBox';
-import TocDropdown from './TocDropdown';
+import TocBar from './TocBar';
 
 class ArticlePage extends React.Component {
 
@@ -22,13 +22,14 @@ class ArticlePage extends React.Component {
     setAnchorLinks();
     initSampleBox();
 
-    if (!this.props.content.meta.toc) return;
+    const { toc, title } = this.props.content.meta;
+    if (!toc) return;
 
     // Attach TOC dropdown component next to the article title
-    $('h1.anchor-heading').after('<div id="toc-header-container"></div>');
+    $('h1.anchor-heading').after('<div id="toc"></div>');
     ReactDOM.render(
-      <TocDropdown items={this.props.content.meta.toc} />,
-      document.getElementById('toc-header-container')
+      <TocBar title={title} items={toc} />,
+      document.getElementById('toc')
     );
   }
 

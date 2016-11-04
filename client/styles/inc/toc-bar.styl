@@ -1,0 +1,107 @@
+$toc-bar-height = 52px
+
+.toc-bar-container
+  display block
+  min-height $toc-bar-height
+
+.toc-bar
+  display block
+
+  .toc-sticky &
+    position fixed
+    top 0
+    z-index 1
+    background-color white
+
+  .toc-title
+    line-height $toc-bar-height
+    display none
+    margin 0
+
+    .toc-sticky &
+      display inline-block
+      float left
+
+  .toc-dropdown
+    display inline-block
+    position relative
+    z-index 1
+
+    .toc-sticky &
+      float right
+
+    &:hover > .toc-dropdown-content
+      opacity 1
+      visibility visible
+      transition-delay 0s
+
+    > .toc-dropdown-title
+      color $color-blue-light
+      cursor pointer
+      display inline-block
+      padding 8px 0
+
+      .toc-sticky &
+        padding 0
+        line-height $toc-bar-height
+
+        .text
+          font-size 16px
+
+      .text
+        display inline-block
+        margin-right 5px
+        font-size 18px
+
+      .icon
+        font-size 16px
+        position relative
+        top 2px
+
+    > .toc-dropdown-content
+      visibility hidden
+      opacity 0
+      position absolute
+      top 40px
+      left 0
+      overflow-x hidden
+      overflow-y scroll
+      background-color white
+      width 255px
+      min-height 300px
+      max-height 520px
+      padding 12px 20px
+      font-size 14px
+      border 1px solid $gray-lighter
+      border-radius $border-radius-base
+      box-shadow 0 0 2px 0 rgba(black, 0.1)
+      transition visibility 0s linear 0.1s, opacity 0.1s ease-out
+
+      .toc-sticky &
+        left auto
+        right 0
+
+      .toc-dropdown-list
+        list-style-type none
+        padding 0
+
+      .toc-dropdown-list-depth-2
+        padding-left 14px
+        margin-bottom 4px
+
+      .item-link
+        display block
+        width 100%
+        white-space nowrap
+        overflow hidden
+        text-overflow ellipsis
+
+        &:hover
+          color $link-hover-color
+
+      .item-link-depth-1
+        color $gray
+
+      .item-link-depth-2
+        color $gray-light
+        padding 4px 0
