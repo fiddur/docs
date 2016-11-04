@@ -78,6 +78,12 @@ export default {
   //   action: loadPlatforms
   // },
 
+  updates: {
+    path: '/docs/updates',
+    method: 'get',
+    handler: StaticPage
+  },
+
   mgmtApiExplorerV2: {
     path: '/docs/api/management/v2',
     method: 'get',
