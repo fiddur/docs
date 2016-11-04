@@ -1,4 +1,5 @@
 import React from 'react';
+import ReactDOM from 'react-dom';
 import { navigateAction } from 'fluxible-router';
 import { connectToStores } from 'fluxible-addons-react';
 import { StickyContainer, Sticky } from 'react-sticky';
@@ -11,6 +12,7 @@ import FeedbackFooter from './FeedbackFooter';
 import setAnchorLinks from '../browser/anchorLinks';
 import Spinner from './Spinner';
 import initSampleBox from '../browser/sampleBox';
+import TocDropdown from './TocDropdown';
 
 class ArticlePage extends React.Component {
 
@@ -19,6 +21,13 @@ class ArticlePage extends React.Component {
     //this.captureClicks();
     setAnchorLinks();
     initSampleBox();
+
+    // Attach TOC dropdown component next to the article title
+    $('h1.anchor-heading').after('<div id="toc-header-container"></div>');
+    ReactDOM.render(
+      <TocDropdown items={this.props.content.meta.toc} />,
+      document.getElementById('toc-header-container')
+    );
   }
 
   componentDidUpdate(prevProps) {
