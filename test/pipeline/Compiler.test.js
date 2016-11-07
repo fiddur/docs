@@ -1,7 +1,9 @@
 import { basename, extname } from 'path';
 import { expect } from 'chai';
 import matter from 'gray-matter';
-import FakeWatcher from './mocks/FakeWatcher';
+import _ from 'lodash';
+import FakeCache from './mocks/FakeCache';
+import getTestDocument from './util/getTestDocument';
 import getTestFile from './util/getTestFile';
 import Compiler from '../../lib/pipeline/Compiler';
 import Document from '../../lib/pipeline/models/Document';
@@ -29,7 +31,7 @@ describe('Compiler', () => {
       });
     });
     describe('with a valid plugin', () => {
-      const plugin = { transform: (meta, content) => content };
+      const plugin = { preprocess: (meta, content) => content };
       compiler.use(plugin);
       it('adds the plugin to the end of the compiler pipeline', () => {
         expect(compiler.plugins.length).to.equal(1);
@@ -41,12 +43,13 @@ describe('Compiler', () => {
   describe('when compile() is called with a File', () => {
 
     const file = getTestFile('articles/test-html.html');
-    const cache = {};
     const expectedContent = 'title = HTML Test File, example = this is read from front matter, environment = test';
+    let cache;
     let compiler;
 
     beforeEach(() => {
       compiler = new Compiler({ vars });
+      cache = new FakeCache();
     });
 
     it('returns a Document', () => {
@@ -83,13 +86,52 @@ describe('Compiler', () => {
       expect(doc.getContent()).to.equal(expectedContent);
     });
 
-    it('allows content plugins to transform Document content in a stepwise fashion', () => {
-      compiler.use({ transform(doc, content) { return `ONE(${content})`; } });
-      compiler.use({ transform(doc, content) { return `TWO(${content})`; } });
+    it('allows preprocessor plugins to transform Document content in a stepwise fashion', () => {
+      compiler.use({ preprocess(doc, content) { return `ONE(${content})`; } });
+      compiler.use({ preprocess(doc, content) { return `TWO(${content})`; } });
       const doc = compiler.compile(file, cache);
       const raw = matter(file.text);
       expect(doc.getContent()).to.equal(`TWO(ONE(${expectedContent}))`);
     });
+
+    describe('with a call to cache.get()', () => {
+      const dependent = getTestFile('articles/cache-get.html');
+      const parent = getTestDocument(getTestFile('articles/test-markdown.md'));
+      it('gets the requested doc from the cache', () => {
+        cache.add(parent);
+        const child = compiler.compile(dependent, cache);
+        const content = child.render();
+        expect(content).to.equal('The path of the cached document is articles/test-markdown');
+      });
+      it('adds the returned doc as a dependency', () => {
+        cache.add(parent);
+        const child = compiler.compile(dependent, cache);
+        const content = child.render();
+        expect(child.hasDependency(parent.filename)).to.be.true;
+      });
+    });
+
+    describe('with a call to cache.find()', () => {
+      const dependent = getTestFile('articles/cache-find.html');
+      const parent1 = getTestDocument(getTestFile('articles/test-markdown.md'));
+      const parent2 = getTestDocument(getTestFile('articles/test-html.html'));
+      it('gets the requested docs from the cache', () => {
+        cache.add(parent1);
+        cache.add(parent2);
+        const child = compiler.compile(dependent, cache);
+        const content = child.render();
+        expect(content).to.equal('The path of the cached documents are:\n\narticles/test-markdown\n\narticles/test-html\n');
+      });
+      it('adds the returned docs as dependencies', () => {
+        cache.add(parent1);
+        cache.add(parent2);
+        const child = compiler.compile(dependent, cache);
+        const content = child.render();
+        expect(child.hasDependency(parent1.filename)).to.be.true;
+        expect(child.hasDependency(parent2.filename)).to.be.true;
+      });
+    });
+
   });
 
 });

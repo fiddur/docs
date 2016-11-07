@@ -28,7 +28,7 @@ describe('NormalizeUrlsPlugin', () => {
     describe('when the content contains a tag with a src attribute', () => {
       it('replaces its value with a URL formatted using the UrlFormatter', () => {
         const content = imageTag('/media/example.jpg');
-        const transformed = plugin.transform({}, content);
+        const transformed = plugin.postprocess({}, content);
         expect(transformed).to.equal(imageTag(urlFormatter.format('/media/example.jpg')));
       });
     });
@@ -36,7 +36,7 @@ describe('NormalizeUrlsPlugin', () => {
     describe('when the content contains a tag with an href attribute', () => {
       it('replaces its value with a URL formatted using the UrlFormatter', () => {
         const content = anchorTag('/some/example/article');
-        const transformed = plugin.transform({}, content);
+        const transformed = plugin.postprocess({}, content);
         expect(transformed).to.equal(anchorTag(urlFormatter.format('/some/example/article')));
       });
     });

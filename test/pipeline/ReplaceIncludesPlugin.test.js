@@ -20,7 +20,7 @@ describe('ReplaceIncludesPlugin', () => {
 
     const plugin = new ReplaceIncludesPlugin({ snippetsDir: resolve(__dirname, 'docs/snippets') });
     const process = (doc, file) => {
-      const content = plugin.transform(doc, file.text);
+      const content = plugin.preprocess(doc, file.text);
       return template(content)({ meta: doc });
     };
 
