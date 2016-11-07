@@ -7,7 +7,7 @@ import File from '../../lib/pipeline/models/File';
 describe('Watcher', () => {
 
   let watcher;
-  const baseDir = resolve(__dirname, 'docs');
+  const baseDir = resolve(__dirname, '../docs');
   const expectedFiles = [
     'articles/_includes/html.html',
     'articles/_includes/html-locals.html',

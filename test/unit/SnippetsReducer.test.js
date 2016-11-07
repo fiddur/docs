@@ -1,14 +1,13 @@
 import { resolve } from 'path';
 import { expect } from 'chai';
-import getTestDocument from './util/getTestDocument';
-import getTestFile from './util/getTestFile';
-import FakeCache from './mocks/FakeCache';
-import Tree from '../../lib/pipeline/models/Tree';
 import SnippetsReducer from '../../lib/pipeline/reducers/SnippetsReducer';
+import Tree from '../../lib/pipeline/models/Tree';
+import FakeCache from '../mocks/FakeCache';
+import { getTestDocument, getTestFile } from '../util';
 
 describe('SnippetsReducer', () => {
 
-  const snippetsDir = resolve(__dirname, 'docs/snippets');
+  const snippetsDir = resolve(__dirname, '../docs/snippets');
 
   describe('when the constructor is called', () => {
     describe('without a snippetsDir option', () => {

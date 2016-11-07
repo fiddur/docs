@@ -1,8 +1,7 @@
 import { resolve } from 'path';
 import { expect } from 'chai';
-import getTestDocument from './util/getTestDocument';
-import getTestFile from './util/getTestFile';
-import FakeCache from './mocks/FakeCache';
+import { getTestDocument, getTestFile } from '../util';
+import FakeCache from '../mocks/FakeCache';
 import Tree from '../../lib/pipeline/models/Tree';
 import ArticlesReducer from '../../lib/pipeline/reducers/ArticlesReducer';
 

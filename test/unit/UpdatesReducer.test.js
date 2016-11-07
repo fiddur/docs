@@ -1,11 +1,11 @@
 import { resolve } from 'path';
 import { expect } from 'chai';
-import FakeCache from './mocks/FakeCache';
 import UpdatesReducer from '../../lib/pipeline/reducers/UpdatesReducer';
+import FakeCache from '../mocks/FakeCache';
 
 describe('UpdatesReducer', () => {
 
-  const updatesDir = resolve(__dirname, 'docs/updates');
+  const updatesDir = resolve(__dirname, '../docs/updates');
 
   describe('when the constructor is called', () => {
     describe('without an updatesDir option', () => {

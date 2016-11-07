@@ -7,13 +7,13 @@ import MarkdownPlugin from '../../lib/pipeline/plugins/content/MarkdownPlugin';
 import ReplaceIncludesPlugin from '../../lib/pipeline/plugins/content/ReplaceIncludesPlugin';
 import File from '../../lib/pipeline/models/File';
 import Document from '../../lib/pipeline/models/Document';
-import FakeWatcher from './mocks/FakeWatcher';
-import getTestFile from './util/getTestFile';
+import FakeWatcher from '../mocks/FakeWatcher';
+import { getTestFile } from '../util';
 
 describe('Cache', () => {
 
   const vars = { environment: 'test' };
-  const baseDir = resolve(__dirname, 'docs');
+  const baseDir = resolve(__dirname, '../docs');
 
   describe('when constructor is called', () => {
     describe('without a compiler option', () => {

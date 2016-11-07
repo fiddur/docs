@@ -2,16 +2,15 @@ import { resolve } from 'path';
 import { expect } from 'chai';
 import urljoin from 'url-join';
 import { parseString as parseXmlString } from 'xml2js';
-import getTestDocument from './util/getTestDocument';
-import getTestFile from './util/getTestFile';
-import FakeCache from './mocks/FakeCache';
 import SitemapReducer from '../../lib/pipeline/reducers/SitemapReducer';
+import FakeCache from '../mocks/FakeCache';
+import { getTestDocument, getTestFile } from '../util';
 
 describe('SitemapReducer', () => {
 
   const baseUrl = 'https://tests.local/';
 
-  const articlesDir = resolve(__dirname, 'docs/articles');
+  const articlesDir = resolve(__dirname, '../docs/articles');
   const appTypes = [
     { title: 'Example', name: 'example', slug: 'example-quickstarts', flavor: 'vanilla' }
   ];

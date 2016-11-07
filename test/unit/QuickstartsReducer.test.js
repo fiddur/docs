@@ -1,10 +1,9 @@
 import { resolve } from 'path';
 import { expect } from 'chai';
-import getTestDocument from './util/getTestDocument';
-import getTestFile from './util/getTestFile';
-import FakeCache from './mocks/FakeCache';
 import UrlFormatter from '../../lib/pipeline/UrlFormatter';
 import QuickstartsReducer from '../../lib/pipeline/reducers/QuickstartsReducer';
+import FakeCache from '../mocks/FakeCache';
+import { getTestDocument, getTestFile } from '../util';
 
 describe('QuickstartsReducer', () => {
 
@@ -12,7 +11,7 @@ describe('QuickstartsReducer', () => {
   const mediaUrl = 'https://cdn.cloud/';
   const urlFormatter = new UrlFormatter({ baseUrl, mediaUrl });
 
-  const articlesDir = resolve(__dirname, 'docs/articles');
+  const articlesDir = resolve(__dirname, '../docs/articles');
   const appTypes = [
     { title: 'Example', name: 'example', slug: 'example-quickstarts', flavor: 'vanilla' }
   ];

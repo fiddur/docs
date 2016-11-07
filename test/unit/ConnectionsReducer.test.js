@@ -1,10 +1,9 @@
 import { resolve } from 'path';
 import { expect } from 'chai';
-import getTestDocument from './util/getTestDocument';
-import getTestFile from './util/getTestFile';
-import FakeCache from './mocks/FakeCache';
 import UrlFormatter from '../../lib/pipeline/UrlFormatter';
 import ConnectionsReducer from '../../lib/pipeline/reducers/ConnectionsReducer';
+import FakeCache from '../mocks/FakeCache';
+import { getTestDocument, getTestFile } from '../util';
 
 describe('ConnectionsReducer', () => {
 

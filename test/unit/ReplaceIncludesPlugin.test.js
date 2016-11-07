@@ -1,9 +1,9 @@
 import { expect } from 'chai';
 import { resolve } from 'path';
 import { template } from 'lodash';
-import getTestFile from './util/getTestFile';
 import ReplaceIncludesPlugin from '../../lib/pipeline/plugins/content/ReplaceIncludesPlugin';
 import Document from '../../lib/pipeline/models/Document';
+import { getTestFile } from '../util';
 
 describe('ReplaceIncludesPlugin', () => {
 
@@ -18,7 +18,7 @@ describe('ReplaceIncludesPlugin', () => {
 
   describe('when transform() is called', () => {
 
-    const plugin = new ReplaceIncludesPlugin({ snippetsDir: resolve(__dirname, 'docs/snippets') });
+    const plugin = new ReplaceIncludesPlugin({ snippetsDir: resolve(__dirname, '../docs/snippets') });
     const process = (doc, file) => {
       const content = plugin.preprocess(doc, file.text);
       return template(content)({ meta: doc });
@@ -29,7 +29,7 @@ describe('ReplaceIncludesPlugin', () => {
         const file = getTestFile('articles/include-markdown.html');
         const doc = new Document(file, { foo: 'meta-foo', bar: 'meta-bar' });
         process(doc, file);
-        const filename = resolve(__dirname, 'docs/articles/_includes/markdown.md');
+        const filename = resolve(__dirname, '../docs/articles/_includes/markdown.md');
         expect(doc.dependencies.has(filename)).to.equal(true);
       });
     });
@@ -112,7 +112,7 @@ describe('ReplaceIncludesPlugin', () => {
           bar: 'meta-bar'
         });
         process(doc, file);
-        expect(doc.dependencies.has(resolve(__dirname, 'docs/snippets/foo/snippet-foo.md')));
+        expect(doc.dependencies.has(resolve(__dirname, '../docs/snippets/foo/snippet-foo.md')));
       });
       it('inserts the included content', () => {
         const file = getTestFile('articles/include-snippet.html');

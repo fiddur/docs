@@ -1,6 +1,6 @@
 import fs from 'fs';
 import { relative, resolve } from 'path';
-import File from '../../../lib/pipeline/models/File';
+import File from '../../lib/pipeline/models/File';
 
 const baseDir = resolve(__dirname, '../docs');
 export default function getTestFile(path, encoding = 'utf8') {

@@ -2,11 +2,10 @@ import { basename, extname } from 'path';
 import { expect } from 'chai';
 import matter from 'gray-matter';
 import _ from 'lodash';
-import FakeCache from './mocks/FakeCache';
-import getTestDocument from './util/getTestDocument';
-import getTestFile from './util/getTestFile';
 import Compiler from '../../lib/pipeline/Compiler';
 import Document from '../../lib/pipeline/models/Document';
+import FakeCache from '../mocks/FakeCache';
+import { getTestDocument, getTestFile } from '../util';
 
 describe('Compiler', () => {
 

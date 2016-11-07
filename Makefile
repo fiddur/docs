@@ -4,7 +4,7 @@ NODE_VERSION="4.2.3"
 
 test: node_modules
 	@CONSOLE_LOG_LEVEL=error PORT=5050 NODE_ENV=$(TEST_NODE_ENV) NODE_TLS_REJECT_UNAUTHORIZED=0 \
-		./node_modules/.bin/mocha --reporter $(REPORTER)
+		./node_modules/.bin/mocha --recursive --reporter $(REPORTER)
 
 node_modules:
 	@npm i

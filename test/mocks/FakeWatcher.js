@@ -1,7 +1,7 @@
 import fs from 'fs';
 import EventEmitter from 'events';
 import { relative, resolve } from 'path';
-import File from '../../../lib/pipeline/models/File';
+import File from '../../lib/pipeline/models/File';
 
 class FakeWatcher extends EventEmitter {
 

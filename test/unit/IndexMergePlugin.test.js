@@ -1,8 +1,7 @@
 import { expect } from 'chai';
 import { resolve } from 'path';
-import getTestDocument from './util/getTestDocument';
-import getTestFile from './util/getTestFile';
 import IndexMergePlugin from '../../lib/pipeline/plugins/metadata/IndexMergePlugin';
+import { getTestDocument, getTestFile } from '../util';
 
 describe('IndexMergePlugin', () => {
 
