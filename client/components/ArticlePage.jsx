@@ -18,13 +18,13 @@ class ArticlePage extends React.Component {
 
   componentDidMount() {
     this.executeEmbeddedScripts();
-    //this.captureClicks();
+    // this.captureClicks();
     setAnchorLinks();
     initSampleBox();
 
-    const { toc, title } = this.props.content.meta;
-    if (!toc) return;
+    if (!this.props.content || !this.props.content.meta || !this.props.content.meta.toc) return;
 
+    const { toc, title } = this.props.content.meta;
     // Attach TOC dropdown component next to the article title
     $('h1.anchor-heading').after('<div id="toc"></div>');
     ReactDOM.render(
