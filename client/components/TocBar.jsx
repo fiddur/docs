@@ -21,25 +21,33 @@ class TocDropdown extends React.Component {
   constructor() {
     super();
 
+    this.state = {
+      open: false
+    };
+
     this.renderItems = this.renderItems.bind(this);
     this.renderList = this.renderList.bind(this);
     this.handleScroll = _.throttle(this.handleScroll, 200).bind(this);
   }
   componentDidMount() {
-    document.onscroll = this.handleScroll;
+    this.handleScroll();
+    window.addEventListener('scroll', this.handleScroll);
+    window.addEventListener('resize', this.handleScroll);
   }
   handleScroll() {
     const bottomScroll = this.tocContainer.getBoundingClientRect().bottom;
     if (bottomScroll < -10) {
       // stick
-      this.tocContainer.classList.add('toc-sticky');
+      this.tocBar.classList.add('toc-sticky');
       this.tocBar.setAttribute('style', `width: ${this.tocContainer.offsetWidth}px`);
       this.tocBar.style.width = `${this.tocContainer.offsetWidth}px`;
       return;
     }
 
     // unstick
-    this.tocContainer.classList.remove('toc-sticky');
+    this.tocBar.classList.remove('toc-sticky');
+    this.tocBar.setAttribute('style', '');
+    this.tocBar.style.width = '';
   }
   renderList(itemList, depth = 1) {
     return (
@@ -68,11 +76,14 @@ class TocDropdown extends React.Component {
       <div className="toc-bar-container" ref={node => (this.tocContainer = node)}>
         <div className="toc-bar" ref={node => (this.tocBar = node)}>
           <h4 className="toc-title">{this.props.title}</h4>
-          <div className="toc-dropdown">
-            <span className="toc-dropdown-title">
+          <div className={`toc-dropdown ${this.state.open ? 'toc-dropdown-open' : ''}`}>
+            <div
+              className="toc-dropdown-title"
+              onClick={() => { this.setState({ open: !this.state.open }); }}
+            >
               <span className="text">On this article</span>
               <i className="icon icon-budicon-460" />
-            </span>
+            </div>
             <div className="toc-dropdown-content">
               {this.renderItems()}
             </div>

@@ -16,27 +16,28 @@ import TocBar from './TocBar';
 
 class ArticlePage extends React.Component {
 
+  constructor() {
+    super();
+
+    this.initTOC = this.initTOC.bind(this);
+  }
+
   componentDidMount() {
     this.executeEmbeddedScripts();
     // this.captureClicks();
     setAnchorLinks();
     initSampleBox();
 
-    if (!this.props.content || !this.props.content.meta || !this.props.content.meta.toc) return;
-
-    const { toc, title } = this.props.content.meta;
-    // Attach TOC dropdown component next to the article title
-    $('h1.anchor-heading').after('<div id="toc"></div>');
-    ReactDOM.render(
-      <TocBar title={title} items={toc} />,
-      document.getElementById('toc')
-    );
+    if (!this.props.content ||
+        !this.props.content.meta ||
+        !this.props.content.meta.toc) return;
+    this.initTOC();
   }
 
   componentDidUpdate(prevProps) {
     this.executeEmbeddedScripts();
-    //this.captureClicks();
-    //this.scrollToAnchor();
+    // this.captureClicks();
+    // this.scrollToAnchor();
     setAnchorLinks();
     initSampleBox();
   }
@@ -66,6 +67,25 @@ class ArticlePage extends React.Component {
     }
   }
   */
+
+  initTOC() {
+    const { toc, title } = this.props.content.meta;
+    const docsContainer = $('.docs-content');
+
+    docsContainer.addClass('docs-with-toc');
+    docsContainer.find('h1.anchor-heading').wrap('<div class="title-toc-container"></div>');
+    docsContainer.find('.title-toc-container').append('<div id="toc"></div>');
+
+    $.each(docsContainer.find('.anchor-heading:not(h1)'), (index, elem) => {
+      const titleID = $(elem).attr('id');
+      $(elem).before(`<span id="${titleID}" class="anchor-heading-pointer"></span>`);
+    });
+
+    ReactDOM.render(
+      <TocBar title={title} items={toc} />,
+      document.getElementById('toc')
+    );
+  }
 
   executeEmbeddedScripts() {
     $('script', this.refs.content).each((idx, item) => {
