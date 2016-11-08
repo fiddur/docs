@@ -9,6 +9,7 @@ import IntroBanner from './IntroBanner';
 import { quickstartNavigationAction } from '../action/quickstartNavigationAction';
 import highlightCode from '../browser/highlightCode';
 import setAnchorLinks from '../browser/anchorLinks';
+import initSampleBox from '../browser/sampleBox';
 import ApplicationStore from '../stores/ApplicationStore';
 
 // TODO: Uses ref from within tutorial navigator, can we move this?
@@ -37,10 +38,12 @@ class TutorialPage extends React.Component {
 
   componentDidMount() {
     this.initClient();
+    initSampleBox();
   }
 
   componentDidUpdate() {
     this.initClient();
+    initSampleBox();
   }
 
   initClient() {

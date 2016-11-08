@@ -1,56 +1,90 @@
 .package
-  clearfix();
-  background-color: white;
-  border: 1px solid rgb(231, 233, 237);
-  border-radius: 3px;
-  padding: 20px;
+  clearfix()
+  background-color: white
+  border: 1px solid rgb(231, 233, 237)
+  border-radius: $border-radius-base
+  padding: 0 28px
+  padding-bottom 37px
+  position relative
 
-  +breakpoint("desktop")
-    line-height: 45px;
+  .package-content
+    padding 24px 0 16px
 
-  .btn
-    display: block;
-
-  .button-area
-    padding: 0 20px;
-
-    +breakpoint("desktop")
-      float: right;
-      width: 40%;
-
-      .btn
-        display: inline-block;
-        width: 100%;
-
-  .info
-    position: relative;
+  .package-information
+    width calc(100% - 140px)
 
     +breakpoint("desktop")
-      float: left;
-      width: 60%;
+      float: left
 
-  i
-    display: block;
-    font-size: 20px;
-    opacity: 0.5;
-    text-align: center;
+    .package-header
+      font-size: 24px
+      margin 0
+      margin-bottom 8px
+      line-height: 1
+      font-weight normal
 
-    +breakpoint("desktop")
-      margin-left: 20px;
-      vertical-align: middle;
-      display inline-block
-      line-height 0
-
-  p
-    margin: 0;
-    margin-bottom: 15px;
-    text-align: center;
-    max-width: 80%;
-    line-height: 2;
-
-    +breakpoint("desktop")
+    .package-description
       margin-bottom 0
-      text-align: left;
-      padding-left: 20px;
-      display inline-block
-      vertical-align: middle;
+
+  .package-buttons
+
+    +breakpoint("desktop")
+      text-align: center
+      float right
+
+    .btn
+      display: inline-block
+      padding: 5px 20px
+
+      +breakpoint("desktop")
+        display: block
+
+    .github-link
+      line-height: 42px
+      padding-left: 8px
+
+      &:after
+        font-size: 0.8em
+        content: ' \25B8'
+
+      +breakpoint("desktop")
+        padding-left: 0
+
+  .package-requirements-toggle
+    width 100%
+    border-top 1px solid rgba(black, 0.1)
+    position absolute
+    padding 4px 30px
+    text-align center
+    cursor pointer
+    left 0
+    right 0
+    bottom 0
+    background-color white
+
+    i
+      font-size 12px
+      position relative
+      top 2px
+      margin-left 4px
+
+  .package-requirements
+    display none
+
+    .package-requirements-header
+      font-weight: 500
+
+    .package-requirements-list
+      margin-bottom: 14px
+      padding 0
+      list-style-type none
+
+      li
+        &:before
+          content ''
+          display inline-block
+          margin-right 8px
+          width 8px
+          height 8px
+          border-radius 50%
+          border 2px solid $color-blue-light
