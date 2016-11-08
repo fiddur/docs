@@ -1,22 +1,6 @@
 import React, { PropTypes } from 'react';
 import _ from 'lodash';
 
-// http://codereview.stackexchange.com/a/109905
-const toSpinalTapCase = str =>
-  str
-    .replace(/(?!^)([A-Z])/g, ' $1')
-    .replace(/[_\s]+(?=[a-zA-Z])/g, '-')
-    .toLowerCase();
-
-// If item doesn't have an id then default to the spinal tap case of the name
-const replaceItemsID = list =>
-  list.map(item =>
-    Object.assign({}, item, {
-      id: item.id ? item.id : toSpinalTapCase(item.name),
-      children: item.children ? replaceItemsID(item.children) : undefined
-    })
-  );
-
 class TocDropdown extends React.Component {
   constructor() {
     super();
@@ -27,12 +11,38 @@ class TocDropdown extends React.Component {
 
     this.renderItems = this.renderItems.bind(this);
     this.renderList = this.renderList.bind(this);
+    this.buildArticleHierarchy = this.buildArticleHierarchy.bind(this);
     this.handleScroll = _.throttle(this.handleScroll, 200).bind(this);
+
+    this.items = this.buildArticleHierarchy();
   }
   componentDidMount() {
     this.handleScroll();
     window.addEventListener('scroll', this.handleScroll);
     window.addEventListener('resize', this.handleScroll);
+  }
+  buildArticleHierarchy() {
+    const titles = $('.docs-content').find('h2.anchor-heading, h3.anchor-heading');
+
+    return $.makeArray(titles)
+      .reduce((prev, current) => {
+        const newHeadingNode = {
+          name: $(current).text(),
+          id: $(current).attr('id'),
+          children: []
+        };
+
+        // Add an object representing the <h2> title to the array
+        if (current.tagName === 'H2') return prev.concat(newHeadingNode);
+
+        // Add an object representing the <h3> title to the last node of an <h2> title
+        const lastTitleNode = prev[prev.length - 1];
+        // Add the <h3> node to the children list of the <h2> node
+        const newTitleNode = Object.assign({}, lastTitleNode, {
+          children: lastTitleNode.children.concat(newHeadingNode)
+        });
+        return prev.slice(0, prev.length - 1).concat(newTitleNode);
+      }, []);
   }
   handleScroll() {
     const bottomScroll = this.tocContainer.getBoundingClientRect().bottom;
@@ -70,7 +80,7 @@ class TocDropdown extends React.Component {
     );
   }
   renderItems() {
-    return this.renderList(replaceItemsID(this.props.items));
+    return this.renderList(this.items);
   }
   render() {
     return (
@@ -96,14 +106,7 @@ class TocDropdown extends React.Component {
 }
 
 TocDropdown.propTypes = {
-  title: PropTypes.string.isRequired,
-  items: PropTypes.arrayOf(
-    PropTypes.shape({
-      name: PropTypes.string.isRequired,
-      id: PropTypes.string,
-      children: PropTypes.array
-    })
-  ).isRequired
+  title: PropTypes.string.isRequired
 };
 
 export default TocDropdown;

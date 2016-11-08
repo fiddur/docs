@@ -84,7 +84,7 @@ class ArticlePage extends React.Component {
     });
 
     ReactDOM.render(
-      <TocBar title={title} items={toc} />,
+      <TocBar title={title} />,
       document.getElementById('toc')
     );
   }
