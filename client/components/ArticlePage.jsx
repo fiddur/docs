@@ -10,6 +10,7 @@ import Sidebar from './Sidebar';
 import FeedbackFooter from './FeedbackFooter';
 import setAnchorLinks from '../browser/anchorLinks';
 import Spinner from './Spinner';
+import initSampleBox from '../browser/sampleBox';
 
 class ArticlePage extends React.Component {
 
@@ -17,6 +18,7 @@ class ArticlePage extends React.Component {
     this.executeEmbeddedScripts();
     //this.captureClicks();
     setAnchorLinks();
+    initSampleBox();
   }
 
   componentDidUpdate(prevProps) {
@@ -24,6 +26,7 @@ class ArticlePage extends React.Component {
     //this.captureClicks();
     //this.scrollToAnchor();
     setAnchorLinks();
+    initSampleBox();
   }
 
   /*

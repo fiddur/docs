@@ -9,6 +9,7 @@ import IntroBanner from './IntroBanner';
 import { quickstartNavigationAction } from '../action/quickstartNavigationAction';
 import highlightCode from '../browser/highlightCode';
 import setAnchorLinks from '../browser/anchorLinks';
+import initSampleBox from '../browser/sampleBox';
 import ApplicationStore from '../stores/ApplicationStore';
 
 // TODO: Uses ref from within tutorial navigator, can we move this?
@@ -37,38 +38,18 @@ class TutorialPage extends React.Component {
 
   componentDidMount() {
     this.initClient();
-    this.initSampleBox();
+    initSampleBox();
   }
 
   componentDidUpdate() {
     this.initClient();
-    this.initSampleBox();
+    initSampleBox();
   }
 
   initClient() {
     if (typeof document !== 'undefined') {
       this.metrics();
     }
-  }
-
-  initSampleBox() {
-    const $sampleBox = $('#package');
-    const $sampleRequirements = $sampleBox.find('.package-requirements');
-    const $requirementsToggle = $sampleBox.find('.package-requirements-toggle');
-    const $requirementsToggleText = $requirementsToggle.find('.text');
-    const $requirementsToggleIcon = $requirementsToggle.find('.icon');
-    let requirementsOpen = false;
-
-    if (!$sampleBox || !$sampleRequirements || $sampleBox.data('configured')) return;
-
-    $($requirementsToggle).on('click', () => {
-      requirementsOpen = !requirementsOpen;
-      $($sampleRequirements).slideToggle(200);
-      $($requirementsToggleText).text(`${requirementsOpen ? 'Hide' : 'Show'} requirements`);
-      $($requirementsToggleIcon).toggleClass('icon-budicon-460 icon-budicon-462');
-    });
-
-    $sampleBox.data('configured', true);
   }
 
   metrics() {
