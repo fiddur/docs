@@ -76,6 +76,8 @@ class ArticlePage extends React.Component {
     docsContainer.find('h1.anchor-heading').wrap('<div class="title-toc-container"></div>');
     docsContainer.find('.title-toc-container').append('<div id="toc"></div>');
 
+    // https://css-tricks.com/hash-tag-links-padding/
+    // Add a <span> element before each title to make padding for the fixed top bar
     $.each(docsContainer.find('.anchor-heading:not(h1)'), (index, elem) => {
       const titleID = $(elem).attr('id');
       $(elem).before(`<span id="${titleID}" class="anchor-heading-pointer"></span>`);
