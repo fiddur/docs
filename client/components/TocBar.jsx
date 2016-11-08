@@ -58,6 +58,7 @@ class TocDropdown extends React.Component {
               <a
                 href={`#${item.id}`}
                 className={`item-link item-link-depth-${depth}`}
+                onClick={() => { this.setState({ open: false }); }}
               >
                 {item.name}
               </a>
