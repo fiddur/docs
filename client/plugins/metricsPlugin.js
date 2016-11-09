@@ -2,27 +2,31 @@ import metrics from '../browser/metrics';
 
 const trackEvent = (event, data) => (
   new Promise((resolve, reject) => {
-    if (!metrics.isReady()) {
-      resolve();
-    } else {
-      metrics.track(event, data, err => {
-        if (err) reject(err);
-        else resolve();
-      });
-    }
+    setTimeout(() => {
+      if (!metrics.isReady()) {
+        resolve();
+      } else {
+        metrics.track(event, data, err => {
+          if (err) reject(err);
+          else resolve();
+        });
+      }
+    }, 0);
   })
 );
 
 const trackPage = () => (
   new Promise((resolve, reject) => {
-    if (!metrics.isReady()) {
-      resolve();
-    } else {
-      metrics.page(err => {
-        if (err) reject(err);
-        else resolve();
-      });
-    }
+    setTimeout(() => {
+      if (!metrics.isReady()) {
+        resolve();
+      } else {
+        metrics.page(err => {
+          if (err) reject(err);
+          else resolve();
+        });
+      }
+    }, 0);
   })
 );
 
