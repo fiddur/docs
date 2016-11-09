@@ -21,8 +21,8 @@ class Layout extends React.Component {
   }
 
   canonicalUrl() {
-    if (this.props.canonicalUrl) {
-      return <link rel="canonical" href={this.props.canonicalUrl}/>;
+    if (this.props.pageCanonicalUrl) {
+      return <link rel="canonical" href={this.props.pageCanonicalUrl}/>;
     }
     else {
       return undefined;
