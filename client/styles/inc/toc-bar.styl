@@ -1,0 +1,152 @@
+$toc-bar-height = 52px
+
+@keyframes toggle-sticky-animation
+  0%
+    top - ($toc-bar-height)
+  100%
+    top 0
+
+// Fix headers overlap with fixed toc
+//https://css-tricks.com/hash-tag-links-padding/
+.docs-content.docs-with-toc .anchor-heading-pointer
+  margin-top - $toc-bar-height
+  padding-bottom $toc-bar-height
+  display block
+
+// Wrapper for main title and TOC
+.title-toc-container
+  +breakpoint('desktop')
+    position relative
+
+    h1
+      padding-right 180px
+
+.toc-bar-container
+  display block
+  width 100%
+
+.toc-bar
+
+  +breakpoint("desktop", "max")
+    h1
+      margin-bottom 6px
+
+    .toc-dropdown-content
+      left 0
+      right auto
+
+  .toc-title
+    line-height $toc-bar-height
+    display none
+    margin 0
+
+  .toc-dropdown
+    display inline-block
+    position relative
+    z-index 1
+
+    &.toc-dropdown-open > .toc-dropdown-content
+      opacity 1
+      visibility visible
+      transition-delay 0s
+
+    > .toc-dropdown-title
+      color $color-blue-light
+      cursor pointer
+      display inline-block
+      padding 8px 0
+
+      .text
+        display inline-block
+        margin-right 5px
+        font-size 18px
+
+      .icon
+        font-size 16px
+        position relative
+        top 2px
+
+    > .toc-dropdown-content
+      visibility hidden
+      opacity 0
+      position absolute
+      top 40px
+      right 0
+      overflow-x hidden
+      overflow-y scroll
+      background-color white
+      width 255px
+      min-height 300px
+      max-height 520px
+      padding 12px 20px
+      font-size 14px
+      border 1px solid $gray-lighter
+      border-radius $border-radius-base
+      box-shadow 0 0 2px 0 rgba(black, 0.1)
+      transition visibility 0s linear 0.1s, opacity 0.1s ease-out
+
+      &::-webkit-scrollbar
+        -webkit-appearance none
+        width 7px
+
+      &::-webkit-scrollbar-thumb
+        border-radius 6px
+        background-color rgba(0,0,0,.5)
+        box-shadow 0 0 1px rgba(255,255,255,.5)
+
+      .toc-dropdown-list
+        list-style-type none
+        padding 0
+
+      .toc-dropdown-list-depth-2
+        padding-left 14px
+        margin-bottom 4px
+
+      .item-link
+        display block
+        width 100%
+        white-space nowrap
+        overflow hidden
+        text-overflow ellipsis
+
+        &:hover
+          color $link-hover-color
+
+      .item-link-depth-1
+        color $gray
+
+      .item-link-depth-2
+        color $gray-light
+        padding 4px 0
+
+  // Sticky styles
+
+  &:not(.toc-sticky)
+    +breakpoint('desktop')
+      display inline-block
+      position absolute
+      top 0
+      right 0
+
+  &.toc-sticky
+    +breakpoint('desktop')
+      position fixed
+      top - ($toc-bar-height)
+      z-index 1
+      background-color white
+      animation: toggle-sticky-animation 0.5s alternate both
+      border-bottom 1px solid rgba(black, 0.1)
+
+      .toc-title
+        display inline-block
+        float left
+
+      .toc-dropdown
+        float right
+
+      .toc-dropdown-title
+        padding 0
+        line-height $toc-bar-height
+
+        .text
+          font-size 16px
