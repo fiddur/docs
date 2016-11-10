@@ -12,12 +12,33 @@ var htmlparser = require('htmlparser2');
 var async = require('async');
 var testConfig = require('../docs/config/tests.json');
 var urlJoin = require('url-join');
-var docUrls = require('../lib/docs/builder').docUrls;
+var builder = require('../lib/docs/builder');
 var ProgressBar = require('progress');
+
+var docUrls = builder.docUrls;
+var docsByUrl = builder.docsByUrl;
 
 var baseUrl = urlJoin('http://localhost:' + nconf.get('PORT'), '/docs');
 
 if (!nconf.get('DISABLE_CONTENT_TESTS')) {
+
+  describe('Public content', function() {
+    it('should have a valid title', function() {
+
+      for (let url in docsByUrl) {
+        var doc = docsByUrl[url];
+ 
+        if (doc.meta.public) {
+          var title = doc.meta.title;
+          var message = `The page at ${url} has an invalid title '${title}'`;
+          assert(title, message);
+          assert(title !== 'Document', message);
+        }
+      }
+
+    });
+  });
+
   var getProgressBar = function(total, message) {
     if (!message) {
       console.log('');
