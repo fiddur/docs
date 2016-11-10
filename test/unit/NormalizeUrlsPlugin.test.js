@@ -1,12 +1,12 @@
 import { expect } from 'chai';
-import { resolve } from 'path';
 import UrlFormatter from '../../lib/pipeline/UrlFormatter';
-import NormalizeUrlsPlugin from '../../lib/pipeline/plugins/content/NormalizeUrlsPlugin';
+import NormalizeUrlsPlugin from '../../lib/pipeline/plugins/metadata/NormalizeUrlsPlugin';
 
 describe('NormalizeUrlsPlugin', () => {
 
   const baseUrl = 'https://tests.local/';
   const mediaUrl = 'https://cdn.cloud/';
+  const urlFormatter = new UrlFormatter({ baseUrl, mediaUrl });
 
   const imageTag = (url) => `<img src="${url}">`;
   const anchorTag = (url) => `<a href="${url}">Example Link</a>`;
@@ -20,24 +20,32 @@ describe('NormalizeUrlsPlugin', () => {
     });
   });
 
-  describe('when transform() is called', () => {
+  describe('when getMetadata() is called', () => {
 
-    const urlFormatter = new UrlFormatter({ baseUrl, mediaUrl });
     const plugin = new NormalizeUrlsPlugin({ urlFormatter });
 
-    describe('when the content contains a tag with a src attribute', () => {
-      it('replaces its value with a URL formatted using the UrlFormatter', () => {
-        const content = imageTag('/media/example.jpg');
-        const transformed = plugin.postprocess({}, content);
-        expect(transformed).to.equal(imageTag(urlFormatter.format('/media/example.jpg')));
+    describe('with a document with a url property', () => {
+      it('formats the url using the UrlFormatter', () => {
+        const doc = { url: '/articles/test-example' };
+        const output = plugin.getMetadata(doc, '');
+        expect(output.url).to.equal(urlFormatter.format(doc.url));
       });
     });
 
-    describe('when the content contains a tag with an href attribute', () => {
-      it('replaces its value with a URL formatted using the UrlFormatter', () => {
-        const content = anchorTag('/some/example/article');
-        const transformed = plugin.postprocess({}, content);
-        expect(transformed).to.equal(anchorTag(urlFormatter.format('/some/example/article')));
+    describe('with a document without a url property', () => {
+      it('generates a url using the path and then formats it using the UrlFormatter', () => {
+        const doc = { path: '/articles/test-example' };
+        const expectedUrl = doc.path.replace(NormalizeUrlsPlugin.defaults.documentPathRegex, '');
+        const output = plugin.getMetadata(doc, '');
+        expect(output.url).to.equal(urlFormatter.format(expectedUrl));
+      });
+    });
+
+    describe('with a document with an image property', () => {
+      it('formats the image URL using the UrlFormatter', () => {
+        const doc = { url: '/articles/test-example', image: '/media/example.png' };
+        const output = plugin.getMetadata(doc, '');
+        expect(output.image).to.equal(urlFormatter.format(doc.image));
       });
     });
 

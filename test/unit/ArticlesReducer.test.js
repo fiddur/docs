@@ -3,6 +3,7 @@ import { expect } from 'chai';
 import { getTestDocument, getTestFile } from '../util';
 import FakeCache from '../mocks/FakeCache';
 import Tree from '../../lib/pipeline/models/Tree';
+import UrlFormatter from '../../lib/pipeline/UrlFormatter';
 import ArticlesReducer from '../../lib/pipeline/reducers/ArticlesReducer';
 
 describe('ArticlesReducer', () => {

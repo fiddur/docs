@@ -1,8 +1,10 @@
 import { expect } from 'chai';
 import { resolve } from 'path';
 import { merge } from 'lodash';
+import urljoin from 'url-join';
 import Cache from '../../lib/pipeline/Cache';
 import Compiler from '../../lib/pipeline/Compiler';
+import UrlFormatter from '../../lib/pipeline/UrlFormatter';
 import MarkdownPlugin from '../../lib/pipeline/plugins/content/MarkdownPlugin';
 import ReplaceIncludesPlugin from '../../lib/pipeline/plugins/content/ReplaceIncludesPlugin';
 import File from '../../lib/pipeline/models/File';
@@ -14,18 +16,27 @@ describe('Cache', () => {
 
   const vars = { environment: 'test' };
   const baseDir = resolve(__dirname, '../docs');
+  const baseUrl = 'https://tests.local/';
+  const mediaUrl = 'https://cdn.cloud/';
+  const urlFormatter = new UrlFormatter({ baseUrl, mediaUrl });
 
   describe('when constructor is called', () => {
     describe('without a compiler option', () => {
       it('throws an Error', () => {
-        const func = () => new Cache({ watcher: {} });
+        const func = () => new Cache({ urlFormatter, watcher: {} });
         expect(func).to.throw(/requires a compiler option/);
       });
     });
     describe('without a watcher option', () => {
       it('throws an Error', () => {
-        const func = () => new Cache({ compiler: {} });
+        const func = () => new Cache({ urlFormatter, compiler: {} });
         expect(func).to.throw(/requires a watcher option/);
+      });
+    });
+    describe('without a urlFormatter option', () => {
+      it('throws an Error', () => {
+        const func = () => new Cache({ compiler: {}, watcher: {} });
+        expect(func).to.throw(/requires a urlFormatter option/);
       });
     });
   });
@@ -34,7 +45,7 @@ describe('Cache', () => {
 
     const watcher = new FakeWatcher({ baseDir });
     const compiler = new Compiler({ vars });
-    const cache = new Cache({ watcher, compiler });
+    const cache = new Cache({ watcher, compiler, urlFormatter });
 
     describe('with a path of a loaded document', () => {
       it('returns the document', () => {
@@ -56,7 +67,7 @@ describe('Cache', () => {
 
     const watcher = new FakeWatcher({ baseDir });
     const compiler = new Compiler({ vars });
-    const cache = new Cache({ watcher, compiler });
+    const cache = new Cache({ watcher, compiler, urlFormatter });
 
     describe('with a path of a loaded document', () => {
       it('returns the document', () => {
@@ -77,7 +88,7 @@ describe('Cache', () => {
 
     const watcher = new FakeWatcher({ baseDir });
     const compiler = new Compiler({ vars });
-    const cache = new Cache({ watcher, compiler });
+    const cache = new Cache({ watcher, compiler, urlFormatter });
 
     describe('with a path of a loaded document', () => {
       it('returns the document', () => {
@@ -98,11 +109,11 @@ describe('Cache', () => {
 
     const watcher = new FakeWatcher({ baseDir });
     const compiler = new Compiler({ vars });
-    const cache = new Cache({ watcher, compiler });
+    const cache = new Cache({ watcher, compiler, urlFormatter });
 
     describe('with a path of a loaded document', () => {
       it('returns the document', () => {
-        const doc = new Document(getTestFile('articles/test-markdown.md'), { url: '/articles/test-markdown' });
+        const doc = new Document(getTestFile('articles/test-markdown.md'), { url: urljoin(baseUrl, '/articles/test-markdown') });
         cache.add(doc);
         expect(cache.getByUrl(doc.url)).to.equal(doc);
       });
@@ -119,7 +130,7 @@ describe('Cache', () => {
 
     const watcher = new FakeWatcher({ baseDir });
     const compiler = new Compiler({ vars });
-    const cache = new Cache({ watcher, compiler });
+    const cache = new Cache({ watcher, compiler, urlFormatter });
 
     describe('with a path of a loaded document', () => {
       it('returns the document', () => {
@@ -145,7 +156,7 @@ describe('Cache', () => {
     let cache;
 
     beforeEach(() => {
-      cache = new Cache({ watcher, compiler });
+      cache = new Cache({ watcher, compiler, urlFormatter });
     });
 
     describe('for a file that matches one of the documentPaths expressions', () => {
@@ -170,7 +181,7 @@ describe('Cache', () => {
 
     beforeEach(() => {
       watcher = new FakeWatcher({ baseDir });
-      cache = new Cache({ watcher, compiler });
+      cache = new Cache({ watcher, compiler, urlFormatter });
     });
 
     describe('for an existing document', () => {
