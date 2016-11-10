@@ -1,4 +1,3 @@
-var widget = window.widget = new Auth0Lock(window.env.AUTH0_CLIENT_ID, window.env.AUTH0_DOMAIN);
 function getBasicInfo () {
   return {
     path: window.location.pathname,
@@ -9,18 +8,20 @@ function getBasicInfo () {
     label: 'docs'
   }
 }
+
 var options = {
-  callbackURL: window.env.DOMAIN_URL_APP + '/callback',
-  dict: {
-    signup: {
-      footerText: 'By signing up, you agree to our <a href="/terms" target="_new">terms of service</a> and <a href="/privacy" target="_new">privacy policy</a>'
-    }
+  auth: { redirectUrl: window.env.DOMAIN_URL_APP + '/callback' },
+  theme: {
+    logo: '//cdn.auth0.com/styleguide/latest/lib/logos/img/badge.png'
   },
-  icon: '//cdn.auth0.com/styleguide/latest/lib/logos/img/badge.png',
   rememberLastLogin: true,
   integratedWindowsLogin: false,
-  socialBigButtons: true
+  socialButtonStyle: 'big',
+  languageDictionary: {
+    signUpTerms: 'By signing up, you agree to our <a href="/terms" target="_new">terms of service</a> and <a href="/privacy" target="_new">privacy policy</a>'
+  }
 };
+var widget = window.widget = new Auth0Lock(window.env.AUTH0_CLIENT_ID, window.env.AUTH0_DOMAIN, options);
 
 widget.on('signup ready', function() {
   if (!window.metricsLib) return;
@@ -36,16 +37,12 @@ window.login = function () {
   if (window.metricsLib) {
     window.metricsLib.track('click:signin', getBasicInfo());
   }
-  widget.hide(function() {
-    widget.show(options);
-  });
+  widget.show({ initialScreen: 'login' });
 };
 
 window.signup = function() {
   if (window.metricsLib) {
     window.metricsLib.track('click:signup', getBasicInfo());
   }
-  widget.hide(function() {
-    widget.showSignup(options);
-  });
+  widget.show({ initialScreen: 'signUp' });
 }

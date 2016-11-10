@@ -54,14 +54,19 @@ class TutorialPage extends React.Component {
 
   metrics() {
     const { quickstart, platform } = this.props;
-    if (!window.widget) return;
     const eventData = {
-      clientID: window.widget.getClient()._clientID || '',
       'tutorial-apptype': quickstart ? quickstart.name : '',
       'tutorial-platform': platform ? platform.name : ''
     };
-    $('#package .btn').off('click').on('click', () => {
-      this.context.getComponentContext().trackEvent('download:tutorial-seed', eventData);
+    $('#package .btn').off('click').on('click', (e) => {
+      if (e.currentTarget && e.currentTarget.href) {
+        const url = e.currentTarget.href;
+        const urlClientID = url.match(/client_id=([^&]*)/);
+        eventData.clientID = urlClientID && urlClientID[1]
+          ? urlClientID[1]
+          : '';
+      }
+      this.context.trackEvent('download:tutorial-seed', eventData);
     });
   }
 
