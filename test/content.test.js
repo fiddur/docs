@@ -22,8 +22,8 @@ var baseUrl = urlJoin('http://localhost:' + nconf.get('PORT'), '/docs');
 
 if (!nconf.get('DISABLE_CONTENT_TESTS')) {
 
-  describe('Public content', function() {
-    it('should have a valid title', function() {
+  describe('Content metadata', function() {
+    it('should include a valid title', function() {
 
       for (let url in docsByUrl) {
         var doc = docsByUrl[url];
