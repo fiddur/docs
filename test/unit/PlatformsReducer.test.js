@@ -71,8 +71,8 @@ describe('PlatformsReducer', () => {
 
     it('formats platform URLs using the UrlFormatter', () => {
       const [platformA, platformB] = result;
-      expect(platformA.url).to.equal(urlFormatter.format('/docs/quickstart/example/platform-a'));
-      expect(platformB.url).to.equal(urlFormatter.format('/docs/quickstart/example/platform-b'));
+      expect(platformA.url).to.equal(urlFormatter.format('/quickstart/example/platform-a'));
+      expect(platformB.url).to.equal(urlFormatter.format('/quickstart/example/platform-b'));
     });
 
     it('formats platform image URLs using the UrlFormatter', () => {
