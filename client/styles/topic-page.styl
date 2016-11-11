@@ -1,4 +1,8 @@
 .docs-content.topic-page
+  .icon
+    color: $color-text-light
+    font-size: 16px
+    vertical-align: middle
 
   .topic-page-header
     position: relative
@@ -35,22 +39,26 @@
   
   ul.topic-links
     padding-left: 0
+    margin-bottom: 64px;
+
+    li>a
+      font-size: 18px
+      line-height: 18px
 
     li
       list-style-type: none
       margin: 24px 0
       border-bottom: 1px solid $color-gray
 
-      a
-        font-size: 18px
-        line-height: 18px
       i
         padding-right: 10px
       p
         margin-bottom: 24px
+      p:not(:last-child)
+        margin-bottom: 6px
 
       ul
-        margin: 24px 0
+        margin: 0 0 24px 0
         padding-left: 24px
 
         li
