@@ -67,7 +67,8 @@ describe('Watcher', () => {
 
   });
 
-  describe('when a file changes after it has been found', () => {
+  describe('when a file changes after it has been found', function() {
+    this.timeout(10000);
 
     it('emits a change event for the file', (done) => {
       const filename = resolve(baseDir, 'articles/test-markdown.md');
