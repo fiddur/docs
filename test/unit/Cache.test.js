@@ -47,7 +47,7 @@ describe('Cache', () => {
     const compiler = new Compiler({ vars });
     const cache = new Cache({ watcher, compiler, urlFormatter });
 
-    describe('with a path of a loaded document', () => {
+    describe('with the path of a loaded document', () => {
       it('returns the document', () => {
         const doc = new Document(getTestFile('articles/test-markdown.md'));
         cache.add(doc);
@@ -69,7 +69,7 @@ describe('Cache', () => {
     const compiler = new Compiler({ vars });
     const cache = new Cache({ watcher, compiler, urlFormatter });
 
-    describe('with a path of a loaded document', () => {
+    describe('with the path of a loaded document', () => {
       it('returns the document', () => {
         const doc = new Document(getTestFile('articles/test-markdown.md'));
         cache.add(doc);
@@ -90,7 +90,7 @@ describe('Cache', () => {
     const compiler = new Compiler({ vars });
     const cache = new Cache({ watcher, compiler, urlFormatter });
 
-    describe('with a path of a loaded document', () => {
+    describe('with the filename of a loaded document', () => {
       it('returns the document', () => {
         const doc = new Document(getTestFile('articles/test-markdown.md'));
         cache.add(doc);
@@ -98,8 +98,30 @@ describe('Cache', () => {
       });
     });
     describe('with a non-existent filename', () => {
+      it('throws an Error', () => {
+        const func = () => cache.getByFilename('does-not-exist');
+        expect(func).to.throw(/exists in the cache/);
+      });
+    });
+
+  });
+
+  describe('when tryGetByFilename() is called', () => {
+
+    const watcher = new FakeWatcher({ baseDir });
+    const compiler = new Compiler({ vars });
+    const cache = new Cache({ watcher, compiler, urlFormatter });
+
+    describe('with the filename of a loaded document', () => {
+      it('returns the document', () => {
+        const doc = new Document(getTestFile('articles/test-markdown.md'));
+        cache.add(doc);
+        expect(cache.tryGetByFilename(doc.filename)).to.equal(doc);
+      });
+    });
+    describe('with a non-existent filename', () => {
       it('returns undefined', () => {
-        expect(cache.getByFilename('does-not-exist')).to.equal(undefined);
+        expect(cache.tryGetByFilename('does-not-exist')).to.equal(undefined);
       });
     });
 
@@ -111,7 +133,7 @@ describe('Cache', () => {
     const compiler = new Compiler({ vars });
     const cache = new Cache({ watcher, compiler, urlFormatter });
 
-    describe('with a path of a loaded document', () => {
+    describe('with the URL of a loaded document', () => {
       it('returns the document', () => {
         const doc = new Document(getTestFile('articles/test-markdown.md'), { url: urljoin(baseUrl, '/articles/test-markdown') });
         cache.add(doc);
@@ -119,8 +141,30 @@ describe('Cache', () => {
       });
     });
     describe('with a non-existent URL', () => {
+      it('throws an Error', () => {
+        const func = () => cache.getByUrl('does-not-exist');
+        expect(func).to.throw(/exists in the cache/);
+      });
+    });
+
+  });
+
+  describe('when tryGetByUrl() is called', () => {
+
+    const watcher = new FakeWatcher({ baseDir });
+    const compiler = new Compiler({ vars });
+    const cache = new Cache({ watcher, compiler, urlFormatter });
+
+    describe('with the URL of a loaded document', () => {
+      it('returns the document', () => {
+        const doc = new Document(getTestFile('articles/test-markdown.md'), { url: urljoin(baseUrl, '/articles/test-markdown') });
+        cache.add(doc);
+        expect(cache.tryGetByUrl(doc.url)).to.equal(doc);
+      });
+    });
+    describe('with a non-existent URL', () => {
       it('returns undefined', () => {
-        expect(cache.getByUrl('does-not-exist')).to.equal(undefined);
+        expect(cache.tryGetByUrl('does-not-exist')).to.equal(undefined);
       });
     });
 
