@@ -37,11 +37,16 @@ if (nconf.get('WEBPACK_PROXY_PORT')) {
 
 var application = {
   start: function (callback) {
+    console.log('Finding and compiling documents...');
     var app = require('./server');
-    server = http.createServer(app);
-    var enableDestroy = require('server-destroy');
-    enableDestroy(server);
-    server.listen(port, callback);
+    var pipeline = require('./lib/pipeline');
+    pipeline.whenReady(function() {
+      console.log('Compiled ' + pipeline.getStats().count + ' documents. Starting server...');
+      server = http.createServer(app);
+      var enableDestroy = require('server-destroy');
+      enableDestroy(server);
+      server.listen(port, callback);
+    });
   },
   stop: function (callback) {
     var timedout = false;
