@@ -1,0 +1,11 @@
+changed:
+  -
+    title: "change-example-1"
+    description: |
+       This is an *example* change
+  -
+    title: "change-example-2"
+    foo: 42
+    bar: 123
+    description: |
+       This is another *example* change

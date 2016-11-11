@@ -51,7 +51,7 @@ class Application extends React.Component {
 
   render() {
     const { currentRoute, user } = this.props;
-    const fullWidth = this.props.env.fullWidth;
+    const fullWidth = !!this.props.env.fullWidth;
 
     // Temporary fix for: https://github.com/yahoo/fluxible-router/issues/108
     if (!currentRoute && typeof document !== 'undefined') {

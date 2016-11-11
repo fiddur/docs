@@ -71,19 +71,18 @@ export default {
     handler: SearchPage
   },
 
-  apis: {
-    path: '/docs/api/info',
-    method: 'get',
-    handler: ArticlePage,
-    action: loadContent
-  },
-
   // sdks: {
   //   path: '/docs/sdks',
   //   method: 'get',
   //   handler: require('../components/SdksPage'),
   //   action: loadPlatforms
   // },
+
+  updates: {
+    path: '/docs/updates',
+    method: 'get',
+    handler: StaticPage
+  },
 
   mgmtApiExplorerV2: {
     path: '/docs/api/management/v2',

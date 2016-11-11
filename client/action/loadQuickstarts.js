@@ -2,13 +2,12 @@ import { loadSettingsAction, TutorialStore } from 'auth0-tutorial-navigator';
 import NavigationStore from '../stores/NavigationStore';
 import LoadState from '../stores/LoadState';
 
-
-export default function loadPlatforms(context, payload) {
+export default function loadQuickstarts(context, payload) {
   const logger = context.getService('LoggingService');
 
   const success = ({ quickstarts }) => {
     context.dispatch('QUICKSTARTS_LOAD_SUCCESS', { quickstarts });
-    logger.debug('Platforms loaded successfully.');
+    logger.debug('Quickstarts loaded successfully.');
     return context.executeAction(loadSettingsAction, { quickstarts });
   };
 

@@ -1,13 +1,16 @@
 import { cards } from '../../lib/data/navigation';
-import platforms from '../../lib/collections/platforms';
-import quickstarts from '../../lib/collections/quickstarts';
+import docs from '../../lib/pipeline';
 
 const NavigationService = {};
 
 NavigationService.loadCards = () => Promise.resolve({ cards });
 
-NavigationService.loadPlatforms = () => Promise.resolve({ platforms });
+NavigationService.loadPlatforms = () => Promise.resolve({
+  platforms: docs.getReduction('platforms')
+});
 
-NavigationService.loadQuickstarts = () => Promise.resolve({ quickstarts });
+NavigationService.loadQuickstarts = () => Promise.resolve({
+  quickstarts: docs.getReduction('quickstarts')
+});
 
 export default NavigationService;

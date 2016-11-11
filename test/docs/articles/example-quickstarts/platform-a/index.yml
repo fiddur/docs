@@ -1,0 +1,5 @@
+title: Platform A
+image: /media/platforms/platform-a.png
+default_article: 01-example
+articles:
+  - 01-example
