@@ -111,12 +111,6 @@ export default {
     }
   },
 
-  updates: {
-    path: '/docs/updates*',
-    method: 'get',
-    handler: StaticPage
-  },
-
   article: {
     path: '/docs/*',
     method: 'get',
