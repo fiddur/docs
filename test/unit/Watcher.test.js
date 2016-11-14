@@ -77,7 +77,7 @@ describe('Watcher', () => {
         done();
       });
       watcher.watch('articles');
-      touch.sync(resolve(baseDir, filename));
+      touch.sync(resolve(baseDir, filename), { mtime: true });
     });
 
   });
