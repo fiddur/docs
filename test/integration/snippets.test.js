@@ -1,9 +1,8 @@
 import { expect } from 'chai';
 import { extname, relative, resolve } from 'path';
 import lsr from 'lsr';
-import FakeCache from '../mocks/FakeCache';
+import { createProductionPipeline } from '../util';
 import Tree from '../../lib/pipeline/models/Tree';
-import SnippetsReducer from '../../lib/pipeline/reducers/SnippetsReducer';
 
 describe('Snippets Reduction', () => {
 
@@ -13,12 +12,16 @@ describe('Snippets Reduction', () => {
     .filter(file => ['.md', '.html'].indexOf(extname(file)) !== -1)
     .map(file => relative(snippetsDir, file.fullPath).replace(extname(file.name)));
 
+  let cache;
   let reduction;
 
-  before(() => {
-    const cache = new FakeCache();
-    const reducer = new SnippetsReducer({ snippetsDir });
-    reduction = reducer.reduce(cache);
+  before(done => {
+    createProductionPipeline((err, pipeline) => {
+      expect(err).not.to.exist;
+      cache = pipeline;
+      reduction = pipeline.getReduction('snippets');
+      done();
+    });
   });
 
   it('reduces to a Tree', () => {
