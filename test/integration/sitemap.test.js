@@ -17,14 +17,17 @@ describe('Sitemap Reduction', function() {
   let cache;
   let urlFormatter;
   let reduction;
+  let baseUrl;
 
-  const isQuickstartDocument = (doc) => appTypes.some(appType => doc.url.indexOf(`/${appType.slug}/`) === 0);
+  const isQuickstartDocument = (doc) =>
+    appTypes.some(appType => doc.url.indexOf(urljoin(baseUrl, `/${appType.slug}/`) === 0));
 
   before(done => {
     createProductionPipeline((err, pipeline) => {
       expect(err).not.to.exist;
       cache = pipeline;
       urlFormatter = pipeline.urlFormatter;
+      baseUrl = urlFormatter.baseUrl;
       reduction = pipeline.getReduction('sitemap');
       done();
     });
@@ -36,10 +39,16 @@ describe('Sitemap Reduction', function() {
     expect(reduction.xml).to.be.a('string');
   });
 
+  it('formats all urls as absolute urls', () => {
+    reduction.urls.forEach(url => {
+      expect(/^https?:\/\//.test(url));
+    });
+  });
+
   it('adds quickstart urls', () => {
     const { urls } = reduction;
     appTypes.forEach(appType => {
-      const baseRoute = `/docs/quickstart/${appType.name}`;
+      const baseRoute = urljoin(baseUrl, `quickstart/${appType.name}`);
       expect(urls).to.contain(baseRoute);
       indexes[appType.name].forEach(index => {
         expect(urls).to.contain(urljoin(baseRoute, index.name));
@@ -54,7 +63,7 @@ describe('Sitemap Reduction', function() {
     const { urls } = reduction;
     cache.forEach(doc => {
       if (doc.sitemap && !isQuickstartDocument(doc)) {
-        expect(urls).to.contain(urljoin('/docs', doc.url));
+        expect(urls).to.contain(doc.url);
       }
     });
   });
