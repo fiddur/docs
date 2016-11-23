@@ -60,7 +60,7 @@ class Application extends React.Component {
 
     return (
       <div>
-        <Header user={user} currentRoute={currentRoute} fullWidth={fullWidth} />
+        <Header theme= "gray" user={user} currentRoute={currentRoute} fullWidth={fullWidth} />
         {this.getHandler()}
       </div>
     );
