@@ -36,7 +36,6 @@ describe('Configuration', () => {
     it('is valid YAML in the expected format', () => {
       const data = loadYaml('sidebar.yml');
       expect(data).to.be.an('object');
-      expect(data).to.have.keys('articles', 'apis', 'appliance');
     });
   });
 
