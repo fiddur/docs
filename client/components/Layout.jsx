@@ -87,7 +87,7 @@ class Layout extends React.Component {
           <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
           <script src="https://cdn.ravenjs.com/3.7.0/raven.min.js"></script>
           <script src="//cdn.auth0.com/styleguide/vendor/bootstrap-3.2.0.min.js"></script>
-          <script src="https://cdn.auth0.com/js/lock-9.2.min.js"></script>
+          <script src="//cdn.auth0.com/js/lock/10.6/lock.min.js"></script>
           <script src={getAssetBundleUrl('commons')}></script>
           <script src={getAssetBundleUrl('browser')}></script>
         </head>
