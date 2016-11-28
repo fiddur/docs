@@ -92,7 +92,7 @@ class TocDropdown extends React.Component {
               className="toc-dropdown-title"
               onClick={() => { this.setState({ open: !this.state.open }); }}
             >
-              <span className="text">On this article</span>
+              <span className="text">In this article</span>
               <i className="icon icon-budicon-460" />
             </div>
             <div className="toc-dropdown-content">
