@@ -43,7 +43,7 @@ class Header extends Component {
 
     const props = {
       className: this.props.fullWidth ? 'header-full-width' : '',
-      theme: 'gray',
+      theme: this.props.theme,
       secondaryButtonLink: '',
       secondaryButtonOnClick: () => this.contactForm.show(),
       featuredEnable: !this.props.fullWidth
@@ -61,6 +61,7 @@ class Header extends Component {
 }
 
 Header.propTypes = {
+  theme: React.PropTypes.string,
   currentRoute: React.PropTypes.object,
   user: React.PropTypes.object,
   fullWidth: React.PropTypes.bool

@@ -449,8 +449,8 @@
       }
     },
     "auth0-styleguide": {
-      "version": "4.8.11",
-      "from": "auth0/styleguide#4.8.11",
+      "version": "4.8.24",
+      "from": "auth0/styleguide#4.8.24",
       "resolved": "git://github.com/auth0/styleguide.git#7189d6111be11f31ad87b0e07b5d94901ed5ecd4"
     },
     "auth0-tutorial-navigator": {
@@ -579,9 +579,9 @@
       }
     },
     "auth0-web-header": {
-      "version": "1.2.13",
-      "from": "https://registry.npmjs.org/auth0-web-header/-/auth0-web-header-1.2.13.tgz",
-      "resolved": "https://registry.npmjs.org/auth0-web-header/-/auth0-web-header-1.2.13.tgz",
+      "version": "1.4.0",
+      "from": "https://registry.npmjs.org/auth0-web-header/-/auth0-web-header-1.4.0.tgz",
+      "resolved": "https://registry.npmjs.org/auth0-web-header/-/auth0-web-header-1.4.0.tgz",
       "dependencies": {
         "classnames": {
           "version": "2.2.5",
