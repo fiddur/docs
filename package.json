@@ -73,8 +73,9 @@
     "build-dev": "webpack --config webpack.config.js --progress",
     "dev": "NODE_ENV=development PORT=3000 node webpack-dev-server.js & WEBPACK_PROXY_PORT=5050 NODE_ENV=development nodemon --debug --ext js,jsx,pug start.js | node_modules/.bin/bunyan",
     "shrinkwrap": "npm-shrinkwrap",
-    "heroku-postbuild": "bash heroku.sh",
-    "preinstall": "bash init.sh",
+    "heroku-prebuild": "bash prebuild.sh",
+    "heroku-postbuild": "bash postbuild.sh",
+    "preinstall": "bash preinstall.sh",
     "postinstall": "npm run build"
   },
   "engines": {

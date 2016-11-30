@@ -8,6 +8,9 @@
     },
     "NODE_ENV": {
       "required": true
+    },
+    "GIT_SSH_KEY": {
+      "required": true
     }
   },
   "addons": []
