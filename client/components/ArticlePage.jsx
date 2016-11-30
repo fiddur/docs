@@ -20,6 +20,7 @@ class ArticlePage extends React.Component {
   constructor() {
     super();
 
+    this.tocUrlChange = false;
     this.initTOC = this.initTOC.bind(this);
   }
 
@@ -40,7 +41,11 @@ class ArticlePage extends React.Component {
     initSampleBox();
 
     // Initialize TOC again if url changes
-    if (get(this.props, 'content.meta.toc') && this.props.url !== prevProps.url) this.initTOC();
+    if (this.props.url !== prevProps.url) this.tocUrlChange = true;
+    if (get(this.props, 'content.meta.toc') && this.tocUrlChange) {
+      this.initTOC();
+      this.tocUrlChange = false;
+    }
   }
 
   /*
