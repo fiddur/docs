@@ -154,35 +154,45 @@
         padding-bottom 80px
         border-bottom 1px solid rgba(black, 0.075)
 
+        > h1
+          margin 0
+          padding-top 40px
+          padding-bottom 20px
+          line-height 48px
+          font-size 32px
+
+        > h2
+          font-size 24px
+          margin 0
+          padding-top 36px
+          padding-bottom 14px
+
+        > h3
+          font-weight $font-weight-bold
+          font-size 16px
+          color $color-oil
+          margin-top 36px
+
+        > h1,
+        > h2,
+        > h3,
+        > h4,
+        > h5,
+        > h6,
+        > p,
+        > ul,
+        > ol,
+        > aside,
+        > dl
+          padding-left: 40px;
+          padding-right: 40px;
+
+          +breakpoint("tablet")
+            margin-right: $examples-width
+
         +breakpoint("tablet")
           min-height 100vh
           overflow: hidden // Fix code examples going out of section
-
-      h1, h2, h3, h4, h5, h6, p, ul, ol, aside, dl
-        padding-left: 40px;
-        padding-right: 40px;
-
-        +breakpoint("tablet")
-          margin-right: $examples-width
-
-      h1
-        margin 0
-        padding-top 40px
-        padding-bottom 20px
-        line-height 48px
-        font-size 32px
-
-      h2
-        font-size 24px
-        margin 0
-        padding-top 36px
-        padding-bottom 14px
-
-      h3
-        font-weight $font-weight-bold
-        font-size 16px
-        color $color-oil
-        margin-top 36px
 
       // Remove margins of empty paragraphs
       p:empty
@@ -219,6 +229,21 @@
           left 0px
           top 0px
           opacity 0.5
+
+      .panel
+        margin-left: 40px;
+        margin-right: 40px;
+
+        +breakpoint("tablet")
+          margin-right: "calc(%s + 40px)" % $examples-width
+
+        .panel-heading
+          padding: 15px;
+        
+        .panel-body:after,
+        .panel-body:before
+          display: none; //Fix bug with empty space
+          
 
       .anchor-heading
         cursor auto
