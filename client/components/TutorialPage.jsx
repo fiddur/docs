@@ -68,83 +68,97 @@ class TutorialPage extends React.Component {
     return `${platform.title} ${article.title}`;
   }
 
-  render() {
-    const { quickstart, platform, article, isAuthenticated, isFramedMode } = this.props;
-    const tryBanner = isAuthenticated ? null : <TryBanner />;
+  renderFooter() {
+    const { isFramedMode, quickstart, platform, article } = this.props;
+    let element;
+    if (isFramedMode) {
+      element = <TutorialNextSteps quickstart={quickstart} platform={platform} />;
+    } else {
+      element = <TutorialPrevNext quickstart={quickstart} platform={platform} currentArticle={article} />;
+    }
+
+    return <div data-swiftype-index="false">{element}</div>;
+  }
+
+  renderTryBanner() {
+    const { isAuthenticated, isFramedMode } = this.props;
+    if (isAuthenticated || isFramedMode) return undefined;
+    return <TryBanner />;
+  }
+
+  renderIntroBanner() {
+    const { isFramedMode } = this.props;
+    if (isFramedMode) return undefined;
+    return <IntroBanner />;
+  }
+
+  renderFeedback() {
+    const { quickstart, platform, article } = this.props;
+    // TODO: This is temporary; we should switch to using the actual editUrl
+    // from the doc's metadata once we are loading it.
+    const editUrl = `https://github.com/auth0/docs/edit/master/articles/${quickstart.slug}/${platform.name}/${article.name}.md`;
+    return (
+      <div data-swiftype-index="false">
+        <FeedbackFooter url={article.url} editUrl={editUrl} />
+      </div>
+    );
+  }
+
+  renderSidebar() {
+    const { isFramedMode, platform } = this.props;
+
+    if (isFramedMode) return undefined;
+
     const sidebarTitle = platform ? platform.title : '';
     const sidebarItems = platform ? platform.articles : [];
 
+    return (
+      <div className="sidebar-container col-md-3">
+        <Sidebar
+          section={sidebarTitle} maxDepth={3} includeSectionInBreadcrumb isQuickstart
+          items={sidebarItems} url={this.props.currentRoute.url}
+        />
+      </div>
+    );
+  }
+
+  renderNavigationBar() {
+    const { isFramedMode } = this.props;
+    if (isFramedMode) return undefined;
+    return <NavigationBar currentSection="quickstarts" />;
+  }
+
+  render() {
+    const { quickstart, platform, article, isFramedMode } = this.props;
+    const columnWidth = isFramedMode ? 12 : 9;
+
     let tutorial;
-    let sidebar;
-    let prevNext;
-    let feedbackFooter;
-    let nextSteps;
-    let columnWidth = 12;
-
     if (article) {
-      tutorial = (<Tutorial
-        quickstart={quickstart}
-        platform={platform}
-        article={article}
-      />);
-      prevNext = (<TutorialPrevNext
-        quickstart={quickstart}
-        platform={platform}
-        currentArticle={article}
-      />);
-      // TODO: This is temporary; we should switch to using the actual editUrl
-      // from the doc's metadata once we are loading it.
-      const editUrl = `https://github.com/auth0/docs/edit/master/articles/${quickstart.slug}/${platform.name}/${article.name}.md`;
-      feedbackFooter = <FeedbackFooter url={article.url} editUrl={editUrl} />;
-      nextSteps = (
-        <div data-swiftype-index="false">
-          <TutorialPrevNext
-            quickstart={quickstart}
-            platform={platform}
-            currentArticle={article}
-            isFramedMode={isFramedMode}
-          />
-        </div>
-      );
-    }
-
-    if (isFramedMode) {
-      nextSteps = undefined; // <TutorialNextSteps quickstart={quickstart} platform={platform} />;
-    }
-
-    if (!isFramedMode) {
-      columnWidth = 9;
-      sidebar = (
-        <div className="sidebar-container col-md-3">
-          <Sidebar
-            section={sidebarTitle} maxDepth={3} includeSectionInBreadcrumb isQuickstart
-            items={sidebarItems} url={this.props.currentRoute.url}
-          />
-        </div>
-      );
+      tutorial = <Tutorial quickstart={quickstart} platform={platform} article={article} />;
     }
 
     return (
       <div className="docs-quickstart">
         <div id="tutorial-template" className="docs-single animated fadeIn">
-          {isFramedMode ? undefined : <NavigationBar currentSection="quickstarts" />}
+          {this.renderNavigationBar()}
           <StickyContainer>
             <div className="js-doc-template container" style={{ marginBottom: '40px' }}>
               <div className="row">
-                {sidebar}
+                {this.renderSidebar()}
                 <div className={`col-sm-${columnWidth}`}>
                   <div className="navigation" style={{ marginTop: '40px' }}>
                     <Breadcrumbs {...this.props} />
                   </div>
                   <section className="docs-content">
-                    {isFramedMode ? undefined : <IntroBanner />}
+                    {this.renderIntroBanner()}
                     <article data-swiftype-index="true">
                       <h1 className="tutorial-title">{this.renderTitle()}</h1>
                       <div data-swiftype-name="body" data-swiftype-type="text">{tutorial}</div>
-                      {nextSteps}
+                      {this.renderFeedback()}
+                      {this.renderFooter()}
                     </article>
                   </section>
-                  {isFramedMode ? undefined : tryBanner}
+                  {this.renderTryBanner()}
                 </div>
               </div>
             </div>

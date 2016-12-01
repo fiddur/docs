@@ -1,6 +1,5 @@
 import React from 'react';
-import navigateAction from '../../action/navigateTutorial';
-import loadArticleAction from '../../action/loadTutorialNavArticle';
+import navigateToQuickstart from '../../action/navigateToQuickstart';
 
 class Platform extends React.Component {
 
@@ -21,13 +20,12 @@ class Platform extends React.Component {
   }
 
   handleClick() {
-    const { quickstart, platform, isFramedMode } = this.props;
+    const { quickstart, platform } = this.props;
     const payload = {
       quickstartId: quickstart.name,
       platformId: platform.name,
-      isFramedMode
     };
-    this.context.executeAction(navigateAction, payload);
+    this.context.executeAction(navigateToQuickstart, payload);
   }
 
   render() {
@@ -51,7 +49,6 @@ class Platform extends React.Component {
 Platform.propTypes = {
   quickstart: React.PropTypes.object,
   platform: React.PropTypes.object,
-  isFramedMode: React.PropTypes.bool.isRequired,
   delay: React.PropTypes.number
 };
 

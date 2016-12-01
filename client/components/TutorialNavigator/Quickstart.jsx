@@ -1,5 +1,5 @@
 import React from 'react';
-import navigateAction from '../../action/navigateTutorial';
+import navigateToQuickstart from '../../action/navigateToQuickstart';
 
 class Quickstart extends React.Component {
 
@@ -9,8 +9,7 @@ class Quickstart extends React.Component {
   }
 
   handleClick(quickstart) {
-    this.context.executeAction(navigateAction, {
-      isFramedMode: this.props.isFramedMode,
+    this.context.executeAction(navigateToQuickstart, {
       quickstartId: this.props.quickstart.name
     });
   }
@@ -33,8 +32,7 @@ class Quickstart extends React.Component {
 }
 
 Quickstart.propTypes = {
-  quickstart: React.PropTypes.object,
-  isFramedMode: React.PropTypes.bool.isRequired
+  quickstart: React.PropTypes.object
 };
 
 Quickstart.contextTypes = {

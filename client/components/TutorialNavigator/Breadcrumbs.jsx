@@ -1,7 +1,7 @@
 import React from 'react';
 import _ from 'lodash';
 import { connectToStores } from 'fluxible-addons-react';
-import navigateAction from '../../action/navigateTutorial';
+import navigateToQuickstart from '../../action/navigateToQuickstart';
 import ApplicationStore from '../../stores/ApplicationStore';
 import TutorialStore from '../../stores/TutorialStore';
 
@@ -16,24 +16,24 @@ class Breadcrumbs extends React.Component {
   }
 
   handleClickHome() {
-    this.context.executeAction(navigateAction, {});
+    this.context.executeAction(navigateToQuickstart, {});
   }
 
   handleClickQuickstart() {
-    this.context.executeAction(navigateAction, {
+    this.context.executeAction(navigateToQuickstart, {
       quickstartId: this.props.quickstart.name
     });
   }
 
   handleClickPlatform() {
-    this.context.executeAction(navigateAction, {
+    this.context.executeAction(navigateToQuickstart, {
       quickstartId: this.props.quickstart.name,
       platformId: this.props.platform.name
     });
   }
 
   hanldeClickArticle() {
-    this.context.executeAction(navigateAction, {
+    this.context.executeAction(navigateToQuickstart, {
       quickstartId: this.props.quickstart.name,
       platformId: this.props.platform.name,
       articleId: this.props.article.name
@@ -41,73 +41,37 @@ class Breadcrumbs extends React.Component {
   }
 
   render() {
-    const crumbs = [];
     const { quickstart, platform, article, isFramedMode, isSingleQuickstartMode } = this.props;
-    let index = 1;
 
     if (!quickstart) {
       return <div />;
     }
 
-    // Don't display the top-level Documentation link if we're in single app type mode.
-    if (isSingleQuickstartMode) {
+    const crumbs = [];
+    const addBreadcrumb = (text, onClick) => {
       crumbs.push(
-        <li itemProp="itemListElement" itemScope itemType="http://schema.org/ListItem" key={index}>
-          <a itemProp="item" key="quickstart" onClick={this.handleClickQuickstart}>
-            <span className="text" itemProp="name">{quickstart.title}</span>
-            <meta itemProp="position" content={index} />
+        <li itemProp="itemListElement" itemScope itemType="http://schema.org/ListItem" key={crumbs.length + 1}>
+          <a itemProp="item" onClick={onClick}>
+            <span className="text" itemProp="name">{text}</span>
+            <meta itemProp="position" content={crumbs.length + 1} />
           </a>
         </li>
       );
-      index++;
-    } else {
-      crumbs.push(
-        <li itemProp="itemListElement" itemScope itemType="http://schema.org/ListItem" key={index}>
-          <a itemProp="item" key="base" onClick={this.handleClickHome}>
-            <span className="text" itemProp="name">Quickstarts</span>
-            <meta itemProp="position" content={index} />
-          </a>
-        </li>
-      );
-      index++;
-      crumbs.push(
-        <li itemProp="itemListElement" itemScope itemType="http://schema.org/ListItem" key={index}>
-          <a itemProp="item" key="quickstart" onClick={this.handleClickQuickstart}>
-            <span className="text" itemProp="name">{quickstart.title}</span>
-            <meta itemProp="position" content={index} />
-          </a>
-        </li>
-      );
-      index++;
+    };
+
+    // Add a link to the homepage as long as we aren't restricted to a single app type.
+    if (!isSingleQuickstartMode) {
+      addBreadcrumb('Quickstarts', this.handleClickHome);
     }
 
+    addBreadcrumb(quickstart.title, this.handleClickQuickstart);
+
     if (platform) {
-      crumbs.push(
-        <li itemProp="itemListElement" itemScope itemType="http://schema.org/ListItem" key={index}>
-          <a
-            itemProp="item" key="platform"
-            onClick={this.handleClickPlatform}
-          >
-            <span className="text" itemProp="name">{platform.title}</span>
-            <meta itemProp="position" content={index} />
-          </a>
-        </li>
-      );
-      index++;
-      if (!isSingleQuickstartMode && article && platform.articles.length > 1) {
-        crumbs.push(
-          <li itemProp="itemListElement" itemScope itemType="http://schema.org/ListItem" key={index}>
-            <a
-              itemProp="item"
-              key="article"
-              onClick={this.handleClickArticle}
-            >
-              <span className="text" itemProp="name">{article.title}</span>
-              <meta itemProp="position" content={index} />
-            </a>
-          </li>
-        );
-        index++;
+      addBreadcrumb(platform.title, this.handleClickQuickstart);
+      // Only add a link to the article if there are multiple articles for the platform,
+      // and we aren't running in framed mode (which restricts us to a single article).
+      if (article && platform.articles.length > 1 && !isFramedMode) {
+        addBreadcrumb(article.title, this.handleClickArticle);
       }
     }
 

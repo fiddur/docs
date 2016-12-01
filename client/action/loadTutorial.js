@@ -2,7 +2,6 @@ import ApplicationStore from '../stores/ApplicationStore';
 import TutorialStore from '../stores/TutorialStore';
 
 export default function loadArticleAction(context, payload, done) {
-
   const articleService = context.getService('ArticleService');
 
   const isFramedMode = context.getStore(ApplicationStore).isFramedMode();
@@ -14,8 +13,7 @@ export default function loadArticleAction(context, payload, done) {
     const platform = quickstarts[quickstartId].platforms[platformId];
     if (isFramedMode && platform.defaultArticle) {
       articleId = platform.defaultArticle.name;
-    }
-    else {
+    } else {
       articleId = platform.articles[0].name;
     }
   }

@@ -167,13 +167,12 @@ ArticlePage.propTypes = {
   url: PropTypes.string
 };
 
-ArticlePage = connectToStores(ArticlePage, [ContentStore], (context, props) => {
-
-  const { url } = props.currentRoute;
+ArticlePage = connectToStores(ArticlePage, [ApplicationStore, ContentStore, NavigationStore], (context, props) => {
   const appStore = context.getStore(ApplicationStore);
   const contentStore = context.getStore(ContentStore);
   const navigationStore = context.getStore(NavigationStore);
 
+  const { url } = props.currentRoute;
   const content = contentStore.getContent(url);
 
   let sidebarArticles = [];

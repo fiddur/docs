@@ -1,4 +1,4 @@
-import {BaseStore} from 'fluxible/addons';
+import { BaseStore } from 'fluxible/addons';
 import _ from 'lodash';
 
 class TutorialStore extends BaseStore {
@@ -9,54 +9,33 @@ class TutorialStore extends BaseStore {
     this.currentQuickstartId = undefined;
     this.currentPlatformId = undefined;
     this.currentArticleId = undefined;
-    this.restricted = false;
-    this.singleArticleMode = false;
+    this.isFramedMode = false;
   }
 
   getQuickstarts() {
     return this.quickstarts;
   }
 
-  getRestricted() {
-    return this.restricted;
-  }
-
-  getSingleArticleMode() {
-    return this.singleArticleMode;
-  }
-
   getCurrentQuickstart() {
-    if (this.currentQuickstartId) {
-      return this.quickstarts[this.currentQuickstartId];
-    }
-    else {
-      return undefined;
-    }
+    if (!this.currentQuickstartId) return undefined;
+    return this.quickstarts[this.currentQuickstartId];
   }
 
   getCurrentPlatform() {
-    let quickstart = this.getCurrentQuickstart();
-    if (quickstart && this.currentPlatformId) {
-      return quickstart.platforms[this.currentPlatformId];
-    }
-    else {
-      return undefined;
-    }
+    const quickstart = this.getCurrentQuickstart();
+    if (!quickstart || !this.currentPlatformId) return undefined;
+    return quickstart.platforms[this.currentPlatformId];
   }
 
   getCurrentArticle() {
-    let platform = this.getCurrentPlatform();
-    if (platform) {
-      if (this.singleArticleMode && platform.defaultArticle) {
-        return platform.defaultArticle;
-      }
-      else if (this.currentArticleId) {
-        return _.find(platform.articles, {name: this.currentArticleId});
-      }
-      else {
-        return _.first(platform.articles);
-      }
+    const platform = this.getCurrentPlatform();
+    if (!platform) return undefined;
+    if (this.isFramedMode && platform.defaultArticle) {
+      return platform.defaultArticle;
+    } else if (this.currentArticleId) {
+      return _.find(platform.articles, { name: this.currentArticleId });
     }
+    return _.first(platform.articles);
   }
 
   handleTutorialNavigatorLoaded(payload) {
@@ -77,9 +56,8 @@ class TutorialStore extends BaseStore {
     this.emitChange();
   }
 
-  handleSettingsLoaded(payload) {
-    this.restricted = payload.restricted;
-    this.singleArticleMode = payload.singleArticleMode;
+  handleModeFlagsLoaded(payload) {
+    this.isFramedMode = payload.flags.framed;
     this.emitChange();
   }
 
@@ -89,9 +67,8 @@ class TutorialStore extends BaseStore {
       currentQuickstartId: this.currentQuickstartId,
       currentPlatformId: this.currentPlatformId,
       currentArticleId: this.currentArticleId,
-      restricted: this.restricted,
-      singleArticleMode: this.singleArticleMode
-    }
+      isFramedMode: this.isFramedMode
+    };
   }
 
   rehydrate(state) {
@@ -99,8 +76,7 @@ class TutorialStore extends BaseStore {
     this.currentQuickstartId = state.currentQuickstartId;
     this.currentPlatformId = state.currentPlatformId;
     this.currentArticleId = state.currentArticleId;
-    this.restricted = state.restricted;
-    this.singleArticleMode = state.singleArticleMode;
+    this.isFramedMode = state.isFramedMode;
   }
 
 }
@@ -110,7 +86,7 @@ TutorialStore.handlers = {
   ARTICLE_LOADED: 'handleArticleSelected',
   LOAD_TUTORIAL_NAVIGATOR: 'handleTutorialNavigatorLoaded',
   QUICKSTARTS_LOAD_SUCCESS: 'handleQuickstartsLoaded',
-  LOAD_SETTINGS: 'handleSettingsLoaded'
+  MODE_FLAGS_LOADED: 'handleModeFlagsLoaded'
 };
 
 export default TutorialStore;

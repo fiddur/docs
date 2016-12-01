@@ -7,16 +7,17 @@ const DEFAULT_ARTICLE_BUDICON = 691;
 class TutorialNextSteps extends React.Component {
 
   render() {
+    const { quickstart, platform } = this.props;
 
-    let {quickstart, platform} = this.props;
+    if (!quickstart || !platform) return <div />;
 
-    let items = platform.articles.map((article, index) => {
-      let icon = article.budicon ? article.budicon : DEFAULT_ARTICLE_BUDICON;
-      let href = ['docs', 'quickstart', quickstart.name, platform.name, article.name].join('/');
+    const items = platform.articles.map((article, index) => {
+      const icon = article.budicon ? article.budicon : DEFAULT_ARTICLE_BUDICON;
+      const href = ['docs', 'quickstart', quickstart.name, platform.name, article.name].join('/');
       return (
         <li key={index} className="tutorial-next-steps-article">
-          <a href={href} target="_blank">
-            <i className={"icon icon-budicon-" + icon } />
+          <a href={href} target="_blank" rel="noopener noreferrer">
+            <i className={`icon icon-budicon-${icon}`} />
             {article.title}
           </a>
         </li>
@@ -32,7 +33,6 @@ class TutorialNextSteps extends React.Component {
         </ul>
       </div>
     );
-
   }
 
 }

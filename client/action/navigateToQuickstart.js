@@ -2,7 +2,7 @@ import { navigateAction } from 'fluxible-router';
 import { format } from 'url';
 import ApplicationStore from '../stores/ApplicationStore';
 
-export default function navigateTutorial(context, payload, done) {
+export default function navigateToQuickstart(context, payload, done) {
 
   const { quickstartId, platformId, articleId } = payload;
   const tokens = ['/docs'];

@@ -1,5 +1,5 @@
 
-const API = {}
+const API = {};
 
 API.get = (url) => {
   const headers = new Headers({

@@ -1,21 +1,20 @@
 import React from 'react';
 import _ from 'lodash';
-import loadArticleAction from '../../action/loadTutorialNavArticle';
-import navigateAction from '../../action/navigateTutorial';
+import loadTutorial from '../../action/loadTutorial';
+import navigateToQuickstart from '../../action/navigateToQuickstart';
 
 class TutorialPrevNext extends React.Component {
 
   handleClick(article) {
-    const { quickstart, platform, isFramedMode } = this.props;
+    const { quickstart, platform } = this.props;
     const payload = {
       quickstartId: quickstart.name,
       platformId: platform.name,
-      articleId: article.name,
-      isFramedMode
+      articleId: article.name
     };
     Promise.all([
-      this.context.executeAction(loadArticleAction, payload),
-      this.context.executeAction(navigateAction, payload)
+      this.context.executeAction(loadTutorial, payload),
+      this.context.executeAction(navigateToQuickstart, payload)
     ]);
   }
 
@@ -63,8 +62,7 @@ class TutorialPrevNext extends React.Component {
 TutorialPrevNext.propTypes = {
   quickstart: React.PropTypes.object,
   platform: React.PropTypes.object,
-  currentArticle: React.PropTypes.object,
-  isFramedMode: React.PropTypes.bool.isRequired
+  currentArticle: React.PropTypes.object
 };
 
 TutorialPrevNext.contextTypes = {

@@ -1,31 +1,34 @@
 import React from 'react';
 import _ from 'lodash';
-import loadArticleAction from '../../action/loadTutorialNavArticle';
-import navigateAction from '../../action/navigateTutorial';
+import loadTutorial from '../../action/loadTutorial';
+import navigateToQuickstart from '../../action/navigateToQuickstart';
 
 class TutorialTableOfContents extends React.Component {
 
   handleClick(article, isFirst) {
-    let {quickstart, platform } = this.props;
-    let payload = {
+    const { quickstart, platform } = this.props;
+    const payload = {
       quickstartId: quickstart.name,
       platformId: platform.name
     };
     if (!isFirst) {
       payload.articleId = article.name;
     }
-    this.context.executeAction(navigateAction, payload);
+    this.context.executeAction(navigateToQuickstart, payload);
   }
 
   render() {
-    let {platform, currentArticle} = this.props;
+    const { platform, currentArticle } = this.props;
 
-    let items = platform.articles.map((article, index) => {
-      let selected = (article.name == currentArticle.name) ? 'selected ' : '';
-      let isFirst = (index == 0);
-      return <li key={index} className={selected + "tutorial-toc-article"} onClick={this.handleClick.bind(this, article, isFirst)}>
-        {article.title}
-      </li>
+    const items = platform.articles.map((article, index) => {
+      const selected = (article.name === currentArticle.name) ? 'selected ' : '';
+      const isFirst = (index === 0);
+      const onClick = this.handleClick.bind(this, article, isFirst);
+      return (
+        <li key={index} className={`${selected} tutorial-toc-article`} onClick={onClick}>
+          {article.title}
+        </li>
+      );
     });
 
     return (
