@@ -14,6 +14,7 @@ import FeedbackFooter from './FeedbackFooter';
 import TutorialNextSteps from './TutorialNavigator/TutorialNextSteps';
 import initSampleBox from '../browser/sampleBox';
 import ApplicationStore from '../stores/ApplicationStore';
+import UserStore from '../stores/UserStore';
 
 class TutorialPage extends React.Component {
 
@@ -171,14 +172,15 @@ TutorialPage.contextTypes = {
 };
 
 TutorialPage = connectToStores(TutorialPage, [TutorialStore, ApplicationStore], (context, props) => {
-  const tutorialStore = context.getStore(TutorialStore);
   const appStore = context.getStore(ApplicationStore);
+  const tutorialStore = context.getStore(TutorialStore);
+  const userStore = context.getStore(UserStore);
   return {
     quickstart: tutorialStore.getCurrentQuickstart(),
     platform: tutorialStore.getCurrentPlatform(),
     article: tutorialStore.getCurrentArticle(),
-    user: appStore.getUser(),
-    isFramedMode: props.env.FRAMED_MODE
+    isFramedMode: appStore.isFramedMode(),
+    isAuthenticated: userStore.isAuthenticated()
   };
 });
 

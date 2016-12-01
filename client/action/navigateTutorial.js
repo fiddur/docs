@@ -1,9 +1,11 @@
 import { navigateAction } from 'fluxible-router';
+import { format } from 'url';
+import ApplicationStore from '../stores/ApplicationStore';
 
 export default function navigateTutorial(context, payload, done) {
 
-  let {quickstartId, platformId, articleId} = payload;
-  let tokens = ['/docs'];
+  const { quickstartId, platformId, articleId } = payload;
+  const tokens = ['/docs'];
 
   if (quickstartId) {
     tokens.push('quickstart');
@@ -15,10 +17,12 @@ export default function navigateTutorial(context, payload, done) {
   if (platformId) tokens.push(platformId);
   if (articleId) tokens.push(articleId);
 
-  let url = tokens.join('/');
-  if (payload.isFramedMode) {
-    url += '?framed=1';
-  }
-  return navigateAction(context, { url }, done);
+  const appStore = context.getStore(ApplicationStore);
 
+  const query = {};
+  if (appStore.isFramedMode()) query.framed = 1;
+  if (appStore.isSingleQuickstartMode()) query.sq = 1;
+
+  const url = format({ pathname: tokens.join('/'), query });
+  return navigateAction(context, { url }, done);
 }

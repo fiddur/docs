@@ -10,6 +10,7 @@ import StaticContentStore from './stores/StaticContentStore';
 import NavigationStore from './stores/NavigationStore';
 import RouteStore from './stores/RouteStore';
 import SearchStore from './stores/SearchStore';
+import UserStore from './stores/UserStore';
 import metricsPlugin from './plugins/metricsPlugin';
 
 // create new fluxible instance
@@ -31,5 +32,6 @@ app.registerStore(ArticleStore);
 app.registerStore(NavigationStore);
 app.registerStore(SearchStore);
 app.registerStore(StaticContentStore);
+app.registerStore(UserStore);
 
 module.exports = app;

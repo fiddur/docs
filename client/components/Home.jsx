@@ -3,6 +3,7 @@ import { connectToStores } from 'fluxible-addons-react';
 import TutorialNavigator from './TutorialNavigator/TutorialNavigator';
 import TutorialStore from '../stores/TutorialStore';
 import NavigationStore from '../stores/NavigationStore';
+import UserStore from '../stores/UserStore';
 import CategoryCard from './CategoryCard';
 import TryBanner from './TryBanner';
 import SearchBox from './SearchBox';
@@ -10,17 +11,14 @@ import Spinner from './Spinner';
 
 class Home extends React.Component {
 
-  renderTutorialNav() {
-    if (!this.props.quickstarts) {
-      return <Spinner />;
-    }
-
-    return <TutorialNavigator {...this.props} />;
-  }
-
   render() {
-    const { cards, isAuthenticated } = this.props;
+    const { cards, quickstarts, isAuthenticated } = this.props;
     const tryBanner = isAuthenticated ? null : <TryBanner />;
+
+    let tutorialNav = <Spinner />;
+    if (quickstarts) {
+      tutorialNav = <TutorialNavigator {...this.props} />;
+    }
 
     let cardElements;
     if (cards) {
@@ -36,7 +34,7 @@ class Home extends React.Component {
             <h1>Documentation</h1>
           </div>
         </div>
-        {this.renderTutorialNav()}
+        {tutorialNav}
         {tryBanner}
         <div className="category-cards container center-block">
           <h1>Curated content to fully understand our platform</h1>
@@ -50,7 +48,7 @@ class Home extends React.Component {
 }
 
 Home.propTypes = {
-  isAuthenticated: React.PropTypes.bool,
+  isAuthenticated: React.PropTypes.bool.isRequired,
   quickstarts: React.PropTypes.object,
   cards: React.PropTypes.array
 };
@@ -60,6 +58,7 @@ Home.contextTypes = {
 };
 
 Home = connectToStores(Home, [NavigationStore, TutorialStore], (context, props) => ({
+  isAuthenticated: context.getStore(UserStore).isAuthenticated(),
   quickstarts: context.getStore(TutorialStore).getQuickstarts(),
   cards: context.getStore(NavigationStore).getCards()
 }));

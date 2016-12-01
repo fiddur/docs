@@ -2,6 +2,7 @@ import React from 'react';
 import { connectToStores, provideContext } from 'fluxible-addons-react';
 import { handleHistory } from 'fluxible-router';
 import ApplicationStore from '../stores/ApplicationStore';
+import UserStore from '../stores/UserStore';
 import ContentStore from '../stores/ContentStore';
 import ErrorPage from './ErrorPage';
 import highlightCode from '../browser/highlightCode';
@@ -50,17 +51,28 @@ class Application extends React.Component {
 
 
   render() {
-    const { currentRoute, user } = this.props;
-    const fullWidth = !!this.props.env.fullWidth;
+    const { currentRoute, user, isFramedMode, isFullWidthMode } = this.props;
 
     // Temporary fix for: https://github.com/yahoo/fluxible-router/issues/108
     if (!currentRoute && typeof document !== 'undefined') {
       document.location = document.location;
     }
 
+    let header;
+    if (!isFramedMode) {
+      header = (
+        <Header
+          theme="gray"
+          user={user}
+          currentRoute={currentRoute}
+          fullWidth={isFullWidthMode}
+        />
+      );
+    }
+
     return (
       <div>
-        <Header theme= "gray" user={user} currentRoute={currentRoute} fullWidth={fullWidth} />
+        {header}
         {this.getHandler()}
       </div>
     );
@@ -68,8 +80,19 @@ class Application extends React.Component {
 
 }
 
+Application.propTypes = {
+  content: React.PropTypes.object,
+  currentRoute: React.PropTypes.object.isRequired,
+  isAuthenticated: React.PropTypes.bool.isRequired,
+  isFramedMode: React.PropTypes.bool.isRequired,
+  isFullWidthMode: React.PropTypes.bool.isRequired,
+  pageTitle: React.PropTypes.string.isRequired,
+  user: React.PropTypes.object
+};
+
 Application = connectToStores(Application, [ApplicationStore], (context, props) => {
   const appStore = context.getStore(ApplicationStore);
+  const userStore = context.getStore(UserStore);
 
   let content;
   if (props.currentRoute) {
@@ -77,11 +100,13 @@ Application = connectToStores(Application, [ApplicationStore], (context, props) 
   }
 
   return {
-    env: appStore.getEnvironmentVars(),
-    user: appStore.getUser(),
-    pageTitle: appStore.getPageTitle(),
+    content,
     currentRoute: props.currentRoute,
-    content
+    isAuthenticated: userStore.isAuthenticated(),
+    isFramedMode: appStore.isFramedMode(),
+    isFullWidthMode: appStore.isFullWidthMode(),
+    pageTitle: appStore.getPageTitle(),
+    user: userStore.getUser()
   };
 });
 

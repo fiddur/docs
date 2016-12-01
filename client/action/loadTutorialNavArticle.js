@@ -1,18 +1,18 @@
+import ApplicationStore from '../stores/ApplicationStore';
 import TutorialStore from '../stores/TutorialStore';
 
 export default function loadArticleAction(context, payload, done) {
 
-  let articleService = context.getService('ArticleService');
+  const articleService = context.getService('ArticleService');
 
-  let store = context.getStore(TutorialStore);
-  let quickstarts = store.getQuickstarts();
-  let isSingleArticleMode = store.getSingleArticleMode();
+  const isFramedMode = context.getStore(ApplicationStore).isFramedMode();
+  const quickstarts = context.getStore(TutorialStore).getQuickstarts();
 
-  let {quickstartId, platformId, articleId, clientId} = payload;
+  let { quickstartId, platformId, articleId, clientId } = payload;
 
   if (quickstartId && platformId && !articleId) {
-    let platform = quickstarts[quickstartId].platforms[platformId];
-    if (isSingleArticleMode && platform.defaultArticle) {
+    const platform = quickstarts[quickstartId].platforms[platformId];
+    if (isFramedMode && platform.defaultArticle) {
       articleId = platform.defaultArticle.name;
     }
     else {
@@ -20,9 +20,9 @@ export default function loadArticleAction(context, payload, done) {
     }
   }
 
-  return articleService.loadArticle(quickstarts, {quickstartId, platformId, articleId, clientId})
+  return articleService.loadArticle(quickstarts, { quickstartId, platformId, articleId, clientId })
   .then(html => {
-    context.dispatch('ARTICLE_LOAD_SUCCESS', {html, quickstartId, platformId, articleId});
+    context.dispatch('ARTICLE_LOAD_SUCCESS', { html, quickstartId, platformId, articleId });
     if (done) done();
   }).catch(err => {
     context.dispatch('ARTICLE_LOAD_FAILURE', err);

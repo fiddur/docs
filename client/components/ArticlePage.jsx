@@ -169,10 +169,10 @@ ArticlePage.propTypes = {
 
 ArticlePage = connectToStores(ArticlePage, [ContentStore], (context, props) => {
 
-  let { url } = props.currentRoute;
-  let appStore = context.getStore(ApplicationStore);
-  let contentStore = context.getStore(ContentStore);
-  let navigationStore = context.getStore(NavigationStore);
+  const { url } = props.currentRoute;
+  const appStore = context.getStore(ApplicationStore);
+  const contentStore = context.getStore(ContentStore);
+  const navigationStore = context.getStore(NavigationStore);
 
   const content = contentStore.getContent(url);
 
@@ -183,7 +183,6 @@ ArticlePage = connectToStores(ArticlePage, [ContentStore], (context, props) => {
 
   return {
     url,
-    env: appStore.getEnvironmentVars(),
     content,
     sidebarArticles
   };
