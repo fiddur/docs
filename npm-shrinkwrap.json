@@ -375,6 +375,7 @@
     },
     "auth0-mongodb-config": {
       "version": "0.2.0",
+      "from": "auth0-mongodb-config@git+https://github.com/auth0/auth0-mongodb-config.git#6d649defc6f65ef87f5b0f42a9709f55aa4bf6a2",
       "resolved": "git+https://github.com/auth0/auth0-mongodb-config.git#6d649defc6f65ef87f5b0f42a9709f55aa4bf6a2",
       "dependencies": {
         "mongo-heartbeat": {
@@ -576,13 +577,7 @@
     },
     "auth0-web-header": {
       "version": "1.4.0",
-      "resolved": "https://registry.npmjs.org/auth0-web-header/-/auth0-web-header-1.4.0.tgz",
-      "dependencies": {
-        "classnames": {
-          "version": "2.2.5",
-          "resolved": "https://registry.npmjs.org/classnames/-/classnames-2.2.5.tgz"
-        }
-      }
+      "resolved": "https://registry.npmjs.org/auth0-web-header/-/auth0-web-header-1.4.0.tgz"
     },
     "axios": {
       "version": "0.15.3",
@@ -3292,6 +3287,10 @@
     "react-dom": {
       "version": "15.3.2",
       "resolved": "https://registry.npmjs.org/react-dom/-/react-dom-15.3.2.tgz"
+    },
+    "react-sticky": {
+      "version": "5.0.5",
+      "resolved": "https://registry.npmjs.org/react-sticky/-/react-sticky-5.0.5.tgz"
     },
     "request": {
       "version": "2.75.0",
