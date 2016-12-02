@@ -6,15 +6,11 @@
       position relative
       z-index 20
 
-  .sticky > .sticky-nav
-    +breakpoint("desktop")
-      max-height: 100vh;
-
   .sticky-nav
 
     // Make sidebar scrollable
     +breakpoint("desktop")
-      max-height: calc(100vh - 114px); //Full height minus navbar height
+      max-height: 100vh; //Full height minus navbar height
       overflow-y: scroll;
 
     &.fixed
