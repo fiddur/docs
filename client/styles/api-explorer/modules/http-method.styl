@@ -1,0 +1,31 @@
+.http-method-box
+  margin-bottom: 24px;
+
+  .http-method
+    border-radius: 20px;
+    color: #fff;
+    text-transform: uppercase;
+    padding: 2px 10px;
+    font-weight: $font-weight-bold;
+    font-size: 11px;
+    vertical-align: middle;
+
+    &.get
+      background-color: $color-blue-light;
+
+    &.post
+      background-color: $color-green;
+
+    &.delete
+      background-color: red;
+
+    &.patch
+      background-color: $color-orange;
+  
+  .path
+    font-size: 16px;
+    color: $gray-darker;
+    padding: 4px;
+    margin-left: 6px;
+    font-weight: $font-weight-normal;
+    vertical-align: middle;
