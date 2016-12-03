@@ -23,6 +23,7 @@ nconf.file('global', { file: config_file })
     COOKIE_NAME: 'auth0l',
     CURRENT_TENANT_COOKIE: 'current_tenant',
     DOMAIN_URL_SERVER: '{tenant}.auth0.com:3000',
+    GUARDIAN_DOMAIN_URL: '{tenant}.guardian.auth0.com',
     DOMAIN_URL_APP: 'localhost:8989',
     PACKAGER_URL: 'http://localhost:8792',
     DOMAIN_URL_DOCS: 'http://localhost:3000/docs',
