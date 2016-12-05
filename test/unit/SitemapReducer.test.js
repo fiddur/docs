@@ -1,4 +1,4 @@
-import { resolve } from 'path';
+import { extname, resolve } from 'path';
 import { expect } from 'chai';
 import urljoin from 'url-join';
 import { parseString as parseXmlString } from 'xml2js';
@@ -8,7 +8,7 @@ import { getTestDocument, getTestFile } from '../util';
 
 describe('SitemapReducer', () => {
 
-  const baseUrl = 'https://tests.local/';
+  const baseUrl = 'https://tests.local/docs';
 
   const articlesDir = resolve(__dirname, '../docs/articles');
   const appTypes = [
@@ -16,22 +16,25 @@ describe('SitemapReducer', () => {
   ];
 
   const docs = [
-    getTestDocument(getTestFile('articles/connections/database/mysql.md'), { sitemap: true, url: '/connections/database/mysql' }),
-    getTestDocument(getTestFile('articles/connections/social/facebook.md'), { sitemap: true, url: '/connections/social/facebook' }),
-    getTestDocument(getTestFile('articles/example-quickstarts/platform-a/01-example.md'), { sitemap: true, url: '/example-quickstarts/platform-a/01-example' }),
-    getTestDocument(getTestFile('articles/example-quickstarts/platform-b/00-intro.md'), { sitemap: true, url: '/example-quickstarts/platform-b/00-intro' })
-  ];
+    'articles/connections/database/mysql.md',
+    'articles/connections/social/facebook.md',
+    'articles/example-quickstarts/platform-a/01-example.md',
+    'articles/example-quickstarts/platform-b/00-intro.md'
+  ].map(path => getTestDocument(getTestFile(path), {
+    sitemap: true,
+    url: urljoin(baseUrl, path.replace(/^articles/, '').replace(extname(path), ''))
+  }));
 
   const expectedUrls = [
-    '/docs',
-    '/docs/quickstart/example',
-    '/docs/quickstart/example/platform-a',
-    '/docs/quickstart/example/platform-a/01-example',
-    '/docs/quickstart/example/platform-b',
-    '/docs/quickstart/example/platform-b/00-intro',
-    '/docs/connections/database/mysql',
-    '/docs/connections/social/facebook'
-  ];
+    '',
+    '/quickstart/example',
+    '/quickstart/example/platform-a',
+    '/quickstart/example/platform-a/01-example',
+    '/quickstart/example/platform-b',
+    '/quickstart/example/platform-b/00-intro',
+    '/connections/database/mysql',
+    '/connections/social/facebook'
+  ].map(url => urljoin(baseUrl, url));
 
   describe('when the constructor is called', () => {
     describe('without an appTypes option', () => {
@@ -84,8 +87,7 @@ describe('SitemapReducer', () => {
         data.urlset.url.forEach(item => {
           expect(item.loc).to.be.an('array');
           expect(item.loc).to.have.length(1);
-          const url = item.loc[0].replace(baseUrl, '/');
-          expect(url).to.be.oneOf(expectedUrls);
+          expect(item.loc[0]).to.be.oneOf(expectedUrls);
         });
         done();
       });

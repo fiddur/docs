@@ -23,6 +23,7 @@ script.
         clientId:       '#{globalClientID}',
         clientSecret:   '#{globalClientSecret}',
         docsDomain:     '#{env.DOMAIN_URL_DOCS}',
+        appDomain:      '#{env.DOMAIN_URL_APP}',
         user:           !{JSON.stringify(user)},
         readOnly:       #{readOnly},
         anchors:        true

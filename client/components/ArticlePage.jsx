@@ -1,8 +1,9 @@
-import React from 'react';
+import React, { PropTypes } from 'react';
 import ReactDOM from 'react-dom';
 import { navigateAction } from 'fluxible-router';
 import { connectToStores } from 'fluxible-addons-react';
 import { StickyContainer, Sticky } from 'react-sticky';
+import { get } from 'lodash';
 import ApplicationStore from '../stores/ApplicationStore';
 import NavigationStore from '../stores/NavigationStore';
 import ContentStore from '../stores/ContentStore';
@@ -19,6 +20,7 @@ class ArticlePage extends React.Component {
   constructor() {
     super();
 
+    this.tocUrlChange = false;
     this.initTOC = this.initTOC.bind(this);
   }
 
@@ -28,10 +30,7 @@ class ArticlePage extends React.Component {
     setAnchorLinks();
     initSampleBox();
 
-    if (!this.props.content ||
-        !this.props.content.meta ||
-        !this.props.content.meta.toc) return;
-    this.initTOC();
+    if (get(this.props, 'content.meta.toc')) this.initTOC();
   }
 
   componentDidUpdate(prevProps) {
@@ -40,6 +39,13 @@ class ArticlePage extends React.Component {
     // this.scrollToAnchor();
     setAnchorLinks();
     initSampleBox();
+
+    // Initialize TOC again if url changes
+    if (this.props.url !== prevProps.url) this.tocUrlChange = true;
+    if (get(this.props, 'content.meta.toc') && this.tocUrlChange) {
+      this.initTOC();
+      this.tocUrlChange = false;
+    }
   }
 
   /*
@@ -156,6 +162,10 @@ class ArticlePage extends React.Component {
     );
   }
 }
+
+ArticlePage.propTypes = {
+  url: PropTypes.string
+};
 
 ArticlePage = connectToStores(ArticlePage, [ContentStore], (context, props) => {
 
