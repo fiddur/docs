@@ -142,13 +142,11 @@ class TutorialPage extends React.Component {
         <div id="tutorial-template" className="docs-single animated fadeIn">
           {this.renderNavigationBar()}
           <StickyContainer>
-            <div className="js-doc-template container" style={{ marginBottom: '40px' }}>
+            <div className="js-doc-template tutorial-page container">
               <div className="row">
                 {this.renderSidebar()}
                 <div className={`col-sm-${columnWidth}`}>
-                  <div className="navigation" style={{ marginTop: '40px' }}>
-                    <Breadcrumbs {...this.props} />
-                  </div>
+                  <Breadcrumbs {...this.props} />
                   <section className="docs-content">
                     {this.renderIntroBanner()}
                     <article data-swiftype-index="true">

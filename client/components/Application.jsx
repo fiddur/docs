@@ -7,11 +7,14 @@ import ContentStore from '../stores/ContentStore';
 import ErrorPage from './ErrorPage';
 import highlightCode from '../browser/highlightCode';
 import Header from './Header';
+import sendMessageToParentFrame from '../util/sendMessageToParentFrame';
 
 class Application extends React.Component {
 
   componentDidMount() {
-    this.initClientScripts();
+    if (this.props.isFramedMode) {
+      sendMessageToParentFrame({ type: 'ready' });
+    }
   }
 
   componentDidUpdate(prevProps, prevState) {
@@ -21,6 +24,9 @@ class Application extends React.Component {
     }
     if (newProps.currentRoute.url !== prevProps.currentRoute.url) {
       this.props.context.trackPage();
+    }
+    if (newProps.isFramedMode) {
+      sendMessageToParentFrame({ type: 'contentChanged' });
     }
     this.initClientScripts();
   }
@@ -70,8 +76,11 @@ class Application extends React.Component {
       );
     }
 
+    const styles = ['docs-application'];
+    if (isFramedMode) styles.push('framed-mode');
+
     return (
-      <div>
+      <div className={styles.join(' ')}>
         {header}
         {this.getHandler()}
       </div>

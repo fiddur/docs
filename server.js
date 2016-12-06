@@ -106,11 +106,22 @@ server.use(session({
 
 // security headers
 server.use(cors);
-server.use(helmet.frameguard({ action: 'deny' }));
 server.use(helmet.hsts({ maxAge: 31536000000 }));
 server.use(helmet.xssFilter());
 server.use(helmet.noSniff());
 server.use(helmet.hidePoweredBy());
+
+// Only the quickstarts can be embedded in an iframe. We can't use helmet's frameguard
+// middleware because it doesn't support exceptions on certain URLs.
+// TODO: It would be nice if we could use the ALLOW FROM directive with the management
+// site's URL, but it isn't supported in most browsers. Eventually we should consider
+// setting a Content-Security-Policy header instead.
+server.use((req, res, next) => {
+  if (!req.originalUrl.startsWith('/docs/quickstart')) {
+    res.setHeader('X-Frame-Options', 'DENY');
+  }
+  next();
+});
 
 server.use(methodOverride());
 
