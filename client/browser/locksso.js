@@ -19,8 +19,10 @@ var options = {
   socialButtonStyle: 'big',
   languageDictionary: {
     signUpTerms: 'By signing up, you agree to our <a href="/terms" target="_new">terms of service</a> and <a href="/privacy" target="_new">privacy policy</a>'
-  }
+  },
+  configurationBaseUrl: window.env.DOMAIN_URL_CDN,
 };
+
 var widget = window.widget = new Auth0Lock(window.env.AUTH0_CLIENT_ID, window.env.AUTH0_DOMAIN, options);
 
 widget.on('signup ready', function() {
