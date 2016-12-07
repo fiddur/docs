@@ -1,5 +1,9 @@
+import loadUser from '../action/loadUser';
+
 const updateUserData = (message) => {
-  window.user = message.user;
+  const { user } = message;
+  const context = window.context;
+  context.executeAction(loadUser, { user });
 };
 
 const parentOrigin = window.env.DOMAIN_URL_APP;

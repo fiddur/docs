@@ -3,7 +3,7 @@ import { connectToStores } from 'fluxible-addons-react';
 import Breadcrumbs from './Breadcrumbs';
 import QuickstartList from './QuickstartList';
 import PlatformList from './PlatformList';
-import TutorialStore from '../../stores/TutorialStore';
+import QuickstartStore from '../../stores/QuickstartStore';
 
 class TutorialNavigator extends React.Component {
 
@@ -53,8 +53,8 @@ TutorialNavigator.propTypes = {
   isFramedMode: React.PropTypes.bool.isRequired
 };
 
-TutorialNavigator = connectToStores(TutorialNavigator, [TutorialStore], (context, props) => {
-  let store = context.getStore(TutorialStore);
+TutorialNavigator = connectToStores(TutorialNavigator, [QuickstartStore], (context, props) => {
+  let store = context.getStore(QuickstartStore);
   return {
     quickstarts: store.getQuickstarts(),
     quickstart: store.getCurrentQuickstart()

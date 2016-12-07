@@ -1,15 +1,14 @@
 import tutorialNavigatorActions from '../action/tutorialNavigatorActions';
-import loadContent from '../action/loadContent';
 import loadCards from '../action/loadCards';
+import loadDocument from '../action/loadDocument';
 import loadQuickstarts from '../action/loadQuickstarts';
-import updateEnvironment from '../action/updateEnvironment';
-import HomePage from '../components/Home';
-import StaticPage from '../components/StaticPage';
-import ArticlePage from '../components/ArticlePage';
-import SearchPage from '../components/SearchPage';
-import TutorialPage from '../components/TutorialPage';
-import QuickstartsPage from '../components/QuickstartsPage';
-import AuthApiPage from '../components/AuthApiPage';
+import HomePage from '../components/pages/HomePage';
+import StaticPage from '../components/pages/StaticPage';
+import ArticlePage from '../components/pages/ArticlePage';
+import SearchPage from '../components/pages/SearchPage';
+import QuickstartsPage from '../components/pages/QuickstartsPage';
+import TutorialPage from '../components/pages/TutorialPage';
+import AuthApiPage from '../components/pages/AuthApiPage';
 
 export default {
 
@@ -72,8 +71,14 @@ export default {
     handler: SearchPage
   },
 
-  updates: {
+  updateList: {
     path: '/docs/updates',
+    method: 'get',
+    handler: StaticPage
+  },
+
+  update: {
+    path: '/docs/updates*',
     method: 'get',
     handler: StaticPage
   },
@@ -81,27 +86,27 @@ export default {
   mgmtApiExplorerV2: {
     path: '/docs/api/management/v2',
     method: 'get',
-    handler: StaticPage
-  },
-
-  authApiExplorer: {
-    path: '/docs/api/authentication',
-    method: 'get',
-    handler: AuthApiPage,
-    action: (context, payload) => {
+    handler: AuthApiPage
+    /* action: (context, payload) => {
       const env = { fullWidth: true };
       return Promise.all([
         updateEnvironment(context, { env }),
         loadContent(context, payload)
       ]);
-    }
+    }*/
+  },
+
+  authApiExplorer: {
+    path: '/docs/api/authentication',
+    method: 'get',
+    handler: StaticPage
   },
 
   article: {
     path: '/docs/*',
     method: 'get',
     handler: ArticlePage,
-    action: loadContent
+    action: loadDocument
   }
 
 };

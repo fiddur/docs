@@ -8,7 +8,7 @@ class UserStore extends BaseStore {
   }
 
   isAuthenticated() {
-    return !!this.user;
+    return this.user && this.user.account.userName !== '';
   }
 
   getUser() {

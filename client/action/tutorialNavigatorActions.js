@@ -1,11 +1,13 @@
-import TutorialStore from '../stores/TutorialStore';
-import loadTutorial from './loadTutorial';
+import ApplicationStore from '../stores/ApplicationStore';
+import QuickstartStore from '../stores/QuickstartStore';
+import loadDocument from './loadDocument';
 import { getPageMetadata } from '../util/metadata';
+import getQuickstartDocumentUrl from '../util/getQuickstartDocumentUrl';
 
 const TutorialNavigatorActions = {};
 
 TutorialNavigatorActions.home = (context) => {
-  context.dispatch('LOAD_TUTORIAL_NAVIGATOR', {});
+  context.dispatch('QUICKSTART_SELECTED', {});
   return Promise.all([
     getPageMetadata().then(metadata => {
       context.dispatch('UPDATE_PAGE_METADATA', metadata);
@@ -14,7 +16,7 @@ TutorialNavigatorActions.home = (context) => {
 };
 
 TutorialNavigatorActions.quickstartList = (context) => {
-  context.dispatch('LOAD_TUTORIAL_NAVIGATOR', {});
+  context.dispatch('QUICKSTART_SELECTED', {});
   return Promise.all([
     getPageMetadata().then(metadata => {
       context.dispatch('UPDATE_PAGE_METADATA', metadata);
@@ -24,10 +26,10 @@ TutorialNavigatorActions.quickstartList = (context) => {
 
 TutorialNavigatorActions.quickstart = (context, payload) => {
   const { quickstartId } = payload.params;
-  const quickstarts = context.getStore(TutorialStore).getQuickstarts();
+  const quickstarts = context.getStore(QuickstartStore).getQuickstarts();
   return Promise.all([
     getPageMetadata(quickstarts, quickstartId).then(metadata => {
-      context.dispatch('LOAD_TUTORIAL_NAVIGATOR', { quickstartId });
+      context.dispatch('QUICKSTART_SELECTED', { quickstartId });
       context.dispatch('UPDATE_PAGE_METADATA', metadata);
     })
   ]);
@@ -35,25 +37,29 @@ TutorialNavigatorActions.quickstart = (context, payload) => {
 
 TutorialNavigatorActions.platform = (context, payload) => {
   const { quickstartId, platformId } = payload.params;
-  const quickstarts = context.getStore(TutorialStore).getQuickstarts();
+  const isFramedMode = context.getStore(ApplicationStore).isFramedMode();
+  const quickstarts = context.getStore(QuickstartStore).getQuickstarts();
+  const url = getQuickstartDocumentUrl(quickstarts, { quickstartId, platformId, isFramedMode });
   return Promise.all([
     getPageMetadata(quickstarts, quickstartId, platformId).then(metadata => {
-      context.dispatch('LOAD_TUTORIAL_NAVIGATOR', { quickstartId, platformId });
+      context.dispatch('QUICKSTART_SELECTED', { quickstartId, platformId });
       context.dispatch('UPDATE_PAGE_METADATA', metadata);
     }),
-    context.executeAction(loadTutorial, { quickstartId, platformId })
+    context.executeAction(loadDocument, { url })
   ]);
 };
 
 TutorialNavigatorActions.article = (context, payload) => {
   const { quickstartId, platformId, articleId } = payload.params;
-  const quickstarts = context.getStore(TutorialStore).getQuickstarts();
+  const isFramedMode = context.getStore(ApplicationStore).isFramedMode();
+  const quickstarts = context.getStore(QuickstartStore).getQuickstarts();
+  const url = getQuickstartDocumentUrl(quickstarts, { quickstartId, platformId, articleId, isFramedMode });
   return Promise.all([
     getPageMetadata(quickstarts, quickstartId, platformId, articleId).then(metadata => {
-      context.dispatch('LOAD_TUTORIAL_NAVIGATOR', { quickstartId, platformId, articleId });
+      context.dispatch('QUICKSTART_SELECTED', { quickstartId, platformId, articleId });
       context.dispatch('UPDATE_PAGE_METADATA', metadata);
     }),
-    context.executeAction(loadTutorial, { quickstartId, platformId, articleId })
+    context.executeAction(loadDocument, { url })
   ]);
 };
 

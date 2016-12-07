@@ -1,15 +1,14 @@
 import Fluxible from 'fluxible';
-import TutorialStore from './stores/TutorialStore';
-import ArticleStore from './stores/ArticleStore';
 import serviceProxyPlugin from 'fluxible-plugin-service-proxy';
 import devToolsPlugin from 'fluxible-plugin-devtools';
 import Application from './components/Application';
 import ApplicationStore from './stores/ApplicationStore';
-import ContentStore from './stores/ContentStore';
-import StaticContentStore from './stores/StaticContentStore';
+import DocumentStore from './stores/DocumentStore';
 import NavigationStore from './stores/NavigationStore';
+import QuickstartStore from './stores/QuickstartStore';
 import RouteStore from './stores/RouteStore';
 import SearchStore from './stores/SearchStore';
+import StaticContentStore from './stores/StaticContentStore';
 import UserStore from './stores/UserStore';
 import metricsPlugin from './plugins/metricsPlugin';
 
@@ -26,10 +25,9 @@ app.plug(devToolsPlugin());
 // register stores
 app.registerStore(RouteStore);
 app.registerStore(ApplicationStore);
-app.registerStore(ContentStore);
-app.registerStore(TutorialStore);
-app.registerStore(ArticleStore);
+app.registerStore(DocumentStore);
 app.registerStore(NavigationStore);
+app.registerStore(QuickstartStore);
 app.registerStore(SearchStore);
 app.registerStore(StaticContentStore);
 app.registerStore(UserStore);

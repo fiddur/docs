@@ -1,15 +1,15 @@
 import React from 'react';
 import { connectToStores } from 'fluxible-addons-react';
-import TutorialNavigator from './TutorialNavigator/TutorialNavigator';
-import TutorialStore from '../stores/TutorialStore';
-import NavigationStore from '../stores/NavigationStore';
-import UserStore from '../stores/UserStore';
-import CategoryCard from './CategoryCard';
-import TryBanner from './TryBanner';
-import SearchBox from './SearchBox';
-import Spinner from './Spinner';
+import TutorialNavigator from '../quickstarts/TutorialNavigator';
+import QuickstartStore from '../../stores/QuickstartStore';
+import NavigationStore from '../../stores/NavigationStore';
+import UserStore from '../../stores/UserStore';
+import CategoryCard from '../CategoryCard';
+import TryBanner from '../TryBanner';
+import SearchBox from '../SearchBox';
+import Spinner from '../Spinner';
 
-class Home extends React.Component {
+class HomePage extends React.Component {
 
   render() {
     const { cards, quickstarts, isAuthenticated } = this.props;
@@ -47,20 +47,20 @@ class Home extends React.Component {
 
 }
 
-Home.propTypes = {
+HomePage.propTypes = {
   isAuthenticated: React.PropTypes.bool.isRequired,
   quickstarts: React.PropTypes.object,
   cards: React.PropTypes.array
 };
 
-Home.contextTypes = {
+HomePage.contextTypes = {
   getStore: React.PropTypes.func
 };
 
-Home = connectToStores(Home, [NavigationStore, TutorialStore], (context, props) => ({
+HomePage = connectToStores(HomePage, [NavigationStore, QuickstartStore], (context, props) => ({
   isAuthenticated: context.getStore(UserStore).isAuthenticated(),
-  quickstarts: context.getStore(TutorialStore).getQuickstarts(),
+  quickstarts: context.getStore(QuickstartStore).getQuickstarts(),
   cards: context.getStore(NavigationStore).getCards()
 }));
 
-export default Home;
+export default HomePage;

@@ -1,6 +1,5 @@
 import React from 'react';
 import _ from 'lodash';
-import loadTutorial from '../../action/loadTutorial';
 import navigateToQuickstart from '../../action/navigateToQuickstart';
 
 class TutorialPrevNext extends React.Component {
@@ -12,10 +11,7 @@ class TutorialPrevNext extends React.Component {
       platformId: platform.name,
       articleId: article.name
     };
-    Promise.all([
-      this.context.executeAction(loadTutorial, payload),
-      this.context.executeAction(navigateToQuickstart, payload)
-    ]);
+    this.context.executeAction(navigateToQuickstart, payload);
   }
 
   render() {

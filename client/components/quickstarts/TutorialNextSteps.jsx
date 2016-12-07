@@ -1,6 +1,5 @@
 import React from 'react';
 import _ from 'lodash';
-import TutorialStore from '../../stores/TutorialStore';
 
 const DEFAULT_ARTICLE_BUDICON = 691;
 
@@ -51,6 +50,6 @@ class TutorialNextSteps extends React.Component {
 TutorialNextSteps.propTypes = {
   quickstart: React.PropTypes.object,
   platform: React.PropTypes.object
-}
+};
 
 export default TutorialNextSteps;

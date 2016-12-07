@@ -1,6 +1,8 @@
 import React from 'react';
 import { connectToStores } from 'fluxible-addons-react';
-import ArticleStore from '../../stores/ArticleStore';
+import DocumentStore from '../../stores/DocumentStore';
+import QuickstartStore from '../../stores/QuickstartStore';
+import getQuickstartDocumentUrl from '../../util/getQuickstartDocumentUrl';
 import highlightCode from '../../browser/highlightCode';
 import setAnchorLinks from '../../browser/anchorLinks';
 import Spinner from '../Spinner';
@@ -21,13 +23,13 @@ class Tutorial extends React.Component {
   }
 
   render() {
-    const { articleHtml } = this.props;
+    const { doc } = this.props;
 
-    if (!articleHtml) {
+    if (!doc || !doc.html) {
       return <Spinner />;
     }
 
-    const markup = { __html: articleHtml };
+    const markup = { __html: doc.html };
     return <div ref={this.initHtml} dangerouslySetInnerHTML={markup} />;
   }
 
@@ -37,14 +39,21 @@ Tutorial.propTypes = {
   quickstart: React.PropTypes.object,
   platform: React.PropTypes.object,
   article: React.PropTypes.object,
-  articleHtml: React.PropTypes.string
+  doc: React.PropTypes.object
 };
 
-Tutorial = connectToStores(Tutorial, [ArticleStore], (context, props) => {
+Tutorial = connectToStores(Tutorial, [DocumentStore, QuickstartStore], (context, props) => {
   const { quickstart, platform, article } = props;
-  const store = context.getStore(ArticleStore);
+  const quickstarts = context.getStore(QuickstartStore).getQuickstarts();
+  const url = getQuickstartDocumentUrl(quickstarts, {
+    quickstartId: quickstart.name,
+    platformId: platform.name,
+    articleId: article.name
+  });
+  const doc =context.getStore(DocumentStore).getDocument(url);
+  console.log({url, doc});
   return {
-    articleHtml: store.getArticleHtml(quickstart.name, platform.name, article.name)
+    doc
   };
 });
 

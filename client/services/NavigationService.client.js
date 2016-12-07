@@ -1,15 +1,14 @@
-import API from './API.client.js';
+import Api from './Api';
 
 const NavigationService = {};
 
 const cardsApiUrl = '/docs/meta/cards';
 const quickstartsApiUrl = '/docs/meta/quickstart';
 
-NavigationService.loadCards = () => API.get(cardsApiUrl);
+NavigationService.loadCards = () => Api.get(cardsApiUrl);
 
 NavigationService.loadQuickstarts = () =>
-  API.get(quickstartsApiUrl)
-  .then(result => (
+  Api.get(quickstartsApiUrl).then(result => (
     { quickstarts: result }
   ));
 

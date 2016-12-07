@@ -1,5 +1,4 @@
-import TutorialStore from '../stores/TutorialStore';
-import NavigationStore from '../stores/NavigationStore';
+import QuickstartStore from '../stores/QuickstartStore';
 import LoadState from '../stores/LoadState';
 
 export default function loadQuickstarts(context, payload) {
@@ -16,7 +15,7 @@ export default function loadQuickstarts(context, payload) {
   };
 
   // First, check to see if the content has already been loaded.
-  const quickstarts = context.getStore(TutorialStore).getQuickstarts();
+  const quickstarts = context.getStore(QuickstartStore).getQuickstarts();
   if (quickstarts) {
     return success({ quickstarts });
   }

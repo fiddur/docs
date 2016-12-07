@@ -1,13 +1,13 @@
 import React from 'react';
 import { navigateAction } from 'fluxible-router';
 import { connectToStores } from 'fluxible-addons-react';
-import ApplicationStore from '../stores/ApplicationStore';
-import NavigationStore from '../stores/NavigationStore';
-import StaticContentStore from '../stores/StaticContentStore';
-import NavigationBar from './NavigationBar';
-import Sidebar from './Sidebar';
-import FeedbackFooter from './FeedbackFooter';
-import setAnchorLinks from '../browser/anchorLinks';
+import ApplicationStore from '../../stores/ApplicationStore';
+import NavigationStore from '../../stores/NavigationStore';
+import StaticContentStore from '../../stores/StaticContentStore';
+import NavigationBar from '../NavigationBar';
+import Sidebar from '../Sidebar';
+import FeedbackFooter from '../FeedbackFooter';
+import setAnchorLinks from '../../browser/anchorLinks';
 
 class StaticPage extends React.Component {
 

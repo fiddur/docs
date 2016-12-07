@@ -1,5 +1,9 @@
-import {parse} from 'url';
+import { parse } from 'url';
 
-let normalizeUrl = (url) => parse(url).pathname;
+/**
+ * This is just a simple utility function to ensure that we remove the
+ * query string from a URL.
+ */
+const normalizeUrl = (url) => parse(url).pathname;
 
 export default normalizeUrl;

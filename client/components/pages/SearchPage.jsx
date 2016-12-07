@@ -3,16 +3,16 @@ import url from 'url';
 import qs from 'querystring';
 import { connectToStores } from 'fluxible-addons-react';
 import { RouteStore, navigateAction } from 'fluxible-router';
-import NavigationBar from './NavigationBar';
-import performSearchAction from '../action/performSearch';
-import searchClickthroughAction from '../action/searchClickthroughAction';
-import SearchStore, { SearchResultState } from '../stores/SearchStore';
-import SearchBox from './SearchBox';
+import NavigationBar from '../NavigationBar';
+import performSearchAction from '../../action/performSearch';
+import searchClickthroughAction from '../../action/searchClickthroughAction';
+import SearchStore, { SearchResultState } from '../../stores/SearchStore';
+import SearchBox from '../SearchBox';
 
-let SearchSpinner = () => (
+const SearchSpinner = () => (
   <div className="auth0-spinner">
-    <div className="spinner"></div>
-    <div className="spinner-bg"></div>
+    <div className="spinner" />
+    <div className="spinner-bg" />
   </div>
 );
 

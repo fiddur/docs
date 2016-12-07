@@ -1,12 +1,12 @@
 import React from 'react';
 import { connectToStores } from 'fluxible-addons-react';
-import TutorialNavigator from './TutorialNavigator/TutorialNavigator';
-import ApplicationStore from '../stores/ApplicationStore';
-import TutorialStore from '../stores/TutorialStore';
-import UserStore from '../stores/UserStore';
-import NavigationBar from './NavigationBar';
-import Spinner from './Spinner';
-import TryBanner from './TryBanner';
+import TutorialNavigator from '../quickstarts/TutorialNavigator';
+import ApplicationStore from '../../stores/ApplicationStore';
+import QuickstartStore from '../../stores/QuickstartStore';
+import UserStore from '../../stores/UserStore';
+import NavigationBar from '../NavigationBar';
+import Spinner from '../Spinner';
+import TryBanner from '../TryBanner';
 
 class QuickstartsPage extends React.Component {
 
@@ -48,9 +48,9 @@ QuickstartsPage.propTypes = {
 };
 
 
-QuickstartsPage = connectToStores(QuickstartsPage, [TutorialStore], (context, props) => {
+QuickstartsPage = connectToStores(QuickstartsPage, [QuickstartStore], (context, props) => {
   return {
-    quickstarts: context.getStore(TutorialStore).getQuickstarts(),
+    quickstarts: context.getStore(QuickstartStore).getQuickstarts(),
     isAuthenticated: context.getStore(UserStore).isAuthenticated(),
     isFramedMode: context.getStore(ApplicationStore).isFramedMode()
   };

@@ -3,7 +3,7 @@ import _ from 'lodash';
 import { connectToStores } from 'fluxible-addons-react';
 import navigateToQuickstart from '../../action/navigateToQuickstart';
 import ApplicationStore from '../../stores/ApplicationStore';
-import TutorialStore from '../../stores/TutorialStore';
+import QuickstartStore from '../../stores/QuickstartStore';
 
 class Breadcrumbs extends React.Component {
 
@@ -93,13 +93,13 @@ Breadcrumbs.contextTypes = {
   executeAction: React.PropTypes.func
 };
 
-Breadcrumbs = connectToStores(Breadcrumbs, [ApplicationStore, TutorialStore], (context, props) => {
+Breadcrumbs = connectToStores(Breadcrumbs, [ApplicationStore, QuickstartStore], (context, props) => {
   const appStore = context.getStore(ApplicationStore);
-  const tutorialStore = context.getStore(TutorialStore);
+  const quickstartStore = context.getStore(QuickstartStore);
   return {
-    quickstart: tutorialStore.getCurrentQuickstart(),
-    platform: tutorialStore.getCurrentPlatform(),
-    article: tutorialStore.getCurrentArticle(),
+    quickstart: quickstartStore.getCurrentQuickstart(),
+    platform: quickstartStore.getCurrentPlatform(),
+    article: quickstartStore.getCurrentArticle(),
     isFramedMode: appStore.isFramedMode(),
     isSingleQuickstartMode: appStore.isSingleQuickstartMode()
   };

@@ -1,6 +1,5 @@
 import React from 'react';
 import _ from 'lodash';
-import loadTutorial from '../../action/loadTutorial';
 import navigateToQuickstart from '../../action/navigateToQuickstart';
 
 class TutorialTableOfContents extends React.Component {

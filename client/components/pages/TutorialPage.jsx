@@ -1,20 +1,20 @@
 import React from 'react';
 import { StickyContainer, Sticky } from 'react-sticky';
 import { connectToStores, provideContext } from 'fluxible-addons-react';
-import TutorialStore from '../stores/TutorialStore';
-import Breadcrumbs from './TutorialNavigator/Breadcrumbs';
-import Tutorial from './TutorialNavigator/Tutorial';
-import TutorialTableOfContents from './TutorialNavigator/TutorialTableOfContents';
-import TutorialPrevNext from './TutorialNavigator/TutorialPrevNext';
-import NavigationBar from './NavigationBar';
-import Sidebar from './Sidebar';
-import TryBanner from './TryBanner';
-import IntroBanner from './IntroBanner';
-import FeedbackFooter from './FeedbackFooter';
-import TutorialNextSteps from './TutorialNavigator/TutorialNextSteps';
-import initSampleBox from '../browser/sampleBox';
-import ApplicationStore from '../stores/ApplicationStore';
-import UserStore from '../stores/UserStore';
+import ApplicationStore from '../../stores/ApplicationStore';
+import QuickstartStore from '../../stores/QuickstartStore';
+import UserStore from '../../stores/UserStore';
+import initSampleBox from '../../browser/sampleBox';
+import NavigationBar from '../NavigationBar';
+import Sidebar from '../Sidebar';
+import TryBanner from '../TryBanner';
+import IntroBanner from '../IntroBanner';
+import FeedbackFooter from '../FeedbackFooter';
+import Breadcrumbs from '../quickstarts/Breadcrumbs';
+import Tutorial from '../quickstarts/Tutorial';
+import TutorialTableOfContents from '../quickstarts/TutorialTableOfContents';
+import TutorialPrevNext from '../quickstarts/TutorialPrevNext';
+import TutorialNextSteps from '../quickstarts/TutorialNextSteps';
 
 class TutorialPage extends React.Component {
 
@@ -183,14 +183,14 @@ TutorialPage.contextTypes = {
   trackEvent: React.PropTypes.func.isRequired
 };
 
-TutorialPage = connectToStores(TutorialPage, [TutorialStore, ApplicationStore], (context, props) => {
+TutorialPage = connectToStores(TutorialPage, [ApplicationStore, QuickstartStore], (context, props) => {
   const appStore = context.getStore(ApplicationStore);
-  const tutorialStore = context.getStore(TutorialStore);
+  const quickstartStore = context.getStore(QuickstartStore);
   const userStore = context.getStore(UserStore);
   return {
-    quickstart: tutorialStore.getCurrentQuickstart(),
-    platform: tutorialStore.getCurrentPlatform(),
-    article: tutorialStore.getCurrentArticle(),
+    quickstart: quickstartStore.getCurrentQuickstart(),
+    platform: quickstartStore.getCurrentPlatform(),
+    article: quickstartStore.getCurrentArticle(),
     isFramedMode: appStore.isFramedMode(),
     isAuthenticated: userStore.isAuthenticated()
   };

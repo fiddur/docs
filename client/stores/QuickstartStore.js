@@ -1,7 +1,7 @@
 import { BaseStore } from 'fluxible/addons';
 import _ from 'lodash';
 
-class TutorialStore extends BaseStore {
+class QuickstartStore extends BaseStore {
 
   constructor(dispatcher) {
     super(dispatcher);
@@ -38,7 +38,7 @@ class TutorialStore extends BaseStore {
     return _.first(platform.articles);
   }
 
-  handleTutorialNavigatorLoaded(payload) {
+  handleQuickstartSelected(payload) {
     this.currentQuickstartId = payload.quickstartId;
     this.currentPlatformId = payload.platformId;
     this.currentArticleId = payload.articleId;
@@ -81,12 +81,12 @@ class TutorialStore extends BaseStore {
 
 }
 
-TutorialStore.storeName = 'TutorialStore';
-TutorialStore.handlers = {
+QuickstartStore.storeName = 'QuickstartStore';
+QuickstartStore.handlers = {
   ARTICLE_LOADED: 'handleArticleSelected',
-  LOAD_TUTORIAL_NAVIGATOR: 'handleTutorialNavigatorLoaded',
+  QUICKSTART_SELECTED: 'handleQuickstartSelected',
   QUICKSTARTS_LOAD_SUCCESS: 'handleQuickstartsLoaded',
   MODE_FLAGS_LOADED: 'handleModeFlagsLoaded'
 };
 
-export default TutorialStore;
+export default QuickstartStore;

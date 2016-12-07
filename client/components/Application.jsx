@@ -3,8 +3,8 @@ import { connectToStores, provideContext } from 'fluxible-addons-react';
 import { handleHistory } from 'fluxible-router';
 import ApplicationStore from '../stores/ApplicationStore';
 import UserStore from '../stores/UserStore';
-import ContentStore from '../stores/ContentStore';
-import ErrorPage from './ErrorPage';
+import DocumentStore from '../stores/DocumentStore';
+import ErrorPage from './pages/ErrorPage';
 import highlightCode from '../browser/highlightCode';
 import Header from './Header';
 import sendMessageToParentFrame from '../util/sendMessageToParentFrame';
@@ -36,15 +36,15 @@ class Application extends React.Component {
   }
 
   getHandler() {
-    const { content, currentRoute, currentNavigateError } = this.props;
+    const { doc, currentRoute, currentNavigateError } = this.props;
 
     if (!currentRoute) {
       let error = { message: 'Not Found', status: 404 };
       return <ErrorPage error={error} />;
     }
 
-    if (content && content.err) {
-      return <ErrorPage error={content.err} />;
+    if (doc && doc.err) {
+      return <ErrorPage error={doc.err} />;
     }
 
     if (currentNavigateError) {
@@ -90,7 +90,7 @@ class Application extends React.Component {
 }
 
 Application.propTypes = {
-  content: React.PropTypes.object,
+  doc: React.PropTypes.object,
   currentRoute: React.PropTypes.object.isRequired,
   isAuthenticated: React.PropTypes.bool.isRequired,
   isFramedMode: React.PropTypes.bool.isRequired,
@@ -103,19 +103,19 @@ Application = connectToStores(Application, [ApplicationStore], (context, props) 
   const appStore = context.getStore(ApplicationStore);
   const userStore = context.getStore(UserStore);
 
-  let content;
+  let doc;
   if (props.currentRoute) {
-    content = context.getStore(ContentStore).getContent(props.currentRoute.url);
+    doc = context.getStore(DocumentStore).getDocument(props.currentRoute.url);
   }
 
   return {
-    content,
+    doc,
     currentRoute: props.currentRoute,
     isAuthenticated: userStore.isAuthenticated(),
     isFramedMode: appStore.isFramedMode(),
     isFullWidthMode: appStore.isFullWidthMode(),
     pageTitle: appStore.getPageTitle(),
-    user: userStore.getUser()
+    user: userStore.isAuthenticated() ? userStore.getUser() : undefined
   };
 });
 
