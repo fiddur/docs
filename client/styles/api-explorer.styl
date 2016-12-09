@@ -1,7 +1,5 @@
-
-@import 'vars'
-@import 'modules/nav'
-@import 'modules/http-method'
+@import 'inc/api-explorer-nav'
+@import 'inc/http-method'
 
 .api-explorer
   position: relative;
@@ -12,7 +10,7 @@
       left: 0;
       top: 0;
       height: 100%;
-      background: color_gray_1;
+      background: $gray-lighter;
       min-height: 100vh;
       width: $nav-width;
 
@@ -245,11 +243,11 @@
 
         .panel-heading
           padding: 15px;
-        
+
         .panel-body:after,
         .panel-body:before
           display: none; //Fix bug with empty space
-          
+
 
       .anchor-heading
         cursor auto
@@ -275,8 +273,8 @@
         font-style normal
         border none
         border-radius 0
-
-        @extend $right-col
+        width: auto
+        float: none
 
         +breakpoint("tablet")
           width: $examples-width
