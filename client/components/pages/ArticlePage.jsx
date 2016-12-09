@@ -167,7 +167,7 @@ ArticlePage.propTypes = {
   url: PropTypes.string
 };
 
-ArticlePage = connectToStores(ArticlePage, [ApplicationStore, ContentStore, NavigationStore], (context, props) => {
+ArticlePage = connectToStores(ArticlePage, [ApplicationStore, DocumentStore, NavigationStore], (context, props) => {
   const appStore = context.getStore(ApplicationStore);
   const docStore = context.getStore(DocumentStore);
   const navigationStore = context.getStore(NavigationStore);
