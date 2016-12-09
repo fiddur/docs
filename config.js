@@ -46,7 +46,8 @@ nconf.file('global', { file: config_file })
     '1f318101-e4cd-4d84-b95e-6a0e6771798d' : false,
     SWIFTYPE_ENGINE_KEY: 's-M2Jb8-xTC1XeyCpWZ1',
     TRELLO_LIST_ID: '57ec50a9ce30841a4b4aedf2',
-    TRELLO_LABEL_ID: '57ec522e84e677fd369a6ba9'
+    TRELLO_LABEL_ID: '57ec522e84e677fd369a6ba9',
+    DOMAIN_URL_CDN: undefined
   });
 
 if (nconf.get('COOKIE_NAME') !== 'auth0l') {
