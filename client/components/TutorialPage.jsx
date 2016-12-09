@@ -6,6 +6,7 @@ import NavigationBar from './NavigationBar';
 import Sidebar from './Sidebar';
 import TryBanner from './TryBanner';
 import IntroBanner from './IntroBanner';
+import FeedbackFooter from './FeedbackFooter';
 import { quickstartNavigationAction } from '../action/quickstartNavigationAction';
 import highlightCode from '../browser/highlightCode';
 import setAnchorLinks from '../browser/anchorLinks';
@@ -87,18 +88,25 @@ class TutorialPage extends React.Component {
     let tutorial;
     let sidebar;
     let prevNext;
+    let feedbackFooter;
 
     if (article) {
-      tutorial = <Tutorial
+      tutorial = (<Tutorial
         quickstart={quickstart}
         platform={platform}
         article={article}
-        componentLoadedInBrowser={initTutorialInBrowser} />
-      prevNext = <TutorialPrevNext
+        componentLoadedInBrowser={initTutorialInBrowser}
+      />);
+      prevNext = (<TutorialPrevNext
         quickstart={quickstart}
         platform={platform}
         currentArticle={article}
-        customNavigationAction={quickstartNavigationAction} />
+        customNavigationAction={quickstartNavigationAction}
+      />);
+      // TODO: This is temporary; we should switch to using the actual editUrl
+      // from the doc's metadata once we are loading it.
+      const editUrl = `https://github.com/auth0/docs/edit/master/articles/${quickstart.slug}/${platform.name}/${article.name}.md`;
+      feedbackFooter = <FeedbackFooter url={article.url} editUrl={editUrl} />;
     }
 
     return (
@@ -120,10 +128,11 @@ class TutorialPage extends React.Component {
                   </div>
                   <section className="docs-content">
                     <IntroBanner />
-                    <article data-swiftype-index='true'>
+                    <article data-swiftype-index="true">
                       <h1 className="tutorial-title">{this.renderTitle()}</h1>
                       <div data-swiftype-name="body" data-swiftype-type="text">{tutorial}</div>
-                      <div data-swiftype-index='false'>{prevNext}</div>
+                      <div data-swiftype-index="false">{prevNext}</div>
+                      <div data-swiftype-index="false">{feedbackFooter}</div>
                     </article>
                   </section>
                   {tryBanner}
