@@ -1,7 +1,7 @@
 import ApplicationStore from '../stores/ApplicationStore';
 import QuickstartStore from '../stores/QuickstartStore';
 import loadDocument from './loadDocument';
-import { getPageMetadata } from '../util/metadata';
+import getPageMetadata from '../util/getPageMetadata';
 import getQuickstartDocumentUrl from '../util/getQuickstartDocumentUrl';
 
 const TutorialNavigatorActions = {};

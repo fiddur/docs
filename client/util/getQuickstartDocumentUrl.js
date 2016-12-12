@@ -1,5 +1,9 @@
 export default function getQuickstartDocumentUrl(quickstarts, payload) {
-  let { quickstartId, platformId, articleId, isFramedMode } = payload;
+  const { isFramedMode } = payload;
+
+  const quickstartId = payload.quickstart ? payload.quickstart.name : payload.quickstartId;
+  const platformId = payload.platform ? payload.platform.name : payload.platformId;
+  let articleId = payload.article ? payload.article.name : payload.articleId;
 
   if (quickstartId && platformId && !articleId) {
     const platform = quickstarts[quickstartId].platforms[platformId];

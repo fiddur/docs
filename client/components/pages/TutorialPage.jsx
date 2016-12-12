@@ -18,15 +18,6 @@ import TutorialNextSteps from '../quickstarts/TutorialNextSteps';
 
 class TutorialPage extends React.Component {
 
-  constructor(props) {
-    super(props);
-
-    // Transform quickstart object to pass as prop to Sidebar
-    this.sidebarItems = Object
-      .keys(props.quickstart.platforms).map(key => props.quickstart.platforms[key])
-      .map((item) => Object.assign({}, item, { children: item.articles }));
-  }
-
   componentDidMount() {
     this.initClient();
     initSampleBox();
@@ -68,16 +59,14 @@ class TutorialPage extends React.Component {
     return `${platform.title} ${article.title}`;
   }
 
-  renderFooter() {
+  renderBottomNavigation() {
     const { isFramedMode, quickstart, platform, article } = this.props;
     let element;
     if (isFramedMode) {
-      element = <TutorialNextSteps quickstart={quickstart} platform={platform} />;
+      return <TutorialNextSteps quickstart={quickstart} platform={platform} />;
     } else {
-      element = <TutorialPrevNext quickstart={quickstart} platform={platform} currentArticle={article} />;
+      return <TutorialPrevNext quickstart={quickstart} platform={platform} currentArticle={article} />;
     }
-
-    return <div data-swiftype-index="false">{element}</div>;
   }
 
   renderTryBanner() {
@@ -90,18 +79,6 @@ class TutorialPage extends React.Component {
     const { isFramedMode } = this.props;
     if (isFramedMode) return undefined;
     return <IntroBanner />;
-  }
-
-  renderFeedback() {
-    const { quickstart, platform, article } = this.props;
-    // TODO: This is temporary; we should switch to using the actual editUrl
-    // from the doc's metadata once we are loading it.
-    const editUrl = `https://github.com/auth0/docs/edit/master/articles/${quickstart.slug}/${platform.name}/${article.name}.md`;
-    return (
-      <div data-swiftype-index="false">
-        <FeedbackFooter url={article.url} editUrl={editUrl} />
-      </div>
-    );
   }
 
   renderSidebar() {
@@ -133,8 +110,16 @@ class TutorialPage extends React.Component {
     const columnWidth = isFramedMode ? 12 : 9;
 
     let tutorial;
+    let feedbackFooter;
+
     if (article) {
       tutorial = <Tutorial quickstart={quickstart} platform={platform} article={article} />;
+      const editUrl = `https://github.com/auth0/docs/edit/master/articles/${quickstart.slug}/${platform.name}/${article.name}.md`;
+      feedbackFooter = (
+        <div data-swiftype-index="false">
+          <FeedbackFooter url={article.url} editUrl={editUrl} />
+        </div>
+      );
     }
 
     return (
@@ -152,8 +137,8 @@ class TutorialPage extends React.Component {
                     <article data-swiftype-index="true">
                       <h1 className="tutorial-title">{this.renderTitle()}</h1>
                       <div data-swiftype-name="body" data-swiftype-type="text">{tutorial}</div>
-                      {this.renderFeedback()}
-                      {this.renderFooter()}
+                      <div data-swiftype-index="false">{this.renderBottomNavigation()}</div>
+                      <div data-swiftype-index="false">{feedbackFooter}</div>
                     </article>
                   </section>
                   {this.renderTryBanner()}

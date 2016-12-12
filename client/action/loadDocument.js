@@ -10,10 +10,12 @@ export default function loadDocument(context, payload, done) {
   context.dispatch('DOCUMENT_SELECTED', { url });
 
   const success = (doc) => {
-    context.dispatch('UPDATE_PAGE_METADATA', {
-      pageTitle: doc.meta.title,
-      pageDescription: doc.meta.description
-    });
+    if (!doc.meta.quickstart) {
+      context.dispatch('UPDATE_PAGE_METADATA', {
+        pageTitle: doc.meta.title,
+        pageDescription: doc.meta.description
+      });
+    }
     context.dispatch('DOCUMENT_LOAD_SUCCESS', { url, doc });
     logger.debug('Document loaded successfully.', { url });
     if (done) done();

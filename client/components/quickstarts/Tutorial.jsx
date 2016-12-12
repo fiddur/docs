@@ -45,15 +45,9 @@ Tutorial.propTypes = {
 Tutorial = connectToStores(Tutorial, [DocumentStore, QuickstartStore], (context, props) => {
   const { quickstart, platform, article } = props;
   const quickstarts = context.getStore(QuickstartStore).getQuickstarts();
-  const url = getQuickstartDocumentUrl(quickstarts, {
-    quickstartId: quickstart.name,
-    platformId: platform.name,
-    articleId: article.name
-  });
-  const doc =context.getStore(DocumentStore).getDocument(url);
-  console.log({url, doc});
+  const url = getQuickstartDocumentUrl(quickstarts, { quickstart, platform, article });
   return {
-    doc
+    doc: context.getStore(DocumentStore).getDocument(url)
   };
 });
 
