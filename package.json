@@ -11,7 +11,7 @@
     "auth0-common-logging": "auth0/auth0-common-logging#v2.14.0",
     "auth0-contact-form": "^1.0.6",
     "auth0-instrumentation": "auth0/auth0-instrumentation#v1.2.2",
-    "auth0-mongodb-config": "git+ssh://git@github.com/auth0/auth0-mongodb-config.git#v0.2.0",
+    "auth0-mongodb-config": "git+ssh://git@github.com/auth0/auth0-mongodb-config.git#v0.2.4",
     "auth0-styleguide": "auth0/styleguide#4.8.25",
     "auth0-tutorial-navigator": "auth0/tutorial-navigator#3.9.3",
     "auth0-web-header": "^2.0.1",
