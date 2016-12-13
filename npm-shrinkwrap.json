@@ -374,9 +374,9 @@
       }
     },
     "auth0-mongodb-config": {
-      "version": "0.2.0",
-      "from": "auth0-mongodb-config@git+ssh://git@github.com/auth0/auth0-mongodb-config.git#6d649defc6f65ef87f5b0f42a9709f55aa4bf6a2",
-      "resolved": "git+ssh://git@github.com/auth0/auth0-mongodb-config.git#6d649defc6f65ef87f5b0f42a9709f55aa4bf6a2",
+      "version": "0.2.4",
+      "from": "auth0-mongodb-config@git+ssh://git@github.com/auth0/auth0-mongodb-config.git#ef6b5a65732de55d509e47a9674775a363e99189",
+      "resolved": "git+ssh://git@github.com/auth0/auth0-mongodb-config.git#ef6b5a65732de55d509e47a9674775a363e99189",
       "dependencies": {
         "mongo-heartbeat": {
           "version": "1.1.0",
