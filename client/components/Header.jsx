@@ -44,19 +44,16 @@ class Header extends Component {
     const props = {
       className: this.props.fullWidth ? 'header-full-width' : '',
       theme: this.props.theme,
-      talkToSalesButtonLink: '',
-      talkToSalesButtonOnClick: () => this.contactForm.show(),
+      secondaryButtonLink: '',
+      secondaryButtonOnClick: () => this.contactForm.show(),
       featuredEnable: !this.props.fullWidth
     };
 
     if (user) {
-      props.loginButtonEnable = false;
-      props.signupButtonText = 'Open Dashboard';
-      props.signupButtonLink = 'https://manage.auth0.com/';
+      props.primaryButtonText = 'Open Dashboard';
+      props.primaryButtonLink = 'https://manage.auth0.com/';
     } else {
-      props.loginButtonEnable = true;
-      props.loginButtonOnClick = () => window.login();
-      props.signupButtonOnClick = () => window.signup();
+      props.primaryButtonOnClick = () => window.login();
     }
 
     return <Auth0WebHeader {...props} />;
