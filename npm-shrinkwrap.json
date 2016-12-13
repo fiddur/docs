@@ -500,8 +500,8 @@
       }
     },
     "auth0-web-header": {
-      "version": "1.4.0",
-      "resolved": "https://registry.npmjs.org/auth0-web-header/-/auth0-web-header-1.4.0.tgz"
+      "version": "2.0.1",
+      "resolved": "https://registry.npmjs.org/auth0-web-header/-/auth0-web-header-2.0.1.tgz"
     },
     "axios": {
       "version": "0.15.3",
