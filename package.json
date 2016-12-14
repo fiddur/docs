@@ -46,7 +46,7 @@
     "method-override": "^2.3.6",
     "mongo-getdb": "^3.0.0",
     "mongo-heartbeat": "^1.0.0",
-    "mongodb": "^2.2.12",
+    "mongodb": "^2.2.16",
     "nconf": "^0.8.4",
     "node-uuid": "^1.4.7",
     "on-finished": "^2.3.0",
