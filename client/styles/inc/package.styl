@@ -3,12 +3,10 @@
   background-color: white
   border: 1px solid rgb(231, 233, 237)
   border-radius: $border-radius-base
-  padding: 0 28px
-  padding-bottom 37px
   position relative
 
   .package-content
-    padding 24px 0 16px
+    padding 24px 28px 16px
 
   .package-information
     width calc(100% - 140px)
@@ -53,13 +51,9 @@
   .package-requirements-toggle
     width 100%
     border-top 1px solid rgba(black, 0.1)
-    position absolute
     padding 4px 30px
     text-align center
     cursor pointer
-    left 0
-    right 0
-    bottom 0
     background-color white
 
     i
@@ -70,6 +64,7 @@
 
   .package-requirements
     display none
+    padding 0 28px
 
     .package-requirements-header
       font-weight: 500
