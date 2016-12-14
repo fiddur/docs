@@ -5,10 +5,6 @@ const NavigationService = {};
 
 NavigationService.loadCards = () => Promise.resolve({ cards });
 
-NavigationService.loadPlatforms = () => Promise.resolve({
-  platforms: docs.getReduction('platforms')
-});
-
 NavigationService.loadQuickstarts = () => Promise.resolve({
   quickstarts: docs.getReduction('quickstarts')
 });

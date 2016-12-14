@@ -1,7 +1,6 @@
 import tutorialNavigatorActions from '../action/tutorialNavigatorActions';
 import loadContent from '../action/loadContent';
 import loadCards from '../action/loadCards';
-import loadPlatforms from '../action/loadPlatforms';
 import loadQuickstarts from '../action/loadQuickstarts';
 import updateEnvironment from '../action/updateEnvironment';
 import HomePage from '../components/Home';
@@ -72,13 +71,6 @@ export default {
     method: 'get',
     handler: SearchPage
   },
-
-  // sdks: {
-  //   path: '/docs/sdks',
-  //   method: 'get',
-  //   handler: require('../components/SdksPage'),
-  //   action: loadPlatforms
-  // },
 
   updates: {
     path: '/docs/updates',

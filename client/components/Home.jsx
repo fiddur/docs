@@ -50,12 +50,15 @@ class Home extends React.Component {
   }
 
   render() {
-    const { cardDefinitions, isAuthenticated } = this.props;
+    const { cards, isAuthenticated } = this.props;
     const tryBanner = isAuthenticated ? null : <TryBanner />;
 
-    const cards = cardDefinitions.map(category => (
-      <CategoryCard key={category.id} category={category} />
-    ));
+    let cardElements;
+    if (cards) {
+      cardElements = cards.map(category => (
+        <CategoryCard key={category.id} category={category} />
+      ));
+    }
 
     return (
       <div className="docs-home">
@@ -69,7 +72,7 @@ class Home extends React.Component {
         <div className="category-cards container center-block">
           <h1>Curated content to fully understand our platform</h1>
           <SearchBox />
-          {cards}
+          {cardElements}
         </div>
       </div>
     );
@@ -80,7 +83,7 @@ class Home extends React.Component {
 Home.propTypes = {
   isAuthenticated: React.PropTypes.bool,
   quickstarts: React.PropTypes.object,
-  cardDefinitions: React.PropTypes.array
+  cards: React.PropTypes.array
 };
 
 Home.contextTypes = {
@@ -89,7 +92,7 @@ Home.contextTypes = {
 
 Home = connectToStores(Home, [NavigationStore, TutorialStore], (context, props) => ({
   quickstarts: context.getStore(TutorialStore).getQuickstarts(),
-  cardDefinitions: context.getStore(NavigationStore).getCards()
+  cards: context.getStore(NavigationStore).getCards()
 }));
 
 export default Home;

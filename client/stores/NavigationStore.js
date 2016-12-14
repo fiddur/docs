@@ -7,7 +7,6 @@ class NavigationStore extends BaseStore {
   constructor(dispatcher) {
     super(dispatcher);
     this.navigation = null;
-    this.platforms = null;
     this.cards = null;
   }
 
@@ -36,13 +35,6 @@ class NavigationStore extends BaseStore {
     if (this.cards) {
       return this.cards;
     }
-    return [];
-  }
-
-  getPlatforms() {
-    if (this.platforms) {
-      return this.platforms;
-    }
     return undefined;
   }
 
@@ -66,22 +58,15 @@ class NavigationStore extends BaseStore {
     this.emitChange();
   }
 
-  handlePlatformsLoaded(payload) {
-    this.platforms = payload.platforms;
-    this.emitChange();
-  }
-
   dehydrate() {
     return {
       navigation: this.navigation,
-      platforms: this.platforms,
       cards: this.cards
     };
   }
 
   rehydrate(state) {
     this.navigation = state.navigation;
-    this.platforms = state.platforms;
     this.cards = state.cards;
   }
 }
@@ -89,8 +74,7 @@ class NavigationStore extends BaseStore {
 NavigationStore.storeName = 'NavigationStore';
 NavigationStore.handlers = {
   NAVIGATION_LOAD_SUCCESS: 'handleNavigationLoaded',
-  CARDS_LOAD_SUCCESS: 'handleCardsLoaded',
-  PLATFORMS_LOAD_SUCCESS: 'handlePlatformsLoaded'
+  CARDS_LOAD_SUCCESS: 'handleCardsLoaded'
 };
 
 export default NavigationStore;

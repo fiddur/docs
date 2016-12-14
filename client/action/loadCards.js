@@ -16,8 +16,7 @@ export default function loadCards(context, payload) {
   // First, check to see if the content has already been loaded.
   const cards = context.getStore(NavigationStore).getCards();
   if (cards) {
-    // If it has been loaded, just return.
-    return Promise.resolve();
+    return success({ cards });
   }
 
   // If the cards haven't been loaded (or a previous load resulted in
