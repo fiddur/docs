@@ -106,14 +106,8 @@ AuthApiPage.propTypes = {
 
 AuthApiPage = connectToStores(AuthApiPage, [DocumentStore, NavigationStore], (context, props) => {
   const { url } = props.currentRoute;
-  const appStore = context.getStore(ApplicationStore);
-  const docStore = context.getStore(DocumentStore);
-  const navigationStore = context.getStore(NavigationStore);
-  return {
-    url,
-    env: appStore.getEnvironmentVars(),
-    content: docStore.getDocument(url)
-  };
+  const doc = context.getStore(DocumentStore).getDocument(url);
+  return { doc };
 });
 
 export default AuthApiPage;

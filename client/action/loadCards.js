@@ -6,11 +6,13 @@ export default function loadCards(context, payload) {
   const success = ({ cards }) => {
     context.dispatch('CARDS_LOAD_SUCCESS', { cards });
     logger.debug('Cards loaded successfully.');
+    return Promise.resolve();
   };
 
   const failure = (err) => {
     context.dispatch('CARDS_LOAD_FAILURE', { err });
     logger.warn('Error loading cards.', { err });
+    return Promise.resolve();
   };
 
   // First, check to see if the content has already been loaded.

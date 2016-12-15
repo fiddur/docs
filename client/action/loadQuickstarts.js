@@ -7,11 +7,13 @@ export default function loadQuickstarts(context, payload) {
   const success = ({ quickstarts }) => {
     context.dispatch('QUICKSTARTS_LOAD_SUCCESS', { quickstarts });
     logger.debug('Platforms loaded successfully.');
+    return Promise.resolve();
   };
 
   const failure = (err) => {
     context.dispatch('QUICKSTARTS_LOAD_FAILURE', { err });
     logger.warn('Error loading quickstarts.', { err });
+    return Promise.resolve();
   };
 
   // First, check to see if the content has already been loaded.

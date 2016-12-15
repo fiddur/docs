@@ -3,7 +3,7 @@ import DocumentStore from '../stores/DocumentStore';
 import LoadState from '../stores/LoadState';
 import normalizeUrl from '../util/normalizeUrl';
 
-export default function loadDocument(context, payload, done) {
+export default function loadDocument(context, payload) {
   const logger = context.getService('LoggingService');
   const url = normalizeUrl(payload.url);
 
@@ -18,13 +18,13 @@ export default function loadDocument(context, payload, done) {
     }
     context.dispatch('DOCUMENT_LOAD_SUCCESS', { url, doc });
     logger.debug('Document loaded successfully.', { url });
-    if (done) done();
+    return Promise.resolve();
   };
 
   const failure = (err) => {
     context.dispatch('DOCUMENT_LOAD_FAILURE', { url, err });
     logger.warn('Error loading document.', { url, err });
-    if (done) done();
+    return Promise.resolve();
   };
 
   // First, check to see if the doc has already been loaded.
@@ -35,7 +35,7 @@ export default function loadDocument(context, payload, done) {
       return success(doc);
     } else if (doc.state === LoadState.LOADING) {
       // If it's already being loaded, don't load it again.
-      return done();
+      return Promise.resolve();
     }
   }
 

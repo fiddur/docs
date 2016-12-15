@@ -4,6 +4,7 @@ import { handleHistory } from 'fluxible-router';
 import ApplicationStore from '../stores/ApplicationStore';
 import UserStore from '../stores/UserStore';
 import DocumentStore from '../stores/DocumentStore';
+import StaticContentStore from '../stores/StaticContentStore';
 import ErrorPage from './pages/ErrorPage';
 import highlightCode from '../browser/highlightCode';
 import Header from './Header';
@@ -57,7 +58,7 @@ class Application extends React.Component {
 
 
   render() {
-    const { currentRoute, user, isFramedMode, isFullWidthMode } = this.props;
+    const { currentRoute, doc, fullWidth, isAuthenticated, isFramedMode } = this.props;
 
     // Temporary fix for: https://github.com/yahoo/fluxible-router/issues/108
     if (!currentRoute && typeof document !== 'undefined') {
@@ -69,9 +70,9 @@ class Application extends React.Component {
       header = (
         <Header
           theme="gray"
-          user={user}
+          isAuthenticated={isAuthenticated}
           currentRoute={currentRoute}
-          fullWidth={isFullWidthMode}
+          fullWidth={fullWidth}
         />
       );
     }
@@ -92,11 +93,10 @@ class Application extends React.Component {
 Application.propTypes = {
   doc: React.PropTypes.object,
   currentRoute: React.PropTypes.object.isRequired,
+  fullWidth: React.PropTypes.bool.isRequired,
   isAuthenticated: React.PropTypes.bool.isRequired,
   isFramedMode: React.PropTypes.bool.isRequired,
-  isFullWidthMode: React.PropTypes.bool.isRequired,
-  pageTitle: React.PropTypes.string.isRequired,
-  user: React.PropTypes.object
+  pageTitle: React.PropTypes.string.isRequired
 };
 
 Application = connectToStores(Application, [ApplicationStore], (context, props) => {
@@ -104,18 +104,24 @@ Application = connectToStores(Application, [ApplicationStore], (context, props) 
   const userStore = context.getStore(UserStore);
 
   let doc;
+  let fullWidth = false;
   if (props.currentRoute) {
     doc = context.getStore(DocumentStore).getDocument(props.currentRoute.url);
+    if (doc && doc.meta) fullWidth = !!doc.meta.fullWidth;
+  }
+
+  const staticContent = context.getStore(StaticContentStore).getContent();
+  if (staticContent) {
+    fullWidth = !!staticContent.meta.fullWidth;
   }
 
   return {
     doc,
+    fullWidth,
     currentRoute: props.currentRoute,
     isAuthenticated: userStore.isAuthenticated(),
     isFramedMode: appStore.isFramedMode(),
-    isFullWidthMode: appStore.isFullWidthMode(),
-    pageTitle: appStore.getPageTitle(),
-    user: userStore.isAuthenticated() ? userStore.getUser() : undefined
+    pageTitle: appStore.getPageTitle()
   };
 });
 

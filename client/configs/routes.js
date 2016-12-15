@@ -86,20 +86,14 @@ export default {
   mgmtApiExplorerV2: {
     path: '/docs/api/management/v2',
     method: 'get',
-    handler: AuthApiPage
-    /* action: (context, payload) => {
-      const env = { fullWidth: true };
-      return Promise.all([
-        updateEnvironment(context, { env }),
-        loadContent(context, payload)
-      ]);
-    }*/
+    handler: StaticPage
   },
 
   authApiExplorer: {
     path: '/docs/api/authentication',
     method: 'get',
-    handler: StaticPage
+    handler: AuthApiPage,
+    action: loadDocument
   },
 
   article: {

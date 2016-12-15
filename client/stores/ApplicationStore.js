@@ -11,10 +11,6 @@ class ApplicationStore extends BaseStore {
     this.pageDescription = '';
   }
 
-  isFullWidthMode() {
-    return !!this.flags.fullWidth;
-  }
-
   isFramedMode() {
     return !!this.flags.framed;
   }
@@ -32,7 +28,7 @@ class ApplicationStore extends BaseStore {
   }
 
   handleModeFlagsLoaded(payload) {
-    this.flags = payload.flags;
+    this.flags = Object.extend({}, this.flags, payload.flags);
     this.emitChange();
   }
 

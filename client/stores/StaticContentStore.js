@@ -6,7 +6,7 @@ class StaticContentStore extends BaseStore {
 
   constructor(dispatcher) {
     super(dispatcher);
-    this.content = {};
+    this.content = undefined;
   }
 
   getContent() {

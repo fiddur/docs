@@ -6,10 +6,10 @@ const DocumentService = {};
 DocumentService.load = (url, options = {}) => (
   new Promise((resolve, reject) => {
     const normalizedUrl = parse(url).pathname.replace(/^\/docs/, '');
-    const doc = docs.getByUrl(normalizedUrl);
+    const doc = docs.tryGetByUrl(normalizedUrl);
 
     if (!doc) {
-      const error = new Error(`No content found at ${normalizedUrl}`);
+      const error = new Error(`No document found at ${normalizedUrl}`);
       error.status = 404;
       return reject(error);
     }

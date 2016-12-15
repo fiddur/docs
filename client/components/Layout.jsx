@@ -34,14 +34,14 @@ class Layout extends React.Component {
   cssAssetBundle() {
     const url = getAssetBundleUrl('commons', 'css');
     if (url) {
-      return <link rel="stylesheet" href={url}/>;
+      return <link rel="stylesheet" href={url} />;
     }
     return undefined;
   }
 
   footer() {
-    const { flags } = this.props;
-    if (!flags.fullWidth && !flags.framed) {
+    const { flags, fullWidth } = this.props;
+    if (!fullWidth && !flags.framed) {
       return <Footer />;
     }
     return undefined;
@@ -85,7 +85,7 @@ class Layout extends React.Component {
           <link rel="stylesheet" href="https://cdn.auth0.com/styleguide-components/0.0.1/components.min.css" />
           {this.cssAssetBundle()}
 
-          {this.getEnvScript()}
+          {this.envScript()}
           <script
             src="https://code.jquery.com/jquery-2.2.4.min.js" integrity="sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44="
             crossOrigin="anonymous"
