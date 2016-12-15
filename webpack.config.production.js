@@ -5,6 +5,7 @@ var ExtractTextPlugin = require('extract-text-webpack-plugin');
 var autoprefixer = require('autoprefixer');
 var precss = require('precss');
 var nconf = require('nconf');
+var fs = require('fs');
 
 require('./config');
 
@@ -15,7 +16,6 @@ var webpackConfig = {
   entry: {
     client: './client/client.js',
     base: './client/base.js',
-    standard: './client/standard.js',
     browser: './client/browser.js'
   },
   output: {
@@ -23,11 +23,14 @@ var webpackConfig = {
     filename: '[name].[chunkhash].bundle.js',
     chunkFilename: '[id].[chunkhash].chunk.js'
   },
+  externals: {
+    jquery: 'jQuery'
+  },
   module: {
     loaders: [{
       test: /\.(js|jsx)$/,
       exclude: [
-        path.resolve(__dirname, 'node_modules'),
+        path.resolve(__dirname, 'node_modules')
       ],
       loaders: [
         require.resolve('react-hot-loader'),
@@ -47,8 +50,10 @@ var webpackConfig = {
   plugins: [
     new Clean(['./public/js']),
     new webpack.ProvidePlugin({
+      $: 'jquery',
+      jQuery: 'jquery',
       Promise: 'imports?this=>global!exports?global.Promise!es6-promise',
-      fetch: 'imports?this=>global!exports?global.fetch!whatwg-fetch',
+      fetch: 'imports?this=>global!exports?global.fetch!whatwg-fetch'
     }),
     new webpack.DefinePlugin({
       'process.env': {
@@ -71,7 +76,7 @@ var webpackConfig = {
     }),
     function() {
       this.plugin('done', function(stats) {
-        require('fs').writeFileSync(
+        fs.writeFileSync(
           path.join(__dirname, './public/js/assets.json'),
           JSON.stringify(stats.toJson().assetsByChunkName));
       });

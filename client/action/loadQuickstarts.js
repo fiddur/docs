@@ -13,15 +13,13 @@ export default function loadQuickstarts(context, payload) {
 
   const failure = (err) => {
     context.dispatch('QUICKSTARTS_LOAD_FAILURE', { err });
-    logger.warn('Error loading platforms.', { err });
+    logger.warn('Error loading quickstarts.', { err });
   };
 
   // First, check to see if the content has already been loaded.
   const quickstarts = context.getStore(TutorialStore).getQuickstarts();
   if (quickstarts) {
-    // Quickstarts are already loaded so we just return.
-    // The loadSettingsAction is only designed to be called once.
-    return Promise.resolve();
+    return success({ quickstarts });
   }
 
   // If the cards haven't been loaded (or a previous load resulted in

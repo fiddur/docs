@@ -1,14 +1,15 @@
 import tutorialNavigatorActions from '../action/tutorialNavigatorActions';
 import loadContent from '../action/loadContent';
 import loadCards from '../action/loadCards';
-import loadPlatforms from '../action/loadPlatforms';
 import loadQuickstarts from '../action/loadQuickstarts';
+import updateEnvironment from '../action/updateEnvironment';
 import HomePage from '../components/Home';
 import StaticPage from '../components/StaticPage';
 import ArticlePage from '../components/ArticlePage';
 import SearchPage from '../components/SearchPage';
 import TutorialPage from '../components/TutorialPage';
 import QuickstartsPage from '../components/QuickstartsPage';
+import AuthApiPage from '../components/AuthApiPage';
 
 export default {
 
@@ -71,13 +72,6 @@ export default {
     handler: SearchPage
   },
 
-  // sdks: {
-  //   path: '/docs/sdks',
-  //   method: 'get',
-  //   handler: require('../components/SdksPage'),
-  //   action: loadPlatforms
-  // },
-
   updates: {
     path: '/docs/updates',
     method: 'get',
@@ -90,16 +84,23 @@ export default {
     handler: StaticPage
   },
 
-  authApiExplorer: {
+  authApiExplorerLegacy: {
     path: '/docs/api/authentication',
     method: 'get',
     handler: StaticPage
   },
 
-  updates: {
-    path: '/docs/updates*',
+  authApiExplorer: {
+    path: '/docs/api/authentication/reference',
     method: 'get',
-    handler: StaticPage
+    handler: AuthApiPage,
+    action: (context, payload) => {
+      const env = { fullWidth: true };
+      return Promise.all([
+        updateEnvironment(context, { env }),
+        loadContent(context, payload)
+      ]);
+    }
   },
 
   article: {

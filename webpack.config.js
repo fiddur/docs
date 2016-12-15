@@ -10,29 +10,24 @@ var webpackConfig = {
   displayErrorDetails: true,
   resolve: {
     alias: {
-      react: path.resolve('./node_modules/react'),
+      react: path.resolve('./node_modules/react')
     },
     extensions: ['', '.js', '.jsx'],
-    fallback: path.join(__dirname, "node_modules")
+    fallback: path.join(__dirname, 'node_modules')
   },
   resolveLoader: {
-    fallback: path.join(__dirname, "node_modules")
+    fallback: path.join(__dirname, 'node_modules')
   },
   entry: {
     client: [
       'webpack-dev-server/client?http://localhost:3000',
       'webpack/hot/only-dev-server',
-      './client/client.js',
+      './client/client.js'
     ],
     base: [
       'webpack-dev-server/client?http://localhost:3000',
       'webpack/hot/only-dev-server',
-      './client/base.js',
-    ],
-    standard: [
-      'webpack-dev-server/client?http://localhost:3000',
-      'webpack/hot/only-dev-server',
-      './client/standard.js'
+      './client/base.js'
     ],
     browser: [
       'webpack-dev-server/client?http://localhost:3000',
@@ -46,11 +41,14 @@ var webpackConfig = {
     filename: '[name].bundle.js',
     chunkFilename: '[id].chunk.js'
   },
+  externals: {
+    jquery: 'jQuery'
+  },
   module: {
     loaders: [{
       test: /\.(js|jsx)$/,
       exclude: [
-        path.resolve(__dirname, 'node_modules'),
+        path.resolve(__dirname, 'node_modules')
       ],
       loaders: [
         require.resolve('react-hot-loader'),
@@ -70,8 +68,10 @@ var webpackConfig = {
   plugins: [
     new Clean(['./public/js/']),
     new webpack.ProvidePlugin({
+      $: 'jquery',
+      jQuery: 'jquery',
       Promise: 'imports?this=>global!exports?global.Promise!es6-promise',
-      fetch: 'imports?this=>global!exports?global.fetch!whatwg-fetch',
+      fetch: 'imports?this=>global!exports?global.fetch!whatwg-fetch'
     }),
     new webpack.HotModuleReplacementPlugin(),
     new webpack.NoErrorsPlugin(),

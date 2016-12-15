@@ -176,7 +176,12 @@ server.use((internalErr, req, res, next) => {
     err.stack = internalErr.stack;
   }
 
-  if (res.locals.embedded) {
+  if (res.locals.embedded && req.headers['content-type'] === 'application/json') {
+    res.type('json')
+    .status(err.status)
+    .json(err)
+    .end();
+  } else if (res.locals.embedded) {
     res.type('html')
     .status(err.status)
     .send(`<h1>${err.title}</h1><h2>${err.status}</h2><pre>${err.stack}</pre>`)

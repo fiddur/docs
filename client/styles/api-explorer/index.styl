@@ -1,0 +1,356 @@
+@import 'vars'
+@import 'modules/nav'
+@import 'modules/http-method'
+
+.api-explorer
+  position: relative;
+
+  .api-sidebar
+    +breakpoint("desktop")
+      position: absolute;
+      left: 0;
+      top: 0;
+      height: 100%;
+      background: $gray-lighter;
+      min-height: 100vh;
+      width: $nav-width;
+
+    // +breakpoint("desktop-hd")
+    //   width: $nav-width-hd;
+
+  ////////////////////////////////////////////////////////////////////////////////
+  // PAGE LAYOUT AND CODE SAMPLE BACKGROUND
+  ////////////////////////////////////////////////////////////////////////////////
+  .page-wrapper
+    position: relative
+    z-index: 10
+    min-height: 100%
+    padding-bottom: 1px
+
+    +breakpoint("desktop")
+      margin-left: $nav-width;
+
+    +breakpoint("desktop-hd")
+      margin-left: $nav-width-hd;
+
+    // prevent margin overflow
+    // The dark box is what gives the code samples their dark background.
+    // It sits essentially under the actual content block, which has a
+    // transparent background.
+    // I know, it's hackish, but it's the simplist way to make the left
+    // half of the content always this background color.
+    .dark-box
+      width: $examples-width
+      background-color: $examples-bg
+      position: absolute
+      right: 0
+      top: 0
+      bottom: 0
+
+    .lang-mobile-sticky
+      +breakpoint("desktop", "max")
+        top: 43px !important
+
+    .lang-selector-container
+      z-index 50
+      position absolute
+      top 0
+      right 0
+
+      +breakpoint("tablet", "max")
+        width 100%
+        left 0
+
+      +breakpoint("tablet")
+        width 50%
+
+    .lang-selector
+      background-color: $lang-select-bg
+      width: 100%
+      text-transform capitalize
+      display flex
+      justify-content space-between
+
+      .lang-selector-selected
+        display none
+
+      a
+        display: block
+        color: $lang-select-text
+        text-decoration: none
+        padding: 10px 0
+        line-height: 30px
+        outline: 0
+        text-align center
+        flex-grow 1
+
+        &:active, &:focus
+          background-color: $lang-select-pressed-bg
+          color: $lang-select-pressed-text
+
+        &.active
+          background-color: $lang-select-active-bg
+          color: $lang-select-active-text
+
+      &:after
+        content: ''
+        clear: both
+        display: block
+
+      +breakpoint("desktop", "max")
+        flex-direction column
+        position relative
+
+        &.open a
+          display block
+
+        > a
+          display none
+          text-align left
+          padding-left 20px
+
+          &.active
+            background-color black
+
+        .lang-selector-selected
+          display block
+          height 50px
+          line-height 50px
+          padding 0 20px
+          cursor pointer
+
+          > i
+            position absolute
+            right 20px
+            top 4px
+            color white
+
+          > .language-label
+            padding-right 5px
+            color rgba(white, 0.5)
+
+          > .language
+            color white
+
+    ////////////////////////////////////////////////////////////////////////////////
+    // CONTENT STYLES
+    ////////////////////////////////////////////////////////////////////////////////
+    // This is all the stuff with the light background in the left half of the page
+    .api-content
+      // to place content above the dark box
+      position: relative
+      z-index: 30
+
+      // To push content down the language selector sticky element
+      +breakpoint("tablet", "max")
+        padding-top 43px
+
+      &:after
+        content: ''
+        display: block
+        clear: both
+
+      .api-section
+        padding-bottom 80px
+        border-bottom 1px solid rgba(black, 0.075)
+
+        > h1
+          margin 0
+          padding-top 40px
+          padding-bottom 20px
+          line-height 48px
+          font-size 32px
+          clear both
+
+        > h2
+          font-size 24px
+          margin 0
+          padding-top 36px
+          padding-bottom 14px
+          clear both
+
+        > h3
+          font-weight $font-weight-bold
+          font-size 16px
+          color $color-oil
+          margin-top 36px
+          margin-bottom: 20px;
+
+        > h1,
+        > h2,
+        > h3,
+        > h4,
+        > h5,
+        > h6,
+        > p,
+        > ul,
+        > ol,
+        > aside,
+        > dl
+        > .test-endpoint-box
+          padding-left: 40px;
+          padding-right: 40px;
+
+          +breakpoint("tablet")
+            margin-right: $examples-width
+
+        +breakpoint("tablet")
+          min-height 100vh
+          overflow: hidden // Fix code examples going out of section
+
+      // Remove margins of empty paragraphs
+      p:empty
+        margin 0
+
+      li, p
+        color #4d4d4d
+
+      table
+        margin-left 40px
+        width calc(100% - 80px)
+        table-layout fixed //Fix table content going out of the table
+
+        +breakpoint("tablet")
+          width calc(50% - 80px)
+          margin-right $examples-width
+
+      ul, ol
+
+        ul, ol, li, p
+          margin 0
+          padding 0
+
+        li
+          margin 10px 0
+          padding-left 20px
+          position relative
+
+      ul
+        list-style-type none
+
+        li:before
+          content "—"
+          position absolute
+          left 0px
+          top 0px
+          opacity 0.5
+
+      .panel
+        margin-left: 40px;
+        margin-right: 40px;
+
+        +breakpoint("tablet")
+          margin-right: "calc(%s + 40px)" % $examples-width
+
+        .panel-heading
+          padding: 15px;
+        
+        .panel-body:after,
+        .panel-body:before
+          display: none; //Fix bug with empty space
+          
+
+      .anchor-heading
+        cursor auto
+
+        > .anchor
+          display none
+
+      .test-endpoint-box
+        padding-bottom: 20px;
+
+
+    ////////////////////////////////////////////////////////////////////////////////
+    // CODE SAMPLE STYLES
+    ////////////////////////////////////////////////////////////////////////////////
+    // This is all the stuff that appears in the right half of the page
+    .api-content
+      pre, blockquote
+        background-color: $code-bg
+        color: #fff
+        padding: 0 $main-padding
+        margin: 0
+        box-sizing: border-box
+        font-style normal
+        border none
+        border-radius 0
+
+        @extend $right-col
+
+        +breakpoint("tablet")
+          width: $examples-width
+          float: right
+          clear: right
+
+        & > p
+          margin: 0
+
+        a
+          color: #fff
+          text-decoration: none
+          border-bottom: dashed 1px #ccc
+
+        code
+          background-color: $code-bg !important
+
+          +breakpoint("tablet", "max")
+
+            padding 30px 12px !important
+
+      pre + p
+        +breakpoint("tablet", "max")
+          margin-top 20px
+
+      blockquote
+        padding 10px $main-padding
+        background-color $examples-bg
+
+        & > p
+          padding 0 15px
+          color white
+          font-size 16px
+
+      .code-snippet-title
+        font-size 14px
+        letter-spacing 1px
+        text-transform uppercase
+        padding 0 28px 20px
+        margin 0
+        display none
+
+        +breakpoint("tablet")
+          color white
+          width 50%
+          float right
+          clear right
+
+
+
+
+
+    ////////////////////////////////////////////////////////////////////////////////
+    // RESPONSIVE DESIGN
+    ////////////////////////////////////////////////////////////////////////////////
+    // These are the styles for phones and tablets
+    // There are also a couple styles disperesed
+    @media (max-width: $tablet-width)
+      .page-wrapper
+        margin-left: 0
+    @media (max-width: $phone-width)
+      .dark-box
+        display: none
+      $left-col
+        margin-right: 0
+      .tocify-wrapper .lang-selector
+        display: block
+      .page-wrapper .lang-selector
+        display: none
+      $right-col
+        width: auto
+        float: none
+      $right-col + $left-col
+        margin-top: $main-padding
+    .highlight .c, .highlight .cm, .highlight .c1, .highlight .cs
+      color: #909090
+    .highlight, .highlight .w
+      background-color: $code-bg

@@ -1,0 +1,312 @@
+.api-sidebar
+  line-height: 1;
+
+  .sticky-nav-placeholder
+    +breakpoint("desktop", "max")
+      position relative
+      z-index 20
+
+  .sticky-nav
+
+    // Make sidebar scrollable
+    +breakpoint("desktop")
+      max-height: 100vh; //Full height minus navbar height
+      overflow-y: scroll;
+
+    &.fixed
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      z-index: 600;
+
+      +breakpoint("desktop")
+        width: $nav-width;
+        height: 100%;
+        overflow-y: auto;
+
+      +breakpoint("desktop-hd")
+        width: $nav-width-hd;
+
+    .sticky-nav-selected
+      position relative
+      background white
+      padding 15px 20px
+      text-transform uppercase
+      letter-spacing .08em
+      font-size 12px
+      border-bottom 1px solid #ebebee
+
+      +breakpoint("desktop")
+        display none
+
+      > i
+        position absolute
+        right 20px
+
+    .tocify
+      transition: height 300ms ease;
+      overflow-y: scroll;
+      overflow-x: hidden;
+      background: darken($color-oil, 15%);
+      box-shadow: inset 0 2px 10px 0 rgba(0,0,0,0.4);
+      line-height: 1;
+      z-index: 500;
+
+      +breakpoint("desktop", "max")
+        height 0
+
+        .title
+          display none
+
+        &.open
+          height 100vh
+
+      +breakpoint("desktop")
+        top: 43px;
+        width: 100%;
+        position: static;
+        height: auto;
+        overflow: visible;
+        background: $gray-lighter;
+        box-shadow: none;
+
+        .title
+          display: inline-block;
+          content: attr(label);
+          text-transform: uppercase;
+          letter-spacing: 0.08em;
+          color: $color-oil;
+          font-size: 13px;
+          font-weight 500;
+          margin-bottom: 15px;
+          margin-top: 30px;
+          padding: 0 20px;
+
+      [data-resource]
+        +breakpoint("desktop")
+          cursor: pointer;
+
+        .item
+          +breakpoint("desktop")
+            display: none;
+
+          .label
+            text-transform: uppercase;
+            color: white;
+            font-size: 11px;
+            margin-bottom: 10px;
+            text-align: left;
+            padding: 0;
+            margin-left: 8px;
+            opacity: 0.5;
+
+            +breakpoint("desktop")
+              color: #acb3ba;
+              opacity: 1;
+
+        &.active
+          &:before
+            +breakpoint("desktop")
+              //color: #333;
+
+          .item
+            +breakpoint("desktop")
+              display: block;
+
+
+      .tocify-header
+        padding: 0;
+        margin: 0;
+
+        .tocify-item
+          list-style: none;
+          display: block;
+
+          a
+            display: block;
+            color: white;
+            padding: 10px 20px;
+
+            +breakpoint("desktop")
+              font-size: 16px;
+              font-weight: normal;
+              letter-spacing: 0;
+              color: $color-oil;
+
+        // First level items
+        & > .tocify-item > a
+          +breakpoint("desktop", "max")
+            text-transform uppercase
+            background-color #454d53
+            font-size 11px
+            letter-spacing 0.08em
+            font-weight 500
+
+
+        .tocify-subheader
+          padding: 0;
+
+          .tocify-item > a
+            font-size: 14px;
+
+            +breakpoint("desktop")
+              background: #f3f3f4;
+              color: #5c666f;
+              padding: 9;
+              padding-left 40px
+
+            +breakpoint("desktop", "max")
+              padding 10px 20px
+              color white
+
+          .tocify-focus a
+
+            +breakpoint("desktop")
+              color black
+              font-weight 500
+
+            +breakpoint("desktop", "max")
+              background-color rgba(68,199,244,.5)
+
+
+
+      [label="Tools"]
+        +breakpoint("desktop")
+          display: none;
+
+      .tocify-item
+        a
+          padding: 12px 20px;
+          color: white;
+          cursor: pointer;
+          overflow: hidden;
+          text-overflow: ellipsis;
+          white-space: nowrap;
+          position: relative;
+
+          +breakpoint("desktop")
+            color: $color-oil;
+            padding: 9px;
+            padding-left: 40px;
+            font-size: 14px;
+
+            &:hover,
+            &:active
+              color: darken($gray-darker, 10%);
+
+          &[data-tg-switch]
+            &:after
+              content: 'OFF';
+              position: absolute;
+              right: 20px;
+              top: 8px;
+              display: block;
+              background: black;
+              width: 40px;
+              font-size: 11px;
+              font-weight 500;
+              text-transform: uppercase;
+              text-align: center;
+              padding: 5px 0;
+              border-radius: 13px;
+              opacity: 0.2;
+
+            &.active:after
+              content: 'ON';
+              background: rgba(68, 199, 244, 0.5);
+              opacity: 1;
+
+        a
+          color: #333;
+
+        a.active,
+        &[data-selected]
+          background: rgba(68, 199, 244, 0.5);
+          padding-right: 42px;
+
+          +breakpoint("desktop")
+            background: darken($gray-lighter, 2%);
+            font-weight 500;
+            color: #333;
+
+            &:hover,
+            &:active
+              color: #333;
+
+          &:after
+            budicon("\E178");
+            font-size: 12px;
+            position: absolute;
+            top: 15px;
+            right: 20px;
+            opacity: 0.7;
+            pointer-events: none;
+
+            +breakpoint("desktop")
+              display: none;
+
+        & + .tocify-item
+          border-top: 1px solid darken($color-oil, 5%);
+
+          +breakpoint("desktop")
+            border-top: 1px solid #E8EAEB;
+
+    &.nav-open
+      [data-navigator]
+        height: 180px;
+        height: 100vh;
+
+        +breakpoint("desktop")
+          height: auto;
+
+  .custom-select
+    position: relative;
+
+    &.disabled
+      opacity: 0.65;
+
+    select
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      opacity: 0;
+      -webkit-appearance: none;
+
+  .mobile-nav
+    position: relative;
+    background: white;
+    padding: 15px 20px;
+    cursor: default;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    font-size: 12px;
+    border-bottom: 1px solid darken($gray-lighter, 5%);
+    z-index: 800;
+
+    +breakpoint("desktop")
+      display: none;
+
+    &:after
+      budicon("\E16E");
+      font-size: 12px;
+      position: absolute;
+      top: 15px;
+      right: 20px;
+      opacity: 0.7;
+      pointer-events: none;
+
+    > span
+      display: table-cell;
+
+    .select-label
+      color: $gray-darker;
+      min-width: 110px;
+
+    [data-selected-value]
+      max-width: 140px;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;

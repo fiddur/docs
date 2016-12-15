@@ -1,4 +1,6 @@
+import _ from 'lodash';
 import BaseStore from 'fluxible/addons/BaseStore';
+
 
 class ApplicationStore extends BaseStore {
 
@@ -8,6 +10,11 @@ class ApplicationStore extends BaseStore {
     this.user = null;
     this.pageTitle = '';
     this.pageDescription = '';
+  }
+
+  handleEnvironmentUpdated(payload) {
+    this.env = _.merge(this.env, payload.env);
+    this.emitChange();
   }
 
   handleEnvironmentLoaded(payload) {
@@ -43,7 +50,7 @@ class ApplicationStore extends BaseStore {
       env: this.env,
       user: this.user,
       pageTitle: this.pageTitle,
-      pageDescription: this.pageDescription,
+      pageDescription: this.pageDescription
     };
   }
 
@@ -58,6 +65,7 @@ class ApplicationStore extends BaseStore {
 
 ApplicationStore.storeName = 'ApplicationStore';
 ApplicationStore.handlers = {
+  'ENVIRONMENT_UPDATED': 'handleEnvironmentUpdated',
   'ENVIRONMENT_LOADED': 'handleEnvironmentLoaded',
   'UPDATE_PAGE_METADATA': 'handlePageMetadata',
 };

@@ -52,11 +52,11 @@ class Layout extends React.Component {
 
           <meta charSet="utf-8"/>
           <title>{this.title()}</title>
-          <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-          <meta name="google-site-verification" content="4aSwkVvotRegQ6g32k-21r38Fls9sO8VT5LytKdin3o"/>
-          <meta name="description" content={this.description()}/>
-          <meta name="author" content="Auth0"/>
-          <meta name="keywords" content="auth0, authentication, sso, passwordless, user, profile, applications, identity, providers, nodejs, ruby, scala, angular, go, php, rails"/>
+          <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+          <meta name="google-site-verification" content="4aSwkVvotRegQ6g32k-21r38Fls9sO8VT5LytKdin3o" />
+          <meta name="description" content={this.description()} />
+          <meta name="author" content="Auth0" />
+          <meta name="keywords" content="auth0, authentication, sso, passwordless, user, profile, applications, identity, providers, nodejs, ruby, scala, angular, go, php, rails" />
           {this.canonicalUrl()}
 
           {/* Twitter */}
@@ -84,7 +84,10 @@ class Layout extends React.Component {
           {this.cssAssetBundle()}
 
           {this.getEnvScript()}
-          <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+          <script
+            src="https://code.jquery.com/jquery-2.2.4.min.js" integrity="sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44="
+            crossOrigin="anonymous"
+          />
           <script src="https://cdn.ravenjs.com/3.7.0/raven.min.js"></script>
           <script src="//cdn.auth0.com/styleguide/vendor/bootstrap-3.2.0.min.js"></script>
           <script src="//cdn.auth0.com/js/lock/10.6/lock.min.js"></script>
