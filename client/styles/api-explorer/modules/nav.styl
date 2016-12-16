@@ -123,6 +123,10 @@
           list-style: none;
           display: block;
 
+          &.tocify-focus > a
+            color: $color-text-black;
+            font-weight: $font-weight-bold;
+
           a
             display: block;
             color: white;
@@ -163,8 +167,8 @@
           .tocify-focus a
 
             +breakpoint("desktop")
-              color black
-              font-weight 500
+              color: $color-text-black;
+              font-weight: $font-weight-bold;
 
             +breakpoint("desktop", "max")
               background-color rgba(68,199,244,.5)
