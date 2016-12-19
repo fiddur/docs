@@ -16,11 +16,11 @@ import eventLogger from './lib/logs/event-logger';
 import requestLogger from './lib/logs/request-logger';
 import bootstrap from './lib/bootstrap';
 import defaultValues from './lib/middleware/default-values';
-import embedded from './lib/middleware/embedded';
 import overrideIfAuthenticated from './lib/middleware/override-if-authenticated';
 import overrideClientQsPublic from './lib/middleware/override-client-qs-public-urls';
 import overrideClientQs from './lib/middleware/override-client-qs';
 import setCurrentTenant from './lib/middleware/set-current-tenant';
+import setModeFlags from './lib/middleware/set-mode-flags';
 import setUserIsOwner from './lib/middleware/set-user-is-owner';
 import docsVariables from './lib/middleware/docs-variables';
 import fetchABExperiments from './lib/middleware/ab-testing';
@@ -106,11 +106,22 @@ server.use(session({
 
 // security headers
 server.use(cors);
-server.use(helmet.frameguard({ action: 'deny' }));
 server.use(helmet.hsts({ maxAge: 31536000000 }));
 server.use(helmet.xssFilter());
 server.use(helmet.noSniff());
 server.use(helmet.hidePoweredBy());
+
+// Only the quickstarts can be embedded in an iframe. We can't use helmet's frameguard
+// middleware because it doesn't support exceptions on certain URLs.
+// TODO: It would be nice if we could use the ALLOW FROM directive with the management
+// site's URL, but it isn't supported in most browsers. Eventually we should consider
+// setting a Content-Security-Policy header instead.
+server.use((req, res, next) => {
+  if (!req.originalUrl.startsWith('/docs/quickstart')) {
+    res.setHeader('X-Frame-Options', 'DENY');
+  }
+  next();
+});
 
 server.use(methodOverride());
 
@@ -125,7 +136,7 @@ server.use(passport.session());
 server.use(setCurrentTenant);
 server.use(setUserIsOwner);
 server.use(defaultValues);
-server.use(embedded);
+server.use(setModeFlags);
 server.use(overrideIfAuthenticated);
 server.use(overrideClientQs);
 server.use(overrideClientQsPublic);

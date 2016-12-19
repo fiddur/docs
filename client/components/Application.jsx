@@ -2,15 +2,20 @@ import React from 'react';
 import { connectToStores, provideContext } from 'fluxible-addons-react';
 import { handleHistory } from 'fluxible-router';
 import ApplicationStore from '../stores/ApplicationStore';
-import ContentStore from '../stores/ContentStore';
-import ErrorPage from './ErrorPage';
+import UserStore from '../stores/UserStore';
+import DocumentStore from '../stores/DocumentStore';
+import StaticContentStore from '../stores/StaticContentStore';
+import ErrorPage from './pages/ErrorPage';
 import highlightCode from '../browser/highlightCode';
 import Header from './Header';
+import sendMessageToParentFrame from '../util/sendMessageToParentFrame';
 
 class Application extends React.Component {
 
   componentDidMount() {
-    this.initClientScripts();
+    if (this.props.isFramedMode) {
+      sendMessageToParentFrame({ type: 'ready' });
+    }
   }
 
   componentDidUpdate(prevProps, prevState) {
@@ -21,6 +26,9 @@ class Application extends React.Component {
     if (newProps.currentRoute.url !== prevProps.currentRoute.url) {
       this.props.context.trackPage();
     }
+    if (newProps.isFramedMode) {
+      sendMessageToParentFrame({ type: 'contentChanged' });
+    }
     this.initClientScripts();
   }
 
@@ -29,15 +37,15 @@ class Application extends React.Component {
   }
 
   getHandler() {
-    const { content, currentRoute, currentNavigateError } = this.props;
+    const { doc, currentRoute, currentNavigateError } = this.props;
 
     if (!currentRoute) {
       let error = { message: 'Not Found', status: 404 };
       return <ErrorPage error={error} />;
     }
 
-    if (content && content.err) {
-      return <ErrorPage error={content.err} />;
+    if (doc && doc.err) {
+      return <ErrorPage error={doc.err} />;
     }
 
     if (currentNavigateError) {
@@ -50,17 +58,31 @@ class Application extends React.Component {
 
 
   render() {
-    const { currentRoute, user } = this.props;
-    const fullWidth = !!this.props.env.fullWidth;
+    const { currentRoute, doc, fullWidth, isAuthenticated, isFramedMode } = this.props;
 
     // Temporary fix for: https://github.com/yahoo/fluxible-router/issues/108
     if (!currentRoute && typeof document !== 'undefined') {
       document.location = document.location;
     }
 
+    let header;
+    if (!isFramedMode) {
+      header = (
+        <Header
+          theme="gray"
+          isAuthenticated={isAuthenticated}
+          currentRoute={currentRoute}
+          fullWidth={fullWidth}
+        />
+      );
+    }
+
+    const styles = ['docs-application'];
+    if (isFramedMode) styles.push('framed-mode');
+
     return (
-      <div>
-        <Header theme= "gray" user={user} currentRoute={currentRoute} fullWidth={fullWidth} />
+      <div className={styles.join(' ')}>
+        {header}
         {this.getHandler()}
       </div>
     );
@@ -68,20 +90,38 @@ class Application extends React.Component {
 
 }
 
+Application.propTypes = {
+  doc: React.PropTypes.object,
+  currentRoute: React.PropTypes.object.isRequired,
+  fullWidth: React.PropTypes.bool.isRequired,
+  isAuthenticated: React.PropTypes.bool.isRequired,
+  isFramedMode: React.PropTypes.bool.isRequired,
+  pageTitle: React.PropTypes.string.isRequired
+};
+
 Application = connectToStores(Application, [ApplicationStore], (context, props) => {
   const appStore = context.getStore(ApplicationStore);
+  const userStore = context.getStore(UserStore);
 
-  let content;
+  let doc;
+  let fullWidth = false;
   if (props.currentRoute) {
-    content = context.getStore(ContentStore).getContent(props.currentRoute.url);
+    doc = context.getStore(DocumentStore).getDocument(props.currentRoute.url);
+    if (doc && doc.meta) fullWidth = !!doc.meta.fullWidth;
+  }
+
+  const staticContent = context.getStore(StaticContentStore).getContent();
+  if (staticContent) {
+    fullWidth = !!staticContent.meta.fullWidth;
   }
 
   return {
-    env: appStore.getEnvironmentVars(),
-    user: appStore.getUser(),
-    pageTitle: appStore.getPageTitle(),
+    doc,
+    fullWidth,
     currentRoute: props.currentRoute,
-    content
+    isAuthenticated: userStore.isAuthenticated(),
+    isFramedMode: appStore.isFramedMode(),
+    pageTitle: appStore.getPageTitle()
   };
 });
 

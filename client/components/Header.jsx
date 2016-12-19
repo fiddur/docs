@@ -39,7 +39,7 @@ class Header extends Component {
   }
 
   render() {
-    const { currentRoute, user } = this.props;
+    const { currentRoute, isAuthenticated } = this.props;
 
     const props = {
       className: this.props.fullWidth ? 'header-full-width' : '',
@@ -49,7 +49,7 @@ class Header extends Component {
       featuredEnable: !this.props.fullWidth
     };
 
-    if (user) {
+    if (isAuthenticated) {
       props.loginButtonEnable = false;
       props.signupButtonText = 'Open Dashboard';
       props.signupButtonLink = 'https://manage.auth0.com/';
@@ -66,7 +66,7 @@ class Header extends Component {
 Header.propTypes = {
   theme: React.PropTypes.string,
   currentRoute: React.PropTypes.object,
-  user: React.PropTypes.object,
+  isAuthenticated: React.PropTypes.bool,
   fullWidth: React.PropTypes.bool
 };
 

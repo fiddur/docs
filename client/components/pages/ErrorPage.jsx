@@ -1,9 +1,9 @@
 import React from 'react';
 import { StickyContainer } from 'react-sticky';
 import { connectToStores } from 'fluxible-addons-react';
-import NavigationStore from '../stores/NavigationStore';
-import Sidebar from './Sidebar';
-import NavigationBar from './NavigationBar';
+import NavigationStore from '../../stores/NavigationStore';
+import Sidebar from '../Sidebar';
+import NavigationBar from '../NavigationBar';
 
 class ErrorPage extends React.Component {
 

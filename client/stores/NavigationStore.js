@@ -38,13 +38,6 @@ class NavigationStore extends BaseStore {
     return undefined;
   }
 
-  getQuickstarts() {
-    if (this.quickstarts) {
-      return this.quickstarts;
-    }
-    return [];
-  }
-
   handleNavigationLoaded(payload) {
     this.navigation = {
       sections: payload.sections,

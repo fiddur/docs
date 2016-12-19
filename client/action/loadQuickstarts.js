@@ -1,5 +1,4 @@
-import { loadSettingsAction, TutorialStore } from 'auth0-tutorial-navigator';
-import NavigationStore from '../stores/NavigationStore';
+import QuickstartStore from '../stores/QuickstartStore';
 import LoadState from '../stores/LoadState';
 
 export default function loadQuickstarts(context, payload) {
@@ -7,17 +6,18 @@ export default function loadQuickstarts(context, payload) {
 
   const success = ({ quickstarts }) => {
     context.dispatch('QUICKSTARTS_LOAD_SUCCESS', { quickstarts });
-    logger.debug('Quickstarts loaded successfully.');
-    return context.executeAction(loadSettingsAction, { quickstarts });
+    logger.debug('Platforms loaded successfully.');
+    return Promise.resolve();
   };
 
   const failure = (err) => {
     context.dispatch('QUICKSTARTS_LOAD_FAILURE', { err });
     logger.warn('Error loading quickstarts.', { err });
+    return Promise.resolve();
   };
 
   // First, check to see if the content has already been loaded.
-  const quickstarts = context.getStore(TutorialStore).getQuickstarts();
+  const quickstarts = context.getStore(QuickstartStore).getQuickstarts();
   if (quickstarts) {
     return success({ quickstarts });
   }

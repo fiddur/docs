@@ -6,35 +6,17 @@ class ApplicationStore extends BaseStore {
 
   constructor(dispatcher) {
     super(dispatcher);
-    this.env = null;
-    this.user = null;
+    this.flags = {};
     this.pageTitle = '';
     this.pageDescription = '';
   }
 
-  handleEnvironmentUpdated(payload) {
-    this.env = _.merge(this.env, payload.env);
-    this.emitChange();
+  isFramedMode() {
+    return !!this.flags.framed;
   }
 
-  handleEnvironmentLoaded(payload) {
-    this.env = payload.env;
-    this.user = payload.user;
-    this.emitChange();
-  }
-
-  handlePageMetadata(payload) {
-    this.pageTitle = payload.pageTitle;
-    this.pageDescription = payload.pageDescription;
-    this.emitChange();
-  }
-
-  getEnvironmentVars() {
-    return this.env;
-  }
-
-  getUser() {
-    return this.user;
+  isSingleQuickstartMode() {
+    return !!this.flags.singleQuickstart;
   }
 
   getPageTitle() {
@@ -45,18 +27,27 @@ class ApplicationStore extends BaseStore {
     return this.pageDescription;
   }
 
+  handleModeFlagsLoaded(payload) {
+    this.flags = Object.extend({}, this.flags, payload.flags);
+    this.emitChange();
+  }
+
+  handlePageMetadata(payload) {
+    this.pageTitle = payload.pageTitle;
+    this.pageDescription = payload.pageDescription;
+    this.emitChange();
+  }
+
   dehydrate() {
     return {
-      env: this.env,
-      user: this.user,
+      flags: this.flags,
       pageTitle: this.pageTitle,
       pageDescription: this.pageDescription
     };
   }
 
   rehydrate(state) {
-    this.env = state.env;
-    this.user = state.user;
+    this.flags = state.flags;
     this.pageTitle = state.pageTitle;
     this.pageDescription = state.pageDescription;
   }
@@ -65,9 +56,8 @@ class ApplicationStore extends BaseStore {
 
 ApplicationStore.storeName = 'ApplicationStore';
 ApplicationStore.handlers = {
-  'ENVIRONMENT_UPDATED': 'handleEnvironmentUpdated',
-  'ENVIRONMENT_LOADED': 'handleEnvironmentLoaded',
-  'UPDATE_PAGE_METADATA': 'handlePageMetadata',
+  MODE_FLAGS_LOADED: 'handleModeFlagsLoaded',
+  UPDATE_PAGE_METADATA: 'handlePageMetadata'
 };
 
 export default ApplicationStore;

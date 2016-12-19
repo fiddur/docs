@@ -1,25 +1,21 @@
 import { logger } from '../../lib/logs';
 
-export default function(req, res) {
+const LoggingService = {};
 
-  let LoggingService = {}
+LoggingService.debug = (msg, data) => {
+  logger.debug(msg, data);
+};
 
+LoggingService.info = (msg, data) => {
+  logger.info(msg, data);
+};
 
-  LoggingService.debug = function(msg, data) {
-    logger.debug(msg, data);
-  }
+LoggingService.warn = (msg, data) => {
+  logger.warn(msg, data);
+};
 
-  LoggingService.info = function(msg, data) {
-    logger.info(msg, data);
-  }
+LoggingService.error = (msg, data) => {
+  logger.error(msg, data);
+};
 
-  LoggingService.warn = function(msg, data) {
-    logger.warn(msg, data);
-  }
-
-  LoggingService.error = function(msg, data) {
-    logger.error(msg, data);
-  }
-
-  return LoggingService;
-}
+export default LoggingService;

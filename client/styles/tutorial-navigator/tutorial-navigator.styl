@@ -1,0 +1,250 @@
+// UI elements
+@import './carousel'
+@import './quickstarts'
+@import './breadcrumbs'
+
+#tutorial-template
+  .loading-tutorial
+    padding-top: 150px
+
+.tutorial-page
+  margin-bottom: 40px
+
+  /.docs-application.framed-mode &
+    padding-left: 0
+    padding-right: 0
+
+#tutorial-navigator
+  min-height: 525px;
+  background: $bg-color-gray-light;
+  position: relative;
+
+  .container
+    min-width: auto;
+    max-width: auto;
+
+  .banner
+    background: none;
+    color: $color-oil;
+    margin: 0;
+    transition: min-height 100ms ease;
+    color: #333;
+    padding: 0 0 40px;
+
+    /.docs-quickstart-selector &
+      padding: 40px 20px
+
+    i
+      font-size: inherit;
+
+    h1,
+    p
+      color: #333;
+      line-height: 1.3;
+
+    p + button
+      margin: 0 15px;
+
+  .section-product
+    h2
+      padding-top: 50px;
+      padding-bottom: 40px;
+      margin: 0;
+      font-size: 35px;
+
+      span
+        font-size: 14px;
+        color: $color-oil;
+        display: block;
+
+        +breakpoint("desktop")
+          display: inline;
+          margin-left: 30px;
+
+  section
+    .circle-list
+      list-style: none;
+      padding: 0;
+      grid(2, 0, 'li');
+
+      +breakpoint("mobile-landscape")
+        grid(3, 0, 'li');
+
+      +breakpoint("tablet")
+        grid(5, 0, 'li');
+
+      +breakpoint("desktop")
+        grid(6, 0, 'li');
+
+  .question-text,
+  .tenant-switcher
+    margin 20px 0
+    margin-bottom 10px
+    display inline-block
+    color rgba(0, 0, 0, 0.58)
+    font-size 20px
+
+  .tenant-switcher
+    max-width: 320px;
+
+    +breakpoint("tablet")
+      max-width: none;
+
+    .text
+      margin-bottom: 15px;
+      font-size: 16px;
+
+      +breakpoint("tablet")
+        font-size: 20px;
+
+    .icon
+      font-size: 16px;
+      opacity: 0.5;
+      position: relative;
+      top: 0.2em;
+      padding-left: 1px;
+
+    .custom-select
+      margin: 0 10px;
+      max-width: 30vw;
+
+  .tutorial-content
+    display: none;
+
+  .is-result
+    .tutorial-content
+      display: block;
+
+    .tutorial-wizard
+      display: none;
+
+  [data-skip]
+    background: none;
+    outline: none;
+    border: 0;
+    background-color: #EB5424;
+    font-size: 13px;
+    border-radius: 3px;
+    font-weight: bold;
+    text-transform: uppercase;
+    color: #fff;
+    margin: 0 15px;
+    padding: 6px 15px;
+
+  .circle-list
+    padding: 0;
+    padding-top: 10px;
+    padding-bottom: 30px;
+    list-style: none;
+    text-align: center;
+    margin: 0 auto;
+
+    +breakpoint("tablet")
+      max-width: 800px;
+
+    +breakpoint("desktop")
+      max-width: none;
+
+    li
+      display: inline-block;
+      vertical-align: top;
+      margin: 10px 15px;
+      cursor: pointer;
+
+      +breakpoint("mobile-landscape")
+        margin: 10px 30px;
+
+  .circle-logo
+    font-size: 12px;
+
+    +breakpoint("tablet")
+      font-size: 13px;
+
+
+.tutorial-toc
+  margin-top 20px
+  padding 0
+  ul, li
+    margin 0
+    padding 0
+  .tutorial-toc-title
+    font-size 24px
+    color $color-text-light
+  .tutorial-toc-description
+    font-size 12px
+    line-height 18px
+    color $color-text-light
+    margin 10px 0 20px
+  .tutorial-toc-article
+    cursor pointer
+    list-style none
+    margin-bottom 14px
+    font-size 14px
+    color $color-text-light
+    &:hover
+      color $color-text
+    &.selected
+      color $color-text
+      font-weight 700
+
+.tutorial-next-steps
+  border: 1px solid rgb(231, 233, 237)
+  border-radius: $border-radius-base
+  padding: 40px 40px 26px 40px
+  margin: 20px 0
+  h2
+    font-size: 24px
+    margin: 0px
+  p
+    margin: 4px 0 28px 0
+    color: $color-text-light
+  .tutorial-next-steps-articles
+    margin: 0
+    padding: 0
+    max-width: 600px
+    li
+      list-style-type: none
+      display: inline-block
+      font-weight 500
+      width: 50%
+      margin-bottom: 14px
+      a
+        &:link, &:visited
+          color: $color-text
+        &:hover, &:active
+          color: #0a84ae
+      i
+        padding-right: 6px
+
+@media screen and (max-width: 480px)
+  .tutorial-next-steps .tutorial-next-steps-articles li
+    width: 100%
+
+.tutorial-prev-next
+  overflow: hidden
+  margin: 60px 0
+  padding-top: 20px
+  font-size: 16px
+  border-top: 1px solid $color-gray
+
+  .tutorial-prev-next-header
+    font-size: 12px
+    font-weight: 500
+    line-height: 15px
+    color: $color-text-lighter
+    text-transform: uppercase
+
+  a
+    cursor: pointer
+
+  i
+    position: relative
+    top: 2px
+
+  .tutorial-prev-next-prev
+    float: left
+    text-align: left
+
+  .tutorial-prev-next-next
+    float: right
+    text-align: right

@@ -4,16 +4,16 @@ import { navigateAction } from 'fluxible-router';
 import { connectToStores } from 'fluxible-addons-react';
 import { StickyContainer, Sticky } from 'react-sticky';
 import { get } from 'lodash';
-import ApplicationStore from '../stores/ApplicationStore';
-import NavigationStore from '../stores/NavigationStore';
-import ContentStore from '../stores/ContentStore';
-import NavigationBar from './NavigationBar';
-import Sidebar from './Sidebar';
-import FeedbackFooter from './FeedbackFooter';
-import setAnchorLinks from '../browser/anchorLinks';
-import Spinner from './Spinner';
-import initSampleBox from '../browser/sampleBox';
-import TocBar from './TocBar';
+import ApplicationStore from '../../stores/ApplicationStore';
+import DocumentStore from '../../stores/DocumentStore';
+import NavigationStore from '../../stores/NavigationStore';
+import setAnchorLinks from '../../browser/anchorLinks';
+import initSampleBox from '../../browser/sampleBox';
+import NavigationBar from '../NavigationBar';
+import FeedbackFooter from '../FeedbackFooter';
+import Sidebar from '../Sidebar';
+import Spinner from '../Spinner';
+import TocBar from '../TocBar';
 
 class ArticlePage extends React.Component {
 
@@ -110,15 +110,15 @@ class ArticlePage extends React.Component {
   }
 
   renderContent() {
-    let { url, content } = this.props;
+    let { url, doc } = this.props;
 
-    // If the document's content hasn't been loaded yet, display a spinner.
-    if (!content || !content.html || !content.meta) {
+    // If the document hasn't been loaded yet, display a spinner.
+    if (!doc || !doc.html || !doc.meta) {
       return (<Spinner />);
     }
 
     let classes = ['docs-content']
-    if (content.meta) classes = classes.concat(content.meta.classes);
+    if (doc.meta) classes = classes.concat(doc.meta.classes);
 
     return (
       <div>
@@ -127,19 +127,19 @@ class ArticlePage extends React.Component {
           data-swiftype-name="body"
           data-swiftype-type="text"
           data-swiftype-index="true"
-          dangerouslySetInnerHTML={{ __html: content.html }}
+          dangerouslySetInnerHTML={{ __html: doc.html }}
         />
-        <FeedbackFooter articleUrl={url} editUrl={content.meta.editUrl} />
+        <FeedbackFooter articleUrl={url} editUrl={doc.meta.editUrl} />
       </div>
     );
   }
 
   render() {
-    const { content, sidebarArticles } = this.props;
+    const { doc, sidebarArticles } = this.props;
     const { url } = this.props.currentRoute;
 
     // TODO: Sidebar needs to not update until all this is ready again
-    const section = (content && content.meta) ? content.meta.section : undefined;
+    const section = (doc && doc.meta) ? doc.meta.section : undefined;
 
     return (
       <div className="docs-article">
@@ -167,24 +167,22 @@ ArticlePage.propTypes = {
   url: PropTypes.string
 };
 
-ArticlePage = connectToStores(ArticlePage, [ContentStore], (context, props) => {
+ArticlePage = connectToStores(ArticlePage, [ApplicationStore, DocumentStore, NavigationStore], (context, props) => {
+  const appStore = context.getStore(ApplicationStore);
+  const docStore = context.getStore(DocumentStore);
+  const navigationStore = context.getStore(NavigationStore);
 
-  let { url } = props.currentRoute;
-  let appStore = context.getStore(ApplicationStore);
-  let contentStore = context.getStore(ContentStore);
-  let navigationStore = context.getStore(NavigationStore);
-
-  const content = contentStore.getContent(url);
+  const { url } = props.currentRoute;
+  const doc = docStore.getDocument(url);
 
   let sidebarArticles = [];
-  if (content && content.meta) {
-    sidebarArticles = navigationStore.getSidebarArticles(content.meta.section);
+  if (doc && doc.meta) {
+    sidebarArticles = navigationStore.getSidebarArticles(doc.meta.section);
   }
 
   return {
     url,
-    env: appStore.getEnvironmentVars(),
-    content,
+    doc,
     sidebarArticles
   };
 });

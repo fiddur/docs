@@ -8,3 +8,4 @@ require('./browser/locksso');
 require('./browser/metrics');
 require('./browser/sentry');
 require('./browser/slate');
+require('./browser/frameListener');

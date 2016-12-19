@@ -1,30 +1,25 @@
 /* global Raven */
-let LoggingService = {}
 
+const LoggingService = {};
 
-LoggingService.debug = function(msg, data) {
+LoggingService.debug = (msg, data = {}) => {
   console.log(msg);
-  if (data) {
-    console.log(data);
-  }
-}
+  if (data) console.log(data);
+};
 
-LoggingService.info = function(msg, data) {
-  data = data || {};
-  data.level = 'info'
+LoggingService.info = (msg, data = {}) => {
+  data.level = 'info';
   Raven.captureMessage(msg, data);
-}
+};
 
-LoggingService.warn = function(msg, data) {
-  data = data || {};
-  data.level = 'warning'
+LoggingService.warn = (msg, data = {}) => {
+  data.level = 'warning';
   Raven.captureMessage(msg, data);
-}
+};
 
-LoggingService.error = function(msg, data) {
-  data = data || {};
-  data.level = 'error'
+LoggingService.error = (msg, data = {}) => {
+  data.level = 'error';
   Raven.captureMessage(msg, data);
-}
+};
 
 export default LoggingService;
