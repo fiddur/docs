@@ -46,8 +46,10 @@ nconf.file('global', { file: config_file })
     MOUSEFLOW_ID: process.env.NODE_ENV === 'production' ?
     '1f318101-e4cd-4d84-b95e-6a0e6771798d' : false,
     SWIFTYPE_ENGINE_KEY: 's-M2Jb8-xTC1XeyCpWZ1',
-    TRELLO_LIST_ID: '57ec50a9ce30841a4b4aedf2',
-    TRELLO_LABEL_ID: '57ec522e84e677fd369a6ba9',
+    TRELLO_LIST_DOCS: '57ec50a9ce30841a4b4aedf2',
+    TRELLO_LABEL_DOCS: '57ec522e84e677fd369a6ba9',
+    TRELLO_LIST_QUICKSTARTS: '5859880cef5440ce0517317c',
+    TRELLO_LABEL_QUICKSTARTS: '584fe13e84e677fd36bb47f9',
     DOMAIN_URL_CDN: undefined
   });
 
