@@ -32,7 +32,7 @@ nconf.file('global', { file: config_file })
     AUTH0_CLIENT_ID: 'aCbTAJNi5HbsjPJtRpSP6BIoLPOrSj2C',
     AUTH0_CLIENT_SECRET: 'FBY0d4np9dCQZz1teQbsZSqrTdQI-yA55xPKUGUZgDxOco18yWupBk1MM-eBLme0',
     MEDIA_URL: (process.env.NODE_ENV === 'production' && nconf.get('DISABLE_CDN') !== 1) ? 'https://cdn.auth0.com/docs/media' : false,
-    ASSET_URL: (process.env.NODE_ENV === 'production' && nconf.get('DISABLE_CDN') !== 1) ? 'https://cdn.auth0.com/docs/assets' : false,
+    ASSET_URL: (process.env.NODE_ENV === 'production' && nconf.get('DISABLE_CDN') !== 1) ? 'https://cdn.auth0.com/docs' : false,
     DOCS_PATH: path.resolve(__dirname, './docs/'),
     PORT: 5050,
     CONSOLE_LOG_LEVEL: 'debug',
