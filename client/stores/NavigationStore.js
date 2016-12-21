@@ -8,6 +8,7 @@ class NavigationStore extends BaseStore {
     super(dispatcher);
     this.navigation = null;
     this.cards = null;
+    this.headerRibbon = null;
   }
 
   getSections() {
@@ -38,11 +39,20 @@ class NavigationStore extends BaseStore {
     return undefined;
   }
 
+  getHeaderRibbon() {
+    if (this.headerRibbon) {
+      return this.headerRibbon;
+    }
+
+    return null;
+  }
+
   handleNavigationLoaded(payload) {
     this.navigation = {
       sections: payload.sections,
       sidebar: payload.sidebar
     };
+    this.headerRibbon = payload.headerRibbon;
     this.emitChange();
   }
 
@@ -54,13 +64,15 @@ class NavigationStore extends BaseStore {
   dehydrate() {
     return {
       navigation: this.navigation,
-      cards: this.cards
+      cards: this.cards,
+      headerRibbon: this.headerRibbon
     };
   }
 
   rehydrate(state) {
     this.navigation = state.navigation;
     this.cards = state.cards;
+    this.headerRibbon = state.headerRibbon;
   }
 }
 

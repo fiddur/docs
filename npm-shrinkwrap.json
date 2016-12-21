@@ -400,8 +400,8 @@
       "resolved": "git://github.com/auth0/styleguide.git#4070d20e008616a249f181aa2f5591b1b8829202"
     },
     "auth0-web-header": {
-      "version": "3.0.2",
-      "resolved": "https://registry.npmjs.org/auth0-web-header/-/auth0-web-header-3.0.2.tgz",
+      "version": "3.1.0",
+      "resolved": "https://registry.npmjs.org/auth0-web-header/-/auth0-web-header-3.1.0.tgz",
       "dependencies": {
         "auth0-styleguide-core": {
           "version": "0.0.3",
