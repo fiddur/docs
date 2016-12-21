@@ -30,7 +30,7 @@ class ArticlePage extends React.Component {
     setAnchorLinks();
     initSampleBox();
 
-    if (get(this.props, 'content.meta.toc')) this.initTOC();
+    if (get(this.props, 'doc.meta.toc')) this.initTOC();
   }
 
   componentDidUpdate(prevProps) {
@@ -42,7 +42,7 @@ class ArticlePage extends React.Component {
 
     // Initialize TOC again if url changes
     if (this.props.url !== prevProps.url) this.tocUrlChange = true;
-    if (get(this.props, 'content.meta.toc') && this.tocUrlChange) {
+    if (get(this.props, 'doc.meta.toc') && this.tocUrlChange) {
       this.initTOC();
       this.tocUrlChange = false;
     }
@@ -75,7 +75,7 @@ class ArticlePage extends React.Component {
   */
 
   initTOC() {
-    const { toc, title } = this.props.content.meta;
+    const { toc, title } = this.props.doc.meta;
     const docsContainer = $('.docs-content');
 
     docsContainer.addClass('docs-with-toc');
@@ -117,7 +117,7 @@ class ArticlePage extends React.Component {
       return (<Spinner />);
     }
 
-    let classes = ['docs-content']
+    let classes = ['docs-content'];
     if (doc.meta) classes = classes.concat(doc.meta.classes);
 
     return (
