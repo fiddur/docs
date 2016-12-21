@@ -9,9 +9,13 @@ class Header extends Component {
     const isMetricsLibLoaded = metricsLib && metricsLib.$options && metricsLib.$options.segmentKey;
     const metricsScriptTag = document.getElementById('script-auth0-metrics');
 
-    if (isMetricsLibLoaded || !metricsScriptTag) {
-      this.createContactForm(metricsLib);
-    } else {
+    // Always init the contact form.
+    // Doesn't matter if the metrics lib is loaded or not.
+    this.createContactForm(metricsLib);
+
+    // Only if the metrics lib isn't loaded, attach an event to create a new version
+    // of the contact form with metrics.
+    if (!isMetricsLibLoaded && metricsScriptTag) {
       const metricsScriptOnload = metricsScriptTag.onload;
       metricsScriptTag.onload = () => {
         metricsScriptOnload();
