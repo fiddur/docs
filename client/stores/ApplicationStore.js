@@ -28,7 +28,7 @@ class ApplicationStore extends BaseStore {
   }
 
   handleModeFlagsLoaded(payload) {
-    this.flags = Object.extend({}, this.flags, payload.flags);
+    this.flags = payload.flags;
     this.emitChange();
   }
 
