@@ -1,6 +1,7 @@
 import React from 'react';
 import { StickyContainer, Sticky } from 'react-sticky';
 import { connectToStores, provideContext } from 'fluxible-addons-react';
+import { get } from 'lodash';
 import ApplicationStore from '../../stores/ApplicationStore';
 import QuickstartStore from '../../stores/QuickstartStore';
 import UserStore from '../../stores/UserStore';
@@ -136,6 +137,12 @@ class TutorialPage extends React.Component {
                     {this.renderIntroBanner()}
                     <article data-swiftype-index="true">
                       <h1 className="tutorial-title">{this.renderTitle()}</h1>
+                      { get(this.props, 'platform.community') &&
+                        <div className="community-maintained-box">
+                          <h5>Community maintained project</h5>
+                          <p>This quickstart is maintained by @user in Github.</p>
+                        </div>
+                      }
                       <div data-swiftype-name="body" data-swiftype-type="text">{tutorial}</div>
                       <div data-swiftype-index="false">{this.renderBottomNavigation()}</div>
                       <div data-swiftype-index="false">{feedbackFooter}</div>

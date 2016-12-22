@@ -1,4 +1,5 @@
 import React from 'react';
+import { get } from 'lodash';
 import navigateToQuickstart from '../../action/navigateToQuickstart';
 
 class Platform extends React.Component {
@@ -38,7 +39,7 @@ class Platform extends React.Component {
           onClick={this.handleClick}
         >
           <div className="logo">
-            { platform.community &&
+            { get(this.props, 'platform.community') &&
               <div className="community-maintained-badge">
                 <div className="icon-container">
                   <svg fill="#222228" height="20" viewBox="0 0 24 24" width="20" xmlns="http://www.w3.org/2000/svg">
