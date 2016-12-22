@@ -43,14 +43,16 @@ class Header extends Component {
   }
 
   render() {
-    const { currentRoute, isAuthenticated } = this.props;
+    const { currentRoute, isAuthenticated, headerRibbon } = this.props;
 
     const props = {
       className: this.props.fullWidth ? 'header-full-width' : '',
       theme: this.props.theme,
       talkToSalesButtonLink: '',
       talkToSalesButtonOnClick: () => this.contactForm.show(),
-      featuredEnable: !this.props.fullWidth
+      featuredEnable: !this.props.fullWidth,
+      featuredLink: headerRibbon.link,
+      featuredText: headerRibbon.text
     };
 
     if (isAuthenticated) {
@@ -71,7 +73,11 @@ Header.propTypes = {
   theme: React.PropTypes.string,
   currentRoute: React.PropTypes.object,
   isAuthenticated: React.PropTypes.bool,
-  fullWidth: React.PropTypes.bool
+  fullWidth: React.PropTypes.bool,
+  headerRibbon: React.PropTypes.shape({
+    text: React.PropTypes.string.isRequired,
+    link: React.PropTypes.string.isRequired
+  }).isRequired
 };
 
 export default Header;

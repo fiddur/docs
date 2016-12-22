@@ -2,6 +2,7 @@ import React from 'react';
 import { connectToStores, provideContext } from 'fluxible-addons-react';
 import { handleHistory } from 'fluxible-router';
 import ApplicationStore from '../stores/ApplicationStore';
+import NavigationStore from '../stores/NavigationStore';
 import UserStore from '../stores/UserStore';
 import DocumentStore from '../stores/DocumentStore';
 import StaticContentStore from '../stores/StaticContentStore';
@@ -58,7 +59,14 @@ class Application extends React.Component {
 
 
   render() {
-    const { currentRoute, doc, fullWidth, isAuthenticated, isFramedMode } = this.props;
+    const {
+      currentRoute,
+      doc,
+      fullWidth,
+      isAuthenticated,
+      isFramedMode,
+      headerRibbon
+    } = this.props;
 
     // Temporary fix for: https://github.com/yahoo/fluxible-router/issues/108
     if (!currentRoute && typeof document !== 'undefined') {
@@ -73,6 +81,7 @@ class Application extends React.Component {
           isAuthenticated={isAuthenticated}
           currentRoute={currentRoute}
           fullWidth={fullWidth}
+          headerRibbon={headerRibbon}
         />
       );
     }
@@ -96,12 +105,17 @@ Application.propTypes = {
   fullWidth: React.PropTypes.bool.isRequired,
   isAuthenticated: React.PropTypes.bool.isRequired,
   isFramedMode: React.PropTypes.bool.isRequired,
-  pageTitle: React.PropTypes.string.isRequired
+  pageTitle: React.PropTypes.string.isRequired,
+  headerRibbon: React.PropTypes.shape({
+    text: React.PropTypes.string.isRequired,
+    link: React.PropTypes.string.isRequired
+  }).isRequired
 };
 
-Application = connectToStores(Application, [ApplicationStore], (context, props) => {
+Application = connectToStores(Application, [ApplicationStore, NavigationStore], (context, props) => {
   const appStore = context.getStore(ApplicationStore);
   const userStore = context.getStore(UserStore);
+  const navigationStore = context.getStore(NavigationStore);
 
   let doc;
   let fullWidth = false;
@@ -121,7 +135,8 @@ Application = connectToStores(Application, [ApplicationStore], (context, props) 
     currentRoute: props.currentRoute,
     isAuthenticated: userStore.isAuthenticated(),
     isFramedMode: appStore.isFramedMode(),
-    pageTitle: appStore.getPageTitle()
+    pageTitle: appStore.getPageTitle(),
+    headerRibbon: navigationStore.getHeaderRibbon()
   };
 });
 
