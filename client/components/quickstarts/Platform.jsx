@@ -23,7 +23,7 @@ class Platform extends React.Component {
     const { quickstart, platform } = this.props;
     const payload = {
       quickstartId: quickstart.name,
-      platformId: platform.name,
+      platformId: platform.name
     };
     this.context.executeAction(navigateToQuickstart, payload);
   }
@@ -37,7 +37,18 @@ class Platform extends React.Component {
           className="circle-logo"
           onClick={this.handleClick}
         >
-          <div className="logo" />
+          <div className="logo">
+            { platform.community &&
+              <div className="community-maintained-badge">
+                <div className="icon-container">
+                  <svg fill="#222228" height="20" viewBox="0 0 24 24" width="20" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z" />
+                    <path d="M0 0h24v24H0z" fill="none" />
+                  </svg>
+                </div>
+              </div>
+            }
+          </div>
           <div className="title">{platform.title}</div>
         </div>
       </li>
