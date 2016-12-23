@@ -168,19 +168,12 @@
       right: -10px;
       width: 40px;
       height: 40px;
-
-      > .background,
-      > .badge-icon
-        position: absolute;
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%, -50%);
-
-      > .background
-        width: 40px;
-        height: 40px;
-        background-color: $bg-color-dark;
-        border-radius: 50%;
+      background-color: $bg-color-dark;
+      border-radius: 50%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      -webkit-backface-visibility: hidden;
 
     +breakpoint("tablet")
       font-size: 13px;
