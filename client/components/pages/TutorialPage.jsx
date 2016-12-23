@@ -22,6 +22,9 @@ class TutorialPage extends React.Component {
   componentDidMount() {
     this.initClient();
     initSampleBox();
+
+    // Initialize any community maintained tooltip
+    $('[data-toggle="tooltip"]').tooltip();
   }
 
   componentDidUpdate() {
@@ -63,11 +66,10 @@ class TutorialPage extends React.Component {
   renderBottomNavigation() {
     const { isFramedMode, quickstart, platform, article } = this.props;
     let element;
-    if (isFramedMode) {
-      return <TutorialNextSteps quickstart={quickstart} platform={platform} />;
-    } else {
-      return <TutorialPrevNext quickstart={quickstart} platform={platform} currentArticle={article} />;
-    }
+    if (isFramedMode) return <TutorialNextSteps quickstart={quickstart} platform={platform} />;
+    return (
+      <TutorialPrevNext quickstart={quickstart} platform={platform} currentArticle={article} />
+    );
   }
 
   renderTryBanner() {
@@ -106,6 +108,31 @@ class TutorialPage extends React.Component {
     return <NavigationBar currentSection="quickstarts" />;
   }
 
+  renderCommunityMaintained() {
+    return (
+      <button
+        className="community-maintained"
+        type="button"
+        data-html="true"
+        data-toggle="tooltip"
+        data-placement="top"
+        title="This tutorial is maintained by @user in Github."
+      >
+        <h5 className="title">Community maintained</h5>
+        <svg className="icon" fill="#222" height="22" viewBox="0 0 24 24" width="22" xmlns="http://www.w3.org/2000/svg">
+          <path
+            d={
+              `M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 3c1.66 0 3
+              1.34 3 3s-1.34 3-3 3-3-1.34-3-3 1.34-3 3-3zm0 14.2c-2.5 0-4.71-1.28-6-3.22.03-1.99
+              4-3.08 6-3.08 1.99 0 5.97 1.09 6 3.08-1.29 1.94-3.5 3.22-6 3.22z`
+            }
+          />
+          <path d="M0 0h24v24H0z" fill="none" />
+        </svg>
+      </button>
+    );
+  }
+
   render() {
     const { quickstart, platform, article, isFramedMode } = this.props;
     const columnWidth = isFramedMode ? 12 : 9;
@@ -137,12 +164,7 @@ class TutorialPage extends React.Component {
                     {this.renderIntroBanner()}
                     <article data-swiftype-index="true">
                       <h1 className="tutorial-title">{this.renderTitle()}</h1>
-                      { get(this.props, 'platform.community') &&
-                        <div className="community-maintained-box">
-                          <h5>Community maintained project</h5>
-                          <p>This quickstart is maintained by @user in Github.</p>
-                        </div>
-                      }
+                      { get(this.props, 'platform.community') && this.renderCommunityMaintained() }
                       <div data-swiftype-name="body" data-swiftype-type="text">{tutorial}</div>
                       <div data-swiftype-index="false">{this.renderBottomNavigation()}</div>
                       <div data-swiftype-index="false">{feedbackFooter}</div>
