@@ -131,7 +131,7 @@ class TutorialPage extends React.Component {
       'data-html': 'true',
       'data-toggle': 'tooltip',
       'data-placement': 'right',
-      title: `This tutorial is maintained by ${arrayToNameList(maintainers)} in Github.`
+      title: `This tutorial is maintained by ${arrayToNameList(maintainers)} on Github.`
     } : {};
 
     return (
