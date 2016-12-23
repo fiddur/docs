@@ -17,18 +17,27 @@ import TutorialTableOfContents from '../quickstarts/TutorialTableOfContents';
 import TutorialPrevNext from '../quickstarts/TutorialPrevNext';
 import TutorialNextSteps from '../quickstarts/TutorialNextSteps';
 
+// eslint-disable-next-line max-len
+const arrayToNameList = arr => `${arr.slice(0, -2).join(', ')}${arr.length > 2 ? ', ' : ''}${arr.slice(-2).join(' and ')}`;
+
 class TutorialPage extends React.Component {
+
+  constructor(props) {
+    super(props);
+
+    // eslint-disable-next-line max-len
+    this.communityDriven = get(this.props, 'platform.community');
+  }
 
   componentDidMount() {
     this.initClient();
+    this.initCommunityDriven();
     initSampleBox();
-
-    // Initialize any community maintained tooltip
-    $('[data-toggle="tooltip"]').tooltip();
   }
 
   componentDidUpdate() {
     this.initClient();
+    this.initCommunityDriven();
     initSampleBox();
   }
 
@@ -36,6 +45,14 @@ class TutorialPage extends React.Component {
     if (typeof document !== 'undefined') {
       this.metrics();
     }
+  }
+
+  initCommunityDriven() {
+    // eslint-disable-next-line max-len
+    this.communityDriven = get(this.props, 'platform.community');
+
+    // Initialize any community maintained tooltip
+    if (this.communityDriven) $('[data-toggle="tooltip"]').tooltip();
   }
 
   metrics() {
@@ -108,17 +125,17 @@ class TutorialPage extends React.Component {
     return <NavigationBar currentSection="quickstarts" />;
   }
 
-  renderCommunityMaintained() {
+  renderCommunityMaintained(maintainers = []) {
+    // Init tooltip only if maintainers option is defined
+    const communityBoxOptions = get(this.props, 'platform.maintainers') ? {
+      'data-html': 'true',
+      'data-toggle': 'tooltip',
+      'data-placement': 'right',
+      title: `This tutorial is maintained by ${arrayToNameList(maintainers)} in Github.`
+    } : {};
+
     return (
-      <button
-        className="community-maintained"
-        type="button"
-        data-html="true"
-        data-toggle="tooltip"
-        data-placement="top"
-        title="This tutorial is maintained by @user in Github."
-      >
-        <h5 className="title">Community maintained</h5>
+      <div className="community-maintained" {...communityBoxOptions}>
         <svg className="icon" fill="#222" height="22" viewBox="0 0 24 24" width="22" xmlns="http://www.w3.org/2000/svg">
           <path
             d={
@@ -129,7 +146,8 @@ class TutorialPage extends React.Component {
           />
           <path d="M0 0h24v24H0z" fill="none" />
         </svg>
-      </button>
+        <h5 className="title">Community maintained</h5>
+      </div>
     );
   }
 
@@ -155,7 +173,12 @@ class TutorialPage extends React.Component {
         <div id="tutorial-template" className="docs-single animated fadeIn">
           {this.renderNavigationBar()}
           <StickyContainer>
-            <div className="js-doc-template tutorial-page container">
+            <div
+              className={`
+                js-doc-template tutorial-page container
+                ${this.communityDriven ? 'community-driven-tutorial' : ''}
+              `}
+            >
               <div className="row">
                 {this.renderSidebar()}
                 <div className={`col-sm-${columnWidth}`}>
@@ -164,7 +187,7 @@ class TutorialPage extends React.Component {
                     {this.renderIntroBanner()}
                     <article data-swiftype-index="true">
                       <h1 className="tutorial-title">{this.renderTitle()}</h1>
-                      { get(this.props, 'platform.community') && this.renderCommunityMaintained() }
+                      { this.communityDriven && this.renderCommunityMaintained(this.props.platform.maintainers)}
                       <div data-swiftype-name="body" data-swiftype-type="text">{tutorial}</div>
                       <div data-swiftype-index="false">{this.renderBottomNavigation()}</div>
                       <div data-swiftype-index="false">{feedbackFooter}</div>
