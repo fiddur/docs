@@ -82,7 +82,7 @@ class Layout extends React.Component {
 
           <link rel="shortcut icon" href="//cdn.auth0.com/styleguide/latest/lib/logos/img/favicon.png" />
           <link rel="stylesheet" href="https://cdn.auth0.com/styleguide/core/0.0.4/core.min.css" />
-          <link rel="stylesheet" href="https://cdn.auth0.com/styleguide/components/0.0.3/components.min.css" />
+          <link rel="stylesheet" href="https://cdn.auth0.com/styleguide/components/0.0.4/components.min.css" />
           {this.cssAssetBundle()}
 
           {this.envScript()}
