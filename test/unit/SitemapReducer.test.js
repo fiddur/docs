@@ -22,6 +22,7 @@ describe('SitemapReducer', () => {
     'articles/example-quickstarts/platform-b/00-intro.md'
   ].map(path => getTestDocument(getTestFile(path), {
     sitemap: true,
+    public: true,
     url: urljoin(baseUrl, path.replace(/^articles/, '').replace(extname(path), ''))
   }));
 
