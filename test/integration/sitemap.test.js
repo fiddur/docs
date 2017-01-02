@@ -59,10 +59,10 @@ describe('Sitemap Reduction', function() {
     });
   });
 
-  it('adds non-quickstart document urls', () => {
+  it('adds public non-quickstart document urls', () => {
     const { urls } = reduction;
     cache.forEach(doc => {
-      if (doc.sitemap && !isQuickstartDocument(doc)) {
+      if (doc.sitemap && doc.public && !isQuickstartDocument(doc)) {
         expect(urls).to.contain(doc.url);
       }
     });
