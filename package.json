@@ -12,7 +12,7 @@
     "auth0-contact-form": "^1.0.6",
     "auth0-instrumentation": "auth0/auth0-instrumentation#v1.2.2",
     "auth0-mongodb-config": "git+ssh://git@github.com/auth0/auth0-mongodb-config.git#v0.2.4",
-    "auth0-styleguide": "auth0/styleguide#4.8.25",
+    "auth0-styleguide-core": "auth0/styleguide#core-1.0.0",
     "auth0-web-header": "^3.1.0",
     "axios": "^0.15.3",
     "babel": "^5.8.38",

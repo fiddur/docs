@@ -2,7 +2,7 @@
   "name": "auth0-docs",
   "version": "2.0.0",
   "npm-shrinkwrap-version": "6.0.2",
-  "node-version": "v4.4.2",
+  "node-version": "v4.5.0",
   "dependencies": {
     "async": {
       "version": "0.2.10",
@@ -394,10 +394,22 @@
         }
       }
     },
-    "auth0-styleguide": {
-      "version": "4.8.25",
-      "from": "auth0-styleguide@git://github.com/auth0/styleguide.git#4070d20e008616a249f181aa2f5591b1b8829202",
-      "resolved": "git://github.com/auth0/styleguide.git#4070d20e008616a249f181aa2f5591b1b8829202"
+    "auth0-styleguide-core": {
+      "version": "1.0.0",
+      "from": "auth0-styleguide-core@git://github.com/auth0/styleguide.git#e3f3afa06dbb8a99251502361a68faf9066fbbf9",
+      "resolved": "git://github.com/auth0/styleguide.git#e3f3afa06dbb8a99251502361a68faf9066fbbf9",
+      "dependencies": {
+        "normalize-css": {
+          "version": "2.3.1",
+          "resolved": "https://registry.npmjs.org/normalize-css/-/normalize-css-2.3.1.tgz",
+          "dependencies": {
+            "insert-css": {
+              "version": "0.0.0",
+              "resolved": "https://registry.npmjs.org/insert-css/-/insert-css-0.0.0.tgz"
+            }
+          }
+        }
+      }
     },
     "auth0-web-header": {
       "version": "3.1.0",
@@ -405,6 +417,7 @@
       "dependencies": {
         "auth0-styleguide-core": {
           "version": "0.0.3",
+          "from": "auth0-styleguide-core@git://github.com/auth0/styleguide.git#59c26f8acfaf4be5d3b239e6657007eb18c0f201",
           "resolved": "git://github.com/auth0/styleguide.git#59c26f8acfaf4be5d3b239e6657007eb18c0f201",
           "dependencies": {
             "normalize-css": {
@@ -3167,10 +3180,6 @@
           "resolved": "https://registry.npmjs.org/object-assign/-/object-assign-4.1.0.tgz"
         }
       }
-    },
-    "react-sticky": {
-      "version": "5.0.5",
-      "resolved": "https://registry.npmjs.org/react-sticky/-/react-sticky-5.0.5.tgz"
     },
     "react-sticky": {
       "version": "5.0.5",
