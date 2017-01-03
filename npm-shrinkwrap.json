@@ -412,8 +412,8 @@
       }
     },
     "auth0-web-header": {
-      "version": "3.1.0",
-      "resolved": "https://registry.npmjs.org/auth0-web-header/-/auth0-web-header-3.1.0.tgz",
+      "version": "3.1.5",
+      "resolved": "https://registry.npmjs.org/auth0-web-header/-/auth0-web-header-3.1.5.tgz",
       "dependencies": {
         "auth0-styleguide-core": {
           "version": "0.0.3",
