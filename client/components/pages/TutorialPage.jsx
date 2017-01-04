@@ -17,8 +17,8 @@ import TutorialTableOfContents from '../quickstarts/TutorialTableOfContents';
 import TutorialPrevNext from '../quickstarts/TutorialPrevNext';
 import TutorialNextSteps from '../quickstarts/TutorialNextSteps';
 
-// eslint-disable-next-line max-len
-const arrayToNameList = arr => `${arr.slice(0, -2).join(', ')}${arr.length > 2 ? ', ' : ''}${arr.slice(-2).join(' and ')}`;
+// Formats an array of names into an English list, like "X, Y, and Z".
+const arrayToNameList = arr => arr.join(', ').replace(/,\s([^,]+)$/, ' and $1');
 
 class TutorialPage extends React.Component {
 
@@ -136,16 +136,7 @@ class TutorialPage extends React.Component {
 
     return (
       <div className="community-maintained" {...communityBoxOptions}>
-        <svg className="icon" fill="#222" height="22" viewBox="0 0 24 24" width="22" xmlns="http://www.w3.org/2000/svg">
-          <path
-            d={
-              `M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 3c1.66 0 3
-              1.34 3 3s-1.34 3-3 3-3-1.34-3-3 1.34-3 3-3zm0 14.2c-2.5 0-4.71-1.28-6-3.22.03-1.99
-              4-3.08 6-3.08 1.99 0 5.97 1.09 6 3.08-1.29 1.94-3.5 3.22-6 3.22z`
-            }
-          />
-          <path d="M0 0h24v24H0z" fill="none" />
-        </svg>
+        <img role="presentation" src={require('../../../public/img/community-driven-icon.svg')} />
         <h5 className="title">Community maintained</h5>
       </div>
     );
@@ -168,17 +159,15 @@ class TutorialPage extends React.Component {
       );
     }
 
+    const tutorialPageClasses = ['js-doc-template', 'tutorial-page', 'container'];
+    if (this.communityDriven) tutorialPageClasses.push('community-driven-tutorial');
+
     return (
       <div className="docs-quickstart">
         <div id="tutorial-template" className="docs-single animated fadeIn">
           {this.renderNavigationBar()}
           <StickyContainer>
-            <div
-              className={`
-                js-doc-template tutorial-page container
-                ${this.communityDriven ? 'community-driven-tutorial' : ''}
-              `}
-            >
+            <div className={tutorialPageClasses.join(' ')}>
               <div className="row">
                 {this.renderSidebar()}
                 <div className={`col-sm-${columnWidth}`}>
