@@ -136,7 +136,7 @@ class TutorialPage extends React.Component {
 
     return (
       <div className="community-maintained" {...communityBoxOptions}>
-        <img role="presentation" src={require('../../../public/img/community-driven-icon.svg')} />
+        <div className="icon" />
         <h5 className="title">Community maintained</h5>
       </div>
     );
