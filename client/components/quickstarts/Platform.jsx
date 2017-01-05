@@ -1,4 +1,5 @@
 import React from 'react';
+import { get } from 'lodash';
 import navigateToQuickstart from '../../action/navigateToQuickstart';
 
 class Platform extends React.Component {
@@ -23,7 +24,7 @@ class Platform extends React.Component {
     const { quickstart, platform } = this.props;
     const payload = {
       quickstartId: quickstart.name,
-      platformId: platform.name,
+      platformId: platform.name
     };
     this.context.executeAction(navigateToQuickstart, payload);
   }
@@ -37,7 +38,13 @@ class Platform extends React.Component {
           className="circle-logo"
           onClick={this.handleClick}
         >
-          <div className="logo" />
+          <div className="logo">
+            { get(this.props, 'platform.community') &&
+              <div className="community-maintained-badge">
+                <div className="icon" />
+              </div>
+            }
+          </div>
           <div className="title">{platform.title}</div>
         </div>
       </li>

@@ -1,6 +1,7 @@
 import React from 'react';
 import { StickyContainer, Sticky } from 'react-sticky';
 import { connectToStores, provideContext } from 'fluxible-addons-react';
+import { get } from 'lodash';
 import ApplicationStore from '../../stores/ApplicationStore';
 import QuickstartStore from '../../stores/QuickstartStore';
 import UserStore from '../../stores/UserStore';
@@ -16,15 +17,27 @@ import TutorialTableOfContents from '../quickstarts/TutorialTableOfContents';
 import TutorialPrevNext from '../quickstarts/TutorialPrevNext';
 import TutorialNextSteps from '../quickstarts/TutorialNextSteps';
 
+// Formats an array of names into an English list, like "X, Y, and Z".
+const arrayToNameList = arr => arr.join(', ').replace(/,\s([^,]+)$/, ' and $1');
+
 class TutorialPage extends React.Component {
+
+  constructor(props) {
+    super(props);
+
+    // eslint-disable-next-line max-len
+    this.communityDriven = get(this.props, 'platform.community');
+  }
 
   componentDidMount() {
     this.initClient();
+    this.initCommunityDriven();
     initSampleBox();
   }
 
   componentDidUpdate() {
     this.initClient();
+    this.initCommunityDriven();
     initSampleBox();
   }
 
@@ -32,6 +45,14 @@ class TutorialPage extends React.Component {
     if (typeof document !== 'undefined') {
       this.metrics();
     }
+  }
+
+  initCommunityDriven() {
+    // eslint-disable-next-line max-len
+    this.communityDriven = get(this.props, 'platform.community');
+
+    // Initialize any community maintained tooltip
+    if (this.communityDriven) $('[data-toggle="tooltip"]').tooltip();
   }
 
   metrics() {
@@ -62,11 +83,10 @@ class TutorialPage extends React.Component {
   renderBottomNavigation() {
     const { isFramedMode, quickstart, platform, article } = this.props;
     let element;
-    if (isFramedMode) {
-      return <TutorialNextSteps quickstart={quickstart} platform={platform} />;
-    } else {
-      return <TutorialPrevNext quickstart={quickstart} platform={platform} currentArticle={article} />;
-    }
+    if (isFramedMode) return <TutorialNextSteps quickstart={quickstart} platform={platform} />;
+    return (
+      <TutorialPrevNext quickstart={quickstart} platform={platform} currentArticle={article} />
+    );
   }
 
   renderTryBanner() {
@@ -105,6 +125,23 @@ class TutorialPage extends React.Component {
     return <NavigationBar currentSection="quickstarts" />;
   }
 
+  renderCommunityMaintained(maintainers = []) {
+    // Init tooltip only if maintainers option is defined
+    const communityBoxOptions = get(this.props, 'platform.maintainers') ? {
+      'data-html': 'true',
+      'data-toggle': 'tooltip',
+      'data-placement': 'right',
+      title: `This tutorial is maintained by ${arrayToNameList(maintainers)} on Github.`
+    } : {};
+
+    return (
+      <div className="community-maintained" {...communityBoxOptions}>
+        <div className="icon" />
+        <h5 className="title">Community maintained</h5>
+      </div>
+    );
+  }
+
   render() {
     const { quickstart, platform, article, isFramedMode } = this.props;
     const columnWidth = isFramedMode ? 12 : 9;
@@ -122,12 +159,15 @@ class TutorialPage extends React.Component {
       );
     }
 
+    const tutorialPageClasses = ['js-doc-template', 'tutorial-page', 'container'];
+    if (this.communityDriven) tutorialPageClasses.push('community-driven-tutorial');
+
     return (
       <div className="docs-quickstart">
         <div id="tutorial-template" className="docs-single animated fadeIn">
           {this.renderNavigationBar()}
           <StickyContainer>
-            <div className="js-doc-template tutorial-page container">
+            <div className={tutorialPageClasses.join(' ')}>
               <div className="row">
                 {this.renderSidebar()}
                 <div className={`col-sm-${columnWidth}`}>
@@ -136,6 +176,7 @@ class TutorialPage extends React.Component {
                     {this.renderIntroBanner()}
                     <article data-swiftype-index="true">
                       <h1 className="tutorial-title">{this.renderTitle()}</h1>
+                      { this.communityDriven && this.renderCommunityMaintained(this.props.platform.maintainers)}
                       <div data-swiftype-name="body" data-swiftype-type="text">{tutorial}</div>
                       <div data-swiftype-index="false">{this.renderBottomNavigation()}</div>
                       <div data-swiftype-index="false">{feedbackFooter}</div>
