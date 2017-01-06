@@ -63,6 +63,7 @@
     "sitemap": "^1.8.2",
     "url-join": "^1.1.0",
     "whatwg-fetch": "^1.0.0",
+    "xss-filters": "^1.2.7",
     "yams": "^2.1.0"
   },
   "main": "app.js",
