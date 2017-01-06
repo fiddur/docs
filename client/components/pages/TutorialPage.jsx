@@ -5,6 +5,7 @@ import { get } from 'lodash';
 import ApplicationStore from '../../stores/ApplicationStore';
 import QuickstartStore from '../../stores/QuickstartStore';
 import UserStore from '../../stores/UserStore';
+import { sendTutorialViewedEvent, sendPackageDownloadedEvent } from '../../browser/quickstartMetrics';
 import initSampleBox from '../../browser/sampleBox';
 import NavigationBar from '../NavigationBar';
 import Sidebar from '../Sidebar';
@@ -20,56 +21,40 @@ import TutorialNextSteps from '../quickstarts/TutorialNextSteps';
 // Formats an array of names into an English list, like "X, Y, and Z".
 const arrayToNameList = arr => arr.join(', ').replace(/,\s([^,]+)$/, ' and $1');
 
+const shouldSendMetrics = (article, prevArticle = undefined) =>
+  article && (!prevArticle || prevArticle.url !== article.url);
+
 class TutorialPage extends React.Component {
 
   constructor(props) {
     super(props);
-
-    // eslint-disable-next-line max-len
     this.communityDriven = get(this.props, 'platform.community');
   }
 
   componentDidMount() {
-    this.initClient();
     this.initCommunityDriven();
+    if (shouldSendMetrics(this.props.article)) this.handleMetrics();
     initSampleBox();
   }
 
-  componentDidUpdate() {
-    this.initClient();
+  componentDidUpdate(prevProps) {
     this.initCommunityDriven();
+    if (shouldSendMetrics(this.props.article, prevProps.article)) this.handleMetrics();
     initSampleBox();
-  }
-
-  initClient() {
-    if (typeof document !== 'undefined') {
-      this.metrics();
-    }
   }
 
   initCommunityDriven() {
-    // eslint-disable-next-line max-len
     this.communityDriven = get(this.props, 'platform.community');
 
     // Initialize any community maintained tooltip
     if (this.communityDriven) $('[data-toggle="tooltip"]').tooltip();
   }
 
-  metrics() {
-    const { quickstart, platform } = this.props;
-    const eventData = {
-      'tutorial-apptype': quickstart ? quickstart.name : '',
-      'tutorial-platform': platform ? platform.name : ''
-    };
+  handleMetrics() {
+    if (typeof document === 'undefined') return;
+    sendTutorialViewedEvent(this.props);
     $('#package .btn').off('click').on('click', (e) => {
-      if (e.currentTarget && e.currentTarget.href) {
-        const url = e.currentTarget.href;
-        const urlClientID = url.match(/client_id=([^&]*)/);
-        eventData.clientID = urlClientID && urlClientID[1]
-          ? urlClientID[1]
-          : '';
-      }
-      this.context.trackEvent('download:tutorial-seed', eventData);
+      sendPackageDownloadedEvent(this.props);
     });
   }
 
@@ -198,6 +183,7 @@ TutorialPage.propTypes = {
   quickstart: React.PropTypes.object,
   platform: React.PropTypes.object,
   article: React.PropTypes.object,
+  user: React.PropTypes.object,
   isAuthenticated: React.PropTypes.bool,
   currentRoute: React.PropTypes.object.isRequired,
   isFramedMode: React.PropTypes.bool.isRequired
@@ -217,6 +203,7 @@ TutorialPage = connectToStores(TutorialPage, [ApplicationStore, QuickstartStore]
     quickstart: quickstartStore.getCurrentQuickstart(),
     platform: quickstartStore.getCurrentPlatform(),
     article: quickstartStore.getCurrentArticle(),
+    user: userStore.getUser(),
     isFramedMode: appStore.isFramedMode(),
     isAuthenticated: userStore.isAuthenticated()
   };

@@ -45,12 +45,6 @@ class QuickstartStore extends BaseStore {
     this.emitChange();
   }
 
-  handleArticleSelected(payload) {
-    this.currentPlatformId = payload.platformId;
-    this.currentArticleId = payload.articleId;
-    this.emitChange();
-  }
-
   handleQuickstartsLoaded(payload) {
     this.quickstarts = payload.quickstarts;
     this.emitChange();
@@ -83,7 +77,6 @@ class QuickstartStore extends BaseStore {
 
 QuickstartStore.storeName = 'QuickstartStore';
 QuickstartStore.handlers = {
-  ARTICLE_LOADED: 'handleArticleSelected',
   QUICKSTART_SELECTED: 'handleQuickstartSelected',
   QUICKSTARTS_LOAD_SUCCESS: 'handleQuickstartsLoaded',
   MODE_FLAGS_LOADED: 'handleModeFlagsLoaded'

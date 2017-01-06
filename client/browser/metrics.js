@@ -12,9 +12,12 @@ const metricsProxy = {
 // and warn if they were made before the library was loaded.
 METHODS.forEach(name => {
   metricsProxy[name] = (...args) => {
+    if (window.env.NODE_ENV !== 'production') {
+      console.debug(`[metrics.${name}] %o`, args);
+    }
     if (metricsImpl) {
       metricsImpl[name](...args);
-    } else {
+    } else if (window.env.NODE_ENV === 'production') {
       console.warn(`metrics.${name}() was called but the metrics library has not been loaded. Event was ignored.`);
     }
   };
