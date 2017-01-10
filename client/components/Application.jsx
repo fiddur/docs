@@ -17,6 +17,7 @@ class Application extends React.Component {
     if (this.props.isFramedMode) {
       sendMessageToParentFrame({ type: 'ready' });
     }
+    this.initClientScripts();
   }
 
   componentDidUpdate(prevProps, prevState) {
