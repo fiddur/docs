@@ -18,6 +18,7 @@ export default function navigateToQuickstart(context, payload, done) {
   if (articleId) tokens.push(articleId);
 
   const appStore = context.getStore(ApplicationStore);
+  const isFramedMode = appStore.isFramedMode();
 
   const query = {};
   if (appStore.isFramedMode()) query.framed = 1;
