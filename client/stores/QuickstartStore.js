@@ -1,5 +1,6 @@
 import { BaseStore } from 'fluxible/addons';
 import _ from 'lodash';
+import sendMessageToParentFrame from '../util/sendMessageToParentFrame';
 
 class QuickstartStore extends BaseStore {
 
@@ -42,6 +43,9 @@ class QuickstartStore extends BaseStore {
     this.currentQuickstartId = payload.quickstartId;
     this.currentPlatformId = payload.platformId;
     this.currentArticleId = payload.articleId;
+    if (this.isFramedMode) {
+      sendMessageToParentFrame({ type: 'tutorialSelected', tutorial: payload });
+    }
     this.emitChange();
   }
 
