@@ -15,9 +15,12 @@ class Application extends React.Component {
 
   componentDidMount() {
     if (this.props.isFramedMode) {
-      sendMessageToParentFrame({ type: 'ready' });
+      sendMessageToParentFrame({
+        type: 'ready',
+        height: document.documentElement.scrollHeight
+      });
     }
-    this.initClientScripts();
+    highlightCode();
   }
 
   componentDidUpdate(prevProps, prevState) {
@@ -29,12 +32,11 @@ class Application extends React.Component {
       this.props.context.trackPage();
     }
     if (newProps.isFramedMode) {
-      sendMessageToParentFrame({ type: 'contentChanged' });
+      sendMessageToParentFrame({
+        type: 'resize',
+        height: document.documentElement.scrollHeight
+      });
     }
-    this.initClientScripts();
-  }
-
-  initClientScripts() {
     highlightCode();
   }
 
