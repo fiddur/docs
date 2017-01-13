@@ -4,6 +4,7 @@ import Breadcrumbs from './Breadcrumbs';
 import QuickstartList from './QuickstartList';
 import PlatformList from './PlatformList';
 import { sendTutorialViewedEvent, sendPackageDownloadedEvent } from '../../browser/quickstartMetrics';
+import ApplicationStore from '../../stores/ApplicationStore';
 import QuickstartStore from '../../stores/QuickstartStore';
 
 const shouldSendMetrics = (quickstart, prevQuickstart = undefined) =>
@@ -69,11 +70,13 @@ TutorialNavigator.propTypes = {
   isFramedMode: React.PropTypes.bool.isRequired
 };
 
-TutorialNavigator = connectToStores(TutorialNavigator, [QuickstartStore], (context, props) => {
-  let store = context.getStore(QuickstartStore);
+TutorialNavigator = connectToStores(TutorialNavigator, [ApplicationStore, QuickstartStore], (context, props) => {
+  const appStore = context.getStore(ApplicationStore);
+  const quickstartStore = context.getStore(QuickstartStore);
   return {
-    quickstarts: store.getQuickstarts(),
-    quickstart: store.getCurrentQuickstart()
+    quickstarts: quickstartStore.getQuickstarts(),
+    quickstart: quickstartStore.getCurrentQuickstart(),
+    isFramedMode: appStore.isFramedMode()
   };
 });
 
