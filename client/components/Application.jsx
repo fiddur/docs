@@ -9,16 +9,15 @@ import StaticContentStore from '../stores/StaticContentStore';
 import ErrorPage from './pages/ErrorPage';
 import highlightCode from '../browser/highlightCode';
 import Header from './Header';
+import monitorContentHeight from '../util/monitorContentHeight';
 import sendMessageToParentFrame from '../util/sendMessageToParentFrame';
 
 class Application extends React.Component {
 
   componentDidMount() {
     if (this.props.isFramedMode) {
-      sendMessageToParentFrame({
-        type: 'ready',
-        height: document.documentElement.scrollHeight
-      });
+      sendMessageToParentFrame({ type: 'ready', height: 500 });
+      monitorContentHeight(height => sendMessageToParentFrame({ type: 'resize', height }));
     }
     highlightCode();
   }
@@ -30,12 +29,6 @@ class Application extends React.Component {
     }
     if (newProps.currentRoute.url !== prevProps.currentRoute.url) {
       this.props.context.trackPage();
-    }
-    if (newProps.isFramedMode) {
-      sendMessageToParentFrame({
-        type: 'resize',
-        height: document.documentElement.scrollHeight
-      });
     }
     highlightCode();
   }
@@ -115,7 +108,7 @@ Application.propTypes = {
   }).isRequired
 };
 
-Application = connectToStores(Application, [ApplicationStore, NavigationStore], (context, props) => {
+Application = connectToStores(Application, [ApplicationStore, DocumentStore, NavigationStore], (context, props) => {
   const appStore = context.getStore(ApplicationStore);
   const userStore = context.getStore(UserStore);
   const navigationStore = context.getStore(NavigationStore);
