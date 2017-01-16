@@ -1,35 +1,40 @@
-import React from 'react';
-import { map, sortBy } from 'lodash';
+import React, { PropTypes } from 'react';
 import Platform from './Platform';
+import QuickstartSuggest from './QuickstartSuggest';
 
-class PlatformList extends React.Component {
+const quickstartDelay = 20;
 
-  render() {
-    const { quickstart, isFramedMode } = this.props;
-
-    const items = sortBy(quickstart.platforms, p => p.title.toLowerCase())
-    .map((platform, i) => (
+const PlatformList = ({ quickstart, isFramedMode, searchTerm }) => {
+  const items = Object.keys(quickstart.platforms)
+    .filter(name => name.toLowerCase().includes(searchTerm.toLowerCase()))
+    .map((name, i) => (
       <Platform
         key={quickstart.name + i}
-        delay={20 * i}
+        delay={quickstartDelay * i}
         quickstart={quickstart}
-        platform={platform}
+        platform={quickstart.platforms[name]}
         isFramedMode={isFramedMode}
       />
-    ));
-
-    return (
-      <div className="container techlist">
-        <ul className="circle-list">{items}</ul>
-      </div>
+    ))
+    .concat(
+      <QuickstartSuggest
+        key="suggest-quickstart"
+        delay={quickstartDelay * Object.keys(quickstart.platforms).length}
+        name={quickstart.name}
+      />
     );
-  }
 
-}
+  return (
+    <div className="container techlist">
+      <ul className="circle-list">{items}</ul>
+    </div>
+  );
+};
 
 PlatformList.propTypes = {
-  quickstart: React.PropTypes.object,
-  isFramedMode: React.PropTypes.bool.isRequired
+  quickstart: PropTypes.object,
+  isFramedMode: PropTypes.bool.isRequired,
+  searchTerm: PropTypes.string
 };
 
 export default PlatformList;

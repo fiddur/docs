@@ -81,8 +81,9 @@ class Layout extends React.Component {
           <meta className="swiftype" name="popularity" data-type="integer" content="2" />
 
           <link rel="shortcut icon" href="//cdn.auth0.com/styleguide/latest/lib/logos/img/favicon.png" />
-          <link rel="stylesheet" href="https://cdn.auth0.com/styleguide/core/1.0.0/core.min.css" />
-          <link rel="stylesheet" href="https://cdn.auth0.com/styleguide/components/1.0.0/components.min.css" />
+          <link rel="stylesheet" href="https://cdn.auth0.com/styleguide/core/1.0.1/core.min.css" />
+          <link rel="stylesheet" href="https://cdn.auth0.com/styleguide/components/1.0.2/components.min.css" />
+          <link rel="stylesheet" href="https://cdn.auth0.com/styleguide/react-components/1.0.0/react-components.css" />
           {this.cssAssetBundle()}
 
           {this.envScript()}

@@ -3,7 +3,10 @@ import { connectToStores } from 'fluxible-addons-react';
 import Breadcrumbs from './Breadcrumbs';
 import QuickstartList from './QuickstartList';
 import PlatformList from './PlatformList';
-import { sendTutorialViewedEvent, sendPackageDownloadedEvent } from '../../browser/quickstartMetrics';
+import {
+    sendTutorialViewedEvent,
+    sendPackageDownloadedEvent
+} from '../../browser/quickstartMetrics';
 import ApplicationStore from '../../stores/ApplicationStore';
 import QuickstartStore from '../../stores/QuickstartStore';
 
@@ -11,6 +14,16 @@ const shouldSendMetrics = (quickstart, prevQuickstart = undefined) =>
   quickstart && (!prevQuickstart || prevQuickstart.slug !== quickstart.slug);
 
 class TutorialNavigator extends React.Component {
+
+  constructor() {
+    super();
+
+    this.state = {
+      searchTerm: ''
+    };
+
+    this.handleSearchChange = this.handleSearchChange.bind(this);
+  }
 
   componentDidMount() {
     if (shouldSendMetrics(this.props.quickstart)) this.handleMetrics();
@@ -26,6 +39,12 @@ class TutorialNavigator extends React.Component {
     }
   }
 
+  handleSearchChange(e) {
+    this.setState({
+      searchTerm: e.target.value
+    });
+  }
+
   render() {
     const { quickstart, firstQuestion } = this.props;
 
@@ -34,7 +53,7 @@ class TutorialNavigator extends React.Component {
     let breadcrumbs;
 
     if (quickstart) {
-      picker = <PlatformList {...this.props} />;
+      picker = <PlatformList searchTerm={this.state.searchTerm} {...this.props} />;
       question = quickstart.question;
       breadcrumbs = <Breadcrumbs {...this.props} />;
     } else {
@@ -44,11 +63,19 @@ class TutorialNavigator extends React.Component {
 
     return (
       <div id="tutorial-navigator">
-        <div className='js-tutorial-navigator'>
+        <div className="js-tutorial-navigator">
           <div className="banner tutorial-wizard">
             <div className="container">
-              <p className='question-text'>{question}</p><br/>
+              <p className="question-text">{question}</p><br />
               {breadcrumbs}
+              { quickstart &&
+                <input
+                  className="form-control"
+                  value={this.state.searchTerm}
+                  placeholder="Search by technology name"
+                  onChange={this.handleSearchChange}
+                />  
+              }
             </div>
             {picker}
           </div>
@@ -60,7 +87,7 @@ class TutorialNavigator extends React.Component {
 }
 
 TutorialNavigator.defaultProps = {
-  firstQuestion: "Choose your application type"
+  firstQuestion: 'Choose your application type'
 };
 
 TutorialNavigator.propTypes = {
@@ -70,15 +97,16 @@ TutorialNavigator.propTypes = {
   isFramedMode: React.PropTypes.bool.isRequired
 };
 
-TutorialNavigator = connectToStores(TutorialNavigator, [ApplicationStore, QuickstartStore], (context, props) => {
-  const appStore = context.getStore(ApplicationStore);
-  const quickstartStore = context.getStore(QuickstartStore);
-  return {
-    quickstarts: quickstartStore.getQuickstarts(),
-    quickstart: quickstartStore.getCurrentQuickstart(),
-    isFramedMode: appStore.isFramedMode()
-  };
-});
-
-
-export default TutorialNavigator;
+export default connectToStores(
+  TutorialNavigator,
+  [ApplicationStore, QuickstartStore],
+  (context, props) => {
+    const appStore = context.getStore(ApplicationStore);
+    const quickstartStore = context.getStore(QuickstartStore);
+    return {
+      quickstarts: quickstartStore.getQuickstarts(),
+      quickstart: quickstartStore.getCurrentQuickstart(),
+      isFramedMode: appStore.isFramedMode()
+    };
+  }
+);
