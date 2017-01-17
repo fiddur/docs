@@ -12,6 +12,7 @@ class QuickstartSuggest extends Component {
     this.renderModal = this.renderModal.bind(this);
     this.handleClick = this.handleClick.bind(this);
     this.getStyle = this.getStyle.bind(this);
+    this.handleSuggestionSubmit = this.handleSuggestionSubmit.bind(this);
   }
 
   getStyle() {
@@ -31,7 +32,11 @@ class QuickstartSuggest extends Component {
     });
   }
 
-  renderModal(suggestionText) {
+  handleSuggestionSubmit() {
+    console.log('handle suggestion');
+  }
+
+  renderModal(title, inputText, handleSuggestionSubmit) {
     return (
       <Modal
         show={this.state.showSuggestionModal}
@@ -44,12 +49,12 @@ class QuickstartSuggest extends Component {
           bsClass="modal-header has-border"
           closeButton
         >
-          <Modal.Title>Suggest {suggestionText}</Modal.Title>
+          <Modal.Title>Suggest {title}</Modal.Title>
         </Modal.Header>
         <Modal.Body>
           <p className="text-center" style={{ marginBottom: '32px' }}>
-            Enter the name of the SDK you would like us to
-            have and we will add it to our list.
+            Enter the name of the quickstart you would like us to have <br />
+            and we will add it to our list.
           </p>
           <div className="row">
             <div className="col-xs-12 form-group form-horizontal">
@@ -64,6 +69,7 @@ class QuickstartSuggest extends Component {
                   className="input-block-level form-control"
                   id="suggestion-name"
                   name="Suggestion name"
+                  defaultValue={inputText}
                   autoFocus
                 />
               </div>
@@ -71,33 +77,42 @@ class QuickstartSuggest extends Component {
           </div>
         </Modal.Body>
         <Modal.Footer>
-          <Button bsStyle="primary">Submit</Button>
+          <Button bsStyle="primary" onClick={handleSuggestionSubmit}>Submit</Button>
         </Modal.Footer>
       </Modal>
     );
   }
 
   render() {
+    const { searchTerm, name } = this.props;
     const quickstartNameToSuggestion = {
       native: 'a SDK',
       spa: 'a technology',
       webapp: 'a technology',
       backend: 'an API'
     };
-    const suggestionText = quickstartNameToSuggestion[this.props.name] || 'a quickstart';
+    const suggestionText = `Suggest ${
+      (searchTerm && `"${searchTerm}"`) ||
+      quickstartNameToSuggestion[name] ||
+      'a quickstart'
+    }`;
 
     return (
       <div style={{ display: 'inline-block' }}>
-        { this.renderModal(suggestionText) }
+        {
+          this.renderModal(
+            quickstartNameToSuggestion[name],
+            searchTerm,
+            this.handleSuggestionSubmit
+          )
+        }
         <li className="animated scaleIn" style={this.getStyle()}>
           <div
             className="circle-logo suggest-quickstart"
             onClick={this.handleClick}
           >
             <div className="logo" />
-            <div className="title">
-              Suggest {suggestionText}
-            </div>
+            <div className="title">{suggestionText}</div>
           </div>
         </li>
       </div>
@@ -107,7 +122,8 @@ class QuickstartSuggest extends Component {
 
 QuickstartSuggest.propTypes = {
   name: PropTypes.string.isRequired,
-  delay: PropTypes.number.isRequired
+  delay: PropTypes.number.isRequired,
+  searchTerm: PropTypes.string.isRequired
 };
 
 export default QuickstartSuggest;

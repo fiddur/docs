@@ -27,12 +27,14 @@ const appendQuickstartSuggest = (acc, current, i, arr, quickstart, firstHiddenIn
   return acc.concat(current);
 };
 
+// eslint-disable-next-line arrow-body-style
 const mapPlatforms = (platformName, i, quickstart, isFramedMode, searchTerm, searchActive) => {
   return (platformName === 'quickstart-suggest') ? (
     <QuickstartSuggest
       key="quickstart-suggest"
       delay={searchActive ? 0 : platformDelay * Object.keys(quickstart.platforms).length}
       name={quickstart.name}
+      searchTerm={searchTerm}
     />
   ) : (
     <Platform
@@ -63,7 +65,7 @@ const PlatformList = ({ quickstart, isFramedMode, searchTerm, searchActive }) =>
   const itemsWithSuggest = sortedItems.reduce((acc, current, i, arr) =>
     appendQuickstartSuggest(acc, current, i, arr, quickstart, firstHiddenIndex), []);
 
-  // Replace each platform name for the <Platform> component or <QuickstartSuggest>
+  // Replace each platform name for the <Platform> or <QuickstartSuggest> components
   const platforms = itemsWithSuggest.map((platformName, i) =>
     mapPlatforms(platformName, i, quickstart, isFramedMode, searchTerm, searchActive));
 
