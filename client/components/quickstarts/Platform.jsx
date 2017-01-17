@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { PropTypes } from 'react';
 import { get } from 'lodash';
 import navigateToQuickstart from '../../action/navigateToQuickstart';
 
@@ -9,14 +9,15 @@ class Platform extends React.Component {
     this.handleClick = this.handleClick.bind(this);
   }
 
-  getStyle() {
+  getStyle(hide) {
     return {
       animationDelay: `${this.props.delay}ms`,
       WebkitAnimationDelay: `${this.props.delay}ms`,
       animationDuration: '200ms',
       WebkitAnimationDuration: '200ms',
       animationTimingFunction: 'cubic-bezier(0.455, 0.03, 0.515, 0.955)',
-      WebkitAnimationTimingFunction: 'cubic-bezier(0.455, 0.03, 0.515, 0.955)'
+      WebkitAnimationTimingFunction: 'cubic-bezier(0.455, 0.03, 0.515, 0.955)',
+      visibility: hide ? 'hidden' : 'visible'
     };
   }
 
@@ -30,9 +31,9 @@ class Platform extends React.Component {
   }
 
   render() {
-    const { platform } = this.props;
+    const { platform, hide } = this.props;
     return (
-      <li className="animated scaleIn" style={this.getStyle()}>
+      <li className="animated scaleIn" style={this.getStyle(hide)}>
         <div
           data-name={platform.logo_name || platform.name}
           className="circle-logo"
@@ -54,13 +55,14 @@ class Platform extends React.Component {
 }
 
 Platform.propTypes = {
-  quickstart: React.PropTypes.object,
-  platform: React.PropTypes.object,
-  delay: React.PropTypes.number
+  quickstart: PropTypes.object,
+  platform: PropTypes.object,
+  delay: PropTypes.number,
+  hide: PropTypes.bool
 };
 
 Platform.contextTypes = {
-  executeAction: React.PropTypes.func
+  executeAction: PropTypes.func
 };
 
 export default Platform;

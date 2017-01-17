@@ -66,15 +66,15 @@ class TutorialNavigator extends React.Component {
         <div className="js-tutorial-navigator">
           <div className="banner tutorial-wizard">
             <div className="container">
-              <p className="question-text">{question}</p><br />
               {breadcrumbs}
+              <p className="question-text">{question}</p><br />
               { quickstart &&
                 <input
-                  className="form-control"
+                  className="form-control quickstart-search-input"
                   value={this.state.searchTerm}
                   placeholder="Search by technology name"
                   onChange={this.handleSearchChange}
-                />  
+                />
               }
             </div>
             {picker}

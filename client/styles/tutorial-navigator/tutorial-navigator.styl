@@ -84,13 +84,18 @@
   .question-text,
   .tenant-switcher
     margin 20px 0
-    margin-bottom 10px
     display inline-block
     color rgba(0, 0, 0, 0.58)
-    font-size 20px
+
+  .question-text
+    font-size: 36px;
+    max-width: none;
+    margin-bottom: 28px;
 
   .tenant-switcher
+    font-size: 28px;
     max-width: 320px;
+    margin-bottom 10px
 
     +breakpoint("tablet")
       max-width: none;
@@ -112,6 +117,14 @@
     .custom-select
       margin: 0 10px;
       max-width: 30vw;
+
+  .quickstart-search-input
+    display: inline-block;
+    width: 340px;
+    border: 0;
+    box-shadow: none;
+    background-color: rgba(black, 0.05);
+    margin-bottom: 40px;
 
   .tutorial-content
     display: none;
@@ -183,7 +196,7 @@
       background-color: $bg-color-dark;
       border-radius: 50%;
       display: flex;
-      justify-content: center;
+      ustify-content: center;
       align-items: center;
       -webkit-backface-visibility: hidden;
 
@@ -202,25 +215,31 @@
 .tutorial-toc
   margin-top 20px
   padding 0
+
   ul, li
     margin 0
     padding 0
+
   .tutorial-toc-title
     font-size 24px
     color $color-text-light
+
   .tutorial-toc-description
     font-size 12px
     line-height 18px
     color $color-text-light
     margin 10px 0 20px
+
   .tutorial-toc-article
     cursor pointer
     list-style none
     margin-bottom 14px
     font-size 14px
     color $color-text-light
+
     &:hover
       color $color-text
+
     &.selected
       color $color-text
       font-weight 700
@@ -230,27 +249,34 @@
   border-radius: $border-radius-base
   padding: 40px 40px 26px 40px
   margin: 20px 0
+
   h2
     font-size: 24px
     margin: 0px
+
   p
     margin: 4px 0 28px 0
     color: $color-text-light
+
   .tutorial-next-steps-articles
     margin: 0
     padding: 0
     max-width: 600px
+
     li
       list-style-type: none
       display: inline-block
       font-weight 500
       width: 50%
       margin-bottom: 14px
+
       a
         &:link, &:visited
           color: $color-text
+
         &:hover, &:active
           color: #0a84ae
+
       i
         padding-right: 6px
 
