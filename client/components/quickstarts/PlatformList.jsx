@@ -19,35 +19,31 @@ const sortPlatforms = (platformA, platformB, quickstart, searchTerm) => {
   return (!platformAMatch && platformBMatch) ? 1 : -1;
 };
 
-const appendQuickstartSuggest = (acc, current, i, quickstart, searchTerm) => {
-  const currentPlatformMatch = nameMatchSearch(quickstart.platforms[current].title, searchTerm);
+const appendQuickstartSuggest = (acc, current, i, arr, quickstart, searchTerm) => {
+  // Find the index of the first hidden platform (not matched)
+  const firstHiddenIndex = _.findIndex(
+    arr,
+    platformName => !nameMatchSearch(quickstart.platforms[platformName].title, searchTerm)
+  );
 
-  // Append <QuickstartSuggest> before the first hidden item
-  if (!currentPlatformMatch) return acc.concat('quickstart-suggest', current);
-
-  // If all the platforms are visible append <QuickstartSuggest> as last item
-  if (i === Object.keys(quickstart.platforms).length - 1 && currentPlatformMatch) {
+  if (i === firstHiddenIndex) return acc.concat('quickstart-suggest', current);
+  if ((i === arr.length - 1) && (firstHiddenIndex === -1)) {
     return acc.concat(current, 'quickstart-suggest');
   }
-
   return acc.concat(current);
 };
 
-const mapPlatforms = (platformName, i, quickstart, isFramedMode, searchTerm) => {
-  if (platformName === 'quickstart-suggest') {
-    return (
-      <QuickstartSuggest
-        key="suggest-quickstart"
-        delay={platformDelay * Object.keys(quickstart.platforms).length}
-        name={quickstart.name}
-      />
-    );
-  }
-
-  return (
+const mapPlatforms = (platformName, i, quickstart, isFramedMode, searchTerm, searchActive) => {
+  return (platformName === 'quickstart-suggest') ? (
+    <QuickstartSuggest
+      key="quickstart-suggest"
+      delay={searchActive ? 0 : platformDelay * Object.keys(quickstart.platforms).length}
+      name={quickstart.name}
+    />
+  ) : (
     <Platform
-      key={quickstart.platforms[platformName] + i}
-      delay={platformDelay * i}
+      key={quickstart.platforms[platformName].title}
+      delay={searchActive ? 0 : platformDelay * i}
       quickstart={quickstart}
       platform={quickstart.platforms[platformName]}
       isFramedMode={isFramedMode}
@@ -56,14 +52,14 @@ const mapPlatforms = (platformName, i, quickstart, isFramedMode, searchTerm) => 
   );
 };
 
-const PlatformList = ({ quickstart, isFramedMode, searchTerm }) => {
+const PlatformList = ({ quickstart, isFramedMode, searchTerm, searchActive }) => {
   const items = Object.keys(quickstart.platforms)
     // Sort by visibility, show first the visible platforms
     .sort((platformA, platformB) => sortPlatforms(platformA, platformB, quickstart, searchTerm))
-    // Append quickstart-suggest key after visible platforms
-    .reduce((acc, current, i) => appendQuickstartSuggest(acc, current, i, quickstart, searchTerm), [])
-    // Replace each platform name for the <Platform> component
-    .map((platformName, i) => mapPlatforms(platformName, i, quickstart, isFramedMode, searchTerm));
+    // Append quickstart-suggest key after visible platforms (matched by search)
+    .reduce((acc, current, i, arr) => appendQuickstartSuggest(acc, current, i, arr, quickstart, searchTerm), [])
+    // Replace each platform name for the <Platform> component or <QuickstartSuggest>
+    .map((platformName, i) => mapPlatforms(platformName, i, quickstart, isFramedMode, searchTerm, searchActive));
 
   return (
     <div className="container techlist">
@@ -73,9 +69,10 @@ const PlatformList = ({ quickstart, isFramedMode, searchTerm }) => {
 };
 
 PlatformList.propTypes = {
-  quickstart: PropTypes.object,
+  quickstart: PropTypes.object.isRequired,
   isFramedMode: PropTypes.bool.isRequired,
-  searchTerm: PropTypes.string
+  searchTerm: PropTypes.string.isRequired,
+  searchActive: PropTypes.bool.isRequired
 };
 
 export default PlatformList;

@@ -19,7 +19,8 @@ class TutorialNavigator extends React.Component {
     super();
 
     this.state = {
-      searchTerm: ''
+      searchTerm: '',
+      searchActive: false
     };
 
     this.handleSearchChange = this.handleSearchChange.bind(this);
@@ -41,7 +42,8 @@ class TutorialNavigator extends React.Component {
 
   handleSearchChange(e) {
     this.setState({
-      searchTerm: e.target.value
+      searchTerm: e.target.value,
+      searchActive: true
     });
   }
 
@@ -53,7 +55,13 @@ class TutorialNavigator extends React.Component {
     let breadcrumbs;
 
     if (quickstart) {
-      picker = <PlatformList searchTerm={this.state.searchTerm} {...this.props} />;
+      picker = (
+        <PlatformList
+          searchActive={this.state.searchActive}
+          searchTerm={this.state.searchTerm}
+          {...this.props}
+        />
+      );
       question = quickstart.question;
       breadcrumbs = <Breadcrumbs {...this.props} />;
     } else {
