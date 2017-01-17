@@ -77,12 +77,15 @@ class TutorialNavigator extends React.Component {
               {breadcrumbs}
               <p className="question-text">{question}</p><br />
               { quickstart &&
-                <input
-                  className="form-control quickstart-search-input"
-                  value={this.state.searchTerm}
-                  placeholder="Search by technology name"
-                  onChange={this.handleSearchChange}
-                />
+                <div className="quickstart-search-input">
+                  <i className="icon icon-budicon-489" />
+                  <input
+                    className="form-control input"
+                    value={this.state.searchTerm}
+                    placeholder="Search by technology name"
+                    onChange={this.handleSearchChange}
+                  />
+                </div>
               }
             </div>
             {picker}

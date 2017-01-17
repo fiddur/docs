@@ -119,12 +119,27 @@
       max-width: 30vw;
 
   .quickstart-search-input
+    position: relative;
     display: inline-block;
-    width: 340px;
-    border: 0;
-    box-shadow: none;
-    background-color: rgba(black, 0.05);
-    margin-bottom: 40px;
+    margin: 0 auto 40px;
+
+    .icon
+      position absolute;
+      padding-top: 4px; // Center vertically
+      top: 50%;
+      left: 14px;
+      transform: translateY(-50%);
+      color: $gray;
+
+    .input
+      display: flex;
+      align-items: center;
+      padding: 16px;
+      padding-left: 40px;
+      width: 340px;
+      border: 0;
+      box-shadow: none;
+      background-color: rgba(black, 0.05);
 
   .tutorial-content
     display: none;
