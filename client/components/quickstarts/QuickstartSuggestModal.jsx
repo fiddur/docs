@@ -28,6 +28,8 @@ class QuickstartSuggestModal extends Component {
   }
 
   handleSuggestionSubmit() {
+    if (this.state.waitingResponse) return;
+
     this.setState({
       waitingResponse: true
     });

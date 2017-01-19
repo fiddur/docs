@@ -27,6 +27,7 @@ const appendQuickstartSuggest = (acc, current, i, arr, quickstart, firstHiddenIn
   return acc.concat(current);
 };
 
+// eslint-disable-next-line max-len
 const mapPlatforms = (platformName, i, quickstart, isFramedMode, searchTerm, searchActive, handleSuggestClick) => {
   if (platformName === 'quickstart-suggest') {
     const quickstartTypeToSuggestion = {
@@ -64,7 +65,9 @@ const mapPlatforms = (platformName, i, quickstart, isFramedMode, searchTerm, sea
   );
 };
 
-const PlatformList = ({ quickstart, isFramedMode, searchTerm, searchActive, handleSuggestClick }) => {
+const PlatformList = ({
+    quickstart, isFramedMode, searchTerm, searchActive, handleSuggestClick
+  }) => {
   const items = Object.keys(quickstart.platforms);
 
   // Sort platforms by visibility, show first the visible ones
