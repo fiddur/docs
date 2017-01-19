@@ -23,7 +23,7 @@ class QuickstartSuggestModal extends Component {
 
   handleSuggestionChange(e) {
     this.setState({
-      suggestion: e.target.value
+      suggestion: e.target.value.substr(0, 80)
     });
   }
 

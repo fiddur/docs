@@ -58,7 +58,7 @@ class TutorialNavigator extends React.Component {
 
   handleSearchChange(e) {
     this.setState({
-      searchTerm: e.target.value,
+      searchTerm: e.target.value.substr(0, 80),
       searchActive: true
     });
   }
