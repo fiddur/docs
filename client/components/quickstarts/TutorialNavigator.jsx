@@ -21,6 +21,7 @@ class TutorialNavigator extends React.Component {
 
     this.state = {
       showSuggestionModal: false,
+      suggestionSent: false,
       searchTerm: '',
       searchActive: false
     };
@@ -28,6 +29,7 @@ class TutorialNavigator extends React.Component {
     this.handleSearchChange = this.handleSearchChange.bind(this);
     this.openSuggestionModal = this.openSuggestionModal.bind(this);
     this.closeSuggestionModal = this.closeSuggestionModal.bind(this);
+    this.showSuggestionSent = this.showSuggestionSent.bind(this);
   }
 
   componentDidMount() {
@@ -47,6 +49,12 @@ class TutorialNavigator extends React.Component {
   closeSuggestionModal() {
     this.setState({
       showSuggestionModal: false
+    });
+  }
+
+  showSuggestionSent() {
+    this.setState({
+      suggestionSent: true
     });
   }
 
@@ -99,6 +107,7 @@ class TutorialNavigator extends React.Component {
                     open={this.state.showSuggestionModal}
                     suggestion={this.state.searchTerm}
                     closeModal={this.closeSuggestionModal}
+                    showSuggestionSent={this.showSuggestionSent}
                   />
                   <div className="quickstart-search-input">
                     <i className="icon icon-budicon-489" />
@@ -109,6 +118,11 @@ class TutorialNavigator extends React.Component {
                       onChange={this.handleSearchChange}
                     />
                   </div>
+                  { this.state.suggestionSent &&
+                    <p className="quickstart-suggestion-sent">
+                      Your suggestion has been sent, thanks for your help!
+                    </p>
+                  }
                 </div>
               }
             </div>

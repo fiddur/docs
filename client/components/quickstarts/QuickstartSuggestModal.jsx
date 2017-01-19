@@ -27,7 +27,8 @@ class QuickstartSuggestModal extends Component {
     });
   }
 
-  handleSuggestionSubmit() {
+  handleSuggestionSubmit(e) {
+    e.preventDefault();
     if (this.state.waitingResponse) return;
 
     this.setState({
@@ -49,6 +50,7 @@ class QuickstartSuggestModal extends Component {
           suggestion: '',
           waitingResponse: false
         });
+        this.props.showSuggestionSent();
         this.props.closeModal();
       },
       error: (error) => {
@@ -80,43 +82,47 @@ class QuickstartSuggestModal extends Component {
         >
           <Modal.Title>Suggest a quickstart</Modal.Title>
         </Modal.Header>
-        <ModalLoader loading={waitingResponse}>
-          <Modal.Body>
-            <p className="text-center" style={{ marginBottom: '32px' }}>
-              Enter the name of the quickstart you would like us to have <br />
-              and we will add it to our list.
-            </p>
-            <div className="row">
-              <div className="col-xs-12 form-group form-horizontal">
-                <label
-                  htmlFor="suggestion-name"
-                  className="control-label col-xs-2 text-left"
-                >
-                  Name
-                </label>
-                <div className="col-xs-10">
-                  <input
-                    className="input-block-level form-control"
-                    id="suggestion-name"
-                    name="Suggestion name"
-                    onChange={this.handleSuggestionChange}
-                    value={suggestion}
-                    autoFocus
-                  />
+        <form onSubmit={this.handleSuggestionSubmit}>
+
+          <ModalLoader loading={waitingResponse}>
+            <Modal.Body>
+              <p className="text-center" style={{ marginBottom: '32px' }}>
+                Enter the name of the quickstart you would like us to have <br />
+                and we will add it to our list.
+              </p>
+              <div className="row">
+                <div className="col-xs-12 form-group form-horizontal">
+                  <label
+                    htmlFor="suggestion-name"
+                    className="control-label col-xs-2 text-left"
+                  >
+                    Name
+                  </label>
+                  <div className="col-xs-10">
+                    <input
+                      className="input-block-level form-control"
+                      id="suggestion-name"
+                      name="Suggestion name"
+                      onChange={this.handleSuggestionChange}
+                      value={suggestion}
+                      autoFocus
+                    />
+                  </div>
                 </div>
               </div>
-            </div>
-          </Modal.Body>
-        </ModalLoader>
-        <Modal.Footer>
-          <Button
-            bsStyle="primary"
-            onClick={this.handleSuggestionSubmit}
-            disabled={waitingResponse || !suggestion}
-          >
-            Submit
-          </Button>
-        </Modal.Footer>
+            </Modal.Body>
+          </ModalLoader>
+
+          <Modal.Footer>
+            <input
+              type="submit"
+              className="btn btn-primary"
+              disabled={waitingResponse || !suggestion}
+              value="Submit"
+            />
+          </Modal.Footer>
+
+        </form>
       </Modal>
     );
   }
@@ -125,7 +131,8 @@ class QuickstartSuggestModal extends Component {
 QuickstartSuggestModal.propTypes = {
   open: PropTypes.bool.isRequired,
   suggestion: PropTypes.string.isRequired,
-  closeModal: PropTypes.func.isRequired
+  closeModal: PropTypes.func.isRequired,
+  showSuggestionSent: PropTypes.func.isRequired
 };
 
 export default QuickstartSuggestModal;
