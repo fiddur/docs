@@ -1,5 +1,7 @@
 import React, { Component, PropTypes } from 'react';
 import { Button, Modal } from 'auth0-styleguide-react-components';
+import { connectToStores } from 'fluxible-addons-react';
+import UserStore from '../../stores/UserStore.js';
 import ModalLoader from '../ModalLoader';
 
 class QuickstartSuggestModal extends Component {
@@ -35,12 +37,24 @@ class QuickstartSuggestModal extends Component {
       waitingResponse: true
     });
 
+    const message = this.props.isAuthenticated ? (
+`From:
+👤 *User*: ${this.props.user.userName}
+️️✉️ *Email*: ${this.props.user.email}
+
+🗣 *Suggestion*: ${this.state.suggestion}`
+    ) : (
+`From *unauthenticated user*:
+
+🗣 *Suggestion*: ${this.state.suggestion}`
+    );
+
     $.ajax({
       type: 'POST',
       url: 'https://wt-6047db103cbb5c1338ce4918051a7a70-0.run.webtask.io/quickstart-suggest-to-slack',
       data: JSON.stringify({
         data: {
-          content: this.state.suggestion
+          content: message
         }
       }),
       processData: false,
@@ -132,7 +146,16 @@ QuickstartSuggestModal.propTypes = {
   open: PropTypes.bool.isRequired,
   suggestion: PropTypes.string.isRequired,
   closeModal: PropTypes.func.isRequired,
-  showSuggestionSent: PropTypes.func.isRequired
+  showSuggestionSent: PropTypes.func.isRequired,
+  isAuthenticated: PropTypes.bool.isRequired,
+  user: PropTypes.object.isRequired
 };
 
-export default QuickstartSuggestModal;
+export default connectToStores(
+  QuickstartSuggestModal,
+  [UserStore],
+  (context, props) => ({
+    isAuthenticated: context.getStore(UserStore).isAuthenticated(),
+    user: context.getStore(UserStore).getUser()
+  })
+);
