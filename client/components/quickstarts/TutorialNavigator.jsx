@@ -3,9 +3,10 @@ import { connectToStores } from 'fluxible-addons-react';
 import Breadcrumbs from './Breadcrumbs';
 import QuickstartList from './QuickstartList';
 import PlatformList from './PlatformList';
+import QuickstartSuggestModal from './QuickstartSuggestModal';
 import {
-    sendTutorialViewedEvent,
-    sendPackageDownloadedEvent
+  sendTutorialViewedEvent,
+  sendPackageDownloadedEvent
 } from '../../browser/quickstartMetrics';
 import ApplicationStore from '../../stores/ApplicationStore';
 import QuickstartStore from '../../stores/QuickstartStore';
@@ -19,11 +20,14 @@ class TutorialNavigator extends React.Component {
     super();
 
     this.state = {
+      showSuggestionModal: false,
       searchTerm: '',
       searchActive: false
     };
 
     this.handleSearchChange = this.handleSearchChange.bind(this);
+    this.openSuggestionModal = this.openSuggestionModal.bind(this);
+    this.closeSuggestionModal = this.closeSuggestionModal.bind(this);
   }
 
   componentDidMount() {
@@ -32,6 +36,18 @@ class TutorialNavigator extends React.Component {
 
   componentDidUpdate(prevProps) {
     if (shouldSendMetrics(this.props.quickstart, prevProps.quickstart)) this.handleMetrics();
+  }
+
+  openSuggestionModal() {
+    this.setState({
+      showSuggestionModal: true
+    });
+  }
+
+  closeSuggestionModal() {
+    this.setState({
+      showSuggestionModal: false
+    });
   }
 
   handleMetrics() {
@@ -59,6 +75,7 @@ class TutorialNavigator extends React.Component {
         <PlatformList
           searchActive={this.state.searchActive}
           searchTerm={this.state.searchTerm}
+          handleSuggestClick={this.openSuggestionModal}
           {...this.props}
         />
       );
@@ -77,14 +94,21 @@ class TutorialNavigator extends React.Component {
               {breadcrumbs}
               <p className="question-text">{question}</p><br />
               { quickstart &&
-                <div className="quickstart-search-input">
-                  <i className="icon icon-budicon-489" />
-                  <input
-                    className="form-control input"
-                    value={this.state.searchTerm}
-                    placeholder="Search by technology name"
-                    onChange={this.handleSearchChange}
+                <div>
+                  <QuickstartSuggestModal
+                    open={this.state.showSuggestionModal}
+                    suggestion={this.state.searchTerm}
+                    closeModal={this.closeSuggestionModal}
                   />
+                  <div className="quickstart-search-input">
+                    <i className="icon icon-budicon-489" />
+                    <input
+                      className="form-control input"
+                      value={this.state.searchTerm}
+                      placeholder="Search by technology name"
+                      onChange={this.handleSearchChange}
+                    />
+                  </div>
                 </div>
               }
             </div>

@@ -1,7 +1,7 @@
 import React, { PropTypes } from 'react';
 import _ from 'lodash';
 import Platform from './Platform';
-import QuickstartSuggest from './QuickstartSuggest';
+import QuickstartSuggestItem from './QuickstartSuggestItem';
 
 const platformDelay = 20;
 
@@ -27,16 +27,32 @@ const appendQuickstartSuggest = (acc, current, i, arr, quickstart, firstHiddenIn
   return acc.concat(current);
 };
 
-// eslint-disable-next-line arrow-body-style
-const mapPlatforms = (platformName, i, quickstart, isFramedMode, searchTerm, searchActive) => {
-  return (platformName === 'quickstart-suggest') ? (
-    <QuickstartSuggest
-      key="quickstart-suggest"
-      delay={searchActive ? 0 : platformDelay * Object.keys(quickstart.platforms).length}
-      name={quickstart.name}
-      searchTerm={searchTerm}
-    />
-  ) : (
+const mapPlatforms = (platformName, i, quickstart, isFramedMode, searchTerm, searchActive, handleSuggestClick) => {
+  if (platformName === 'quickstart-suggest') {
+    const quickstartTypeToSuggestion = {
+      native: 'a SDK',
+      spa: 'a technology',
+      webapp: 'a technology',
+      backend: 'an API'
+    };
+
+    const suggestionText = `Suggest ${
+      (searchTerm && `"${searchTerm}"`) ||
+      quickstartTypeToSuggestion[quickstart.name] ||
+      'a quickstart'
+    }`;
+
+    return (
+      <QuickstartSuggestItem
+        key="quickstart-suggest"
+        title={suggestionText}
+        delay={searchActive ? 0 : platformDelay * Object.keys(quickstart.platforms).length}
+        handleClick={handleSuggestClick}
+      />
+    );
+  }
+
+  return (
     <Platform
       key={quickstart.platforms[platformName].title}
       delay={searchActive ? 0 : platformDelay * i}
@@ -48,7 +64,7 @@ const mapPlatforms = (platformName, i, quickstart, isFramedMode, searchTerm, sea
   );
 };
 
-const PlatformList = ({ quickstart, isFramedMode, searchTerm, searchActive }) => {
+const PlatformList = ({ quickstart, isFramedMode, searchTerm, searchActive, handleSuggestClick }) => {
   const items = Object.keys(quickstart.platforms);
 
   // Sort platforms by visibility, show first the visible ones
@@ -67,7 +83,9 @@ const PlatformList = ({ quickstart, isFramedMode, searchTerm, searchActive }) =>
 
   // Replace each platform name for the <Platform> or <QuickstartSuggest> components
   const platforms = itemsWithSuggest.map((platformName, i) =>
-    mapPlatforms(platformName, i, quickstart, isFramedMode, searchTerm, searchActive));
+    mapPlatforms(
+      platformName, i, quickstart, isFramedMode, searchTerm, searchActive, handleSuggestClick
+    ));
 
   return (
     <div className="container techlist">
@@ -80,7 +98,8 @@ PlatformList.propTypes = {
   quickstart: PropTypes.object.isRequired,
   isFramedMode: PropTypes.bool.isRequired,
   searchTerm: PropTypes.string.isRequired,
-  searchActive: PropTypes.bool.isRequired
+  searchActive: PropTypes.bool.isRequired,
+  handleSuggestClick: PropTypes.func.isRequired
 };
 
 export default PlatformList;
