@@ -3,64 +3,58 @@ import _ from 'lodash';
 import Platform from './Platform';
 import QuickstartSuggestItem from './QuickstartSuggestItem';
 
+// Platform CSS animation delay
 const platformDelay = 20;
 
 const nameMatchSearch = (name, search) => name.toLowerCase().includes(search.toLowerCase());
 
-const sortPlatforms = (platformA, platformB, quickstart, searchTerm) => {
-  // If there is no search term maintain the order
-  if (!searchTerm) return 0;
+const getPlatformsByVisibility = (platforms, visibility, quickstart, searchTerm) =>
+  platforms.filter(item => {
+    const platformTitle = quickstart.platforms[item].title;
+    return nameMatchSearch(platformTitle, searchTerm) === visibility;
+  });
 
-  const platformAMatch = nameMatchSearch(quickstart.platforms[platformA].title, searchTerm);
-  const platformBMatch = nameMatchSearch(quickstart.platforms[platformB].title, searchTerm);
+const sortPlatformsAlphabetically = (list, quickstart) =>
+  list.sort((a, b) => {
+    const platformATitle = quickstart.platforms[a].title;
+    const platformBTitle = quickstart.platforms[b].title;
 
-  // If the first platform is hidden (not matched) and the second
-  // one is visible (matched) put the visible platform first
-  return (!platformAMatch && platformBMatch) ? 1 : -1;
-};
+    if (platformATitle < platformBTitle) return -1;
+    if (platformATitle > platformBTitle) return 1;
+    return 0;
+  });
 
-const appendQuickstartSuggest = (acc, current, i, arr, quickstart, firstHiddenIndex) => {
-  if (i === firstHiddenIndex) return acc.concat('quickstart-suggest', current);
-  if (i === arr.length - 1 && firstHiddenIndex === -1) {
-    return acc.concat(current, 'quickstart-suggest');
-  }
-  return acc.concat(current);
-};
-
-// eslint-disable-next-line max-len
-const mapPlatforms = (platformName, i, quickstart, isFramedMode, searchTerm, searchActive, handleSuggestClick) => {
-  if (platformName === 'quickstart-suggest') {
-    const quickstartTypeToSuggestion = {
-      native: 'a SDK',
-      spa: 'a technology',
-      webapp: 'a technology',
-      backend: 'an API'
-    };
-
-    const suggestionText = `Suggest ${
-      (searchTerm && `"${searchTerm}"`) ||
-      quickstartTypeToSuggestion[quickstart.name] ||
-      'a quickstart'
-    }`;
-
-    return (
-      <QuickstartSuggestItem
-        key="quickstart-suggest"
-        title={suggestionText}
-        delay={searchActive ? 0 : platformDelay * Object.keys(quickstart.platforms).length}
-        handleClick={handleSuggestClick}
-      />
-    );
-  }
-
-  return (
+const mapPlatforms = (platforms, visible, quickstart, isFramedMode, searchActive) =>
+  platforms.map((platformName, i) =>
     <Platform
       key={quickstart.platforms[platformName].title}
       delay={searchActive ? 0 : platformDelay * i}
       quickstart={quickstart}
       platform={quickstart.platforms[platformName]}
       isFramedMode={isFramedMode}
-      hide={!!searchTerm && !nameMatchSearch(quickstart.platforms[platformName].title, searchTerm)}
+      hide={!visible}
+    />);
+
+const createQuickstartSuggest = (quickstart, searchTerm, handleSuggestClick, searchActive) => {
+  const quickstartTypeToSuggestion = {
+    native: 'a SDK',
+    spa: 'a technology',
+    webapp: 'a technology',
+    backend: 'an API'
+  };
+
+  const suggestionText = `Suggest ${
+    (searchTerm && `"${searchTerm}"`) ||
+    quickstartTypeToSuggestion[quickstart.name] ||
+    'a quickstart'
+  }`;
+
+  return (
+    <QuickstartSuggestItem
+      key="quickstart-suggest"
+      title={suggestionText}
+      delay={searchActive ? 0 : platformDelay * Object.keys(quickstart.platforms).length}
+      handleClick={handleSuggestClick}
     />
   );
 };
@@ -69,26 +63,14 @@ const PlatformList = ({
     quickstart, isFramedMode, searchTerm, searchActive, handleSuggestClick
   }) => {
   const items = Object.keys(quickstart.platforms);
-
-  // Sort platforms by visibility, show first the visible ones
-  const sortedItems = items.sort((platformA, platformB) =>
-    sortPlatforms(platformA, platformB, quickstart, searchTerm));
-
-  // Find the index of the first hidden platform (not matched) to append quickstart suggest
-  const firstHiddenIndex = _.findIndex(
-    sortedItems,
-    platformName => !nameMatchSearch(quickstart.platforms[platformName].title, searchTerm)
-  );
-
-  // Append quickstart-suggest key after visible platforms (matched by search)
-  const itemsWithSuggest = sortedItems.reduce((acc, current, i, arr) =>
-    appendQuickstartSuggest(acc, current, i, arr, quickstart, firstHiddenIndex), []);
-
-  // Replace each platform name for the <Platform> or <QuickstartSuggest> components
-  const platforms = itemsWithSuggest.map((platformName, i) =>
-    mapPlatforms(
-      platformName, i, quickstart, isFramedMode, searchTerm, searchActive, handleSuggestClick
-    ));
+  const visibleItems = getPlatformsByVisibility(items, true, quickstart, searchTerm);
+  const hiddenItems = getPlatformsByVisibility(items, false, quickstart, searchTerm);
+  const sortedVisibleItems = sortPlatformsAlphabetically(visibleItems, quickstart);
+  const platforms = [
+    ...mapPlatforms(sortedVisibleItems, true, quickstart, isFramedMode, searchActive),
+    createQuickstartSuggest(quickstart, searchTerm, handleSuggestClick, searchActive),
+    ...mapPlatforms(hiddenItems, false, quickstart, isFramedMode, searchActive)
+  ];
 
   return (
     <div className="container techlist">
