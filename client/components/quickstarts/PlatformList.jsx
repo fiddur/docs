@@ -1,4 +1,5 @@
 import React from 'react';
+import { map, sortBy } from 'lodash';
 import Platform from './Platform';
 
 class PlatformList extends React.Component {
@@ -6,12 +7,13 @@ class PlatformList extends React.Component {
   render() {
     const { quickstart, isFramedMode } = this.props;
 
-    const items = Object.keys(quickstart.platforms).map((name, i) => (
+    const items = sortBy(quickstart.platforms, p => p.title.toLowerCase())
+    .map((platform, i) => (
       <Platform
         key={quickstart.name + i}
         delay={20 * i}
         quickstart={quickstart}
-        platform={quickstart.platforms[name]}
+        platform={platform}
         isFramedMode={isFramedMode}
       />
     ));
