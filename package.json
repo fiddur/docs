@@ -12,7 +12,6 @@
     "auth0-contact-form": "^1.0.6",
     "auth0-instrumentation": "auth0/auth0-instrumentation#v1.2.2",
     "auth0-mongodb-config": "git+ssh://git@github.com/auth0/auth0-mongodb-config.git#v0.2.4",
-    "auth0-styleguide-components": "^1.0.4",
     "auth0-styleguide-core": "^1.0.1",
     "auth0-styleguide-react-components": "^1.0.0",
     "auth0-web-header": "^3.1.5",
