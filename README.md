@@ -52,7 +52,7 @@ nave use 4.x
 npm i
 ```
 
-Running and deubgging in vagrant
+Running and debugging in vagrant
 
 ```
 sudo service auth0-docs start
