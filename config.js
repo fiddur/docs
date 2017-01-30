@@ -27,6 +27,7 @@ nconf.file('global', { file: config_file })
     DOMAIN_URL_APP: 'localhost:8989',
     PACKAGER_URL: 'http://localhost:8792',
     DOMAIN_URL_DOCS: 'http://localhost:3000/docs',
+    DOMAIN_URL_SUPPORT: 'https://support.auth0.com',
     PUBLIC_ALLOWED_TUTORIALS: '/adldap-auth?,/adldap-x?,/adfs?',
     AUTH0_TENANT: 'auth0-dev',
     AUTH0_CLIENT_ID: 'aCbTAJNi5HbsjPJtRpSP6BIoLPOrSj2C',
