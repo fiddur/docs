@@ -62,7 +62,8 @@ Platform.propTypes = {
 };
 
 Platform.contextTypes = {
-  executeAction: PropTypes.func
+  executeAction: PropTypes.func,
+  trackEvent: React.PropTypes.func.isRequired
 };
 
 export default Platform;

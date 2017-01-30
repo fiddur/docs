@@ -38,16 +38,30 @@ class QuickstartSuggestModal extends Component {
     });
 
     const message = this.props.isAuthenticated ? (
-`From:
-👤 *User*: ${this.props.user.userName}
-️️✉️ *Email*: ${this.props.user.email}
-
+`👤 *User*: ${this.props.user.account.userName}
+✉️ *Email*: ${this.props.user.account.email}
 🗣 *Suggestion*: ${this.state.suggestion}`
     ) : (
-`From *unauthenticated user*:
-
+`👤 *Unauthenticated user*:
 🗣 *Suggestion*: ${this.state.suggestion}`
     );
+
+    const finishSubmit = () => {
+      this.setState({
+        suggestion: '',
+        waitingResponse: false
+      });
+      this.props.closeModal();
+    };
+
+    this.context.trackEvent('quickstart-suggestion:submit', {
+      path: window.location.pathname,
+      url: window.location.toString(),
+      title: document.title,
+      userName: this.props.user.account.userName,
+      userEmail: this.props.user.account.email,
+      suggestion: this.state.suggestion
+    });
 
     $.ajax({
       type: 'POST',
@@ -60,22 +74,13 @@ class QuickstartSuggestModal extends Component {
       processData: false,
       contentType: 'application/json',
       success: () => {
-        this.setState({
-          suggestion: '',
-          waitingResponse: false
-        });
         this.props.showSuggestionSent();
-        this.props.closeModal();
+        finishSubmit();
       },
       error: (error) => {
-        this.setState({
-          suggestion: '',
-          waitingResponse: false
-        });
-
         // eslint-disable-next-line no-console
         console.error('Your quickstart suggestion could not be sent.');
-        this.props.closeModal();
+        finishSubmit();
       }
     });
   }
@@ -141,6 +146,10 @@ class QuickstartSuggestModal extends Component {
     );
   }
 }
+
+QuickstartSuggestModal.contextTypes = {
+  trackEvent: PropTypes.func.isRequired
+};
 
 QuickstartSuggestModal.propTypes = {
   open: PropTypes.bool.isRequired,
