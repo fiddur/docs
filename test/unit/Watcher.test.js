@@ -39,7 +39,10 @@ describe('Watcher', () => {
   ].map(filename => resolve(baseDir, filename));
 
   beforeEach(() => {
-    watcher = new Watcher({ baseDir });
+    watcher = new Watcher({
+      baseDir,
+      monitorContent: true
+    });
   });
 
   describe('when watch() is called', () => {
