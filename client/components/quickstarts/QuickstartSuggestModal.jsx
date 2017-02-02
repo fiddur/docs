@@ -58,9 +58,7 @@ class QuickstartSuggestModal extends Component {
       path: window.location.pathname,
       url: window.location.toString(),
       title: document.title,
-      userName: this.props.user.account.userName,
-      userEmail: this.props.user.account.email,
-      suggestion: this.state.suggestion
+      trackData: this.state.suggestion
     });
 
     $.ajax({
