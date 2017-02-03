@@ -16,8 +16,8 @@ const getPlatformsByVisibility = (platforms, visibility, quickstart, searchTerm)
 
 const sortPlatformsAlphabetically = (list, quickstart) =>
   list.sort((a, b) => {
-    const platformATitle = quickstart.platforms[a].title;
-    const platformBTitle = quickstart.platforms[b].title;
+    const platformATitle = quickstart.platforms[a].title.toLowerCase();
+    const platformBTitle = quickstart.platforms[b].title.toLowerCase();
 
     if (platformATitle < platformBTitle) return -1;
     if (platformATitle > platformBTitle) return 1;
