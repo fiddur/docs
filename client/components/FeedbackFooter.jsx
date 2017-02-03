@@ -130,7 +130,7 @@ class FeedbackFooter extends React.Component {
 }
 
 FeedbackFooter.contextTypes = {
-  trackEvent: React.PropTypes.func.isRequired,
+  trackEvent: React.PropTypes.func.isRequired
 };
 
 FeedbackFooter.propTypes = {
