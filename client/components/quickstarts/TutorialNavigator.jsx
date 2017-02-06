@@ -72,7 +72,7 @@ class TutorialNavigator extends React.Component {
   }
 
   render() {
-    const { quickstart, firstQuestion } = this.props;
+    const { quickstart, firstQuestion, largeHeader } = this.props;
 
     let picker;
     let question;
@@ -94,13 +94,16 @@ class TutorialNavigator extends React.Component {
       question = firstQuestion;
     }
 
+    const TitleElementType = largeHeader ? 'h1' : 'p';
+
     return (
       <div id="tutorial-navigator">
         <div className="js-tutorial-navigator">
           <div className="banner tutorial-wizard">
             <div className="container">
               {breadcrumbs}
-              <p className="question-text">{question}</p><br />
+              <TitleElementType className="navigator-title">{question}</TitleElementType>
+              <br />
               { quickstart &&
                 <div>
                   <QuickstartSuggestModal
@@ -136,14 +139,16 @@ class TutorialNavigator extends React.Component {
 }
 
 TutorialNavigator.defaultProps = {
-  firstQuestion: 'Choose your application type'
+  firstQuestion: 'Choose your application type',
+  largeHeader: true
 };
 
 TutorialNavigator.propTypes = {
   quickstarts: React.PropTypes.object,
   quickstart: React.PropTypes.object,
   firstQuestion: React.PropTypes.string,
-  isFramedMode: React.PropTypes.bool.isRequired
+  isFramedMode: React.PropTypes.bool.isRequired,
+  largeHeader: React.PropTypes.bool
 };
 
 export default connectToStores(

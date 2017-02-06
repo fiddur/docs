@@ -17,7 +17,7 @@ class HomePage extends React.Component {
 
     let tutorialNav = <Spinner />;
     if (quickstarts) {
-      tutorialNav = <TutorialNavigator {...this.props} />;
+      tutorialNav = <TutorialNavigator largeHeader={false} {...this.props} />;
     }
 
     let cardElements;
