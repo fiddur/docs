@@ -104,8 +104,8 @@ class QuickstartSuggestModal extends Component {
           <ModalLoader loading={waitingResponse}>
             <Modal.Body>
               <p className="text-center" style={{ marginBottom: '32px' }}>
-                Enter the name of the quickstart you would like us to have <br />
-                and we will add it to our list.
+                Enter the name of the language or platform you would like <br />
+                to suggest for a quickstart.
               </p>
               <div className="row">
                 <div className="col-xs-12 form-group form-horizontal">
