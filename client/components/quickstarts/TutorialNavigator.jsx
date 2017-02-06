@@ -72,7 +72,7 @@ class TutorialNavigator extends React.Component {
   }
 
   render() {
-    const { quickstart, firstQuestion } = this.props;
+    const { quickstart, firstQuestion, currentRoute } = this.props;
 
     let picker;
     let question;
@@ -94,15 +94,15 @@ class TutorialNavigator extends React.Component {
       question = firstQuestion;
     }
 
+    const TitleElementType = (currentRoute.url === '/docs/') ? 'p' : 'h1';
+
     return (
       <div id="tutorial-navigator">
         <div className="js-tutorial-navigator">
           <div className="banner tutorial-wizard">
             <div className="container">
               {breadcrumbs}
-              <p className={`question-text ${quickstart ? 'title' : 'subtitle'}`}>
-                {question}
-              </p>
+              <TitleElementType className="navigator-title">{question}</TitleElementType>
               <br />
               { quickstart &&
                 <div>
@@ -146,7 +146,8 @@ TutorialNavigator.propTypes = {
   quickstarts: React.PropTypes.object,
   quickstart: React.PropTypes.object,
   firstQuestion: React.PropTypes.string,
-  isFramedMode: React.PropTypes.bool.isRequired
+  isFramedMode: React.PropTypes.bool.isRequired,
+  currentRoute: React.PropTypes.object.isRequired
 };
 
 export default connectToStores(
