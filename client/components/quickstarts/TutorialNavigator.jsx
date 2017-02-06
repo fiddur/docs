@@ -100,7 +100,10 @@ class TutorialNavigator extends React.Component {
           <div className="banner tutorial-wizard">
             <div className="container">
               {breadcrumbs}
-              <p className="question-text">{question}</p><br />
+              <p className={`question-text ${quickstart ? 'title' : 'subtitle'}`}>
+                {question}
+              </p>
+              <br />
               { quickstart &&
                 <div>
                   <QuickstartSuggestModal
