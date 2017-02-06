@@ -72,7 +72,7 @@ class TutorialNavigator extends React.Component {
   }
 
   render() {
-    const { quickstart, firstQuestion, currentRoute } = this.props;
+    const { quickstart, firstQuestion, largeHeader } = this.props;
 
     let picker;
     let question;
@@ -94,7 +94,7 @@ class TutorialNavigator extends React.Component {
       question = firstQuestion;
     }
 
-    const TitleElementType = (currentRoute.url === '/docs/') ? 'p' : 'h1';
+    const TitleElementType = largeHeader ? 'h1' : 'p';
 
     return (
       <div id="tutorial-navigator">
@@ -139,7 +139,8 @@ class TutorialNavigator extends React.Component {
 }
 
 TutorialNavigator.defaultProps = {
-  firstQuestion: 'Choose your application type'
+  firstQuestion: 'Choose your application type',
+  largeHeader: true
 };
 
 TutorialNavigator.propTypes = {
@@ -147,7 +148,7 @@ TutorialNavigator.propTypes = {
   quickstart: React.PropTypes.object,
   firstQuestion: React.PropTypes.string,
   isFramedMode: React.PropTypes.bool.isRequired,
-  currentRoute: React.PropTypes.object.isRequired
+  largeHeader: React.PropTypes.bool
 };
 
 export default connectToStores(
