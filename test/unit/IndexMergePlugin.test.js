@@ -13,7 +13,6 @@ describe('IndexMergePlugin', () => {
         const doc = getTestDocument(getTestFile('articles/test-markdown.md'));
         const output = plugin.getMetadata(doc, '');
         expect(output).to.deep.equal({
-          quickstart: true,
           items: ['one', 'two', 'three']
         });
       });
