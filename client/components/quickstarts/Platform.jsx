@@ -9,7 +9,7 @@ class Platform extends React.Component {
     this.handleClick = this.handleClick.bind(this);
   }
 
-  getStyle(hide) {
+  getStyle() {
     return {
       animationDelay: `${this.props.delay}ms`,
       WebkitAnimationDelay: `${this.props.delay}ms`,
@@ -17,7 +17,6 @@ class Platform extends React.Component {
       WebkitAnimationDuration: '200ms',
       animationTimingFunction: 'cubic-bezier(0.455, 0.03, 0.515, 0.955)',
       WebkitAnimationTimingFunction: 'cubic-bezier(0.455, 0.03, 0.515, 0.955)',
-      visibility: hide ? 'hidden' : 'visible'
     };
   }
 
@@ -31,9 +30,9 @@ class Platform extends React.Component {
   }
 
   render() {
-    const { platform, hide } = this.props;
+    const { platform } = this.props;
     return (
-      <li className="animated scaleIn" style={this.getStyle(hide)}>
+      <li className="animated scaleIn" style={this.getStyle()}>
         <div
           data-name={platform.logo_name || platform.name}
           className="circle-logo"
@@ -57,8 +56,7 @@ class Platform extends React.Component {
 Platform.propTypes = {
   quickstart: PropTypes.object,
   platform: PropTypes.object,
-  delay: PropTypes.number,
-  hide: PropTypes.bool
+  delay: PropTypes.number
 };
 
 Platform.contextTypes = {

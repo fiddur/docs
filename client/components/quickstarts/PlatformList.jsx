@@ -1,86 +1,75 @@
 import React, { PropTypes } from 'react';
 import _ from 'lodash';
 import Platform from './Platform';
-import QuickstartSuggestItem from './QuickstartSuggestItem';
 
 // Platform CSS animation delay
 const platformDelay = 20;
 
 const nameMatchSearch = (name, search) => name.toLowerCase().includes(search.toLowerCase());
 
-const getPlatformsByVisibility = (platforms, visibility, quickstart, searchTerm) =>
-  platforms.filter(item => {
-    const platformTitle = quickstart.platforms[item].title;
-    return nameMatchSearch(platformTitle, searchTerm) === visibility;
-  });
+const getPlatformsByVisibility = (platforms, searchTerm) =>
+  platforms.filter(platform => nameMatchSearch(platform.title, searchTerm));
 
-const sortPlatformsAlphabetically = (list, quickstart) =>
-  list.sort((a, b) => {
-    const platformATitle = quickstart.platforms[a].title.toLowerCase();
-    const platformBTitle = quickstart.platforms[b].title.toLowerCase();
-
-    if (platformATitle < platformBTitle) return -1;
-    if (platformATitle > platformBTitle) return 1;
-    return 0;
-  });
-
-const mapPlatforms = (platforms, visible, quickstart, isFramedMode, searchActive) =>
-  platforms.map((platformName, i) =>
+const mapPlatforms = (platforms, quickstart, isFramedMode, searchActive) =>
+  platforms.map((platform, i) =>
     <Platform
-      key={quickstart.platforms[platformName].title}
+      key={platform.title}
       delay={searchActive ? 0 : platformDelay * i}
       quickstart={quickstart}
-      platform={quickstart.platforms[platformName]}
+      platform={platform}
       isFramedMode={isFramedMode}
-      hide={!visible}
     />);
 
-const createQuickstartSuggest = (quickstart, searchTerm, handleSuggestClick, searchActive) => {
-  const quickstartTypeToSuggestion = {
-    native: 'a SDK',
-    spa: 'a technology',
-    webapp: 'a technology',
-    backend: 'an API'
-  };
-
-  const suggestionText = `Suggest ${
-    (searchTerm && `"${searchTerm}"`) ||
-    quickstartTypeToSuggestion[quickstart.name] ||
-    'a quickstart'
-  }`;
-
-  return (
-    <QuickstartSuggestItem
-      key="quickstart-suggest"
-      title={suggestionText}
-      delay={searchActive ? 0 : platformDelay * Object.keys(quickstart.platforms).length}
-      handleClick={handleSuggestClick}
-    />
-  );
-};
-
 const PlatformList = ({
-    quickstart, isFramedMode, searchTerm, searchActive, handleSuggestClick
+    quickstart, quickstarts, isFramedMode, searchTerm, searchActive, handleSuggestClick
   }) => {
-  const items = Object.keys(quickstart.platforms);
-  const visibleItems = getPlatformsByVisibility(items, true, quickstart, searchTerm);
-  const hiddenItems = getPlatformsByVisibility(items, false, quickstart, searchTerm);
-  const sortedVisibleItems = sortPlatformsAlphabetically(visibleItems, quickstart);
-  const platforms = [
-    ...mapPlatforms(sortedVisibleItems, true, quickstart, isFramedMode, searchActive),
-    createQuickstartSuggest(quickstart, searchTerm, handleSuggestClick, searchActive),
-    ...mapPlatforms(hiddenItems, false, quickstart, isFramedMode, searchActive)
-  ];
+  const currentPlatformType = quickstart.name;
+  const currentTypePlatforms = Object.keys(quickstarts[currentPlatformType].platforms)
+    .map(platformName => quickstarts[currentPlatformType].platforms[platformName]);
+
+  const visibleCurrentTypePlatforms = _.sortBy(
+    getPlatformsByVisibility(currentTypePlatforms, searchTerm),
+    platform => platform.title
+  );
+
+  const otherTypesPlatforms = _.values(quickstarts)
+    .filter(quickstartType => quickstartType.name !== quickstart.name)
+    .map(quickstartType =>
+      Object.assign({}, quickstartType, {
+        platforms: getPlatformsByVisibility(_.values(quickstartType.platforms), searchTerm)
+      })
+    );
 
   return (
     <div className="container techlist">
-      <ul className="circle-list">{platforms}</ul>
+      {
+        visibleCurrentTypePlatforms.length ? (
+          <ul className="circle-list">
+            { mapPlatforms(visibleCurrentTypePlatforms, quickstart, isFramedMode, searchActive) }
+          </ul>
+        ) : (
+          <h5>There are no results in this quickstart type.</h5>
+        )
+      }
+      { searchTerm &&
+        otherTypesPlatforms.map(platformType => {
+          if (!platformType.platforms.length) return null;
+
+          return (
+            <div>
+              <h4>{ platformType.title }</h4>
+              { platformType.platforms.slice(0, 3).map(platform => <h5>{ platform.title }</h5>) }
+            </div>
+          );
+        })
+      }
     </div>
   );
 };
 
 PlatformList.propTypes = {
   quickstart: PropTypes.object.isRequired,
+  quickstarts: PropTypes.object.isRequired,
   isFramedMode: PropTypes.bool.isRequired,
   searchTerm: PropTypes.string.isRequired,
   searchActive: PropTypes.bool.isRequired,
