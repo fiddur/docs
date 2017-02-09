@@ -9,17 +9,6 @@ class Platform extends React.Component {
     this.handleClick = this.handleClick.bind(this);
   }
 
-  getStyle() {
-    return {
-      animationDelay: `${this.props.delay}ms`,
-      WebkitAnimationDelay: `${this.props.delay}ms`,
-      animationDuration: '200ms',
-      WebkitAnimationDuration: '200ms',
-      animationTimingFunction: 'cubic-bezier(0.455, 0.03, 0.515, 0.955)',
-      WebkitAnimationTimingFunction: 'cubic-bezier(0.455, 0.03, 0.515, 0.955)',
-    };
-  }
-
   handleClick() {
     const { quickstart, platform } = this.props;
     const payload = {
@@ -32,7 +21,7 @@ class Platform extends React.Component {
   render() {
     const { platform } = this.props;
     return (
-      <li className="animated scaleIn" style={this.getStyle()}>
+      <li>
         <div
           data-name={platform.logo_name || platform.name}
           className="circle-logo"
@@ -55,8 +44,7 @@ class Platform extends React.Component {
 
 Platform.propTypes = {
   quickstart: PropTypes.object,
-  platform: PropTypes.object,
-  delay: PropTypes.number
+  platform: PropTypes.object
 };
 
 Platform.contextTypes = {
