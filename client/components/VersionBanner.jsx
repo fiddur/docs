@@ -37,19 +37,44 @@ class VersionSelector extends Component {
 
   render() {
     const { doc } = this.props;
+    const { version, versioning } = doc.meta;
 
-    const options = map(doc.meta.versioning.versions, (version, key) => ({
+    const options = map(versioning.versions, (config, key) => ({
       label: key,
       value: key
     }));
 
+    let message;
+    const classes = ['version-banner', 'alert'];
+
+    if (version === versioning.current) {
+      classes.push('alert-info');
+      message = (
+        <div className="version-selector-message">
+          <strong>Heads up!</strong> This document explains the latest version ({version}).
+          If you are still using an older version, you can see that documentation here:
+        </div>
+      );
+    } else {
+      classes.push('alert-warning');
+      message = (
+        <div className="version-selector-message">
+          <strong>Heads up!</strong> This document explains an outdated version ({version}).
+        </div>
+      );
+    }
+
     return (
-      <div className="version-selector">
-        <Select
-          options={options}
-          selected={options.findIndex(v => v.value === doc.meta.version)}
-          handleChange={this.handleChange}
-        />
+      <div className={classes.join(' ')}>
+        {message}
+        <div className="version-selector">
+          Switch to version:
+          <Select
+            options={options}
+            selected={options.findIndex(v => v.value === version)}
+            handleChange={this.handleChange}
+          />
+        </div>
       </div>
     );
   }
