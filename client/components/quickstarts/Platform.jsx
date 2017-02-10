@@ -19,12 +19,12 @@ class Platform extends React.Component {
   }
 
   render() {
-    const { platform } = this.props;
+    const { platform, otherType } = this.props;
     return (
       <li>
         <div
           data-name={platform.logo_name || platform.name}
-          className="circle-logo"
+          className={`circle-logo ${otherType ? 'other-platforms-item' : ''}`}
           onClick={this.handleClick}
         >
           <div className="logo">
@@ -42,9 +42,14 @@ class Platform extends React.Component {
 
 }
 
+Platform.defaultProps = {
+  otherType: false
+};
+
 Platform.propTypes = {
   quickstart: PropTypes.object,
-  platform: PropTypes.object
+  platform: PropTypes.object,
+  otherType: PropTypes.bool
 };
 
 Platform.contextTypes = {

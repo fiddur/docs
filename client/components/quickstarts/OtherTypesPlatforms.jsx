@@ -1,43 +1,75 @@
 import React, { PropTypes } from 'react';
+import Platform from './Platform';
+
+const PlatformTypeList = ({ title, platforms, quickstart }) =>
+  <div className="platforms-type-container">
+    <h4 className="platforms-type-title">{ title }</h4>
+    <ul className="platforms-type-list">
+      {
+        platforms.map(platform =>
+          <Platform
+            key={platform.title}
+            quickstart={quickstart}
+            platform={platform}
+            otherType
+          />
+        )
+      }
+    </ul>
+  </div>;
+
+PlatformTypeList.propTypes = {
+  title: PropTypes.string.isRequired,
+  platforms: PropTypes.array.isRequired,
+  quickstart: PropTypes.object.isRequired
+};
+
 
 const OtherTypesPlatforms = (props) => {
   const { quickstartTypes, handleSuggestClick, currentQuickstartType } = props;
 
-  const platforms = quickstartTypes
+  const anyResultMatch = !!quickstartTypes
     .map(quickstartType => quickstartType.platforms) // Get visible platforms of each type
-    .reduce((acc, current) => acc.concat(current), []); // Flatten array
+    .reduce((acc, current) => acc.concat(current), []) // Flatten array
+    .length;
+
+  const getEmptyStateText = match => {
+    if (!match) return 'There are no matches in any category.';
+
+    return (
+      <span>
+        There are no matches in the
+        <span className="bold"> {currentQuickstartType} </span>
+        category but there are matches in other categories.
+      </span>
+    );
+  };
 
   return (
     <div className="other-types-platforms">
       <div className="empty-state-section">
         <span className="empty-state-icon icon icon-budicon-490" />
-        <h3 className="empty-state-title">
-          There are no matches in the
-          <span className="bold">{` ${currentQuickstartType} `}</span>
-          category but there are matches in other categories.
-        </h3>
+        <h3 className="empty-state-title">{ getEmptyStateText(anyResultMatch) }</h3>
       </div>
       {
-        platforms.length &&
-          <ul className="other-platforms-list">
+        anyResultMatch &&
+          <div className="platforms-list-section">
             {
-              quickstartTypes.map(quickstartType =>
-                quickstartType.platforms.map(platform =>
-                  <li
-                    className="circle-logo other-platforms-item"
-                    data-name={platform.logo_name || platform.name}
-                  >
-                    <div className="logo" />
-                    <span className="title">{ platform.title }</span>
-                    <span className="from-category">from {quickstartType.title}</span>
-                  </li>
-                )
-              )
+              quickstartTypes.map(quickstartType => {
+                if (!quickstartType.platforms.length) return null;
+                return (
+                  <PlatformTypeList
+                    title={quickstartType.title}
+                    platforms={quickstartType.platforms}
+                    quickstart={quickstartType}
+                  />
+                );
+              })
             }
-          </ul>
+          </div>
       }
       <div className="suggest-quickstart-section">
-        <span className="text"> Not what you are looking for?</span>
+        {anyResultMatch && <span className="text"> Not what you are looking for?</span>}
         <button className="btn btn-success"onClick={handleSuggestClick}>
           Suggest a new quickstart
         </button>

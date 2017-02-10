@@ -57,12 +57,12 @@
   .other-types-platforms
     max-width: 500px;
     margin: 0 auto;
-    margin-bottom: 100px;
+    margin-bottom: 60px;
 
     // Empty state section
     .empty-state-section
-      margin-top: 80px;
-      margin-bottom: 60px;
+      margin-top: 50px;
+      margin-bottom: 40px;
 
     .empty-state-icon
       display: inline-block;
@@ -84,11 +84,20 @@
 
     // Other platforms list section
     
-    .other-platforms-list
-      list-style-type: none;
-      padding: 0;
-      margin: 0;
+    .platforms-list-section
       margin-bottom: 60px;
+
+      .platforms-type-container + .platforms-type-container
+        margin-top: 30px;
+
+      .platforms-type-title
+        font-size: 14px;
+        text-transform: uppercase;
+
+      .platforms-type-list
+        list-style-type: none;
+        padding: 0;
+        margin: 0;
 
     // Overwrite default .circle-logo styles
     .other-platforms-item
@@ -105,6 +114,9 @@
       &:hover
         transform: scale(1.02);
 
+      .community-maintained-badge
+        display: none;
+
       .logo
         width: 40px;
         height: 40px;
@@ -114,9 +126,12 @@
         margin: 0
         min-height: initial;
 
-      .from-category
-        color: $color-text-black;
-        margin-left: 6px;
+    // Suggest quickstart section
+    .suggest-quickstart-section
+      
+      .text
+        display: block;
+        margin-bottom: 4px;
 
 
   .section-product
