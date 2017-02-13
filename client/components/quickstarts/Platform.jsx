@@ -9,18 +9,6 @@ class Platform extends React.Component {
     this.handleClick = this.handleClick.bind(this);
   }
 
-  getStyle(hide) {
-    return {
-      animationDelay: `${this.props.delay}ms`,
-      WebkitAnimationDelay: `${this.props.delay}ms`,
-      animationDuration: '200ms',
-      WebkitAnimationDuration: '200ms',
-      animationTimingFunction: 'cubic-bezier(0.455, 0.03, 0.515, 0.955)',
-      WebkitAnimationTimingFunction: 'cubic-bezier(0.455, 0.03, 0.515, 0.955)',
-      visibility: hide ? 'hidden' : 'visible'
-    };
-  }
-
   handleClick() {
     const { quickstart, platform } = this.props;
     const payload = {
@@ -31,12 +19,12 @@ class Platform extends React.Component {
   }
 
   render() {
-    const { platform, hide } = this.props;
+    const { platform, otherType } = this.props;
     return (
-      <li className="animated scaleIn" style={this.getStyle(hide)}>
+      <li>
         <div
           data-name={platform.logo_name || platform.name}
-          className="circle-logo"
+          className={`circle-logo ${otherType ? 'other-platforms-item' : ''}`}
           onClick={this.handleClick}
         >
           <div className="logo">
@@ -54,11 +42,14 @@ class Platform extends React.Component {
 
 }
 
+Platform.defaultProps = {
+  otherType: false
+};
+
 Platform.propTypes = {
   quickstart: PropTypes.object,
   platform: PropTypes.object,
-  delay: PropTypes.number,
-  hide: PropTypes.bool
+  otherType: PropTypes.bool
 };
 
 Platform.contextTypes = {

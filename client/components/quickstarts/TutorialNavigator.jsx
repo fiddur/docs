@@ -29,7 +29,7 @@ class TutorialNavigator extends React.Component {
     this.handleSearchChange = this.handleSearchChange.bind(this);
     this.openSuggestionModal = this.openSuggestionModal.bind(this);
     this.closeSuggestionModal = this.closeSuggestionModal.bind(this);
-    this.showSuggestionSent = this.showSuggestionSent.bind(this);
+    this.handleSuggestionSent = this.handleSuggestionSent.bind(this);
   }
 
   componentDidMount() {
@@ -52,9 +52,10 @@ class TutorialNavigator extends React.Component {
     });
   }
 
-  showSuggestionSent() {
+  handleSuggestionSent() {
     this.setState({
-      suggestionSent: true
+      suggestionSent: true,
+      searchTerm: ''
     });
   }
 
@@ -110,7 +111,7 @@ class TutorialNavigator extends React.Component {
                     open={this.state.showSuggestionModal}
                     suggestion={this.state.searchTerm}
                     closeModal={this.closeSuggestionModal}
-                    showSuggestionSent={this.showSuggestionSent}
+                    handleSuggestionSent={this.handleSuggestionSent}
                   />
                   <div className="quickstart-search-input">
                     <i className="icon icon-budicon-489" />

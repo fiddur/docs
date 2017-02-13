@@ -50,6 +50,90 @@
     p + button
       margin: 0 15px;
 
+  .platforms-no-results
+    font-size: 18px;
+    color: $color-text-light;
+
+  .other-types-platforms
+    max-width: 500px;
+    margin: 0 auto;
+    margin-bottom: 60px;
+
+    // Empty state section
+    .empty-state-section
+      margin-top: 50px;
+      margin-bottom: 40px;
+
+    .empty-state-icon
+      display: inline-block;
+      color: $color-text-lighter;
+      font-size: 72px;
+      line-height: 1em;
+      margin-bottom: 20px;
+
+    .empty-state-title
+      color: $color-text-light;
+      margin-top: 0;
+      font-size: $font-size-large;
+      line-height: 1.7em;
+      max-width: 420px;
+      margin: 0 auto;
+
+      .bold
+        font-weight: $font-weight-bold;
+
+    // Other platforms list section
+    
+    .platforms-list-section
+      margin-bottom: 60px;
+
+      .platforms-type-container + .platforms-type-container
+        margin-top: 30px;
+
+      .platforms-type-title
+        font-size: 14px;
+        text-transform: uppercase;
+
+      .platforms-type-list
+        list-style-type: none;
+        padding: 0;
+        margin: 0;
+
+    // Overwrite default .circle-logo styles
+    .other-platforms-item
+      display: flex;
+      align-items: center;
+      width: 100%;
+      padding: 14px;
+      background-color: white;
+      border-radius: $border-radius-base;
+      box-shadow: 0 1px 1px 0 rgba(black, 0.15);
+      margin-bottom: 8px;
+      cursor: pointer;
+
+      &:hover
+        transform: scale(1.02);
+
+      .community-maintained-badge
+        display: none;
+
+      .logo
+        width: 40px;
+        height: 40px;
+        margin-right: 14px;
+
+      .title
+        margin: 0
+        min-height: initial;
+
+    // Suggest quickstart section
+    .suggest-quickstart-section
+      
+      .text
+        display: block;
+        margin-bottom: 4px;
+
+
   .section-product
     h2
       padding-top: 50px;
@@ -198,18 +282,6 @@
 
   .circle-logo
     font-size: 12px;
-
-    &.suggest-quickstart
-      
-      .logo
-        background-color: rgba(black, 0.10)
-
-        &:after
-          width: 40%;
-          height: 40%;
-          background-image: url('../../public/img/quickstarts/suggest-cross.svg')
-          background-repeat: no-repeat;
-          background-position: center;
 
     .community-maintained-badge
       position: absolute;

@@ -72,7 +72,7 @@ class QuickstartSuggestModal extends Component {
       processData: false,
       contentType: 'application/json',
       success: () => {
-        this.props.showSuggestionSent();
+        this.props.handleSuggestionSent();
         finishSubmit();
       },
       error: (error) => {
@@ -153,7 +153,7 @@ QuickstartSuggestModal.propTypes = {
   open: PropTypes.bool.isRequired,
   suggestion: PropTypes.string.isRequired,
   closeModal: PropTypes.func.isRequired,
-  showSuggestionSent: PropTypes.func.isRequired,
+  handleSuggestionSent: PropTypes.func.isRequired,
   isAuthenticated: PropTypes.bool.isRequired,
   user: PropTypes.object.isRequired
 };
