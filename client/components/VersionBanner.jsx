@@ -2,7 +2,6 @@ import React, { Component, PropTypes } from 'react';
 import urljoin from 'url-join';
 import { Select } from 'auth0-styleguide-react-components';
 import { map } from 'lodash';
-import { navigateAction } from 'fluxible-router';
 
 class VersionSelector extends Component {
 
@@ -13,35 +12,25 @@ class VersionSelector extends Component {
 
   handleChange(evt) {
     const { doc } = this.props;
-    const { baseUrl, versions } = doc.meta.versioning;
-
+    const { baseUrl } = doc.meta.versioning;
     const version = evt.target.value;
-    const config = versions[version];
 
-    // Resolve the path of the article relative to the version group's base URL.
-    let path = doc.meta.url.replace(urljoin(baseUrl, doc.meta.version, '/'), '');
+    // Resolve the path of the article relative to the topic's base URL.
+    const path = doc.meta.url.replace(urljoin(baseUrl, doc.meta.version, '/'), '');
 
-    // If the new target version defines a redirect for the path, use it instead.
-    if (config.redirects && config.redirects[path]) path = config.redirects[path];
-
-    // Build the URL for the corresponding article of the new target version. Use the
-    // path defined by the target version if it exists, otherwise use the version name itself.
-    const url = urljoin(baseUrl, config.path || version, path);
-
-    // Redirect to that article. (NB: navigateAction doesn't seem to support absolute URLs,
-    // so we have to create a relative one instead.)
-    this.context.executeAction(navigateAction, {
-      url: url.replace(window.env.DOMAIN_URL_DOCS, '/docs')
-    });
+    // Redirect to the corresponding article in the new target version.
+    // NB: We can't do a partial refresh with navigateAction here, because we may end
+    // up needing to redirect if the article doesn't exist in the target version.
+    document.location = urljoin(baseUrl, version, path);
   }
 
   render() {
     const { doc } = this.props;
     const { version, versioning } = doc.meta;
 
-    const options = map(versioning.versions, (config, key) => ({
-      label: key,
-      value: key
+    const options = versioning.versions.map(item => ({
+      label: item,
+      value: item
     }));
 
     let message;
@@ -83,10 +72,6 @@ class VersionSelector extends Component {
 
 VersionSelector.propTypes = {
   doc: PropTypes.object
-};
-
-VersionSelector.contextTypes = {
-  executeAction: PropTypes.func
 };
 
 export default VersionSelector;

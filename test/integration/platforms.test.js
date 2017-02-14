@@ -1,6 +1,6 @@
 import { expect } from 'chai';
 import { basename, dirname, resolve } from 'path';
-import { getAppTypes, getPlatformIndexFiles } from '../../lib/pipeline/util';
+import { getAppTypes, findMetadataFiles } from '../../lib/pipeline/util';
 import { createProductionPipeline } from '../util';
 import { flatten } from 'lodash';
 import Tree from '../../lib/pipeline/models/Tree';
@@ -12,7 +12,7 @@ describe('Platforms Reduction', function() {
   const appTypes = getAppTypes();
   const indexes = {};
   appTypes.forEach(appType => {
-    indexes[appType.name] = getPlatformIndexFiles(resolve(__dirname, '../../docs/articles', appType.slug));
+    indexes[appType.name] = findMetadataFiles(resolve(__dirname, '../../docs/articles', appType.slug), 'index.yml');
     expectedCount += indexes[appType.name].length;
   });
 

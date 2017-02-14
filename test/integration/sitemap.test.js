@@ -2,7 +2,7 @@ import { expect } from 'chai';
 import { basename, dirname, resolve } from 'path';
 import urljoin from 'url-join';
 import { parseString as parseXmlString } from 'xml2js';
-import { getAppTypes, getPlatformIndexFiles } from '../../lib/pipeline/util';
+import { getAppTypes, findMetadataFiles } from '../../lib/pipeline/util';
 import { createProductionPipeline } from '../util';
 
 describe('Sitemap Reduction', function() {
@@ -11,7 +11,7 @@ describe('Sitemap Reduction', function() {
   const appTypes = getAppTypes();
   const indexes = {};
   appTypes.forEach(appType => {
-    indexes[appType.name] = getPlatformIndexFiles(resolve(__dirname, '../../docs/articles', appType.slug));
+    indexes[appType.name] = findMetadataFiles(resolve(__dirname, '../../docs/articles', appType.slug), 'index.yml');
   });
 
   let cache;
