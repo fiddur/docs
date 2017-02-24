@@ -5,6 +5,7 @@ import { connectToStores } from 'fluxible-addons-react';
 import { StickyContainer, Sticky } from 'react-sticky';
 import NavigationStore from '../stores/NavigationStore';
 import SidebarItem from './SidebarItem';
+import normalizeUrl from '../util/normalizeUrl';
 
 class Sidebar extends React.Component {
 
@@ -81,7 +82,7 @@ class Sidebar extends React.Component {
     // When entering to an url like http://auth0.com/docs/quickstart/native/android
     // display the first article of the technology as selected
     if (this.props.isQuickstart && this.props.items.length) {
-      const firstElemUrl = this.props.items[0].url;
+      const firstElemUrl = normalizeUrl(this.props.items[0].url);
       const technologyUrl = firstElemUrl.substr(0, firstElemUrl.lastIndexOf('/'));
 
       if (technologyUrl === this.props.url) {
