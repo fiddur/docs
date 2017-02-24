@@ -4,7 +4,7 @@ import ApplicationStore from '../stores/ApplicationStore';
 
 export default function navigateToQuickstart(context, payload, done) {
 
-  const { quickstartId, platformId, articleId } = payload;
+  const { quickstartId, platformId, versionId, articleId } = payload;
   const tokens = ['/docs'];
 
   if (quickstartId) {
@@ -15,6 +15,7 @@ export default function navigateToQuickstart(context, payload, done) {
   }
 
   if (platformId) tokens.push(platformId);
+  if (versionId) tokens.push(versionId);
   if (articleId) tokens.push(articleId);
 
   const appStore = context.getStore(ApplicationStore);

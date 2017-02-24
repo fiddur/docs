@@ -9,6 +9,7 @@ class QuickstartStore extends BaseStore {
     this.quickstarts = undefined;
     this.currentQuickstartId = undefined;
     this.currentPlatformId = undefined;
+    this.currentVersionId = undefined;
     this.currentArticleId = undefined;
     this.isFramedMode = false;
   }
@@ -28,20 +29,36 @@ class QuickstartStore extends BaseStore {
     return quickstart.platforms[this.currentPlatformId];
   }
 
+  getCurrentVersion() {
+    const platform = this.getCurrentPlatform();
+    if (!platform || !this.currentVersionId) return undefined;
+    return platform.previousVersions[this.currentVersionId];
+  }
+
   getCurrentArticle() {
     const platform = this.getCurrentPlatform();
     if (!platform) return undefined;
+
     if (this.isFramedMode && platform.defaultArticle) {
       return platform.defaultArticle;
-    } else if (this.currentArticleId) {
-      return _.find(platform.articles, { name: this.currentArticleId });
     }
-    return _.first(platform.articles);
+
+    let articles = platform.articles;
+    if (this.currentVersionId) {
+      articles = platform.previousVersions[this.currentVersionId].articles;
+    }
+
+    if (this.currentArticleId) {
+      return _.find(articles, { name: this.currentArticleId });
+    }
+
+    return _.first(articles);
   }
 
   handleQuickstartSelected(payload) {
     this.currentQuickstartId = payload.quickstartId;
     this.currentPlatformId = payload.platformId;
+    this.currentVersionId = payload.versionId;
     this.currentArticleId = payload.articleId;
     if (this.isFramedMode) {
       sendMessageToParentFrame({ type: 'tutorialSelected', tutorial: payload });
@@ -64,6 +81,7 @@ class QuickstartStore extends BaseStore {
       quickstarts: this.quickstarts,
       currentQuickstartId: this.currentQuickstartId,
       currentPlatformId: this.currentPlatformId,
+      currentVersionId: this.currentVersionId,
       currentArticleId: this.currentArticleId,
       isFramedMode: this.isFramedMode
     };
@@ -73,6 +91,7 @@ class QuickstartStore extends BaseStore {
     this.quickstarts = state.quickstarts;
     this.currentQuickstartId = state.currentQuickstartId;
     this.currentPlatformId = state.currentPlatformId;
+    this.currentVersionId = state.currentVersionId;
     this.currentArticleId = state.currentArticleId;
     this.isFramedMode = state.isFramedMode;
   }

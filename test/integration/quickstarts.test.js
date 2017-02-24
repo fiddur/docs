@@ -11,7 +11,7 @@ describe('Quickstarts Reduction', function() {
   const appTypes = getAppTypes();
   const indexes = {};
   appTypes.forEach(appType => {
-    indexes[appType.name] = findMetadataFiles(resolve(__dirname, '../../docs/articles', appType.slug), 'index.yml');
+    indexes[appType.name] = findMetadataFiles(resolve(__dirname, '../../docs/articles/quickstart', appType.name), 'index.yml');
   });
 
   let cache;

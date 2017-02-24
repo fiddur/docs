@@ -1,9 +1,8 @@
-export default function getQuickstartDocumentUrl(quickstarts, payload) {
-  const { isFramedMode } = payload;
-
-  const quickstartId = payload.quickstart ? payload.quickstart.name : payload.quickstartId;
-  const platformId = payload.platform ? payload.platform.name : payload.platformId;
-  let articleId = payload.article ? payload.article.name : payload.articleId;
+export default function getQuickstartDocumentUrl(quickstarts, params, isFramedMode = false) {
+  const quickstartId = params.quickstart ? params.quickstart.name : params.quickstartId;
+  const platformId = params.platform ? params.platform.name : params.platformId;
+  const versionId = params.versionId;
+  let articleId = params.article ? params.article.name : params.articleId;
 
   if (quickstartId && platformId && !articleId) {
     const platform = quickstarts[quickstartId].platforms[platformId];
@@ -14,9 +13,10 @@ export default function getQuickstartDocumentUrl(quickstarts, payload) {
     }
   }
 
-  const tokens = ['/docs'];
-  if (quickstartId) tokens.push(quickstarts[quickstartId].slug);
+  const tokens = ['/docs', 'quickstart'];
+  if (quickstartId) tokens.push(quickstartId);
   if (platformId) tokens.push(platformId);
+  if (versionId) tokens.push(versionId);
   if (articleId) tokens.push(articleId);
 
   return tokens.join('/');

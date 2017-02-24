@@ -11,8 +11,8 @@ describe('ArticlesReducer', () => {
   const docs = [
     getTestDocument(getTestFile('articles/connections/database/mysql.md')),
     getTestDocument(getTestFile('articles/connections/social/facebook.md')),
-    getTestDocument(getTestFile('articles/example-quickstarts/platform-a/01-example.md')),
-    getTestDocument(getTestFile('articles/example-quickstarts/platform-b/00-intro.md'))
+    getTestDocument(getTestFile('articles/quickstart/example-apptype/platform-a/01-example.md')),
+    getTestDocument(getTestFile('articles/quickstart/example-apptype/platform-b/00-intro.md'))
   ];
 
   describe('when reduce() is called', () => {

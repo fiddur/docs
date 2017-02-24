@@ -12,14 +12,14 @@ describe('SitemapReducer', () => {
 
   const articlesDir = resolve(__dirname, '../docs/articles');
   const appTypes = [
-    { title: 'Example', name: 'example', slug: 'example-quickstarts', flavor: 'vanilla' }
+    { title: 'Example', name: 'example-apptype', slug: 'example-apptype', flavor: 'vanilla' }
   ];
 
   const docs = [
     'articles/connections/database/mysql.md',
     'articles/connections/social/facebook.md',
-    'articles/example-quickstarts/platform-a/01-example.md',
-    'articles/example-quickstarts/platform-b/00-intro.md'
+    'articles/quickstart/example-apptype/platform-a/01-example.md',
+    'articles/quickstart/example-apptype/platform-b/00-intro.md'
   ].map(path => getTestDocument(getTestFile(path), {
     sitemap: true,
     public: true,
@@ -28,11 +28,11 @@ describe('SitemapReducer', () => {
 
   const expectedUrls = [
     '',
-    '/quickstart/example',
-    '/quickstart/example/platform-a',
-    '/quickstart/example/platform-a/01-example',
-    '/quickstart/example/platform-b',
-    '/quickstart/example/platform-b/00-intro',
+    '/quickstart/example-apptype',
+    '/quickstart/example-apptype/platform-a',
+    '/quickstart/example-apptype/platform-a/01-example',
+    '/quickstart/example-apptype/platform-b',
+    '/quickstart/example-apptype/platform-b/00-intro',
     '/connections/database/mysql',
     '/connections/social/facebook'
   ].map(url => urljoin(baseUrl, url));

@@ -12,7 +12,7 @@ describe('Platforms Reduction', function() {
   const appTypes = getAppTypes();
   const indexes = {};
   appTypes.forEach(appType => {
-    indexes[appType.name] = findMetadataFiles(resolve(__dirname, '../../docs/articles', appType.slug), 'index.yml');
+    indexes[appType.name] = findMetadataFiles(resolve(__dirname, '../../docs/articles/quickstart', appType.name), 'index.yml');
     expectedCount += indexes[appType.name].length;
   });
 

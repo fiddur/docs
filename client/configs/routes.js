@@ -65,6 +65,16 @@ export default {
       )
   },
 
+  quickstartArticlePreviousVersion: {
+    path: '/docs/quickstart/:quickstartId/:platformId/:versionId/:articleId',
+    method: 'get',
+    handler: TutorialPage,
+    action: (context, payload) =>
+      loadQuickstarts(context, payload).then(() =>
+        tutorialNavigatorActions.article(context, payload)
+      )
+  },
+
   search: {
     path: '/docs/search',
     method: 'get',

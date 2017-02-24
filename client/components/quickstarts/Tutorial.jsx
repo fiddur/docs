@@ -1,8 +1,6 @@
 import React from 'react';
 import { connectToStores } from 'fluxible-addons-react';
 import DocumentStore from '../../stores/DocumentStore';
-import QuickstartStore from '../../stores/QuickstartStore';
-import getQuickstartDocumentUrl from '../../util/getQuickstartDocumentUrl';
 import highlightCode from '../../browser/highlightCode';
 import setAnchorLinks from '../../browser/anchorLinks';
 import Spinner from '../Spinner';
@@ -36,18 +34,14 @@ class Tutorial extends React.Component {
 }
 
 Tutorial.propTypes = {
-  quickstart: React.PropTypes.object,
-  platform: React.PropTypes.object,
   article: React.PropTypes.object,
   doc: React.PropTypes.object
 };
 
-Tutorial = connectToStores(Tutorial, [DocumentStore, QuickstartStore], (context, props) => {
-  const { quickstart, platform, article } = props;
-  const quickstarts = context.getStore(QuickstartStore).getQuickstarts();
-  const url = getQuickstartDocumentUrl(quickstarts, { quickstart, platform, article });
+Tutorial = connectToStores(Tutorial, [DocumentStore], (context, props) => {
+  const { article } = props;
   return {
-    doc: context.getStore(DocumentStore).getDocument(url)
+    doc: context.getStore(DocumentStore).getDocument(article.url)
   };
 });
 

@@ -1,23 +1,32 @@
-import React from 'react';
+import React, { PropTypes } from 'react';
 import { NavLink } from 'fluxible-router';
+import { parse } from 'url';
 
-class ArticleLink extends React.Component {
+const ArticleLink = ({ article, children }) => {
 
-  render() {
-    let { article, children } = this.props;
+  let url;
+  let icon;
+  const classes = [];
 
-    return (
-      <NavLink
-        followLink={article.forceFullReload}
-        href={article.url}
-        className={`${article.external ? 'arrow-item' : ''}`}
-      >
-        {children}
-        { article.external && <i className="icon-budicon-519" />}
-      </NavLink>
-    );
+  if (article.external) {
+    classes.push('arrow-item');
+    url = article.url;
+    icon = <i className="icon-budicon-519" />;
+  } else {
+    url = parse(article.url).pathname;
   }
 
-}
+  return (
+    <NavLink className={classes.join(' ')} href={url} followLink={article.forceFullReload}>
+      {children}
+      {icon}
+    </NavLink>
+  );
+};
+
+ArticleLink.propTypes = {
+  article: PropTypes.object,
+  children: PropTypes.node
+};
 
 export default ArticleLink;

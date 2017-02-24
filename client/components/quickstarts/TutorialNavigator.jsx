@@ -12,7 +12,7 @@ import ApplicationStore from '../../stores/ApplicationStore';
 import QuickstartStore from '../../stores/QuickstartStore';
 
 const shouldSendMetrics = (quickstart, prevQuickstart = undefined) =>
-  quickstart && (!prevQuickstart || prevQuickstart.slug !== quickstart.slug);
+  quickstart && (!prevQuickstart || prevQuickstart.name !== quickstart.name);
 
 class TutorialNavigator extends React.Component {
 

@@ -5,7 +5,7 @@ import { getTestDocument, getTestFile } from '../util';
 describe('AutoQuickstartPlugin', () => {
 
   const appTypes = [
-    { title: 'Example', name: 'example', slug: 'example-quickstarts', flavor: 'vanilla' }
+    { title: 'Example', name: 'example-apptype', slug: 'example-apptype', flavor: 'vanilla' }
   ];
 
   const plugin = new AutoQuickstartPlugin({ appTypes });
@@ -22,7 +22,7 @@ describe('AutoQuickstartPlugin', () => {
 
     describe('for a document within a quickstart path', () => {
       it('returns a true quickstart flag', () => {
-        const doc = getTestDocument(getTestFile('articles/example-quickstarts/platform-a/01-example.md'));
+        const doc = getTestDocument(getTestFile('articles/quickstart/example-apptype/platform-a/01-example.md'));
         const output = plugin.getMetadata(doc, '');
         expect(output).to.deep.equal({ quickstart: true });
       });
@@ -30,7 +30,7 @@ describe('AutoQuickstartPlugin', () => {
 
     describe('for a document not within a quickstart path', () => {
       it('does not return a patch', () => {
-        const doc = getTestDocument(getTestFile('articles/test-markdown.md'));
+        const doc = getTestDocument(getTestFile('articles/quickstart/test-markdown.md'));
         const output = plugin.getMetadata(doc, '');
         expect(output).to.equal(null);
       });
