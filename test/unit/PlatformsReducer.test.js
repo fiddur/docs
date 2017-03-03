@@ -65,14 +65,14 @@ describe('PlatformsReducer', () => {
 
     it('sets the platform_type using the appType name', () => {
       const [platformA, platformB] = result;
-      expect(platformA.platform_type).to.equal('example');
-      expect(platformB.platform_type).to.equal('example');
+      expect(platformA.platform_type).to.equal('example-apptype');
+      expect(platformB.platform_type).to.equal('example-apptype');
     });
 
     it('formats platform URLs using the UrlFormatter', () => {
       const [platformA, platformB] = result;
-      expect(platformA.url).to.equal(urlFormatter.format('/quickstart/example/platform-a'));
-      expect(platformB.url).to.equal(urlFormatter.format('/quickstart/example/platform-b'));
+      expect(platformA.url).to.equal(urlFormatter.format('/quickstart/example-apptype/platform-a'));
+      expect(platformB.url).to.equal(urlFormatter.format('/quickstart/example-apptype/platform-b'));
     });
 
     it('formats platform image URLs using the UrlFormatter', () => {
