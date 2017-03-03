@@ -4,7 +4,9 @@ import strings from '../../lib/strings';
 
 const debugClient = debug('docs:docs');
 
-export default function getPageMetadata(quickstarts, quickstartId, platformId, articleId) {
+export default function getPageMetadata(quickstarts = undefined, payload = {}) {
+  const { quickstartId, platformId, versionId, articleId } = payload;
+
   return new Promise((resolve, reject) => {
     if (!quickstartId) {
       return resolve({

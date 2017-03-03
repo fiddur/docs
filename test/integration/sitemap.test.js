@@ -2,7 +2,7 @@ import { expect } from 'chai';
 import { basename, dirname, resolve } from 'path';
 import urljoin from 'url-join';
 import { parseString as parseXmlString } from 'xml2js';
-import { getAppTypes, getPlatformIndexFiles } from '../../lib/pipeline/util';
+import { getAppTypes, findMetadataFiles } from '../../lib/pipeline/util';
 import { createProductionPipeline } from '../util';
 
 describe('Sitemap Reduction', function() {
@@ -11,16 +11,13 @@ describe('Sitemap Reduction', function() {
   const appTypes = getAppTypes();
   const indexes = {};
   appTypes.forEach(appType => {
-    indexes[appType.name] = getPlatformIndexFiles(resolve(__dirname, '../../docs/articles', appType.slug));
+    indexes[appType.name] = findMetadataFiles(resolve(__dirname, '../../docs/articles/quickstart', appType.name), 'index.yml');
   });
 
   let cache;
   let urlFormatter;
   let reduction;
   let baseUrl;
-
-  const isQuickstartDocument = (doc) =>
-    appTypes.some(appType => doc.url.indexOf(urljoin(baseUrl, `/${appType.slug}/`) === 0));
 
   before(done => {
     createProductionPipeline((err, pipeline) => {
@@ -62,7 +59,7 @@ describe('Sitemap Reduction', function() {
   it('adds public non-quickstart document urls', () => {
     const { urls } = reduction;
     cache.forEach(doc => {
-      if (doc.sitemap && doc.public && !isQuickstartDocument(doc)) {
+      if (doc.sitemap && doc.public && !doc.quickstart) {
         expect(urls).to.contain(doc.url);
       }
     });

@@ -11,6 +11,7 @@ import setAnchorLinks from '../../browser/anchorLinks';
 import initSampleBox from '../../browser/sampleBox';
 import NavigationBar from '../NavigationBar';
 import FeedbackFooter from '../FeedbackFooter';
+import VersionSelector from '../VersionSelector';
 import Sidebar from '../Sidebar';
 import Spinner from '../Spinner';
 import TocBar from '../TocBar';
@@ -99,7 +100,7 @@ class ArticlePage extends React.Component {
     $('script', this.refs.content).each((idx, item) => {
       if (item.src) {
         item.remove();
-        let el = document.createElement('script')
+        const el = document.createElement('script');
         el.src = item.src;
         document.body.appendChild(el);
       }
@@ -135,11 +136,13 @@ class ArticlePage extends React.Component {
   }
 
   render() {
-    const { doc, sidebarArticles } = this.props;
-    const { url } = this.props.currentRoute;
+    const { doc, sidebarArticles, url } = this.props;
 
     // TODO: Sidebar needs to not update until all this is ready again
     const section = (doc && doc.meta) ? doc.meta.section : undefined;
+
+    let versionSelector;
+    if (doc && doc.meta && doc.meta.versioning) versionSelector = <VersionSelector doc={doc} />;
 
     return (
       <div className="docs-article">
@@ -152,6 +155,7 @@ class ArticlePage extends React.Component {
                   <Sidebar items={sidebarArticles} section={section} maxDepth={3} url={url} />
                 </div>
                 <div ref="content" className="col-md-9">
+                  {versionSelector}
                   {this.renderContent()}
                 </div>
               </div>
@@ -164,7 +168,9 @@ class ArticlePage extends React.Component {
 }
 
 ArticlePage.propTypes = {
-  url: PropTypes.string
+  doc: PropTypes.object,
+  url: PropTypes.string,
+  sidebarArticles: PropTypes.array
 };
 
 ArticlePage = connectToStores(ArticlePage, [ApplicationStore, DocumentStore, NavigationStore], (context, props) => {

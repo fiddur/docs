@@ -13,7 +13,7 @@ describe('QuickstartsReducer', () => {
 
   const articlesDir = resolve(__dirname, '../docs/articles');
   const appTypes = [
-    { title: 'Example', name: 'example', slug: 'example-quickstarts', flavor: 'vanilla' }
+    { title: 'Example', name: 'example-apptype', slug: 'example-apptype', flavor: 'vanilla' }
   ];
 
   describe('when the constructor is called', () => {
@@ -39,8 +39,8 @@ describe('QuickstartsReducer', () => {
 
   describe('when reduce() is called', () => {
     let result;
-    const doc1 = getTestDocument(getTestFile('articles/example-quickstarts/platform-a/01-example.md'));
-    const doc2 = getTestDocument(getTestFile('articles/example-quickstarts/platform-b/00-intro.md'));
+    const doc1 = getTestDocument(getTestFile('articles/quickstart/example-apptype/platform-a/01-example.md'));
+    const doc2 = getTestDocument(getTestFile('articles/quickstart/example-apptype/platform-b/00-intro.md'));
 
     before(() => {
       const cache = new FakeCache();

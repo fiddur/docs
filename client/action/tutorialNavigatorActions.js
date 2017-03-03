@@ -27,22 +27,23 @@ TutorialNavigatorActions.quickstartList = (context) => {
 TutorialNavigatorActions.quickstart = (context, payload) => {
   const { quickstartId } = payload.params;
   const quickstarts = context.getStore(QuickstartStore).getQuickstarts();
+  const selected = { quickstartId };
   return Promise.all([
-    getPageMetadata(quickstarts, quickstartId).then(metadata => {
-      context.dispatch('QUICKSTART_SELECTED', { quickstartId });
+    getPageMetadata(quickstarts, selected).then(metadata => {
+      context.dispatch('QUICKSTART_SELECTED', selected);
       context.dispatch('UPDATE_PAGE_METADATA', metadata);
     })
   ]);
 };
 
 TutorialNavigatorActions.platform = (context, payload) => {
-  const { quickstartId, platformId } = payload.params;
+  const { params } = payload;
   const isFramedMode = context.getStore(ApplicationStore).isFramedMode();
   const quickstarts = context.getStore(QuickstartStore).getQuickstarts();
-  const url = getQuickstartDocumentUrl(quickstarts, { quickstartId, platformId, isFramedMode });
+  const url = getQuickstartDocumentUrl(quickstarts, params, isFramedMode);
   return Promise.all([
-    getPageMetadata(quickstarts, quickstartId, platformId).then(metadata => {
-      context.dispatch('QUICKSTART_SELECTED', { quickstartId, platformId });
+    getPageMetadata(quickstarts, params).then(metadata => {
+      context.dispatch('QUICKSTART_SELECTED', params);
       context.dispatch('UPDATE_PAGE_METADATA', metadata);
     }),
     context.executeAction(loadDocument, { url })
@@ -50,13 +51,13 @@ TutorialNavigatorActions.platform = (context, payload) => {
 };
 
 TutorialNavigatorActions.article = (context, payload) => {
-  const { quickstartId, platformId, articleId } = payload.params;
+  const { params } = payload;
   const isFramedMode = context.getStore(ApplicationStore).isFramedMode();
   const quickstarts = context.getStore(QuickstartStore).getQuickstarts();
-  const url = getQuickstartDocumentUrl(quickstarts, { quickstartId, platformId, articleId, isFramedMode });
+  const url = getQuickstartDocumentUrl(quickstarts, params, isFramedMode);
   return Promise.all([
-    getPageMetadata(quickstarts, quickstartId, platformId, articleId).then(metadata => {
-      context.dispatch('QUICKSTART_SELECTED', { quickstartId, platformId, articleId });
+    getPageMetadata(quickstarts, params).then(metadata => {
+      context.dispatch('QUICKSTART_SELECTED', params);
       context.dispatch('UPDATE_PAGE_METADATA', metadata);
     }),
     context.executeAction(loadDocument, { url })

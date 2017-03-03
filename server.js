@@ -153,6 +153,7 @@ server.use('/docs', require('./lib/updates'));
 server.use('/docs', require('./lib/redirects'));
 server.use('/docs/meta', require('./lib/api'));
 server.use('/docs', require('./lib/app'));
+server.use('/docs', require('./lib/redirects/versioning'));
 
 // This is just for localhost
 server.get('/', (req, res) => {

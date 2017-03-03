@@ -2,7 +2,7 @@ import { expect } from 'chai';
 import { dirname, resolve } from 'path';
 import urljoin from 'url-join';
 import { createProductionPipeline } from '../util';
-import { getAppTypes, getPlatformIndexFiles } from '../../lib/pipeline/util';
+import { getAppTypes, findMetadataFiles } from '../../lib/pipeline/util';
 import Document from '../../lib/pipeline/models/Document';
 
 describe('Quickstarts Reduction', function() {
@@ -11,7 +11,7 @@ describe('Quickstarts Reduction', function() {
   const appTypes = getAppTypes();
   const indexes = {};
   appTypes.forEach(appType => {
-    indexes[appType.name] = getPlatformIndexFiles(resolve(__dirname, '../../docs/articles', appType.slug));
+    indexes[appType.name] = findMetadataFiles(resolve(__dirname, '../../docs/articles/quickstart', appType.name), 'index.yml');
   });
 
   let cache;

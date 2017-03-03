@@ -17,6 +17,7 @@ import Tutorial from '../quickstarts/Tutorial';
 import TutorialTableOfContents from '../quickstarts/TutorialTableOfContents';
 import TutorialPrevNext from '../quickstarts/TutorialPrevNext';
 import TutorialNextSteps from '../quickstarts/TutorialNextSteps';
+import TutorialVersionBanner from '../quickstarts/TutorialVersionBanner';
 
 // Formats an array of names into an English list, like "X, Y, and Z".
 const arrayToNameList = arr => arr.join(', ').replace(/,\s([^,]+)$/, ' and $1');
@@ -59,10 +60,19 @@ class TutorialPage extends React.Component {
   }
 
   renderTitle() {
-    const { platform, article } = this.props;
-    if (!platform || !article) return '';
-    if (platform.articles.length === 1) return platform.title;
-    return `${platform.title} ${article.title}`;
+    const { platform, article, version } = this.props;
+
+    let text;
+    if (!platform || !article) text = '';
+    else if (platform.articles.length === 1) text = platform.title;
+    else text = `${platform.title} ${article.title}`;
+
+    let label;
+    if (version) label = <span className="label label-warning">{version.title}</span>
+
+    return (
+      <h1 className="tutorial-title">{text} {label}</h1>
+    );
   }
 
   renderBottomNavigation() {
@@ -87,18 +97,27 @@ class TutorialPage extends React.Component {
   }
 
   renderSidebar() {
-    const { isFramedMode, platform } = this.props;
+    const { isFramedMode, platform, version } = this.props;
 
     if (isFramedMode) return undefined;
 
-    const sidebarTitle = platform ? platform.title : '';
-    const sidebarItems = platform ? platform.articles : [];
+    let sidebarTitle = '';
+    if (platform) {
+      sidebarTitle = platform.title;
+      if (version) sidebarTitle += ` (${version.title})`;
+    }
+
+    let articles = [];
+    if (platform) {
+      if (version) articles = version.articles;
+      else articles = platform.articles;
+    }
 
     return (
       <div className="sidebar-container col-md-3">
         <Sidebar
           section={sidebarTitle} maxDepth={3} includeSectionInBreadcrumb isQuickstart
-          items={sidebarItems} url={this.props.currentRoute.url}
+          items={articles} url={this.props.currentRoute.url}
         />
       </div>
     );
@@ -128,7 +147,7 @@ class TutorialPage extends React.Component {
   }
 
   render() {
-    const { quickstart, platform, article, isFramedMode } = this.props;
+    const { quickstart, platform, article, version, isFramedMode } = this.props;
     const columnWidth = isFramedMode ? 12 : 9;
 
     let tutorial;
@@ -136,7 +155,7 @@ class TutorialPage extends React.Component {
 
     if (article) {
       tutorial = <Tutorial quickstart={quickstart} platform={platform} article={article} />;
-      const editUrl = `https://github.com/auth0/docs/edit/master/articles/${quickstart.slug}/${platform.name}/${article.name}.md`;
+      const editUrl = `https://github.com/auth0/docs/edit/master/articles/quickstart/${quickstart.name}/${platform.name}/${article.name}.md`;
       feedbackFooter = (
         <div data-swiftype-index="false">
           <FeedbackFooter url={article.url} editUrl={editUrl} />
@@ -160,8 +179,9 @@ class TutorialPage extends React.Component {
                   <section className="docs-content">
                     {this.renderIntroBanner()}
                     <article data-swiftype-index="true">
-                      <h1 className="tutorial-title">{this.renderTitle()}</h1>
+                      {this.renderTitle()}
                       { this.communityDriven && this.renderCommunityMaintained(this.props.platform.maintainers)}
+                      <TutorialVersionBanner platform={platform} version={version} article={article} />
                       <div data-swiftype-name="body" data-swiftype-type="text">{tutorial}</div>
                       <div data-swiftype-index="false">{this.renderBottomNavigation()}</div>
                       <div data-swiftype-index="false">{feedbackFooter}</div>
@@ -182,6 +202,7 @@ class TutorialPage extends React.Component {
 TutorialPage.propTypes = {
   quickstart: React.PropTypes.object,
   platform: React.PropTypes.object,
+  version: React.PropTypes.object,
   article: React.PropTypes.object,
   user: React.PropTypes.object,
   isAuthenticated: React.PropTypes.bool,
@@ -202,6 +223,7 @@ TutorialPage = connectToStores(TutorialPage, [ApplicationStore, QuickstartStore]
   return {
     quickstart: quickstartStore.getCurrentQuickstart(),
     platform: quickstartStore.getCurrentPlatform(),
+    version: quickstartStore.getCurrentVersion(),
     article: quickstartStore.getCurrentArticle(),
     user: userStore.getUser(),
     isFramedMode: appStore.isFramedMode(),
