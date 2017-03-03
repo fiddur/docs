@@ -11,7 +11,7 @@ import setAnchorLinks from '../../browser/anchorLinks';
 import initSampleBox from '../../browser/sampleBox';
 import NavigationBar from '../NavigationBar';
 import FeedbackFooter from '../FeedbackFooter';
-import VersionBanner from '../VersionBanner';
+import VersionSelector from '../VersionSelector';
 import Sidebar from '../Sidebar';
 import Spinner from '../Spinner';
 import TocBar from '../TocBar';
@@ -141,8 +141,8 @@ class ArticlePage extends React.Component {
     // TODO: Sidebar needs to not update until all this is ready again
     const section = (doc && doc.meta) ? doc.meta.section : undefined;
 
-    let versionBanner;
-    if (doc && doc.meta && doc.meta.versioning) versionBanner = <VersionBanner doc={doc} />;
+    let versionSelector;
+    if (doc && doc.meta && doc.meta.versioning) versionSelector = <VersionSelector doc={doc} />;
 
     return (
       <div className="docs-article">
@@ -155,7 +155,7 @@ class ArticlePage extends React.Component {
                   <Sidebar items={sidebarArticles} section={section} maxDepth={3} url={url} />
                 </div>
                 <div ref="content" className="col-md-9">
-                  {versionBanner}
+                  {versionSelector}
                   {this.renderContent()}
                 </div>
               </div>
