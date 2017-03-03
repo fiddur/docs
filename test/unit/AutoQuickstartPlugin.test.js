@@ -30,7 +30,7 @@ describe('AutoQuickstartPlugin', () => {
 
     describe('for a document not within a quickstart path', () => {
       it('does not return a patch', () => {
-        const doc = getTestDocument(getTestFile('articles/quickstart/test-markdown.md'));
+        const doc = getTestDocument(getTestFile('articles/test-markdown.md'));
         const output = plugin.getMetadata(doc, '');
         expect(output).to.equal(null);
       });

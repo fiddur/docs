@@ -23,7 +23,7 @@ describe('IndexMergePlugin', () => {
 
     describe('for a file with multiple overlapping index.yml files', () => {
       it('returns the merged metadata read from the index.yml files', () => {
-        const doc = getTestDocument(getTestFile('articles/example-quickstarts/platform-a/01-example.md'));
+        const doc = getTestDocument(getTestFile('articles/quickstart/example-apptype/platform-a/01-example.md'));
         const output = plugin.getMetadata(doc, '');
         expect(output).to.deep.equal({
           image: '/media/platforms/platform-a.png',

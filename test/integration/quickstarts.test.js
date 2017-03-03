@@ -16,11 +16,13 @@ describe('Quickstarts Reduction', function() {
 
   let cache;
   let reduction;
+  let urlFormatter;
 
   before(done => {
     createProductionPipeline((err, pipeline) => {
       expect(err).not.to.exist;
       cache = pipeline;
+      urlFormatter = pipeline.urlFormatter;
       reduction = pipeline.getReduction('quickstarts');
       done();
     });
@@ -61,7 +63,7 @@ describe('Quickstarts Reduction', function() {
         expect(platform).to.be.an('object', `Expected an entry for platform ${index.name}, but none was found`);
         expect(platform.name).to.equal(index.name);
         expect(platform.title).to.equal(index.data.title);
-        expect(platform.url).to.equal(`/docs/quickstart/${appType.name}/${platform.name}`);
+        expect(platform.url).to.equal(urlFormatter.format(`/quickstart/${appType.name}/${platform.name}`));
         expect(platform.third_party).to.equal(index.data.thirdParty);
       });
     });

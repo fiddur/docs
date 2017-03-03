@@ -23,7 +23,8 @@ describe('SitemapReducer', () => {
   ].map(path => getTestDocument(getTestFile(path), {
     sitemap: true,
     public: true,
-    url: urljoin(baseUrl, path.replace(/^articles/, '').replace(extname(path), ''))
+    url: urljoin(baseUrl, path.replace(/^articles/, '').replace(extname(path), '')),
+    quickstart: path.indexOf('articles/quickstart') === 0
   }));
 
   const expectedUrls = [

@@ -32,9 +32,9 @@ describe('ArticlesReducer', () => {
       expect(connections.hash).to.equal('connections');
       expect(connections.items).to.be.an('array');
       expect(connections.items).to.have.length(2);
-      const quickstarts = result.get('example-quickstarts');
+      const quickstarts = result.get('quickstart/example-apptype');
       expect(quickstarts).to.exist;
-      expect(quickstarts.hash).to.equal('example-quickstarts');
+      expect(quickstarts.hash).to.equal('example-apptype');
       expect(quickstarts.items).to.be.an('array');
       expect(quickstarts.items).to.have.length(2);
     });
