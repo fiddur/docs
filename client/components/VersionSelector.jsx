@@ -28,13 +28,10 @@ class VersionSelector extends Component {
     const { doc } = this.props;
     const { version, versioning } = doc.meta;
 
-    const options = versioning.versions.map(value => {
-      const marker = (value === versioning.current) ? ' (current)' : ' (outdated)';
-      return {
-        label: `Version ${value} ${marker}`,
-        value
-      };
-    });
+    const options = versioning.versions.map(value => ({
+      label: `Version: ${value}`,
+      value
+    }));
 
     return (
       <div className="version-selector">
