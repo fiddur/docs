@@ -171,17 +171,25 @@ server.use((internalErr, req, res, next) => {
   // Log server errors.
   if (internalErr.status > 499) {
     logger.error(internalErr);
+    agent.errorReporter.captureException(internalErr.message, {
+      extra: {
+        url: req.originalUrl,
+        path: req.path,
+        query: req.query,
+        remoteAddress: req.ip,
+        userAgent: req.headers['user-agent']
+      }
+    });
   }
 
   // Create a santitized, serializable error that we can return to the client.
   const err = {
-    status: internalErr.status || 500,
-    title: internalErr.status === 404 ? strings.PAGE_NOT_FOUND : strings.ERROR_PROCESSING_REQUEST
+    status: internalErr.status || 500
   };
 
   // Don't send back stack traces in production.
   if (process.env.NODE_ENV === 'production') {
-    err.message = err.title;
+    err.message = internalErr.status === 404 ? strings.PAGE_NOT_FOUND : strings.ERROR_PROCESSING_REQUEST;
     err.stack = '';
   } else {
     err.message = internalErr.message;
@@ -196,7 +204,7 @@ server.use((internalErr, req, res, next) => {
   } else if (res.locals.embedded) {
     res.type('html')
     .status(err.status)
-    .send(`<h1>${err.title}</h1><h2>${err.status}</h2><pre>${err.stack}</pre>`)
+    .send(`<h1>Error ${err.status}</h1><h2>${err.message}</h2><pre>${err.stack}</pre>`)
     .end();
   } else {
     bootstrap({ err }, req, res, next);

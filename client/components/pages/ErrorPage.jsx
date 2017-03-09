@@ -1,15 +1,23 @@
-import React from 'react';
+import React, { Component, PropTypes } from 'react';
 import { StickyContainer } from 'react-sticky';
 import { connectToStores } from 'fluxible-addons-react';
 import NavigationStore from '../../stores/NavigationStore';
 import Sidebar from '../Sidebar';
 import NavigationBar from '../NavigationBar';
 
-class ErrorPage extends React.Component {
+class ErrorPage extends Component {
 
   render() {
+    const { error, sidebarArticles } = this.props;
 
-    var { error, sidebarArticles } = this.props;
+    let stack;
+    if (error.stack) {
+      stack = (
+        <pre style={{ padding: '30px', overflowX: 'auto' }}>
+          {error.stack}
+        </pre>
+      );
+    }
 
     return (
       <StickyContainer>
@@ -22,12 +30,9 @@ class ErrorPage extends React.Component {
               </div>
               <div className="col-md-9">
                 <section className="docs-content">
-                  <h1>{error.title}</h1>
-                  <h2>Error {error.status}</h2>
+                  <h1>Error {error.status}</h1>
                   <p>{error.message}</p>
-                  <pre style={{ padding: '30px', overflowX: 'auto' }}>
-                    {error.stack}
-                  </pre>
+                  {stack}
                 </section>
               </div>
             </div>
@@ -39,9 +44,13 @@ class ErrorPage extends React.Component {
 
 }
 
+ErrorPage.propTypes = {
+  error: PropTypes.object,
+  sidebarArticles: PropTypes.array
+};
+
 ErrorPage = connectToStores(ErrorPage, [], (context, props) => {
   const navigationStore = context.getStore(NavigationStore);
-
   return {
     sidebarArticles: navigationStore.getSidebarArticles('articles')
   };
