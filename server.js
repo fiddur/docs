@@ -142,7 +142,6 @@ server.use(overrideClientQs);
 server.use(overrideClientQsPublic);
 server.use(docsVariables);
 server.use(fetchABExperiments);
-server.use(redirectQuickstarts);
 
 // Routes
 server.use('/docs', require('./lib/api-explorer/middleware'));
@@ -154,6 +153,7 @@ server.use('/docs', require('./lib/redirects'));
 server.use('/docs/meta', require('./lib/api'));
 server.use('/docs', require('./lib/app'));
 server.use('/docs', require('./lib/redirects/versioning'));
+server.use(redirectQuickstarts);
 
 // This is just for localhost
 server.get('/', (req, res) => {
