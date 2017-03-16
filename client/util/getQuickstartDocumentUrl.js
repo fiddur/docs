@@ -7,11 +7,15 @@ export default function getQuickstartDocumentUrl(quickstarts, params, isFramedMo
   if (quickstartId && platformId && !articleId) {
     const quickstart = quickstarts[quickstartId];
     if (!quickstart) {
-      throw new Error(`No such app type ${quickstartId} exists.`);
+      const err = new Error(`No such app type ${quickstartId} exists.`);
+      err.statusCode = 404;
+      throw err;
     }
     const platform = quickstart.platforms[platformId];
     if (!platform) {
-      throw new Error(`No such platform ${platformId} exists in the app type ${quickstartId}.`);
+      const err = Error(`No such platform ${platformId} exists in the app type ${quickstartId}.`);
+      err.statusCode = 404;
+      throw err;
     }
     if (isFramedMode && platform.defaultArticle) {
       articleId = platform.defaultArticle.name;

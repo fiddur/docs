@@ -30,7 +30,7 @@ class ErrorPage extends Component {
               </div>
               <div className="col-md-9">
                 <section className="docs-content">
-                  <h1>Error {error.status}</h1>
+                  <h1>Error {error.statusCode}</h1>
                   <p>{error.message}</p>
                   {stack}
                 </section>

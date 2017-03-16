@@ -190,13 +190,11 @@
       }
     },
     "auth0-instrumentation": {
-      "version": "1.2.2",
-      "from": "auth0-instrumentation@git://github.com/auth0/auth0-instrumentation.git#98001666007c4ba1e61cf74b04be8d0af0f9d6b7",
-      "resolved": "git://github.com/auth0/auth0-instrumentation.git#98001666007c4ba1e61cf74b04be8d0af0f9d6b7",
+      "version": "2.1.3",
+      "resolved": "git://github.com/auth0/auth0-instrumentation.git#3d8fa5d59b3699e8c8adb9c516da996956ed5ae8",
       "dependencies": {
         "auth0-common-logging": {
           "version": "2.12.1",
-          "from": "auth0-common-logging@git://github.com/auth0/auth0-common-logging.git#856099945aab465854d8127b790a66b05a41d0b1",
           "resolved": "git://github.com/auth0/auth0-common-logging.git#856099945aab465854d8127b790a66b05a41d0b1",
           "dependencies": {
             "lodash": {
@@ -210,8 +208,8 @@
           "resolved": "https://registry.npmjs.org/aws-kinesis-writable/-/aws-kinesis-writable-2.0.0.tgz",
           "dependencies": {
             "aws-sdk": {
-              "version": "2.6.15",
-              "resolved": "https://registry.npmjs.org/aws-sdk/-/aws-sdk-2.6.15.tgz",
+              "version": "2.28.0",
+              "resolved": "https://registry.npmjs.org/aws-sdk/-/aws-sdk-2.28.0.tgz",
               "dependencies": {
                 "buffer": {
                   "version": "4.9.1",
@@ -257,6 +255,10 @@
                     }
                   }
                 },
+                "uuid": {
+                  "version": "3.0.0",
+                  "resolved": "https://registry.npmjs.org/uuid/-/uuid-3.0.0.tgz"
+                },
                 "xml2js": {
                   "version": "0.4.15",
                   "resolved": "https://registry.npmjs.org/xml2js/-/xml2js-0.4.15.tgz"
@@ -288,8 +290,8 @@
           "resolved": "https://registry.npmjs.org/blocked/-/blocked-1.2.1.tgz"
         },
         "bunyan-sentry-stream": {
-          "version": "1.0.2",
-          "resolved": "https://registry.npmjs.org/bunyan-sentry-stream/-/bunyan-sentry-stream-1.0.2.tgz",
+          "version": "1.1.0",
+          "resolved": "https://registry.npmjs.org/bunyan-sentry-stream/-/bunyan-sentry-stream-1.1.0.tgz",
           "dependencies": {
             "lodash": {
               "version": "4.3.0",
@@ -324,8 +326,8 @@
                   "resolved": "https://registry.npmjs.org/minimist/-/minimist-1.2.0.tgz"
                 },
                 "rc": {
-                  "version": "1.1.6",
-                  "resolved": "https://registry.npmjs.org/rc/-/rc-1.1.6.tgz",
+                  "version": "1.1.7",
+                  "resolved": "https://registry.npmjs.org/rc/-/rc-1.1.7.tgz",
                   "dependencies": {
                     "deep-extend": {
                       "version": "0.4.1",
@@ -336,8 +338,8 @@
                       "resolved": "https://registry.npmjs.org/ini/-/ini-1.3.4.tgz"
                     },
                     "strip-json-comments": {
-                      "version": "1.0.4",
-                      "resolved": "https://registry.npmjs.org/strip-json-comments/-/strip-json-comments-1.0.4.tgz"
+                      "version": "2.0.1",
+                      "resolved": "https://registry.npmjs.org/strip-json-comments/-/strip-json-comments-2.0.1.tgz"
                     }
                   }
                 }
@@ -350,8 +352,8 @@
           "resolved": "https://registry.npmjs.org/node-statsd/-/node-statsd-0.1.1.tgz"
         },
         "pidusage": {
-          "version": "1.1.0",
-          "resolved": "https://registry.npmjs.org/pidusage/-/pidusage-1.1.0.tgz"
+          "version": "1.1.1",
+          "resolved": "https://registry.npmjs.org/pidusage/-/pidusage-1.1.1.tgz"
         },
         "raven": {
           "version": "0.10.0",

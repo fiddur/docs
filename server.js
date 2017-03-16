@@ -31,11 +31,7 @@ import cors from './lib/middleware/cors';
 const logger = agent.logger;
 
 const server = express();
-
 eventLogger.watch(process);
-
-server.use(agent.errorReporter.express.requestHandler);
-server.use(agent.errorReporter.express.errorHandler);
 
 passport.serializeUser((user, done) => {
   if (!nconf.get('db')) {
@@ -163,33 +159,30 @@ server.get('/', (req, res) => {
 // catch 404 and forward to error handler
 server.use((req, res, next) => {
   const err = new Error('Not Found');
-  err.status = 404;
+  err.statusCode = 404;
   next(err);
 });
 
 server.use((internalErr, req, res, next) => {
-  // Log server errors.
-  if (internalErr.status > 499) {
-    logger.error(internalErr);
-    agent.errorReporter.captureException(internalErr.message, {
-      extra: {
-        url: req.originalUrl,
-        path: req.path,
-        query: req.query,
-        remoteAddress: req.ip,
-        userAgent: req.headers['user-agent']
-      }
-    });
-  }
+  // Send errors to Sentry.
+  agent.errorReporter.captureException(internalErr, {
+    extra: {
+      url: req.originalUrl,
+      path: req.path,
+      query: req.query,
+      remoteAddress: req.ip,
+      userAgent: req.headers['user-agent']
+    }
+  });
 
   // Create a santitized, serializable error that we can return to the client.
   const err = {
-    status: internalErr.status || 500
+    statusCode: internalErr.statusCode || 500
   };
 
   // Don't send back stack traces in production.
   if (process.env.NODE_ENV === 'production') {
-    err.message = internalErr.status === 404 ? strings.PAGE_NOT_FOUND : strings.ERROR_PROCESSING_REQUEST;
+    err.message = internalErr.statusCode === 404 ? strings.PAGE_NOT_FOUND : strings.ERROR_PROCESSING_REQUEST;
     err.stack = '';
   } else {
     err.message = internalErr.message;
@@ -198,13 +191,13 @@ server.use((internalErr, req, res, next) => {
 
   if (res.locals.embedded && req.headers['content-type'] === 'application/json') {
     res.type('json')
-    .status(err.status)
+    .status(err.statusCode)
     .json(err)
     .end();
   } else if (res.locals.embedded) {
     res.type('html')
-    .status(err.status)
-    .send(`<h1>Error ${err.status}</h1><h2>${err.message}</h2><pre>${err.stack}</pre>`)
+    .status(err.statusCode)
+    .send(`<h1>Error ${err.statusCode}</h1><h2>${err.message}</h2><pre>${err.stack}</pre>`)
     .end();
   } else {
     bootstrap({ err }, req, res, next);
@@ -216,7 +209,7 @@ server.use((err, req, res, next) => {
   // encountered an error during rendering. If we're in production, show
   // error page; otherwise, dump the stack trace.
   if (process.env.NODE_ENV === 'production') {
-    res.status(err.status || 500);
+    res.status(err.statusCode || 500);
     res.render('error');
   } else {
     next(err);

@@ -16,8 +16,8 @@ export default function getPageMetadata(quickstarts = undefined, payload = {}) {
 
     const quickstart = quickstarts[quickstartId];
     if (!quickstart) {
-      const err = new Error('Invalid AppType.');
-      err.status = 404;
+      const err = new Error(`No such app type ${quickstartId}.`);
+      err.statusCode = 404;
       return reject(err);
     }
 
@@ -30,8 +30,8 @@ export default function getPageMetadata(quickstarts = undefined, payload = {}) {
 
     const platform = quickstart.platforms[platformId];
     if (!platform) {
-      const err = new Error('Platform not found.');
-      err.status = 404;
+      const err = new Error(`No platform ${platformId} exists in the quickstart ${quickstartId}.`);
+      err.statusCode = 404;
       return reject(err);
     }
 
@@ -49,8 +49,8 @@ export default function getPageMetadata(quickstarts = undefined, payload = {}) {
 
     const article = find(platform.articles, { name: articleId });
     if (!article) {
-      const err = new Error('Article not found.');
-      err.status = 404;
+      const err = new Error(`No article ${articleId} exists in the platform ${platformId}.`);
+      err.statusCode = 404;
       return reject(err);
     }
 
