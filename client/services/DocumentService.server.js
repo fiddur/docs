@@ -10,7 +10,7 @@ DocumentService.load = (url, options = {}) => (
 
     if (!doc) {
       const error = new Error(`No document found at ${normalizedUrl}`);
-      error.status = 404;
+      error.statusCode = 404;
       return reject(error);
     }
 

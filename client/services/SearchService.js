@@ -14,7 +14,7 @@ const postRequest = (requestUrl, body) =>
     }
 
     const error = new Error(response.statusText);
-    error.status = response.status;
+    error.statusCode = response.status;
     error.response = response;
     throw error;
   })
