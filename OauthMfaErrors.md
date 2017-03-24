@@ -25,6 +25,9 @@ invalid_request
   out.)
 
 * `Malformed mfa_token`
+  * Cause: The `mfa_token` sent is not correct.
+  * Fix: Make sure to send back the exact `mfa_token` received in the original
+    `/oauth/token` call.
 
 * `Unsupported multifactor provider: "${payload.rap}"`
 * `invalid audience specified for password grant exchange`
