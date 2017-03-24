@@ -6,7 +6,8 @@ invalid_request
 > multiple credentials, utilizes more than one mechanism for authenticating the
 > client, or is otherwise malformed.
 
-* `Binding code is required` -- Change this to the next one.
+* `Binding code is required`
+  * Change this to the next one.
 
 * `binding_code is required`
   * Cause: When the out-of-band multifactor authentication challenge sends a
@@ -21,9 +22,9 @@ invalid_request
   * Fix: Make sure you use the same `client_id` in the multifactor requests as
     the one used in the initial `/oauth/token` request.
 
-* `Mfa token must include txn` -- Change this to the next one (The client need
-  only know that the thing sent in `mfa_token` parameter is not what we sent
-  out.)
+* `Mfa token must include txn`
+  * Change this to the next one (The client need only know that the thing sent
+    in `mfa_token` parameter is not what we sent out.)
 
 * `Malformed mfa_token`
   * Cause: The `mfa_token` sent is not correct.
