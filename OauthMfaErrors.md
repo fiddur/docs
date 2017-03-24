@@ -1,4 +1,5 @@
 invalid_request
+---------------
 
 > The request is missing a required parameter, includes an unsupported
 > parameter value (other than challenge type), repeats a parameter, includes
@@ -30,10 +31,14 @@ invalid_request
     `/oauth/token` call.
 
 * `Unsupported multifactor provider: "${payload.rap}"`
+  * ....shouldn't this also be just `Malformed mfa_token`?  This can only
+    happen if the client hasn't sent an `mfa_token` issued by us.
+
 * `invalid audience specified for password grant exchange`
 
 
 expired_token
+-------------
 
 > The provided MFA token is invalid, expired, or revoked.  The client will need
 > to initiate a new authorization session.
@@ -46,6 +51,7 @@ expired_token
 
 
 unsupported_challenge_type
+--------------------------
 
 > The challenge types supported by the client are not supported by the
 > authorization server.
@@ -62,6 +68,7 @@ unsupported_challenge_type
 
 
 invalid_grant
+-------------
 
 * `MFA Invalid binding code.`
 * `MFA Authorization rejected.`
