@@ -6,9 +6,7 @@ invalid_request
 > multiple credentials, utilizes more than one mechanism for authenticating the
 > client, or is otherwise malformed.
 
-* `Binding code is required` -> `binding_code is required` below
-
-* `binding_code is required`
+* `Missing required parameter: binding_code`
   * Cause: When the out-of-band multifactor authentication challenge sends a
     code to the end-user (via SMS), the user should be prompted for that code.
   * Fix: When the request to `/mfa/challenge` includes `"binding_method":
@@ -20,6 +18,13 @@ invalid_request
     issued to another client.
   * Fix: Make sure you use the same `client_id` in the multifactor requests as
     the one used in the initial `/oauth/token` request.
+
+* `The oob_code doesn't match the mfa_token`
+  * Cause: The authentication transaction in `oob_code` doesn't match the one
+    in the `mfa_token`.
+  * Fix: Make sure that the `mfa_token` gotten on the initial `/oauth/token`
+    request is used both in `/mfa/challenge` and the final `/oauth/token`
+    request, together with the `oob_code` gotten from `/mfa/challenge`.
 
 * `Mfa token must include txn` -> `Malformed mfa_token`
 
