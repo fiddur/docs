@@ -28,14 +28,10 @@ invalid_request
 
 * `Mfa token must include txn` -> `Malformed mfa_token`
 
-* `Malformed mfa_token` -> `invalid_grant`?
-  * Cause: The `mfa_token` sent is not correct.
-  * Fix: Make sure to send back the exact `mfa_token` received in the original
-    `/oauth/token` call.
-
 * `Unsupported multifactor provider: "${payload.rap}"`
-  * ....shouldn't this also be just `Malformed mfa_token`?  This can only
-    happen if the client hasn't sent an `mfa_token` issued by us.
+  * Cause: The requested authentication provider is not supported.
+  * Fix: Make sure the multifactor authentication rule sets a correct
+    `context.multifactor.provider`.
 
 * `invalid audience specified for password grant exchange`
 
@@ -109,3 +105,8 @@ invalid_grant
 * `MFA Authorization rejected.` (-> one of them should be `Invalid otp_code`.)
   * Cause: The user has rejected the out of band authorization request.
   * Fix: Offer the user to restart the login process.
+
+* `Malformed mfa_token` -> `invalid_grant`?
+  * Cause: The `mfa_token` sent is not correct.
+  * Fix: Make sure to send back the exact `mfa_token` received in the original
+    `/oauth/token` call.
