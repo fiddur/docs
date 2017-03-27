@@ -58,6 +58,15 @@ unsupported_challenge_type
 > The challenge types supported by the client are not supported by the
 > authorization server.
 
+* `No matching challenge_type for provider "${provider.name}". Requested:
+  ${JSON.stringify(requestedChallengeTypes)}. Available:
+  ${JSON.stringify(provider.challengeTypes)}.`
+  * Cause: The client has requested challenge types that are not available on
+    the configured multifactor authentication provider.
+  * Fix: Remove `challenge_type` from the `/mfa/challenge` request to accept
+    the user's default, or make sure to include at least one of the available
+    challenge types stated in the error message.
+
 * `User is not enrolled with ${exports.name}` 401 -> ...same as below?
 
 * `user is not enrolled with Google authenticator. Please enroll first.` 400
