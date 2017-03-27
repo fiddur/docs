@@ -26,8 +26,6 @@ invalid_request
     request is used both in `/mfa/challenge` and the final `/oauth/token`
     request, together with the `oob_code` gotten from `/mfa/challenge`.
 
-* `Mfa token must include txn` -> `Malformed mfa_token`
-
 * `Unsupported multifactor provider: "${payload.rap}"`
   * Cause: The requested authentication provider is not supported.
   * Fix: Make sure the multifactor authentication rule sets a correct
@@ -106,7 +104,7 @@ invalid_grant
   * Cause: The user has rejected the out of band authorization request.
   * Fix: Offer the user to restart the login process.
 
-* `Malformed mfa_token` -> `invalid_grant`?
+* `Malformed mfa_token`
   * Cause: The `mfa_token` sent is not correct.
   * Fix: Make sure to send back the exact `mfa_token` received in the original
     `/oauth/token` call.
