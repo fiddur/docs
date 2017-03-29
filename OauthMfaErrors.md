@@ -44,12 +44,6 @@ expired_token
   * Cause: Too much time has passed since the `mfa_token` or `oob_code` was issued.
   * Fix: Restart the authentication to get a new `mfa_token` (and `oob_code`).
 
-* `Invalid sub` 403 -> `server_error`
-* `Invalid challenge type` 403 -> `server_error`
-* `Invalid session id`  403 -> `server_error`
-
-* `${tokenName} is invalid` 403  -> `invalid grant`/`Malformed mfa_token`
-
 
 unsupported_challenge_type
 --------------------------
@@ -66,14 +60,10 @@ unsupported_challenge_type
     the user's default, or make sure to include at least one of the available
     challenge types stated in the error message.
 
-* `User is not enrolled with ${exports.name}` 401 -> ...same as below?
-
-* `user is not enrolled with Google authenticator. Please enroll first.` 400
+* `User is not enrolled with ${exports.name}` 401
   * Cause: The user trying to authenticate hasn't enrolled any authneticator
     with Google authenticator.
   * Fix: Ask the user to enroll an authenticator in a normal login flow.
-
-* `Unsupported challenge type: oob.` (for google) -> `server_error`
 
 * `The user does not support ${pluralize(types, 'the requested challenge type',
   'any of the requested challenge types')} (${types.join(', ')}). Supported
@@ -96,13 +86,17 @@ unsupported_challenge_type
 invalid_grant
 -------------
 
-* `MFA Invalid binding code.` -> `Invalid binding_code`
+* `Invalid binding_code`
   * Cause: The given `binding_code` is incorrect.
   * Fix: Prompt the user for the sent binding code again, or restart the login flow.
 
-* `MFA Authorization rejected.` (-> one of them should be `Invalid otp_code`.)
+* `MFA Authorization rejected.`
   * Cause: The user has rejected the out of band authorization request.
   * Fix: Offer the user to restart the login process.
+
+* `Invalid otp_code`
+  * Cause: The user has input a faulty otp_code.
+  * Fix: Ask the user to try again and resend the request with the new `otp_code`.
 
 * `Malformed mfa_token` or `Malformed oob_code`
   * Cause: The `mfa_token` sent is not correct.
