@@ -104,9 +104,14 @@ invalid_grant
   * Cause: The user has rejected the out of band authorization request.
   * Fix: Offer the user to restart the login process.
 
-* `Malformed mfa_token`
+* `Malformed mfa_token` or `Malformed oob_code`
   * Cause: The `mfa_token` sent is not correct.
   * Fix: Make sure to send back the exact `mfa_token` received in the original
     `/oauth/token` call.
 
-* `Provider ${info.provider} does not support recovery.`
+* `Provider google-authenticator does not support recovery.`
+  * Cause: google-authenticator for multifactor provider has no recovery code support.
+  * Fix: Use Guardian for multifactor authentication to enable recovery codes.
+
+
+REMEMBER the lowercasing of challenge types!
