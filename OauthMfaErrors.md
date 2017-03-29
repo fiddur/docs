@@ -112,6 +112,3 @@ invalid_grant
 * `Provider google-authenticator does not support recovery.`
   * Cause: google-authenticator for multifactor provider has no recovery code support.
   * Fix: Use Guardian for multifactor authentication to enable recovery codes.
-
-
-REMEMBER the lowercasing of challenge types!
