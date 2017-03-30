@@ -90,10 +90,6 @@ invalid_grant
   * Cause: The given `binding_code` is incorrect.
   * Fix: Prompt the user for the sent binding code again, or restart the login flow.
 
-* `MFA Authorization rejected.`
-  * Cause: The user has rejected the out of band authorization request.
-  * Fix: Offer the user to restart the login process.
-
 * `Invalid otp_code`
   * Cause: The user has input a faulty otp_code.
   * Fix: Ask the user to try again and resend the request with the new `otp_code`.
@@ -106,3 +102,25 @@ invalid_grant
 * `Provider google-authenticator does not support recovery.`
   * Cause: google-authenticator for multifactor provider has no recovery code support.
   * Fix: Use Guardian for multifactor authentication to enable recovery codes.
+
+
+bad_gateway
+-----------
+
+* `Error sending SMS.`
+  * Cause: The external service to send SMS failed.
+  * Fix: Try again, use another authenticator or recovery code, or check the
+    SMS service credentials.
+
+* `Error sending Push Notification.`
+  * Cause: The external service to send Push Notifications failed.
+  * Fix: Try again, use another authenticator or recovery code, or check the
+    notification service credentials.
+
+
+access_denied
+-------------
+
+* `MFA Authorization rejected.`
+  * Cause: The user has rejected the out of band authorization request.
+  * Fix: Offer the user to restart the login process.
