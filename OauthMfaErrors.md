@@ -117,6 +117,11 @@ bad_gateway
   * Fix: Try again, use another authenticator or recovery code, or check the
     notification service credentials.
 
+* `There is no available challenge type.`
+  * Cause: The user's out of band authenticator's service is unavailable.
+  * Fix: Try again, use recovery code, or check the notification service
+    cretentials.
+
 
 access_denied
 -------------
